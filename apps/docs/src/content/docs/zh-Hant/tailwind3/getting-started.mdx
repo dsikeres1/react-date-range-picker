@@ -18,7 +18,11 @@ Tailwind v3 套件提供了使用 Tailwind CSS v3 工具類別設計樣式的日
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-不需要額外匯入 CSS。元件直接使用 Tailwind 工具類別。
+在應用程式入口點匯入元件樣式：
+
+```tsx
+import "react-date-range-picker-tailwind3/rdrp-styles.css";
+```
 
 ## Tailwind 設定
 
@@ -99,13 +103,3 @@ import type {
 - [Compound Components](/docs/tailwind3/customization/overview) — 自訂內部結構
 - [Theme Override](/docs/tailwind3/customization/theme-override) — 自訂主題顏色
 - [Dark Mode](/docs/tailwind3/customization/dark-mode) — 深色主題支援
-
-## Tailwind Preflight 與重設
-
-此套件假設您的專案已啟用 Tailwind CSS Preflight (這是預設值)。
-如果您的環境停用 Preflight (例如 Docusaurus、某些微前端)，按鈕樣式可能會損壞。
-在這種情況下，請匯入提供的 `rdrp-reset.css` 來手動初始化按鈕樣式：
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-reset.css";
-```

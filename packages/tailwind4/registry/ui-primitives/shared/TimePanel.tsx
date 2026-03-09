@@ -92,12 +92,12 @@ export const TimePanel = forwardRef<HTMLDivElement, TimePanelProps>(
     }, [tp.scrollToValues]);
 
     return (
-      <div ref={ref} className={cn(className)}>
-        <div className={cn(highlightClassName)} />
-        <div className={cn(columnsClassName)}>
+      <div ref={ref} className={cn("rdrp-time-panel", className)}>
+        <div className={cn("rdrp-time-highlight", highlightClassName)} />
+        <div className={cn("rdrp-time-columns", columnsClassName)}>
           <div
             ref={tp.hourListRef}
-            className={cn(columnClassName)}
+            className={cn("rdrp-time-column", columnClassName)}
             onScroll={tp.handleHourScroll}
             tabIndex={0}
             role="listbox"
@@ -111,7 +111,9 @@ export const TimePanel = forwardRef<HTMLDivElement, TimePanelProps>(
                 tabIndex={val !== -1 ? 0 : -1}
                 aria-selected={val !== -1 ? i === tp.hourIndex : undefined}
                 className={cn(
+                  val === -1 ? "rdrp-time-padding" : "rdrp-time-item",
                   val === -1 ? paddingClassName : itemClassName,
+                  i === tp.hourIndex && val !== -1 && "rdrp-time-item-active",
                   i === tp.hourIndex && val !== -1 && itemActiveClassName,
                 )}
                 onClick={() => {
@@ -131,10 +133,10 @@ export const TimePanel = forwardRef<HTMLDivElement, TimePanelProps>(
 
           {tp.showMinutes && (
             <>
-              <div className={cn(colonClassName)}>:</div>
+              <div className={cn("rdrp-time-colon", colonClassName)}>:</div>
               <div
                 ref={tp.minuteListRef}
-                className={cn(columnClassName)}
+                className={cn("rdrp-time-column", columnClassName)}
                 onScroll={tp.handleMinuteScroll}
                 tabIndex={0}
                 role="listbox"
@@ -148,7 +150,9 @@ export const TimePanel = forwardRef<HTMLDivElement, TimePanelProps>(
                     tabIndex={val !== -1 ? 0 : -1}
                     aria-selected={val !== -1 ? i === tp.minuteIndex : undefined}
                     className={cn(
+                      val === -1 ? "rdrp-time-padding" : "rdrp-time-item",
                       val === -1 ? paddingClassName : itemClassName,
+                      i === tp.minuteIndex && val !== -1 && "rdrp-time-item-active",
                       i === tp.minuteIndex && val !== -1 && itemActiveClassName,
                     )}
                     onClick={() => {
@@ -170,10 +174,10 @@ export const TimePanel = forwardRef<HTMLDivElement, TimePanelProps>(
 
           {tp.showSeconds && (
             <>
-              <div className={cn(colonClassName)}>:</div>
+              <div className={cn("rdrp-time-colon", colonClassName)}>:</div>
               <div
                 ref={tp.secondListRef}
-                className={cn(columnClassName)}
+                className={cn("rdrp-time-column", columnClassName)}
                 onScroll={tp.handleSecondScroll}
                 tabIndex={0}
                 role="listbox"
@@ -187,7 +191,9 @@ export const TimePanel = forwardRef<HTMLDivElement, TimePanelProps>(
                     tabIndex={val !== -1 ? 0 : -1}
                     aria-selected={val !== -1 ? i === tp.secondIndex : undefined}
                     className={cn(
+                      val === -1 ? "rdrp-time-padding" : "rdrp-time-item",
                       val === -1 ? paddingClassName : itemClassName,
+                      i === tp.secondIndex && val !== -1 && "rdrp-time-item-active",
                       i === tp.secondIndex && val !== -1 && itemActiveClassName,
                     )}
                     onClick={() => {
@@ -210,7 +216,7 @@ export const TimePanel = forwardRef<HTMLDivElement, TimePanelProps>(
           {tp.is12Hour && (
             <button
               type="button"
-              className={cn(periodButtonClassName)}
+              className={cn("rdrp-time-period-button", periodButtonClassName)}
               aria-label={`${tp.period === "AM" ? context.locale.am : context.locale.pm}, toggle AM/PM`}
               onClick={tp.handlePeriodToggle}
             >

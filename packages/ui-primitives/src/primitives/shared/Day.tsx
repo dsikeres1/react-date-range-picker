@@ -120,18 +120,31 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
         type="button"
         id={`rdrp-day-${calendarIndex}-${context.locale.formatDate(date)}`}
         className={cn(
+          "rdrp-day",
           className,
+          isToday && "rdrp-day-today",
           isToday && todayClassName,
+          isOutsideDay && "rdrp-day-outside",
           isOutsideDay && outsideClassName,
+          isInHoverRange && "rdrp-day-hover-range",
           isInHoverRange && hoverRangeClassName,
+          isHoverTarget && "rdrp-day-hover-target",
           isHoverTarget && hoverTargetClassName,
+          isInRange && "rdrp-day-in-range",
           isInRange && inRangeClassName,
+          isHighlighted && "rdrp-day-highlighted",
           isHighlighted && highlightedClassName,
+          isSelected && "rdrp-day-selected",
           isSelected && selectedClassName,
+          isRangeStart && "rdrp-day-range-start",
           isRangeStart && rangeStartClassName,
+          isRangeEnd && "rdrp-day-range-end",
           isRangeEnd && rangeEndClassName,
+          isRangeSingle && "rdrp-day-range-single",
           isRangeSingle && rangeSingleClassName,
+          isDisabled && "rdrp-day-disabled",
           isDisabled && disabledClassName,
+          showFocusRing && "rdrp-day-focused",
           showFocusRing && focusedClassName,
         )}
         onClick={onClick}

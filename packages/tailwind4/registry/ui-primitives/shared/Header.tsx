@@ -10,7 +10,7 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
   ({ className, children, cn: cnFn }, ref) => {
     const cn = cnFn ?? ((...args: unknown[]) => args.filter(Boolean).join(" "));
     return (
-      <div ref={ref} className={cn(className)}>
+      <div ref={ref} className={cn("rdrp-header", className)}>
         {children}
       </div>
     );

@@ -18,43 +18,57 @@ Tailwind v4 패키지는 Tailwind CSS v4 유틸리티 클래스와 시맨틱 디
 
 <PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-Importa i token del tema predefiniti (salta questo passaggio se il tuo progetto li definisce già, ad esempio shadcn/ui):
+Importa gli stili dei componenti nel tuo file CSS principale:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+Se il tuo progetto **non** definisce ancora token di design semantici (ad esempio, i progetti shadcn/ui li hanno già), importa anche il tema predefinito:
 
 ```css
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
-## Tailwind Preflight 및 Reset
+### Progetti shadcn/ui
 
-이 패키지는 프로젝트에 Tailwind CSS Preflight가 활성화되어 있다고 가정합니다 (기본값).
-만약 사용자의 환경(예: Docusaurus, 일부 마이크로 프론트엔드)에서 Preflight를 비활성화하면 버튼 스타일이 깨질 수 있습니다.
-이 경우, 제공된 `rdrp-reset.css`를 가져와 버튼 스타일을 수동으로 초기화하세요:
-
-```tsx
-import "react-date-range-picker-tailwind4/rdrp-reset.css";
-```
-
-## 시맨틱 토큰
-
-컴포넌트는 테마 설정을 위해 시맨틱 CSS 변수를 사용합니다. CSS 파일에 다음과 같이 정의하세요:
+shadcn/ui definisce già i token necessari. Hai bisogno solo degli stili dei componenti:
 
 ```css
-@theme {
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0.004 285.823);
-  --color-primary: oklch(0.205 0.006 285.885);
-  --color-primary-foreground: oklch(0.985 0.001 285.823);
-  --color-muted: oklch(0.96 0.003 285.823);
-  --color-muted-foreground: oklch(0.556 0.01 285.823);
-  --color-accent: oklch(0.96 0.003 285.823);
-  --color-accent-foreground: oklch(0.205 0.006 285.885);
-  --color-border: oklch(0.922 0.004 285.823);
-  --color-input: oklch(0.922 0.004 285.823);
-  --color-ring: oklch(0.87 0.006 285.823);
-}
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
-이 토큰들은 `bg-popover`, `text-foreground`, `border-border` 등과 같은 클래스에 매핑됩니다.
+### Progetti Tailwind v4 autonomi
+
+Per i progetti senza shadcn/ui, importa sia i token del tema che gli stili dei componenti:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+## Token Semantici
+
+I componenti utilizzano internamente le proprietà personalizzate CSS `--rdrp-*`, che vengono mappate ai token semantici di Tailwind v4 / shadcn tramite `var()` con valori di fallback. Se desideri personalizzare la mappatura, sovrascrivi le variabili `--rdrp-*` nel tuo CSS.
+
+Il file `rdrp-theme.css` fornisce una palette predefinita Slate + Sky con questi token:
+
+| Token                        | Utilizzo                       |
+| ---------------------------- | ------------------------------ |
+| `--color-background`         | Sfondi dei componenti          |
+| `--color-foreground`         | Colore del testo               |
+| `--color-primary`            | Date selezionate, stati attivi |
+| `--color-primary-foreground` | Testo sul colore primario      |
+| `--color-muted-foreground`   | Testo attenuato, segnaposto    |
+| `--color-accent`             | Sfondi al passaggio del mouse  |
+| `--color-border`             | Colori dei bordi               |
+| `--color-ring`               | Colore dell'anello di focus    |
 
 ## 빠른 시작
 

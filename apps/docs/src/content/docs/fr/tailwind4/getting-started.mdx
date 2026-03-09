@@ -18,43 +18,57 @@ Le package Tailwind v4 fournit des composants de sélecteur de date stylisés av
 
 <PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-Importez les jetons de thème par défaut (ignorez cette étape si votre projet les définit déjà, par exemple shadcn/ui) :
+Importez les styles des composants dans votre fichier CSS principal :
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+Si votre projet ne définit **pas** encore de jetons de design sémantiques (par exemple, les projets shadcn/ui les ont déjà), importez également le thème par défaut :
 
 ```css
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
-## Contrôle en amont et réinitialisation du vent arrière
+### Projets shadcn/ui
 
-Ce package suppose que votre projet a activé Tailwind CSS Preflight (ce qui est la valeur par défaut).
-Si votre environnement désactive le contrôle en amont (par exemple, Docusaurus, certains Micro Frontends), les styles de boutons peuvent être endommagés.
-Dans ce cas, importez le « rdrp-reset.css » fourni pour initialiser manuellement les styles de boutons :
+shadcn/ui définit déjà les jetons requis. Vous n'avez besoin que des styles des composants :
 
-```tsx
-import "react-date-range-picker-tailwind4/rdrp-reset.css";
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### Projets Tailwind v4 autonomes
+
+Pour les projets sans shadcn/ui, importez à la fois les jetons de thème et les styles des composants :
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
 ## Jetons sémantiques
 
-Les composants utilisent des variables CSS sémantiques pour la création de thèmes. Définissez-les dans votre CSS :
+Les composants utilisent en interne des propriétés personnalisées CSS `--rdrp-*`, qui sont mappées vers les jetons sémantiques Tailwind v4 / shadcn via `var()` avec des valeurs de repli. Si vous souhaitez personnaliser le mappage, remplacez les variables `--rdrp-*` dans votre CSS.
 
-```css
-@theme {
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0.004 285.823);
-  --color-primary: oklch(0.205 0.006 285.885);
-  --color-primary-foreground: oklch(0.985 0.001 285.823);
-  --color-muted: oklch(0.96 0.003 285.823);
-  --color-muted-foreground: oklch(0.556 0.01 285.823);
-  --color-accent: oklch(0.96 0.003 285.823);
-  --color-accent-foreground: oklch(0.205 0.006 285.885);
-  --color-border: oklch(0.922 0.004 285.823);
-  --color-input: oklch(0.922 0.004 285.823);
-  --color-ring: oklch(0.87 0.006 285.823);
-}
-```
+Le fichier `rdrp-theme.css` fournit une palette Slate + Sky par défaut avec ces jetons :
 
-Ces jetons correspondent à des classes telles que `bg-popover`, `text-foreground`, `border-border`, etc.
+| Jeton                        | Utilisation                       |
+| ---------------------------- | --------------------------------- |
+| `--color-background`         | Arrière-plans des composants      |
+| `--color-foreground`         | Couleur du texte                  |
+| `--color-primary`            | Dates sélectionnées, états actifs |
+| `--color-primary-foreground` | Texte sur la couleur primaire     |
+| `--color-muted-foreground`   | Texte atténué, espaces réservés   |
+| `--color-accent`             | Arrière-plans au survol           |
+| `--color-border`             | Couleurs de bordure               |
+| `--color-ring`               | Couleur de l'anneau de focus      |
 
 ## Démarrage rapide
 
@@ -73,17 +87,17 @@ Ces jetons correspondent à des classes telles que `bg-popover`, `text-foregroun
 | `DateTimePicker`      | Date + time selection with time scroll panel        |
 | `DateRangeTimePicker` | Date range + time selection                         |
 
-Tous les composants prennent en charge :
+Tous les composants prennent en charge :
 
 - Valeur contrôlée avec `value` / `onChange`
 - Navigation au clavier
 - Mode sombre via la variante `dark:`
-- 4 tailles : "petit", "moyen", "grand", "x-large"
+- 4 tailles : "petit", "moyen", "grand", "x-large"
 - API de composant composé pour la personnalisation
 
 ## Types de scripts dactylographiés
 
-Tous les types de configuration et de données sont réexportés à partir du package — pas besoin d'installer le package sans tête séparément :
+Tous les types de configuration et de données sont réexportés à partir du package — pas besoin d'installer le package sans tête séparément :
 
 ```tsx
 import type {
@@ -103,7 +117,7 @@ import type {
 } from "react-date-range-picker-tailwind4";
 ```
 
-Ces types sont utiles pour :
+Ces types sont utiles pour :
 
 - **`Locale`** — Remplacements de paramètres régionaux personnalisés (noms des jours de la semaine, étiquettes des boutons, formatage de la date)
 - **`DatePickerSize`** — Saisie de l'accessoire `size` ("small"`|`"medium"`|`"large"`|`"x-large"`)

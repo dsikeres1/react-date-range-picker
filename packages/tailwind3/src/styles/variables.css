@@ -1,0 +1,250 @@
+/* ══════════════════════════════════════════════════════════
+   React Date Range Picker — CSS Custom Properties
+
+   Variables are defined on :root so any ancestor element
+   can override them naturally via CSS cascade:
+     <div style="--rdrp-color-primary: purple">
+       <DatePicker />
+     </div>
+
+   Color palette: Tailwind Slate (gray) + Sky (primary)
+   to match tailwind3/tailwind4 packages pixel-for-pixel.
+   ══════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Colors ── */
+  --rdrp-color-primary: #0ea5e9; /* sky-500 */
+  --rdrp-color-primary-hover: #0284c7; /* sky-600 */
+  --rdrp-color-primary-light: #f0f9ff; /* sky-50  (range bg) */
+  --rdrp-color-primary-lighter: #f0f9ff; /* sky-50  (preset active bg) */
+  --rdrp-color-primary-disabled: #7dd3fc; /* sky-300 */
+
+  --rdrp-color-bg: #ffffff;
+  --rdrp-color-bg-hover: #f1f5f9; /* slate-100 */
+  --rdrp-color-bg-subtle: #f8fafc; /* slate-50 */
+
+  --rdrp-color-text: #0f172a; /* slate-900 */
+  --rdrp-color-text-strong: #0f172a; /* slate-900 */
+  --rdrp-color-text-muted: #64748b; /* slate-500 */
+  --rdrp-color-text-placeholder: #64748b; /* slate-500 */
+  --rdrp-color-text-disabled: #64748b; /* slate-500 (opacity in components.css) */
+  --rdrp-color-text-outside: rgba(100, 116, 139, 0.5); /* slate-500/50 */
+  --rdrp-color-text-inverse: #ffffff;
+  --rdrp-color-text-danger: #ef4444; /* red-500 */
+  --rdrp-color-text-today: #0ea5e9; /* sky-500 */
+
+  --rdrp-color-border: #e2e8f0; /* slate-200 */
+  --rdrp-color-border-light: #e2e8f0; /* slate-200 */
+  --rdrp-color-border-subtle: #e2e8f0; /* slate-200 */
+  --rdrp-color-border-hover: rgba(14, 165, 233, 0.5); /* sky-500/50 */
+
+  --rdrp-color-highlight-dot: #f59e0b; /* amber-500 */
+  --rdrp-highlight-dot-size: 4px;
+  --rdrp-color-range-bg: #f0f9ff; /* sky-50 */
+  --rdrp-color-hover-range-bg: rgba(240, 249, 255, 0.5); /* sky-50/50 */
+  --rdrp-color-hover-target-bg: #e0f2fe; /* sky-100 */
+  --rdrp-color-time-highlight: rgba(14, 165, 233, 0.1); /* sky-500/10 */
+
+  /* ── Typography ── */
+  --rdrp-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --rdrp-font-size-xs: 11px;
+  --rdrp-font-size-sm: 12px;
+  --rdrp-font-size-base: 13px;
+  --rdrp-font-size-md: 14px;
+  --rdrp-font-size-lg: 15px;
+  --rdrp-font-weight-normal: 400;
+  --rdrp-font-weight-medium: 500;
+  --rdrp-font-weight-semibold: 600;
+  --rdrp-font-weight-bold: 700;
+
+  /* ── Spacing ── */
+  --rdrp-spacing-xs: 2px;
+  --rdrp-spacing-sm: 4px;
+  --rdrp-spacing-md: 8px;
+  --rdrp-spacing-lg: 12px;
+  --rdrp-spacing-xl: 16px;
+  --rdrp-spacing-2xl: 24px;
+
+  /* ── Borders ── */
+  --rdrp-border-radius-sm: 4px;
+  --rdrp-border-radius-md: 6px;
+  --rdrp-border-radius-lg: 8px;
+  --rdrp-border-radius-xl: 12px;
+  --rdrp-border-radius-full: 9999px;
+  --rdrp-border-width: 1px;
+
+  /* ── Shadows ── */
+  --rdrp-shadow-popup: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --rdrp-shadow-inline: none;
+  --rdrp-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+
+  /* ── Sizing ── */
+  --rdrp-cell-size: 36px;
+  --rdrp-nav-btn-size: 28px;
+  --rdrp-weekday-height: 28px;
+  --rdrp-grid-min-height: 216px;
+  --rdrp-panel-min-width: 252px;
+  --rdrp-dual-gap: 24px;
+
+  --rdrp-trigger-min-width: 200px;
+  --rdrp-trigger-padding-x: 14px;
+  --rdrp-trigger-padding-y: 8px;
+  --rdrp-popup-padding: 16px;
+  --rdrp-popup-gap: 6px;
+
+  --rdrp-btn-padding-x: 14px;
+  --rdrp-btn-padding-y: 6px;
+
+  --rdrp-preset-min-width: 140px;
+
+  /* ── Time picker ── */
+  --rdrp-time-item-height: 32px;
+  --rdrp-time-panel-height: 176px;
+  --rdrp-time-column-height: 160px;
+  --rdrp-time-panel-min-width: 120px;
+  --rdrp-time-colon-width: 12px;
+  --rdrp-time-picker-content-min-width: 250px;
+
+  /* ── Z-index ── */
+  --rdrp-z-popup: 50;
+  --rdrp-z-inline: auto;
+  --rdrp-z-day-button: 20;
+
+  /* ── Transitions ── */
+  --rdrp-transition-fast: 150ms;
+  --rdrp-transition-normal: 150ms;
+}
+
+/* Component root — only color-scheme, no variable re-definitions */
+.rdrp-root {
+  color-scheme: light;
+}
+
+/* ── Explicit light mode ── */
+[data-theme="light"] {
+  --rdrp-color-primary: #0ea5e9; /* sky-500 */
+  --rdrp-color-primary-hover: #0284c7; /* sky-600 */
+  --rdrp-color-primary-light: #f0f9ff; /* sky-50 */
+  --rdrp-color-primary-lighter: #f0f9ff; /* sky-50 */
+  --rdrp-color-primary-disabled: #7dd3fc; /* sky-300 */
+
+  --rdrp-color-bg: #ffffff;
+  --rdrp-color-bg-hover: #f1f5f9; /* slate-100 */
+  --rdrp-color-bg-subtle: #f8fafc; /* slate-50 */
+
+  --rdrp-color-text: #0f172a; /* slate-900 */
+  --rdrp-color-text-strong: #0f172a; /* slate-900 */
+  --rdrp-color-text-muted: #64748b; /* slate-500 */
+  --rdrp-color-text-placeholder: #64748b; /* slate-500 */
+  --rdrp-color-text-disabled: #64748b; /* slate-500 */
+  --rdrp-color-text-outside: rgba(100, 116, 139, 0.5); /* slate-500/50 */
+  --rdrp-color-text-inverse: #ffffff;
+  --rdrp-color-text-danger: #ef4444; /* red-500 */
+  --rdrp-color-text-today: #0ea5e9; /* sky-500 */
+
+  --rdrp-color-border: #e2e8f0; /* slate-200 */
+  --rdrp-color-border-light: #e2e8f0; /* slate-200 */
+  --rdrp-color-border-subtle: #e2e8f0; /* slate-200 */
+  --rdrp-color-border-hover: rgba(14, 165, 233, 0.5); /* sky-500/50 */
+
+  --rdrp-color-highlight-dot: #f59e0b; /* amber-500 */
+  --rdrp-color-range-bg: #f0f9ff; /* sky-50 */
+  --rdrp-color-hover-range-bg: rgba(240, 249, 255, 0.5); /* sky-50/50 */
+  --rdrp-color-hover-target-bg: #e0f2fe; /* sky-100 */
+  --rdrp-color-time-highlight: rgba(14, 165, 233, 0.1); /* sky-500/10 */
+
+  --rdrp-shadow-popup: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --rdrp-shadow-inline: none;
+  --rdrp-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .rdrp-root,
+.rdrp-root[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* ── Explicit dark mode ── */
+[data-theme="dark"] {
+  --rdrp-color-primary: #0ea5e9; /* sky-500 */
+  --rdrp-color-primary-hover: #0284c7; /* sky-600 */
+  --rdrp-color-primary-light: rgba(8, 47, 73, 0.5); /* sky-950/50 */
+  --rdrp-color-primary-lighter: rgba(8, 47, 73, 0.5); /* sky-950/50 */
+  --rdrp-color-primary-disabled: #075985; /* sky-800 */
+
+  --rdrp-color-bg: #020617; /* slate-950 */
+  --rdrp-color-bg-hover: #1e293b; /* slate-800 */
+  --rdrp-color-bg-subtle: #020617; /* slate-950 */
+
+  --rdrp-color-text: #f8fafc; /* slate-50 */
+  --rdrp-color-text-strong: #f8fafc; /* slate-50 */
+  --rdrp-color-text-muted: #94a3b8; /* slate-400 */
+  --rdrp-color-text-placeholder: #94a3b8; /* slate-400 */
+  --rdrp-color-text-disabled: #94a3b8; /* slate-400 */
+  --rdrp-color-text-outside: rgba(148, 163, 184, 0.5); /* slate-400/50 */
+  --rdrp-color-text-inverse: #ffffff;
+  --rdrp-color-text-danger: #ef4444; /* red-500 */
+  --rdrp-color-text-today: #38bdf8; /* sky-400 */
+
+  --rdrp-color-border: #1e293b; /* slate-800 */
+  --rdrp-color-border-light: #1e293b; /* slate-800 */
+  --rdrp-color-border-subtle: #1e293b; /* slate-800 */
+  --rdrp-color-border-hover: rgba(14, 165, 233, 0.5); /* sky-500/50 */
+
+  --rdrp-color-highlight-dot: #fbbf24; /* amber-400 */
+  --rdrp-color-range-bg: rgba(8, 47, 73, 0.5); /* sky-950/50 */
+  --rdrp-color-hover-range-bg: rgba(8, 47, 73, 0.3); /* sky-950/30 */
+  --rdrp-color-hover-target-bg: rgba(12, 74, 110, 0.5); /* sky-900/50 */
+  --rdrp-color-time-highlight: rgba(14, 165, 233, 0.1); /* sky-500/10 */
+
+  --rdrp-shadow-popup: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+  --rdrp-shadow-inline: none;
+  --rdrp-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .rdrp-root,
+.rdrp-root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* ── Class-based dark mode (.dark on ancestor — Tailwind / Next.js / Astro convention) ── */
+.dark {
+  --rdrp-color-primary: #0ea5e9; /* sky-500 */
+  --rdrp-color-primary-hover: #0284c7; /* sky-600 */
+  --rdrp-color-primary-light: rgba(8, 47, 73, 0.5); /* sky-950/50 */
+  --rdrp-color-primary-lighter: rgba(8, 47, 73, 0.5); /* sky-950/50 */
+  --rdrp-color-primary-disabled: #075985; /* sky-800 */
+
+  --rdrp-color-bg: #020617; /* slate-950 */
+  --rdrp-color-bg-hover: #1e293b; /* slate-800 */
+  --rdrp-color-bg-subtle: #020617; /* slate-950 */
+
+  --rdrp-color-text: #f8fafc; /* slate-50 */
+  --rdrp-color-text-strong: #f8fafc; /* slate-50 */
+  --rdrp-color-text-muted: #94a3b8; /* slate-400 */
+  --rdrp-color-text-placeholder: #94a3b8; /* slate-400 */
+  --rdrp-color-text-disabled: #94a3b8; /* slate-400 */
+  --rdrp-color-text-outside: rgba(148, 163, 184, 0.5); /* slate-400/50 */
+  --rdrp-color-text-inverse: #ffffff;
+  --rdrp-color-text-danger: #ef4444; /* red-500 */
+  --rdrp-color-text-today: #38bdf8; /* sky-400 */
+
+  --rdrp-color-border: #1e293b; /* slate-800 */
+  --rdrp-color-border-light: #1e293b; /* slate-800 */
+  --rdrp-color-border-subtle: #1e293b; /* slate-800 */
+  --rdrp-color-border-hover: rgba(14, 165, 233, 0.5); /* sky-500/50 */
+
+  --rdrp-color-highlight-dot: #fbbf24; /* amber-400 */
+  --rdrp-color-range-bg: rgba(8, 47, 73, 0.5); /* sky-950/50 */
+  --rdrp-color-hover-range-bg: rgba(8, 47, 73, 0.3); /* sky-950/30 */
+  --rdrp-color-hover-target-bg: rgba(12, 74, 110, 0.5); /* sky-900/50 */
+  --rdrp-color-time-highlight: rgba(14, 165, 233, 0.1); /* sky-500/10 */
+
+  --rdrp-shadow-popup: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+  --rdrp-shadow-inline: none;
+  --rdrp-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dark .rdrp-root,
+.rdrp-root.dark {
+  color-scheme: dark;
+}

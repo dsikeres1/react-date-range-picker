@@ -18,7 +18,11 @@ import Tailwind3BasicSource from "@examples/tailwind3/DatePicker/Basic.tsx?raw";
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-ไม่จำเป็นต้องนำเข้า CSS เพิ่มเติม คอมโพเนนต์ใช้คลาสยูทิลิตี้ของ Tailwind โดยตรง
+นำเข้าสไตล์ของคอมโพเนนต์ในจุดเริ่มต้นของแอป:
+
+```tsx
+import "react-date-range-picker-tailwind3/rdrp-styles.css";
+```
 
 ## การกำหนดค่า Tailwind
 
@@ -99,13 +103,3 @@ import type {
 - [Compound Components](/docs/tailwind3/customization/overview) — ปรับแต่งโครงสร้างภายใน
 - [Theme Override](/docs/tailwind3/customization/theme-override) — ปรับแต่งสีของธีม
 - [Dark Mode](/docs/tailwind3/customization/dark-mode) — รองรับธีมมืด
-
-## Tailwind Preflight & Reset
-
-แพ็คเกจนี้ถือว่าโปรเจกต์ของคุณเปิดใช้งาน Tailwind CSS Preflight (ซึ่งเป็นค่าเริ่มต้น)
-หากสภาพแวดล้อมของคุณปิดใช้งาน Preflight (เช่น Docusaurus, Micro Frontends บางตัว) สไตล์ของปุ่มอาจเสียหายได้
-ในกรณีนั้น ให้นำเข้า `rdrp-reset.css` ที่ให้มาเพื่อเริ่มต้นสไตล์ของปุ่มด้วยตนเอง:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-reset.css";
-```

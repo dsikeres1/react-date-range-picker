@@ -18,7 +18,11 @@ Tailwind v3 paketi, Tailwind CSS v3 yardımcı sınıflarıyla stillendirilmiş 
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-Ek bir CSS içe aktarımı gerekmez. Bileşenler doğrudan Tailwind yardımcı sınıflarını kullanır.
+Uygulama giriş noktanızda bileşen stillerini içe aktarın:
+
+```tsx
+import "react-date-range-picker-tailwind3/rdrp-styles.css";
+```
 
 ## Tailwind Yapılandırması
 
@@ -99,13 +103,3 @@ Ayrıntılı tip tanımları için bkz. [Headless Tipleri](/docs/headless/types/
 - [Bileşik Bileşenler](/docs/tailwind3/customization/overview) — İç yapıyı özelleştirin
 - [Tema Geçersiz Kılma](/docs/tailwind3/customization/theme-override) — Tema renklerini özelleştirin
 - [Karanlık Mod](/docs/tailwind3/customization/dark-mode) — Koyu tema desteği
-
-## Tailwind Preflight & Sıfırlama
-
-Bu paket, projenizde Tailwind CSS Preflight'ın etkinleştirildiğini varsayar (bu varsayılandır).
-Eğer ortamınız Preflight'ı devre dışı bırakırsa (örn. Docusaurus, bazı Mikro Ön Uçlar), düğme stilleri bozulabilir.
-Bu durumda, düğme stillerini manuel olarak başlatmak için sağlanan `rdrp-reset.css` dosyasını içe aktarın:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-reset.css";
-```

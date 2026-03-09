@@ -3,11 +3,7 @@
   "name": "time-picker-panel",
   "title": "Time Picker Panel",
   "description": "A standalone scroll-wheel time selector with hour/minute/second columns.",
-  "dependencies": [
-    "react-date-range-picker-headless",
-    "clsx",
-    "tailwind-merge"
-  ],
+  "dependencies": ["react-date-range-picker-headless", "clsx", "tailwind-merge"],
   "files": [
     {
       "path": "registry/time-picker-panel.tsx",

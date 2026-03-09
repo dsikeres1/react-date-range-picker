@@ -18,7 +18,11 @@ O pacote Tailwind v3 fornece componentes de seleção de data estilizados com cl
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-Nenhuma importação adicional de CSS é necessária. Os componentes usam classes de utilitário Tailwind diretamente.
+Importe os estilos dos componentes no ponto de entrada do seu aplicativo:
+
+```tsx
+import "react-date-range-picker-tailwind3/rdrp-styles.css";
+```
 
 ## Configuração do vento favorável
 
@@ -99,13 +103,3 @@ Consulte [Tipos sem cabeça](/docs/headless/types/common-types) para definiçõe
 - [Componentes compostos](/docs/tailwind3/customization/overview) — Personalize a estrutura interna
 - [Substituição de tema](/docs/tailwind3/customization/theme-override) — Personalize as cores do tema
 - [Modo escuro](/docs/tailwind3/customization/dark-mode) — Suporte para tema escuro
-
-## Comprovação e redefinição do Tailwind
-
-Este pacote pressupõe que seu projeto tenha o Tailwind CSS Preflight habilitado (que é o padrão).
-Se o seu ambiente desabilitar o Preflight (por exemplo, Docusaurus, alguns Micro Frontends), os estilos dos botões poderão falhar.
-Nesse caso, importe o `rdrp-reset.css` fornecido para inicializar manualmente os estilos dos botões:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-reset.css";
-```

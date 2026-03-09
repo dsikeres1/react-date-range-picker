@@ -18,7 +18,11 @@ The Tailwind v3 package provides date picker components styled with Tailwind CSS
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-No additional CSS import is needed. The components use Tailwind utility classes directly.
+Import the component styles in your app entry point:
+
+```tsx
+import "react-date-range-picker-tailwind3/rdrp-styles.css";
+```
 
 ## Tailwind Configuration
 
@@ -99,13 +103,3 @@ See [Headless Types](/docs/headless/types/common-types) for detailed type defini
 - [Compound Components](/docs/tailwind3/customization/overview) — Customize internal structure
 - [Theme Override](/docs/tailwind3/customization/theme-override) — Customize theme colors
 - [Dark Mode](/docs/tailwind3/customization/dark-mode) — Dark theme support
-
-## Tailwind Preflight & Reset
-
-This package assumes your project has Tailwind CSS Preflight enabled (which is the default).
-If your environment disables Preflight (e.g., Docusaurus, some Micro Frontends), the button styles may break.
-In that case, import the provided `rdrp-reset.css` to manually initialize the button styles:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-reset.css";
-```

@@ -10,7 +10,7 @@ export const NextButton = forwardRef<HTMLButtonElement, NavButtonProps>(
       <button
         ref={ref}
         type="button"
-        className={cn(className)}
+        className={cn("rdrp-header-nav-button", className)}
         onClick={handleNextMonth}
         aria-label={locale.nextMonthLabel}
       >

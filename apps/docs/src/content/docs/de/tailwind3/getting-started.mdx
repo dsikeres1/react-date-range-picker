@@ -18,7 +18,11 @@ Das Tailwind v3-Paket stellt Datumsauswahlkomponenten bereit, die mit Tailwind C
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-Es ist kein zusätzlicher CSS-Import erforderlich. Die Komponenten nutzen Tailwind-Dienstprogrammklassen direkt.
+Importieren Sie die Komponentenstile in Ihrem App-Einstiegspunkt:
+
+```tsx
+import "react-date-range-picker-tailwind3/rdrp-styles.css";
+```
 
 ## Rückenwind-Konfiguration
 
@@ -99,13 +103,3 @@ Detaillierte Typdefinitionen finden Sie unter [Headless-Typen](/docs/headless/ty
 - [Zusammengesetzte Komponenten](/docs/tailwind3/customization/overview) – Passen Sie die interne Struktur an
 - [Theme Override](/docs/tailwind3/customization/theme-override) – Theme-Farben anpassen
 - [Dunkler Modus](/docs/tailwind3/customization/dark-mode) – Unterstützung für dunkle Themen
-
-## Rückenwind Preflight & Reset
-
-Dieses Paket setzt voraus, dass in Ihrem Projekt Tailwind CSS Preflight aktiviert ist (was die Standardeinstellung ist).
-Wenn Ihre Umgebung Preflight deaktiviert (z. B. Docusaurus, einige Micro-Frontends), können die Schaltflächenstile fehlerhaft sein.
-Importieren Sie in diesem Fall die bereitgestellte Datei „rdrp-reset.css", um die Schaltflächenstile manuell zu initialisieren:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-reset.css";
-```

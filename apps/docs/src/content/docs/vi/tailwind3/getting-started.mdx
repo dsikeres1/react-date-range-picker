@@ -18,7 +18,11 @@ Gói Tailwind v3 cung cấp các thành phần bộ chọn ngày được tạo 
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-Không cần nhập thêm CSS. Các thành phần sử dụng trực tiếp các lớp tiện ích của Tailwind.
+Nhập các kiểu thành phần tại điểm đầu vào của ứng dụng:
+
+```tsx
+import "react-date-range-picker-tailwind3/rdrp-styles.css";
+```
 
 ## Cấu hình Tailwind
 
@@ -99,13 +103,3 @@ Xem [Các loại Headless](/docs/headless/types/common-types) để biết đị
 - [Compound Components](/docs/tailwind3/customization/overview) — Tùy chỉnh cấu trúc bên trong
 - [Theme Override](/docs/tailwind3/customization/theme-override) — Tùy chỉnh màu sắc chủ đề
 - [Dark Mode](/docs/tailwind3/customization/dark-mode) — Hỗ trợ chủ đề tối
-
-## Tailwind Preflight & Reset
-
-Gói này giả định rằng dự án của bạn đã bật Tailwind CSS Preflight (đây là mặc định).
-Nếu môi trường của bạn tắt Preflight (ví dụ: Docusaurus, một số Micro Frontend), các kiểu nút có thể bị hỏng.
-Trong trường hợp đó, hãy nhập tệp `rdrp-reset.css` được cung cấp để khởi tạo thủ công các kiểu nút:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-reset.css";
-```

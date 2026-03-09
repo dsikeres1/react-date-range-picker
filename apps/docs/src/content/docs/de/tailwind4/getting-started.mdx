@@ -18,43 +18,57 @@ Das Tailwind v4-Paket bietet Datumsauswahl-Komponenten, die mit Tailwind CSS v4 
 
 <PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-Importieren Sie die Standard-Theme-Tokens (überspringen Sie dies, wenn Ihr Projekt sie bereits definiert, z. B. shadcn/ui):
+Importieren Sie die Komponenten-Stile in Ihrer Haupt-CSS-Datei:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+Wenn Ihr Projekt noch **keine** semantischen Design-Tokens definiert (z. B. shadcn/ui-Projekte haben diese bereits), importieren Sie auch das Standard-Theme:
 
 ```css
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
-## Tailwind Preflight & Reset
+### shadcn/ui-Projekte
 
-Dieses Paket setzt voraus, dass in Ihrem Projekt Tailwind CSS Preflight aktiviert ist (was die Standardeinstellung ist).
-Wenn Ihre Umgebung Preflight deaktiviert (z. B. Docusaurus, einige Micro-Frontends), können die Button-Stile fehlerhaft dargestellt werden.
-In diesem Fall importieren Sie die bereitgestellte `rdrp-reset.css`, um die Button-Stile manuell zu initialisieren:
+shadcn/ui definiert die benötigten Tokens bereits. Sie benötigen nur die Komponenten-Stile:
 
-```tsx
-import "react-date-range-picker-tailwind4/rdrp-reset.css";
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### Eigenständige Tailwind v4-Projekte
+
+Für Projekte ohne shadcn/ui importieren Sie sowohl die Theme-Tokens als auch die Komponenten-Stile:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
 ## Semantische Tokens
 
-Die Komponenten verwenden semantische CSS-Variablen für das Theming. Definieren Sie diese in Ihrem CSS:
+Die Komponenten verwenden intern `--rdrp-*` CSS Custom Properties, die über `var()` mit Fallback-Werten auf Tailwind v4 / shadcn semantische Tokens abgebildet werden. Um die Zuordnung anzupassen, überschreiben Sie die `--rdrp-*`-Variablen in Ihrem CSS.
 
-```css
-@theme {
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0.004 285.823);
-  --color-primary: oklch(0.205 0.006 285.885);
-  --color-primary-foreground: oklch(0.985 0.001 285.823);
-  --color-muted: oklch(0.96 0.003 285.823);
-  --color-muted-foreground: oklch(0.556 0.01 285.823);
-  --color-accent: oklch(0.96 0.003 285.823);
-  --color-accent-foreground: oklch(0.205 0.006 285.885);
-  --color-border: oklch(0.922 0.004 285.823);
-  --color-input: oklch(0.922 0.004 285.823);
-  --color-ring: oklch(0.87 0.006 285.823);
-}
-```
+Die Datei `rdrp-theme.css` bietet eine Standard Slate + Sky-Palette mit diesen Tokens:
 
-Diese Tokens werden auf Klassen wie `bg-popover`, `text-foreground`, `border-border` usw. abgebildet.
+| Token                        | Verwendung                         |
+| ---------------------------- | ---------------------------------- |
+| `--color-background`         | Komponenten-Hintergründe           |
+| `--color-foreground`         | Textfarbe                          |
+| `--color-primary`            | Ausgewählte Daten, aktive Zustände |
+| `--color-primary-foreground` | Text auf Primärfarbe               |
+| `--color-muted-foreground`   | Abgedunkelter Text, Platzhalter    |
+| `--color-accent`             | Hover-Hintergründe                 |
+| `--color-border`             | Rahmenfarben                       |
+| `--color-ring`               | Fokusringfarbe                     |
 
 ## Schnellstart
 

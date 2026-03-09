@@ -65,19 +65,23 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
         data-slot="trigger"
         ref={ref}
         type="button"
-        className={cn(className)}
+        className={cn("rdrp-trigger", className)}
         onClick={context.handleToggle}
         aria-expanded={context.isOpen}
         aria-haspopup="dialog"
       >
-        <span className={context.displayValue ? undefined : cn(placeholderClassName)}>
+        <span
+          className={
+            context.displayValue ? undefined : cn("rdrp-trigger-placeholder", placeholderClassName)
+          }
+        >
           {context.displayValue || placeholder || context.placeholder || context.locale.placeholder}
         </span>
         {context.hasValue && !context.required && (
           <span
             role="button"
             tabIndex={0}
-            className={cn(clearClassName)}
+            className={cn("rdrp-trigger-clear", clearClassName)}
             aria-label={context.locale.clear}
             onClick={handleClearClick}
             onKeyDown={handleClearKeyDown}

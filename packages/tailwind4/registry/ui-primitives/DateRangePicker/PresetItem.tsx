@@ -26,7 +26,12 @@ export const PresetItem = forwardRef<HTMLButtonElement, PresetItemProps>(
       <button
         ref={ref}
         type="button"
-        className={cn(className, isActive && activeClassName)}
+        className={cn(
+          "rdrp-preset-button",
+          className,
+          isActive && "rdrp-preset-button-active",
+          isActive && activeClassName,
+        )}
         onClick={() => handlePresetClick?.(preset)}
       >
         {children || preset.label}

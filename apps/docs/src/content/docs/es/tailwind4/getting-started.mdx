@@ -18,43 +18,57 @@ El paquete Tailwind v4 proporciona componentes de selector de fecha estilizados 
 
 <PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-Importa los tokens del tema predeterminado (omite esto si tu proyecto ya los define, por ejemplo, shadcn/ui):
+Importa los estilos de los componentes en tu archivo CSS principal:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+Si tu proyecto aún **no** define tokens de diseño semánticos (por ejemplo, los proyectos shadcn/ui ya los tienen), importa también el tema predeterminado:
 
 ```css
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
-## Tailwind Preflight & Reset
+### Proyectos shadcn/ui
 
-Este paquete asume que tu proyecto tiene Tailwind CSS Preflight habilitado (que es el predeterminado).
-Si tu entorno deshabilita Preflight (por ejemplo, Docusaurus, algunos Micro Frontends), los estilos de los botones pueden romperse.
-En ese caso, importa el `rdrp-reset.css` proporcionado para inicializar manualmente los estilos de los botones:
+shadcn/ui ya define los tokens necesarios. Solo necesitas los estilos de los componentes:
 
-```tsx
-import "react-date-range-picker-tailwind4/rdrp-reset.css";
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### Proyectos Tailwind v4 Independientes
+
+Para proyectos sin shadcn/ui, importa tanto los tokens del tema como los estilos de los componentes:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
 ## Tokens Semánticos
 
-Los componentes utilizan variables CSS semánticas para la tematización. Defínelas en tu CSS:
+Los componentes utilizan propiedades personalizadas CSS `--rdrp-*` internamente, que se mapean a tokens semánticos de Tailwind v4 / shadcn mediante `var()` con valores de respaldo. Si deseas personalizar el mapeo, sobrescribe las variables `--rdrp-*` en tu CSS.
 
-```css
-@theme {
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0.004 285.823);
-  --color-primary: oklch(0.205 0.006 285.885);
-  --color-primary-foreground: oklch(0.985 0.001 285.823);
-  --color-muted: oklch(0.96 0.003 285.823);
-  --color-muted-foreground: oklch(0.556 0.01 285.823);
-  --color-accent: oklch(0.96 0.003 285.823);
-  --color-accent-foreground: oklch(0.205 0.006 285.885);
-  --color-border: oklch(0.922 0.004 285.823);
-  --color-input: oklch(0.922 0.004 285.823);
-  --color-ring: oklch(0.87 0.006 285.823);
-}
-```
+El archivo `rdrp-theme.css` proporciona una paleta predeterminada Slate + Sky con estos tokens:
 
-Estos tokens se mapean a clases como `bg-popover`, `text-foreground`, `border-border`, etc.
+| Token                        | Uso                                    |
+| ---------------------------- | -------------------------------------- |
+| `--color-background`         | Fondos de los componentes              |
+| `--color-foreground`         | Color del texto                        |
+| `--color-primary`            | Fechas seleccionadas, estados activos  |
+| `--color-primary-foreground` | Texto sobre el color primario          |
+| `--color-muted-foreground`   | Texto atenuado, marcadores de posición |
+| `--color-accent`             | Fondos al pasar el ratón               |
+| `--color-border`             | Colores de borde                       |
+| `--color-ring`               | Color del anillo de enfoque            |
 
 ## Inicio Rápido
 

@@ -1,6 +1,6 @@
 {
   "name": "react-date-range-picker-tailwind4",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Date range picker for React with Tailwind CSS v4",
   "author": "DSikeres1",
   "repository": {
@@ -27,7 +27,8 @@
       }
     },
     "./rdrp-reset.css": "./rdrp-reset.css",
-    "./rdrp-theme.css": "./rdrp-theme.css"
+    "./rdrp-theme.css": "./rdrp-theme.css",
+    "./rdrp-styles.css": "./dist/rdrp-styles.css"
   },
   "license": "MIT",
   "files": [

@@ -1,5 +1,21 @@
 # react-date-range-picker-tailwind3
 
+## 0.2.0
+
+### Minor Changes
+
+- Unified CSS architecture: all packages now use `rdrp-*` semantic CSS classes + `--rdrp-*` CSS custom properties for styling, resolving Tailwind v4 `@layer utilities` cascade issues.
+  - **ui-primitives**: All DOM elements now output `rdrp-*` CSS class names (e.g. `rdrp-trigger`, `rdrp-day`, `rdrp-content`)
+  - **tailwind3/tailwind4**: New `rdrp-styles.css` CSS bundle with component styles, variables, and size overrides
+  - **All packages**: Unlayered CSS with class specificity ensures styles always win over framework defaults
+  - **Docs**: Updated Getting Started guides for all 15 languages with new import instructions
+  - **Registry**: Synced shadcn registry components with `rdrp-*` class additions
+
+### Patch Changes
+
+- Updated dependencies
+  - react-date-range-picker-headless@0.2.0
+
 ## 0.1.4
 
 ### Patch Changes

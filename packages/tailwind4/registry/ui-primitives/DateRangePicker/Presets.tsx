@@ -18,7 +18,7 @@ export const Presets = forwardRef<HTMLDivElement, PresetsProps>(
     if (presets.length === 0) return null;
 
     return (
-      <div ref={ref} className={cn(className)}>
+      <div ref={ref} className={cn("rdrp-presets-container", className)}>
         {children}
       </div>
     );

@@ -18,43 +18,57 @@ import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
 
 <PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-นำเข้าโทเค็นธีมเริ่มต้น (ข้ามขั้นตอนนี้หากโปรเจกต์ของคุณกำหนดไว้แล้ว เช่น shadcn/ui):
+นำเข้าสไตล์คอมโพเนนต์ในไฟล์ CSS หลักของคุณ:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+หากโปรเจกต์ของคุณ**ยังไม่ได้**กำหนดโทเค็นการออกแบบเชิงความหมาย (เช่น โปรเจกต์ shadcn/ui มีอยู่แล้ว) ให้นำเข้าธีมเริ่มต้นด้วย:
 
 ```css
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
-## Tailwind Preflight และ Reset
+### โปรเจกต์ shadcn/ui
 
-แพ็คเกจนี้ถือว่าโปรเจกต์ของคุณเปิดใช้งาน Tailwind CSS Preflight (ซึ่งเป็นค่าเริ่มต้น)
-หากสภาพแวดล้อมของคุณปิดใช้งาน Preflight (เช่น Docusaurus, Micro Frontends บางตัว) สไตล์ของปุ่มอาจเสียหาย
-ในกรณีนั้น ให้นำเข้าไฟล์ `rdrp-reset.css` ที่ให้มาเพื่อเริ่มต้นสไตล์ของปุ่มด้วยตนเอง:
+shadcn/ui กำหนดโทเค็นที่จำเป็นไว้แล้ว คุณต้องการแค่สไตล์คอมโพเนนต์:
 
-```tsx
-import "react-date-range-picker-tailwind4/rdrp-reset.css";
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### โปรเจกต์ Tailwind v4 แบบสแตนด์อโลน
+
+สำหรับโปรเจกต์ที่ไม่มี shadcn/ui ให้นำเข้าทั้งโทเค็นธีมและสไตล์คอมโพเนนต์:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
 ## โทเค็นเชิงความหมาย (Semantic Tokens)
 
-คอมโพเนนต์ใช้ตัวแปร CSS เชิงความหมายสำหรับการทำธีม กำหนดค่าได้ในไฟล์ CSS ของคุณ:
+คอมโพเนนต์ใช้ CSS custom properties `--rdrp-*` ภายใน ซึ่งจับคู่กับโทเค็นเชิงความหมายของ Tailwind v4 / shadcn ผ่าน `var()` พร้อมค่าสำรอง หากต้องการปรับแต่งการจับคู่ ให้แทนที่ตัวแปร `--rdrp-*` ในไฟล์ CSS ของคุณ
 
-```css
-@theme {
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0.004 285.823);
-  --color-primary: oklch(0.205 0.006 285.885);
-  --color-primary-foreground: oklch(0.985 0.001 285.823);
-  --color-muted: oklch(0.96 0.003 285.823);
-  --color-muted-foreground: oklch(0.556 0.01 285.823);
-  --color-accent: oklch(0.96 0.003 285.823);
-  --color-accent-foreground: oklch(0.205 0.006 285.885);
-  --color-border: oklch(0.922 0.004 285.823);
-  --color-input: oklch(0.922 0.004 285.823);
-  --color-ring: oklch(0.87 0.006 285.823);
-}
-```
+ไฟล์ `rdrp-theme.css` ให้พาเลตเริ่มต้น Slate + Sky พร้อมโทเค็นเหล่านี้:
 
-โทเค็นเหล่านี้จะจับคู่กับคลาสต่างๆ เช่น `bg-popover`, `text-foreground`, `border-border` เป็นต้น
+| โทเค็น                       | การใช้งาน                 |
+| ---------------------------- | ------------------------- |
+| `--color-background`         | พื้นหลังคอมโพเนนต์        |
+| `--color-foreground`         | สีข้อความ                 |
+| `--color-primary`            | วันที่เลือก, สถานะแอ็คทีฟ |
+| `--color-primary-foreground` | ข้อความบนสีหลัก           |
+| `--color-muted-foreground`   | ข้อความจาง, ตัวยึดตำแหน่ง |
+| `--color-accent`             | พื้นหลังเมื่อเลื่อนเมาส์  |
+| `--color-border`             | สีขอบ                     |
+| `--color-ring`               | สีวงแหวนโฟกัส             |
 
 ## เริ่มต้นอย่างรวดเร็ว
 

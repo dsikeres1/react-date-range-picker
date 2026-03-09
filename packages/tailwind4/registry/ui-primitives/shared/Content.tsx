@@ -71,7 +71,13 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       return (
         <div
           ref={mergeRefs(forwardedRef, popupRef, localPopupRef)}
-          className={cn(className, inlineClassName)}
+          className={cn(
+            "rdrp-root",
+            "rdrp-content",
+            "rdrp-content-inline",
+            className,
+            inlineClassName,
+          )}
           onKeyDown={handleKeyDown}
           tabIndex={0}
           role="group"
@@ -89,7 +95,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
           <div
             ref={mergeRefs(forwardedRef, refs.setFloating, popupRef, localPopupRef)}
             style={floatingStyles}
-            className={cn(className)}
+            className={cn("rdrp-root", "rdrp-content", className)}
             onKeyDown={handleKeyDown}
             tabIndex={0}
             role="dialog"

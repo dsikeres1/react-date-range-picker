@@ -18,43 +18,57 @@ Gói Tailwind v4 cung cấp các thành phần chọn ngày được tạo kiể
 
 <PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-Nhập các token giao diện mặc định (bỏ qua bước này nếu dự án của bạn đã định nghĩa chúng, ví dụ shadcn/ui):
+Nhập các kiểu dáng thành phần trong tệp CSS chính của bạn:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+Nếu dự án của bạn **chưa** định nghĩa các token thiết kế ngữ nghĩa (ví dụ: các dự án shadcn/ui đã có sẵn), hãy nhập thêm giao diện mặc định:
 
 ```css
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
-## Tailwind Preflight & Reset
+### Dự án shadcn/ui
 
-Gói này giả định dự án của bạn đã bật Tailwind CSS Preflight (đây là mặc định).
-Nếu môi trường của bạn tắt Preflight (ví dụ: Docusaurus, một số Micro Frontends), kiểu dáng của nút có thể bị hỏng.
-Trong trường hợp đó, hãy nhập `rdrp-reset.css` được cung cấp để khởi tạo kiểu dáng nút theo cách thủ công:
+shadcn/ui đã định nghĩa sẵn các token cần thiết. Bạn chỉ cần các kiểu dáng thành phần:
 
-```tsx
-import "react-date-range-picker-tailwind4/rdrp-reset.css";
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### Dự án Tailwind v4 độc lập
+
+Đối với các dự án không có shadcn/ui, hãy nhập cả token giao diện và kiểu dáng thành phần:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
 ## Token ngữ nghĩa
 
-Các thành phần sử dụng các biến CSS ngữ nghĩa để tạo giao diện. Hãy định nghĩa chúng trong CSS của bạn:
+Các thành phần sử dụng nội bộ các thuộc tính CSS tùy chỉnh `--rdrp-*`, được ánh xạ tới các token ngữ nghĩa Tailwind v4 / shadcn thông qua `var()` với giá trị dự phòng. Nếu bạn muốn tùy chỉnh ánh xạ, hãy ghi đè các biến `--rdrp-*` trong CSS của bạn.
 
-```css
-@theme {
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0.004 285.823);
-  --color-primary: oklch(0.205 0.006 285.885);
-  --color-primary-foreground: oklch(0.985 0.001 285.823);
-  --color-muted: oklch(0.96 0.003 285.823);
-  --color-muted-foreground: oklch(0.556 0.01 285.823);
-  --color-accent: oklch(0.96 0.003 285.823);
-  --color-accent-foreground: oklch(0.205 0.006 285.885);
-  --color-border: oklch(0.922 0.004 285.823);
-  --color-input: oklch(0.922 0.004 285.823);
-  --color-ring: oklch(0.87 0.006 285.823);
-}
-```
+Tệp `rdrp-theme.css` cung cấp bảng màu mặc định Slate + Sky với các token sau:
 
-Các token này ánh xạ tới các lớp như `bg-popover`, `text-foreground`, `border-border`, v.v.
+| Token                        | Công dụng                            |
+| ---------------------------- | ------------------------------------ |
+| `--color-background`         | Nền thành phần                       |
+| `--color-foreground`         | Màu chữ                              |
+| `--color-primary`            | Ngày được chọn, trạng thái hoạt động |
+| `--color-primary-foreground` | Chữ trên màu chính                   |
+| `--color-muted-foreground`   | Chữ mờ, chỗ giữ chỗ                  |
+| `--color-accent`             | Nền khi di chuột                     |
+| `--color-border`             | Màu viền                             |
+| `--color-ring`               | Màu vòng tập trung                   |
 
 ## Bắt đầu nhanh
 

@@ -18,43 +18,57 @@ The Tailwind v4 package provides date picker components styled with Tailwind CSS
 
 <PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-Import the default theme tokens (skip this if your project already defines them, e.g. shadcn/ui):
+Import the component styles in your main CSS file:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+If your project does **not** already define semantic design tokens (e.g. shadcn/ui projects already have them), also import the default theme:
 
 ```css
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
-## Tailwind Preflight & Reset
+### shadcn/ui Projects
 
-This package assumes your project has Tailwind CSS Preflight enabled (which is the default).
-If your environment disables Preflight (e.g., Docusaurus, some Micro Frontends), the button styles may break.
-In that case, import the provided `rdrp-reset.css` to manually initialize the button styles:
+shadcn/ui already defines the required tokens. You only need the component styles:
 
-```tsx
-import "react-date-range-picker-tailwind4/rdrp-reset.css";
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### Standalone Tailwind v4 Projects
+
+For projects without shadcn/ui, import both the theme tokens and component styles:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
 ## Semantic Tokens
 
-The components use semantic CSS variables for theming. Define them in your CSS:
+The components use `--rdrp-*` CSS custom properties internally, which map to Tailwind v4 / shadcn semantic tokens via `var()` with fallback values. If you want to customize the mapping, override the `--rdrp-*` variables in your CSS.
 
-```css
-@theme {
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0.004 285.823);
-  --color-primary: oklch(0.205 0.006 285.885);
-  --color-primary-foreground: oklch(0.985 0.001 285.823);
-  --color-muted: oklch(0.96 0.003 285.823);
-  --color-muted-foreground: oklch(0.556 0.01 285.823);
-  --color-accent: oklch(0.96 0.003 285.823);
-  --color-accent-foreground: oklch(0.205 0.006 285.885);
-  --color-border: oklch(0.922 0.004 285.823);
-  --color-input: oklch(0.922 0.004 285.823);
-  --color-ring: oklch(0.87 0.006 285.823);
-}
-```
+The `rdrp-theme.css` file provides a default Slate + Sky palette with these tokens:
 
-These tokens map to classes like `bg-popover`, `text-foreground`, `border-border`, etc.
+| Token                        | Usage                         |
+| ---------------------------- | ----------------------------- |
+| `--color-background`         | Component backgrounds         |
+| `--color-foreground`         | Text color                    |
+| `--color-primary`            | Selected dates, active states |
+| `--color-primary-foreground` | Text on primary color         |
+| `--color-muted-foreground`   | Dimmed text, placeholders     |
+| `--color-accent`             | Hover backgrounds             |
+| `--color-border`             | Border colors                 |
+| `--color-ring`               | Focus ring color              |
 
 ## Quick Start
 

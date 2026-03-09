@@ -49,30 +49,23 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
     if (!cal) return null;
 
     return (
-      <div ref={ref} className={cn(className)}>
-        <div className={cn(weekdaysClassName)} role="row">
+      <div ref={ref} className={cn("rdrp-grid-panel", className)}>
+        <div className={cn("rdrp-weekdays", weekdaysClassName)} role="row">
           {locale.weekdays.map((wd) => (
-            <div key={wd} className={cn(weekdayClassName)} role="columnheader">
+            <div key={wd} className={cn("rdrp-weekday", weekdayClassName)} role="columnheader">
               {wd}
             </div>
           ))}
         </div>
-        <div
-          className={
-            cn(
-              className?.includes("grid") ? undefined : "grid grid-cols-7",
-            ) /* fallback if not styled correctly */
-          }
-          role="grid"
-        >
+        <div className={cn("rdrp-grid")} role="grid">
           {cal.weeks.map((week, wIdx) => (
-            <div key={wIdx} className={cn(weekClassName)} role="row">
+            <div key={wIdx} className={cn("rdrp-week", weekClassName)} role="row">
               {week.map((date, dIdx) => {
                 if (!date) {
                   return (
                     <div
                       key={`empty-${wIdx}-${dIdx}`}
-                      className={cn(dayClasses.dayEmptyClassName)}
+                      className={cn("rdrp-day-empty", dayClasses.dayEmptyClassName)}
                     />
                   );
                 }

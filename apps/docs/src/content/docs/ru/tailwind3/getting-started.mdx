@@ -18,7 +18,11 @@ import Tailwind3BasicSource from "@examples/tailwind3/DatePicker/Basic.tsx?raw";
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-Дополнительный импорт CSS не требуется. Компоненты напрямую используют утилитарные классы Tailwind.
+Импортируйте стили компонентов в точке входа вашего приложения:
+
+```tsx
+import "react-date-range-picker-tailwind3/rdrp-styles.css";
+```
 
 ## Конфигурация Tailwind
 
@@ -99,13 +103,3 @@ import type {
 - [Compound Components](/docs/tailwind3/customization/overview) — Кастомизация внутренней структуры
 - [Theme Override](/docs/tailwind3/customization/theme-override) — Кастомизация цветов темы
 - [Dark Mode](/docs/tailwind3/customization/dark-mode) — Поддержка темного режима
-
-## Tailwind Preflight и сброс стилей
-
-Этот пакет предполагает, что в вашем проекте включен Tailwind CSS Preflight (что является поведением по умолчанию).
-Если в вашей среде Preflight отключен (например, в Docusaurus или некоторых Micro Frontend'ах), стили кнопок могут нарушиться.
-В этом случае импортируйте предоставленный файл `rdrp-reset.css`, чтобы вручную инициализировать стили кнопок:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-reset.css";
-```

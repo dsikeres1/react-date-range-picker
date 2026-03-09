@@ -18,7 +18,11 @@ Pakiet Tailwind v3 zawiera komponenty selektora dat stylizowane na klasy narzęd
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-Nie jest potrzebny żaden dodatkowy import CSS. Komponenty korzystają bezpośrednio z klas narzędzi Tailwind.
+Zaimportuj style komponentów w punkcie wejścia aplikacji:
+
+```tsx
+import "react-date-range-picker-tailwind3/rdrp-styles.css";
+```
 
 ## Konfiguracja wiatru tylnego
 
@@ -99,13 +103,3 @@ Szczegółowe definicje typów znajdziesz w [Typach bezgłowych](/docs/headless/
 - [Komponenty złożone](/docs/tailwind3/customization/overview) — Dostosuj strukturę wewnętrzną
 - [Theme Override](/docs/tailwind3/customization/theme-override) — Dostosuj kolory motywu
 - [Tryb ciemny](/docs/tailwind3/customization/dark-mode) — Obsługa motywu ciemnego
-
-## Lot wstępny i resetowanie tylnego wiatru
-
-Ten pakiet zakłada, że ​​w Twoim projekcie włączona jest funkcja Preflight Tailwind CSS (co jest ustawieniem domyślnym).
-Jeśli Twoje środowisko wyłącza Preflight (np. Docusaurus, niektóre Micro Frontendy), style przycisków mogą ulec uszkodzeniu.
-W takim przypadku zaimportuj dostarczony plik `rdrp-reset.css`, aby ręcznie zainicjować style przycisków:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-reset.css";
-```

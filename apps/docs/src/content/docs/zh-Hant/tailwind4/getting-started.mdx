@@ -18,43 +18,57 @@ Tailwind v4 套件提供了使用 Tailwind CSS v4 功能類別和語意化設計
 
 <PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-匯入預設主題權杖（如果您的專案已經定義了它們，請跳過此步驟，例如 shadcn/ui）：
+在您的主 CSS 檔案中匯入元件樣式：
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+如果您的專案**尚未**定義語意化設計權杖（例如 shadcn/ui 專案已經包含它們），還需匯入預設主題：
 
 ```css
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
-## Tailwind Preflight 與重設
+### shadcn/ui 專案
 
-此套件假設您的專案已啟用 Tailwind CSS Preflight (這是預設值)。
-如果您的環境停用 Preflight (例如 Docusaurus、某些微前端)，按鈕樣式可能會損壞。
-在這種情況下，匯入提供的 `rdrp-reset.css` 來手動初始化按鈕樣式：
+shadcn/ui 已經定義了所需的權杖。您只需要元件樣式：
 
-```tsx
-import "react-date-range-picker-tailwind4/rdrp-reset.css";
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### 獨立 Tailwind v4 專案
+
+對於沒有 shadcn/ui 的專案，需要同時匯入主題權杖和元件樣式：
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
 ## 語意化權杖
 
-元件使用語意化的 CSS 變數來進行主題化。在您的 CSS 中定義它們：
+元件內部使用 `--rdrp-*` CSS 自訂屬性，透過 `var()` 帶有後備值對應到 Tailwind v4 / shadcn 語意化權杖。如果您想自訂對應方式，請在 CSS 中覆寫 `--rdrp-*` 變數。
 
-```css
-@theme {
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0.004 285.823);
-  --color-primary: oklch(0.205 0.006 285.885);
-  --color-primary-foreground: oklch(0.985 0.001 285.823);
-  --color-muted: oklch(0.96 0.003 285.823);
-  --color-muted-foreground: oklch(0.556 0.01 285.823);
-  --color-accent: oklch(0.96 0.003 285.823);
-  --color-accent-foreground: oklch(0.205 0.006 285.885);
-  --color-border: oklch(0.922 0.004 285.823);
-  --color-input: oklch(0.922 0.004 285.823);
-  --color-ring: oklch(0.87 0.006 285.823);
-}
-```
+`rdrp-theme.css` 檔案提供了帶有以下權杖的預設 Slate + Sky 調色盤：
 
-這些權杖對應到像是 `bg-popover`、`text-foreground`、`border-border` 等類別。
+| 權杖                         | 用途                 |
+| ---------------------------- | -------------------- |
+| `--color-background`         | 元件背景             |
+| `--color-foreground`         | 文字顏色             |
+| `--color-primary`            | 選取的日期、啟用狀態 |
+| `--color-primary-foreground` | 主要顏色上的文字     |
+| `--color-muted-foreground`   | 淡化文字、佔位符     |
+| `--color-accent`             | 懸停背景             |
+| `--color-border`             | 邊框顏色             |
+| `--color-ring`               | 聚焦環顏色           |
 
 ## 快速入門
 

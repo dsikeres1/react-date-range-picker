@@ -24,7 +24,11 @@ const Inner = forwardRef<HTMLDivElement, InnerProps>(
   ({ className, children, name, value }, ref) => {
     const context = usePickerContext();
     return (
-      <div ref={mergeRefs(ref, context.containerRef)} className={className} data-slot="root">
+      <div
+        ref={mergeRefs(ref, context.containerRef)}
+        className={`rdrp-root${className ? ` ${className}` : ""}`}
+        data-slot="root"
+      >
         {name && (
           <input type="hidden" name={name} value={value ? formatBasic(value, "HH:mm:ss") : ""} />
         )}
@@ -41,7 +45,12 @@ export const TimePickerRoot = forwardRef<HTMLDivElement, TimePickerRootProps>(
 
     return (
       <StandaloneTimePickerProvider {...options}>
-        <Inner ref={ref} className={cn(className)} name={options.name} value={options.value}>
+        <Inner
+          ref={ref}
+          className={cn("rdrp-time-picker", className)}
+          name={options.name}
+          value={options.value}
+        >
           {children}
         </Inner>
       </StandaloneTimePickerProvider>

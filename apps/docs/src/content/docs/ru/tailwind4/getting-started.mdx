@@ -18,43 +18,57 @@ import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
 
 <PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-Импортируйте токены темы по умолчанию (пропустите это, если ваш проект уже определяет их, например shadcn/ui):
+Импортируйте стили компонентов в ваш основной CSS-файл:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+Если ваш проект ещё **не** определяет семантические дизайн-токены (например, проекты shadcn/ui уже их содержат), также импортируйте тему по умолчанию:
 
 ```css
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
-## Предполетная подготовка и сброс при попутном ветре
+### Проекты shadcn/ui
 
-В этом пакете предполагается, что в вашем проекте включена предварительная проверка CSS Tailwind (по умолчанию).
-Если в вашей среде отключена предварительная проверка (например, Docusaurus, некоторые микроинтерфейсы), стили кнопок могут не работать.
-В этом случае импортируйте предоставленный `rdrp-reset.css`, чтобы вручную инициализировать стили кнопок:
+shadcn/ui уже определяет необходимые токены. Вам нужны только стили компонентов:
 
-```tsx
-import "react-date-range-picker-tailwind4/rdrp-reset.css";
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### Автономные проекты Tailwind v4
+
+Для проектов без shadcn/ui импортируйте как токены темы, так и стили компонентов:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
 ## Семантические токены
 
-Компоненты используют семантические переменные CSS для оформления тем. Определите их в своем CSS:
+Компоненты используют внутренние пользовательские CSS-свойства `--rdrp-*`, которые сопоставляются с семантическими токенами Tailwind v4 / shadcn через `var()` с резервными значениями. Если вы хотите настроить сопоставление, переопределите переменные `--rdrp-*` в вашем CSS.
 
-```css
-@theme {
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0.004 285.823);
-  --color-primary: oklch(0.205 0.006 285.885);
-  --color-primary-foreground: oklch(0.985 0.001 285.823);
-  --color-muted: oklch(0.96 0.003 285.823);
-  --color-muted-foreground: oklch(0.556 0.01 285.823);
-  --color-accent: oklch(0.96 0.003 285.823);
-  --color-accent-foreground: oklch(0.205 0.006 285.885);
-  --color-border: oklch(0.922 0.004 285.823);
-  --color-input: oklch(0.922 0.004 285.823);
-  --color-ring: oklch(0.87 0.006 285.823);
-}
-```
+Файл `rdrp-theme.css` предоставляет палитру Slate + Sky по умолчанию со следующими токенами:
 
-Эти токены соответствуют таким классам, как «bg-popover», «text-foreground», «border-border» и т. д.
+| Токен                        | Использование                      |
+| ---------------------------- | ---------------------------------- |
+| `--color-background`         | Фоны компонентов                   |
+| `--color-foreground`         | Цвет текста                        |
+| `--color-primary`            | Выбранные даты, активные состояния |
+| `--color-primary-foreground` | Текст на основном цвете            |
+| `--color-muted-foreground`   | Приглушённый текст, заполнители    |
+| `--color-accent`             | Фоны при наведении                 |
+| `--color-border`             | Цвета границ                       |
+| `--color-ring`               | Цвет кольца фокуса                 |
 
 ## Быстрый старт
 

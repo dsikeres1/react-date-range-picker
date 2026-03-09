@@ -8,7 +8,12 @@ export const CancelButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
     const cn = cnFn ?? ((...args: unknown[]) => args.filter(Boolean).join(" "));
 
     return (
-      <button ref={ref} type="button" className={cn(className)} onClick={handleCancel}>
+      <button
+        ref={ref}
+        type="button"
+        className={cn("rdrp-footer-button", className)}
+        onClick={handleCancel}
+      >
         {children || locale.cancel}
       </button>
     );

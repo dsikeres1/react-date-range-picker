@@ -8,7 +8,12 @@ export const TodayButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
     const cn = cnFn ?? ((...args: unknown[]) => args.filter(Boolean).join(" "));
 
     return (
-      <button ref={ref} type="button" className={cn(className)} onClick={handleGoToToday}>
+      <button
+        ref={ref}
+        type="button"
+        className={cn("rdrp-footer-button", className)}
+        onClick={handleGoToToday}
+      >
         {children || locale.today}
       </button>
     );

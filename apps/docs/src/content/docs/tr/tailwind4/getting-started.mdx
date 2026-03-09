@@ -18,43 +18,57 @@ Tailwind v4 paketi, Tailwind CSS v4 yardımcı sınıfları ve anlamsal tasarım
 
 <PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-Varsayılan tema belirteçlerini içe aktarın (projeniz bunları zaten tanımlıyorsa bunu atlayın, örneğin shadcn/ui):
+Bileşen stillerini ana CSS dosyanıza aktarın:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+Projeniz henüz anlamsal tasarım belirteçlerini tanımlamıyorsa (örneğin shadcn/ui projeleri bunlara zaten sahiptir), varsayılan temayı da içe aktarın:
 
 ```css
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
-## Tailwind Preflight ve Sıfırlama
+### shadcn/ui Projeleri
 
-Bu paket, projenizde Tailwind CSS Preflight'ın (varsayılan olan) etkin olduğunu varsayar.
-Ortamınız Preflight'ı devre dışı bırakırsa (ör. Docusaurus, bazı Mikro Ön Uçlar), düğme stilleri bozulabilir.
-Bu durumda, düğme stillerini manuel olarak başlatmak için sağlanan `rdrp-reset.css` dosyasını içe aktarın:
+shadcn/ui gerekli belirteçleri zaten tanımlar. Yalnızca bileşen stillerine ihtiyacınız var:
 
-```tsx
-import "react-date-range-picker-tailwind4/rdrp-reset.css";
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### Bağımsız Tailwind v4 Projeleri
+
+shadcn/ui olmayan projeler için hem tema belirteçlerini hem de bileşen stillerini içe aktarın:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
 ## Anlamsal Belirteçler
 
-Bileşenler, tema için anlamsal CSS değişkenleri kullanır. Bunları CSS'nizde tanımlayın:
+Bileşenler dahili olarak `--rdrp-*` CSS özel özelliklerini kullanır. Bunlar `var()` ile yedek değerler aracılığıyla Tailwind v4 / shadcn anlamsal belirteçlerine eşlenir. Eşlemeyi özelleştirmek isterseniz CSS'nizde `--rdrp-*` değişkenlerini geçersiz kılın.
 
-```css
-@theme {
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0.004 285.823);
-  --color-primary: oklch(0.205 0.006 285.885);
-  --color-primary-foreground: oklch(0.985 0.001 285.823);
-  --color-muted: oklch(0.96 0.003 285.823);
-  --color-muted-foreground: oklch(0.556 0.01 285.823);
-  --color-accent: oklch(0.96 0.003 285.823);
-  --color-accent-foreground: oklch(0.205 0.006 285.885);
-  --color-border: oklch(0.922 0.004 285.823);
-  --color-input: oklch(0.922 0.004 285.823);
-  --color-ring: oklch(0.87 0.006 285.823);
-}
-```
+`rdrp-theme.css` dosyası bu belirteçlerle varsayılan bir Slate + Sky paleti sağlar:
 
-Bu belirteçler `bg-popover`, `text-foreground`, `border-border` gibi sınıflarla eşleşir.
+| Belirteç                     | Kullanım                        |
+| ---------------------------- | ------------------------------- |
+| `--color-background`         | Bileşen arka planları           |
+| `--color-foreground`         | Metin rengi                     |
+| `--color-primary`            | Seçili tarihler, aktif durumlar |
+| `--color-primary-foreground` | Birincil renk üzerindeki metin  |
+| `--color-muted-foreground`   | Soluk metin, yer tutucular      |
+| `--color-accent`             | Üzerine gelme arka planları     |
+| `--color-border`             | Kenarlık renkleri               |
+| `--color-ring`               | Odak halkası rengi              |
 
 ## Hızlı Başlangıç
 

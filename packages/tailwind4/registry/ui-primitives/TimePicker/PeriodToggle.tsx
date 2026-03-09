@@ -16,7 +16,7 @@ export const TimePickerPeriodToggle = forwardRef<HTMLButtonElement, TimePickerPe
       <button
         ref={ref}
         type="button"
-        className={cn(className)}
+        className={cn("rdrp-time-period-button", className)}
         onClick={() => handlePeriodChange(tempPeriod === "AM" ? "PM" : "AM")}
       >
         {children || (tempPeriod === "AM" ? locale.am : locale.pm)}

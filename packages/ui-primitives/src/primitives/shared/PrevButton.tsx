@@ -16,7 +16,7 @@ export const PrevButton = forwardRef<HTMLButtonElement, NavButtonProps>(
         data-slot="nav-button"
         ref={ref}
         type="button"
-        className={cn(className)}
+        className={cn("rdrp-header-nav-button", className)}
         onClick={handlePrevMonth}
         aria-label={locale.prevMonthLabel}
       >

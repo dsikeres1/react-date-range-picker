@@ -50,7 +50,7 @@ export const TimePickerRoot = forwardRef<HTMLDivElement, TimePickerRootProps>(
       <StandaloneTimePickerProvider {...options}>
         <Inner
           ref={ref}
-          className={cn(className)}
+          className={cn("rdrp-time-picker", className)}
           style={style}
           name={options.name}
           value={options.value}

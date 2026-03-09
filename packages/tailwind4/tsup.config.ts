@@ -7,4 +7,5 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   external: ["react", "react-dom", "react-date-range-picker-headless", "@floating-ui/react"],
+  onSuccess: "node scripts/bundle-css.mjs",
 });

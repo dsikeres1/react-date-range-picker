@@ -20,9 +20,9 @@ export const Title = forwardRef<HTMLDivElement, TitleProps>(
 
     if (captionLayout === "dropdown") {
       return (
-        <div ref={ref} className={cn(className)}>
+        <div ref={ref} className={cn("rdrp-header-title", className)}>
           <select
-            className={cn(selectClassName)}
+            className={cn("rdrp-header-select", selectClassName)}
             value={monthObj.getMonth()}
             onChange={(e) => handleMonthSelect(Number(e.target.value), calendarIndex)}
             aria-label={locale.selectMonthLabel}
@@ -34,7 +34,7 @@ export const Title = forwardRef<HTMLDivElement, TitleProps>(
             ))}
           </select>
           <select
-            className={cn(selectClassName)}
+            className={cn("rdrp-header-select", selectClassName)}
             value={monthObj.getFullYear()}
             onChange={(e) => handleYearSelect(Number(e.target.value), calendarIndex)}
             aria-label={locale.selectYearLabel}
@@ -50,7 +50,7 @@ export const Title = forwardRef<HTMLDivElement, TitleProps>(
     }
 
     return (
-      <div ref={ref} className={cn(className)}>
+      <div ref={ref} className={cn("rdrp-header-title", className)}>
         {children || locale.formatMonthYear(monthObj)}
       </div>
     );

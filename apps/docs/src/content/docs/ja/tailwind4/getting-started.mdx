@@ -18,43 +18,57 @@ Tailwind v4パッケージは、Tailwind CSS v4のユーティリティクラス
 
 <PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-デフォルトのテーマトークンをインポートします（プロジェクトで既に定義されている場合はスキップしてください。例: shadcn/ui）：
+メインCSSファイルでコンポーネントスタイルをインポートしてください：
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+プロジェクトにセマンティックデザイントークンがまだ定義されて**いない**場合（例：shadcn/uiプロジェクトは既に含んでいます）、デフォルトテーマもインポートしてください：
 
 ```css
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
-## Tailwind Preflightとリセット
+### shadcn/ui プロジェクト
 
-このパッケージは、プロジェクトでTailwind CSS Preflightが有効になっていること（デフォルト）を前提としています。
-もしお使いの環境でPreflightが無効になっている場合（例：Docusaurus、一部のマイクロフロントエンド）、ボタンのスタイルが崩れる可能性があります。
-その場合は、提供されている`rdrp-reset.css`をインポートして、ボタンスタイルを手動で初期化してください：
+shadcn/uiは必要なトークンを既に定義しています。コンポーネントスタイルのみ必要です：
 
-```tsx
-import "react-date-range-picker-tailwind4/rdrp-reset.css";
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### スタンドアロンTailwind v4プロジェクト
+
+shadcn/uiなしのプロジェクトの場合、テーマトークンとコンポーネントスタイルの両方をインポートしてください：
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
 ## セマンティックトークン
 
-コンポーネントはテーマ設定のためにセマンティックCSS変数を使用します。CSSでこれらを定義してください：
+コンポーネントは内部的に`--rdrp-*` CSSカスタムプロパティを使用し、`var()`フォールバック値を通じてTailwind v4 / shadcnセマンティックトークンにマッピングされます。マッピングをカスタマイズするには、CSSで`--rdrp-*`変数をオーバーライドしてください。
 
-```css
-@theme {
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0.004 285.823);
-  --color-primary: oklch(0.205 0.006 285.885);
-  --color-primary-foreground: oklch(0.985 0.001 285.823);
-  --color-muted: oklch(0.96 0.003 285.823);
-  --color-muted-foreground: oklch(0.556 0.01 285.823);
-  --color-accent: oklch(0.96 0.003 285.823);
-  --color-accent-foreground: oklch(0.205 0.006 285.885);
-  --color-border: oklch(0.922 0.004 285.823);
-  --color-input: oklch(0.922 0.004 285.823);
-  --color-ring: oklch(0.87 0.006 285.823);
-}
-```
+`rdrp-theme.css`ファイルは、以下のトークンを含むデフォルトのSlate + Skyパレットを提供します：
 
-これらのトークンは`bg-popover`、`text-foreground`、`border-border`などのクラスにマッピングされます。
+| トークン                     | 用途                           |
+| ---------------------------- | ------------------------------ |
+| `--color-background`         | コンポーネントの背景           |
+| `--color-foreground`         | テキストの色                   |
+| `--color-primary`            | 選択された日付、アクティブ状態 |
+| `--color-primary-foreground` | プライマリカラー上のテキスト   |
+| `--color-muted-foreground`   | 薄いテキスト、プレースホルダー |
+| `--color-accent`             | ホバー時の背景                 |
+| `--color-border`             | ボーダーの色                   |
+| `--color-ring`               | フォーカスリングの色           |
 
 ## クイックスタート
 

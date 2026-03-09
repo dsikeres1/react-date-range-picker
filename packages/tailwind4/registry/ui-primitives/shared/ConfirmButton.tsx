@@ -11,7 +11,7 @@ export const ConfirmButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
       <button
         ref={ref}
         type="button"
-        className={cn(className)}
+        className={cn("rdrp-footer-confirm-button", className)}
         onClick={handleConfirm}
         disabled={!canConfirm}
       >

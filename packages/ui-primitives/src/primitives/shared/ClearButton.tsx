@@ -15,7 +15,12 @@ export const ClearButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
     if (!hasValue || required) return null;
 
     return (
-      <button ref={ref} type="button" className={cn(className)} onClick={handleClear}>
+      <button
+        ref={ref}
+        type="button"
+        className={cn("rdrp-footer-clear-button", className)}
+        onClick={handleClear}
+      >
         {children || locale.clear}
       </button>
     );

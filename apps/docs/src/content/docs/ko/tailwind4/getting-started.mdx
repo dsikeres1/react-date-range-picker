@@ -18,43 +18,57 @@ Tailwind v4 패키지는 Tailwind CSS v4 유틸리티 클래스와 시맨틱 디
 
 <PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-기본 테마 토큰을 가져오세요 (프로젝트에서 이미 정의된 경우 건너뛰세요. 예: shadcn/ui):
+메인 CSS 파일에서 컴포넌트 스타일을 가져오세요:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+프로젝트에 시맨틱 디자인 토큰이 아직 정의되어 있지 **않은** 경우 (예: shadcn/ui 프로젝트는 이미 포함하고 있음), 기본 테마도 가져오세요:
 
 ```css
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
-## Tailwind Preflight 및 초기화 (Reset)
+### shadcn/ui 프로젝트
 
-이 패키지는 프로젝트에 Tailwind CSS Preflight가 활성화되어 있다고 가정합니다(기본값).
-만약 환경에서 Preflight를 비활성화하는 경우(예: Docusaurus, 일부 마이크로 프론트엔드), 버튼 스타일이 깨질 수 있습니다.
-이러한 경우에는 제공된 `rdrp-reset.css`를 임포트하여 버튼 스타일을 수동으로 초기화하세요:
+shadcn/ui는 이미 필요한 토큰을 정의하고 있습니다. 컴포넌트 스타일만 필요합니다:
 
-```tsx
-import "react-date-range-picker-tailwind4/rdrp-reset.css";
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### 단독 Tailwind v4 프로젝트
+
+shadcn/ui 없는 프로젝트의 경우, 테마 토큰과 컴포넌트 스타일을 모두 가져오세요:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
 ## 시맨틱 토큰
 
-컴포넌트들은 테마를 위해 시맨틱 CSS 변수를 사용합니다. CSS에 다음을 정의하세요:
+컴포넌트들은 내부적으로 `--rdrp-*` CSS 커스텀 프로퍼티를 사용하며, `var()` 폴백 값을 통해 Tailwind v4 / shadcn 시맨틱 토큰에 매핑됩니다. 매핑을 커스터마이징하려면 CSS에서 `--rdrp-*` 변수를 오버라이드하세요.
 
-```css
-@theme {
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0.004 285.823);
-  --color-primary: oklch(0.205 0.006 285.885);
-  --color-primary-foreground: oklch(0.985 0.001 285.823);
-  --color-muted: oklch(0.96 0.003 285.823);
-  --color-muted-foreground: oklch(0.556 0.01 285.823);
-  --color-accent: oklch(0.96 0.003 285.823);
-  --color-accent-foreground: oklch(0.205 0.006 285.885);
-  --color-border: oklch(0.922 0.004 285.823);
-  --color-input: oklch(0.922 0.004 285.823);
-  --color-ring: oklch(0.87 0.006 285.823);
-}
-```
+`rdrp-theme.css` 파일은 다음 토큰과 함께 기본 Slate + Sky 팔레트를 제공합니다:
 
-이 토큰들은 `bg-popover`, `text-foreground`, `border-border` 등의 클래스에 매핑됩니다.
+| 토큰                         | 용도                      |
+| ---------------------------- | ------------------------- |
+| `--color-background`         | 컴포넌트 배경             |
+| `--color-foreground`         | 텍스트 색상               |
+| `--color-primary`            | 선택된 날짜, 활성 상태    |
+| `--color-primary-foreground` | 기본 색상 위의 텍스트     |
+| `--color-muted-foreground`   | 흐린 텍스트, 플레이스홀더 |
+| `--color-accent`             | 호버 배경                 |
+| `--color-border`             | 테두리 색상               |
+| `--color-ring`               | 포커스 링 색상            |
 
 ## 빠른 시작
 

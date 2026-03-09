@@ -10,7 +10,7 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(
   ({ className, children, cn: cnFn }, ref) => {
     const cn = cnFn ?? ((...args: unknown[]) => args.filter(Boolean).join(" "));
     return (
-      <div ref={ref} className={cn(className)}>
+      <div ref={ref} className={cn("rdrp-footer", className)}>
         {children}
       </div>
     );
