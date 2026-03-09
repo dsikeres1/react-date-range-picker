@@ -16,7 +16,7 @@ const siteTitle = "React Date Range Picker";
 const fullTitle = title === "Home" ? siteTitle : `${title} | ${siteTitle}`;
 const siteUrl = "https://dsikeres1.github.io/react-date-range-picker";
 const ogImage = `${siteUrl}/og.png`;
-const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
+const canonicalUrl = `https://dsikeres1.github.io${Astro.url.pathname}`;
 const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/react-date-range-picker/";
 ---
 
@@ -62,16 +62,38 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/react-date
     <meta name="twitter:image" content={ogImage} />
     {
       isHome && (
-        <script
-          type="application/ld+json"
-          set:html={JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            name: "React Date Range Picker",
-            url: siteUrl,
-            description: "A headless, composable date & range picker for React",
-          })}
-        />
+        <>
+          <script
+            type="application/ld+json"
+            set:html={JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "React Date Range Picker",
+              url: siteUrl,
+              description:
+                "A headless-first, composable date & range picker for React with Tailwind CSS v4, shadcn/ui, and built-in CSS support.",
+            })}
+          />
+          <script
+            type="application/ld+json"
+            set:html={JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareSourceCode",
+              name: "React Date Range Picker",
+              description:
+                "A headless-first, composable date & range picker for React. Supports DatePicker, DateRangePicker, DateTimePicker, DateRangeTimePicker, and TimePicker with Tailwind CSS v4, v3, built-in CSS, or headless hooks.",
+              url: siteUrl,
+              codeRepository: "https://github.com/dsikeres1/react-date-range-picker",
+              programmingLanguage: ["TypeScript", "React"],
+              runtimePlatform: "Node.js",
+              license: "https://opensource.org/licenses/MIT",
+              operatingSystem: "Any",
+              applicationCategory: "DeveloperApplication",
+              keywords:
+                "react, date picker, date range picker, tailwind css, shadcn, headless, compound component, accessible, i18n",
+            })}
+          />
+        </>
       )
     }
 
