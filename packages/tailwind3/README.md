@@ -17,8 +17,8 @@ npm install react-date-range-picker-tailwind3
 Add the package to your Tailwind content config:
 
 ```js
-// tailwind.config.js
-module.exports = {
+// tailwind.config.js (or tailwind.config.cjs if your package.json has "type": "module")
+export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
