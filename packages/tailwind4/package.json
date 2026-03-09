@@ -26,12 +26,14 @@
         "default": "./dist/index.js"
       }
     },
-    "./reset.css": "./reset.css"
+    "./reset.css": "./reset.css",
+    "./theme.css": "./theme.css"
   },
   "license": "MIT",
   "files": [
     "dist",
-    "reset.css"
+    "reset.css",
+    "theme.css"
   ],
   "scripts": {
     "build": "tsup",

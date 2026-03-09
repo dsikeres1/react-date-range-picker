@@ -14,6 +14,13 @@
 npm install react-date-range-picker-tailwind4
 ```
 
+Import the default theme (skip if you already use shadcn/ui — tokens are already defined):
+
+```css
+/* In your main CSS file */
+@import "react-date-range-picker-tailwind4/theme.css";
+```
+
 ### shadcn/ui Registry
 
 ```bash
