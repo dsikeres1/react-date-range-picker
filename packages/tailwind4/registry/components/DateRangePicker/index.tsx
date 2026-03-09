@@ -3,7 +3,7 @@ import type { DateRangePickerRootProps } from "../../ui-primitives/index";
 import { cn } from "../../utils";
 import { headerClassNames, rangeClassNames } from "../../theme";
 
-export interface DateRangePickerProps extends DateRangePickerRootProps {
+export interface DateRangePickerProps extends Omit<DateRangePickerRootProps, "children"> {
   hideHeader?: boolean;
   hideFooter?: boolean;
 }
