@@ -2,10 +2,12 @@
   <img src="https://dsikeres1.github.io/react-date-range-picker/logo.svg" width="64" alt="React Date Range Picker" />
 </p>
 <h3 align="center">react-date-range-picker-headless</h3>
-<p align="center">A headless, composable date & range picker for React. All logic, zero styling.</p>
+<p align="center">Headless date & range picker hooks for React.<br/>Zero dependencies · Compound components · Keyboard navigation · 15 locales</p>
 <p align="center">
   <a href="https://www.npmjs.com/package/react-date-range-picker-headless"><img src="https://img.shields.io/npm/v/react-date-range-picker-headless" alt="npm" /></a>
   <a href="https://github.com/dsikeres1/react-date-range-picker/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/react-date-range-picker-headless" alt="license" /></a>
+  <img src="https://img.shields.io/badge/TypeScript-strict-blue" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/dependencies-0-green" alt="zero dependencies" />
 </p>
 
 ## Installation

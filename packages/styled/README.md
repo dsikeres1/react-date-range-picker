@@ -2,10 +2,11 @@
   <img src="https://dsikeres1.github.io/react-date-range-picker/logo.svg" width="64" alt="React Date Range Picker" />
 </p>
 <h3 align="center">react-date-range-picker-styled</h3>
-<p align="center">Date range picker for React with built-in CSS styling. No CSS framework required.</p>
+<p align="center">Date & range picker for React with built-in CSS.<br/>No Tailwind needed · CSS variables · Dark mode · 15 locales</p>
 <p align="center">
   <a href="https://www.npmjs.com/package/react-date-range-picker-styled"><img src="https://img.shields.io/npm/v/react-date-range-picker-styled" alt="npm" /></a>
   <a href="https://github.com/dsikeres1/react-date-range-picker/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/react-date-range-picker-styled" alt="license" /></a>
+  <img src="https://img.shields.io/badge/TypeScript-strict-blue" alt="TypeScript" />
 </p>
 
 ## Installation

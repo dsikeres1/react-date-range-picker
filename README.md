@@ -2,31 +2,47 @@
   <img src="https://dsikeres1.github.io/react-date-range-picker/logo.svg" width="80" alt="React Date Range Picker" />
 </p>
 <h1 align="center">React Date Range Picker</h1>
-<p align="center">A modern, accessible, headless-first date & range picker for React.</p>
+<p align="center">A headless-first, composable date & range picker for React.<br/>Tailwind CSS v4 · shadcn/ui · Built-in CSS · Headless hooks</p>
 <p align="center">
-  <a href="https://www.npmjs.com/package/react-date-range-picker-headless"><img src="https://img.shields.io/npm/v/react-date-range-picker-headless?label=headless" alt="npm headless" /></a>
   <a href="https://www.npmjs.com/package/react-date-range-picker-tailwind4"><img src="https://img.shields.io/npm/v/react-date-range-picker-tailwind4?label=tailwind4" alt="npm tailwind4" /></a>
+  <a href="https://www.npmjs.com/package/react-date-range-picker-headless"><img src="https://img.shields.io/npm/v/react-date-range-picker-headless?label=headless" alt="npm headless" /></a>
   <a href="https://github.com/dsikeres1/react-date-range-picker/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/react-date-range-picker-headless" alt="license" /></a>
+  <img src="https://img.shields.io/badge/TypeScript-strict-blue" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/dependencies-0_(headless)-green" alt="zero dependencies" />
 </p>
+
+## Why This Library?
+
+Most React date pickers either lack range/time support, don't support Tailwind CSS v4, or aren't designed for composition. This library gives you:
+
+- **One-liner or full control** — Simple `<DatePicker />` for quick usage, or Compound Components to customize every piece.
+- **Tailwind CSS v4 first-class support** — Semantic design tokens (`bg-primary`, `text-foreground`) that match your theme.
+- **shadcn/ui registry** — Install via `npx shadcn add` and own the source code, just like shadcn's built-in components.
+- **Headless core** — Use the hooks directly to build completely custom UIs.
 
 ## Features
 
-- **Headless core** — All logic, zero styling. Bring your own UI.
-- **Compound Component API** — Flexible composition or simple one-liner usage.
-- **5 picker types** — DatePicker, DateRangePicker, DateTimePicker, DateRangeTimePicker, TimePicker.
-- **Zero dependencies** — Built with native `Date` and `Intl`.
-- **15 locales** — en, ko, ja, zh-Hans, zh-Hant, es, pt-BR, fr, de, ru, tr, it, vi, th, pl.
-- **Accessible** — Keyboard navigation, focus management, ARIA attributes.
-- **Dark mode** — Styled packages include light/dark theme support.
+- **5 picker types** — DatePicker, DateRangePicker, DateTimePicker, DateRangeTimePicker, TimePicker
+- **Compound Component API** — Compose, rearrange, or replace any internal part
+- **Zero dependencies** (headless) — Built with native `Date` and `Intl`. No moment, no date-fns.
+- **15 locales** — en, ko, ja, zh-Hans, zh-Hant, es, pt-BR, fr, de, ru, tr, it, vi, th, pl
+- **Keyboard navigation** — Arrow keys, Enter, Escape, Tab with focus management
+- **Accessible** — ARIA attributes, focus trapping, screen reader support
+- **Dark mode** — Works with `dark:` variant, `next-themes`, or CSS `prefers-color-scheme`
+- **4 sizes** — small, medium, large, x-large
+- **Date constraints** — min/max date, min/max days in range, disabled dates
+- **Range presets** — "Last 7 days", "This month", or any custom preset
+- **Inline mode** — Render calendar without popup trigger
+- **TypeScript** — Strict types for all props, events, and configurations
 
 ## Packages
 
-| Package                                                                                                | Description                |                                                                                                                                           |
-| ------------------------------------------------------------------------------------------------------ | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| [`react-date-range-picker-headless`](https://www.npmjs.com/package/react-date-range-picker-headless)   | Headless hooks & utilities | [![npm](https://img.shields.io/npm/v/react-date-range-picker-headless)](https://www.npmjs.com/package/react-date-range-picker-headless)   |
-| [`react-date-range-picker-tailwind4`](https://www.npmjs.com/package/react-date-range-picker-tailwind4) | Tailwind CSS v4            | [![npm](https://img.shields.io/npm/v/react-date-range-picker-tailwind4)](https://www.npmjs.com/package/react-date-range-picker-tailwind4) |
-| [`react-date-range-picker-tailwind3`](https://www.npmjs.com/package/react-date-range-picker-tailwind3) | Tailwind CSS v3            | [![npm](https://img.shields.io/npm/v/react-date-range-picker-tailwind3)](https://www.npmjs.com/package/react-date-range-picker-tailwind3) |
-| [`react-date-range-picker-styled`](https://www.npmjs.com/package/react-date-range-picker-styled)       | Built-in CSS (no Tailwind) | [![npm](https://img.shields.io/npm/v/react-date-range-picker-styled)](https://www.npmjs.com/package/react-date-range-picker-styled)       |
+| Package                                                                                                | Description                                   |                                                                                                                                           |
+| ------------------------------------------------------------------------------------------------------ | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| [`react-date-range-picker-tailwind4`](https://www.npmjs.com/package/react-date-range-picker-tailwind4) | Tailwind CSS v4 + shadcn/ui compatible        | [![npm](https://img.shields.io/npm/v/react-date-range-picker-tailwind4)](https://www.npmjs.com/package/react-date-range-picker-tailwind4) |
+| [`react-date-range-picker-tailwind3`](https://www.npmjs.com/package/react-date-range-picker-tailwind3) | Tailwind CSS v3                               | [![npm](https://img.shields.io/npm/v/react-date-range-picker-tailwind3)](https://www.npmjs.com/package/react-date-range-picker-tailwind3) |
+| [`react-date-range-picker-styled`](https://www.npmjs.com/package/react-date-range-picker-styled)       | Built-in CSS (no Tailwind, CSS variables)     | [![npm](https://img.shields.io/npm/v/react-date-range-picker-styled)](https://www.npmjs.com/package/react-date-range-picker-styled)       |
+| [`react-date-range-picker-headless`](https://www.npmjs.com/package/react-date-range-picker-headless)   | Headless hooks — bring your own UI, zero deps | [![npm](https://img.shields.io/npm/v/react-date-range-picker-headless)](https://www.npmjs.com/package/react-date-range-picker-headless)   |
 
 ## Choose Your Installation
 

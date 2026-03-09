@@ -2,10 +2,12 @@
   <img src="https://dsikeres1.github.io/react-date-range-picker/logo.svg" width="64" alt="React Date Range Picker" />
 </p>
 <h3 align="center">react-date-range-picker-tailwind4</h3>
-<p align="center">Date range picker for React with Tailwind CSS v4. Semantic design tokens, dark mode, and shadcn/ui registry.</p>
+<p align="center">Date & range picker for React + Tailwind CSS v4.<br/>Semantic design tokens · shadcn/ui compatible · Dark mode · 15 locales</p>
 <p align="center">
   <a href="https://www.npmjs.com/package/react-date-range-picker-tailwind4"><img src="https://img.shields.io/npm/v/react-date-range-picker-tailwind4" alt="npm" /></a>
   <a href="https://github.com/dsikeres1/react-date-range-picker/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/react-date-range-picker-tailwind4" alt="license" /></a>
+  <img src="https://img.shields.io/badge/TypeScript-strict-blue" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-v4-38BDF8" alt="Tailwind v4" />
 </p>
 
 ## Installation
@@ -159,15 +161,18 @@ All components support **simple** and **compound component** patterns.
 
 ## Features
 
-- **Tailwind CSS v4** with semantic design tokens
-- **shadcn/ui compatible** — Uses the same token convention (`--color-primary`, `--color-accent`, etc.)
-- **Dark mode** via `dark:` variant
+- **Tailwind CSS v4** — Semantic design tokens (`bg-primary`, `text-foreground`, `border-border`)
+- **shadcn/ui compatible** — Same token convention, auto-matches your theme. Also available as a [shadcn registry](#option-c-shadcn-registry-full-source-control).
+- **Compound Component API** — One-liner for quick usage, or compose/rearrange every internal part
+- **Dark mode** — Works with `dark:` variant, `next-themes`, or `prefers-color-scheme`
 - **4 sizes** — small, medium, large, x-large
-- **Keyboard navigation** — Arrow keys, Enter, Escape, Tab
-- **Date constraints** — min/max date, min/max days, disabled dates
-- **Range presets** — Last 7 days, This month, etc.
-- **Inline mode** — Render calendar without popup
+- **Keyboard navigation** — Arrow keys, Enter, Escape, Tab with focus management
+- **Accessible** — ARIA attributes, focus trapping, screen reader support
+- **Date constraints** — min/max date, min/max days in range, disabled dates
+- **Range presets** — "Last 7 days", "This month", or any custom preset
+- **Inline mode** — Render calendar without popup trigger
 - **15 locales** — en, ko, ja, zh-Hans, zh-Hant, es, pt-BR, fr, de, ru, tr, it, vi, th, pl
+- **TypeScript** — Strict types for all props, events, and configurations
 
 ## Semantic Tokens
 
