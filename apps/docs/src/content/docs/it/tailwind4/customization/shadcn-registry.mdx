@@ -99,18 +99,19 @@ export function DateForm() {
 </ThemeProvider>
 ```
 
-## shadcn 레지스트리
+## Registro di shadcn
 
-<Admonition type="info" title="출시 예정">
-전체 [shadcn/ui 레지스트리](httpss://ui.shadcn.com/docs/registry) 통합이 계획되어 있습니다. 이를 통해 다음 명령어로 날짜 선택기를 설치할 수 있게 됩니다:
+Puoi anche installare i componenti direttamente tramite la CLI di shadcn:
 
 ```bash
-npx shadcn@latest add react-date-range-picker
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
 ```
 
-그때까지는 npm 패키지를 직접 설치하고, 구조적 커스터마이징이 필요할 경우 Compound Component API를 사용하세요.
-
-</Admonition>
+Questo copia il codice sorgente del componente nel tuo progetto in `components/ui/`, permettendoti di modificarlo direttamente.
 
 ## shadcn 기본값 이상으로 커스터마이징하기
 

@@ -101,16 +101,17 @@ Si tu proyecto de shadcn/ui usa `next-themes` con la estrategia `class`, el modo
 
 ## Registro de shadcn
 
-<Admonition type="info" title="Próximamente">
-La integración completa con el [registro de shadcn/ui](https://ui.shadcn.com/docs/registry) está planeada. Esto permitirá instalar el selector de fechas a través de:
+También puedes instalar componentes directamente mediante la CLI de shadcn:
 
 ```bash
-npx shadcn@latest add react-date-range-picker
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
 ```
 
-Hasta entonces, instala el paquete npm directamente y usa la API de Componentes Compuestos para cualquier personalización estructural.
-
-</Admonition>
+Esto copia el código fuente del componente en tu proyecto en `components/ui/`, permitiéndote modificarlo directamente.
 
 ## Personalización más allá de los predeterminados de shadcn
 

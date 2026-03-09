@@ -101,16 +101,17 @@ export function DateForm() {
 
 ## shadcn 注册表
 
-<Admonition type="info" title="Coming Soon">
-完整的 [shadcn/ui 注册表](https://ui.shadcn.com/docs/registry) 集成已在计划中。这将允许通过以下方式安装日期选择器：
+您还可以通过 shadcn CLI 直接安装组件：
 
 ```bash
-npx shadcn@latest add react-date-range-picker
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
 ```
 
-在此之前，请直接安装 npm 包，并使用复合组件 API 进行任何结构上的自定义。
-
-</Admonition>
+这会将组件源代码复制到您项目的 `components/ui/` 目录中，让您可以直接修改它。
 
 ## 超出 shadcn 默认设置的自定义
 

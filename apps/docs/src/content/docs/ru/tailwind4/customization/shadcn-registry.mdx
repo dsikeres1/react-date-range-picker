@@ -101,16 +101,17 @@ export function DateForm() {
 
 ## Реестр shadcn
 
-<Admonition type="info" title="Скоро">
-Планируется полная интеграция с [реестром shadcn/ui](https://ui.shadcn.com/docs/registry). Это позволит устанавливать календарь через:
+Вы также можете установить компоненты напрямую через CLI shadcn:
 
 ```bash
-npx shadcn@latest add react-date-range-picker
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
 ```
 
-До тех пор устанавливайте npm-пакет напрямую и используйте Compound Component API для любой структурной кастомизации.
-
-</Admonition>
+Это копирует исходный код компонента в ваш проект в `components/ui/`, позволяя вам изменять его напрямую.
 
 ## Кастомизация за пределами настроек shadcn
 

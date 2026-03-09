@@ -101,16 +101,17 @@ Eğer shadcn/ui projeniz `class` stratejisi ile `next-themes` kullanıyorsa, kar
 
 ## shadcn Kayıt Defteri
 
-<Admonition type="info" title="Yakında Gelecek">
-Tam [shadcn/ui kayıt defteri](https://ui.shadcn.com/docs/registry) entegrasyonu planlanmaktadır. Bu, tarih seçicinin şu şekilde kurulmasına olanak tanıyacaktır:
+Ayrıca bileşenleri doğrudan shadcn CLI aracılığıyla yükleyebilirsiniz:
 
 ```bash
-npx shadcn@latest add react-date-range-picker
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
 ```
 
-O zamana kadar, npm paketini doğrudan kurun ve herhangi bir yapısal özelleştirme için Bileşik Bileşen API'sini kullanın.
-
-</Admonition>
+Bu, bileşen kaynak kodunu projenizde `components/ui/` dizinine kopyalar ve doğrudan değiştirmenize olanak tanır.
 
 ## shadcn Varsayılanlarının Ötesinde Özelleştirme
 
