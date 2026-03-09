@@ -28,17 +28,56 @@
 | [`react-date-range-picker-tailwind3`](https://www.npmjs.com/package/react-date-range-picker-tailwind3) | Tailwind CSS v3            | [![npm](https://img.shields.io/npm/v/react-date-range-picker-tailwind3)](https://www.npmjs.com/package/react-date-range-picker-tailwind3) |
 | [`react-date-range-picker-styled`](https://www.npmjs.com/package/react-date-range-picker-styled)       | Built-in CSS (no Tailwind) | [![npm](https://img.shields.io/npm/v/react-date-range-picker-styled)](https://www.npmjs.com/package/react-date-range-picker-styled)       |
 
-## Quick Start
+## Choose Your Installation
 
-### Install
+| Method                | Best for                                | Customization               | Updates      |
+| --------------------- | --------------------------------------- | --------------------------- | ------------ |
+| **npm + Tailwind v4** | Tailwind v4 projects                    | Props & className overrides | `npm update` |
+| **npm + shadcn/ui**   | shadcn/ui projects                      | Props & className overrides | `npm update` |
+| **shadcn Registry**   | shadcn/ui projects wanting full control | Edit source code directly   | Manual       |
+| **npm + Tailwind v3** | Tailwind v3 projects                    | Props & className overrides | `npm update` |
+| **npm + CSS**         | Any React project (no Tailwind)         | CSS variables               | `npm update` |
+| **Headless**          | Build your own UI from scratch          | Everything                  | `npm update` |
+
+### npm Install (Tailwind v4)
 
 ```bash
 npm install react-date-range-picker-tailwind4
-# or: react-date-range-picker-styled, react-date-range-picker-tailwind3
-# headless only: npm install react-date-range-picker-headless
 ```
 
-### Simple Usage
+```css
+/* Standalone Tailwind v4 — import theme + styles */
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+
+/* shadcn/ui projects — tokens already defined, just import reset + styles */
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### shadcn/ui Registry (Source Code in Your Project)
+
+Components are copied into your project — you own and can modify the source directly:
+
+```bash
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
+```
+
+No CSS import needed — the copied components use Tailwind classes directly.
+
+### Other Packages
+
+```bash
+npm install react-date-range-picker-tailwind3  # Tailwind v3
+npm install react-date-range-picker-styled     # Built-in CSS (no Tailwind)
+npm install react-date-range-picker-headless   # Headless hooks only
+```
+
+## Quick Start
 
 ```tsx
 import { useState } from "react";
@@ -57,71 +96,23 @@ function App() {
 ### Compound Component (Full Customization)
 
 ```tsx
-import { useState } from "react";
-import { DateRangePicker } from "react-date-range-picker-tailwind4";
-
-function App() {
-  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
-    start: null,
-    end: null,
-  });
-
-  return (
-    <DateRangePicker.Root value={range} onChange={setRange}>
-      <DateRangePicker.Trigger />
-      <DateRangePicker.Content>
-        <DateRangePicker.Header>
-          <DateRangePicker.PrevButton />
-          <DateRangePicker.Title />
-          <DateRangePicker.NextButton />
-        </DateRangePicker.Header>
-        <DateRangePicker.Grid />
-        <DateRangePicker.Footer>
-          <DateRangePicker.Presets />
-          <DateRangePicker.ClearButton />
-          <DateRangePicker.CancelButton />
-          <DateRangePicker.ConfirmButton />
-        </DateRangePicker.Footer>
-      </DateRangePicker.Content>
-    </DateRangePicker.Root>
-  );
-}
-```
-
-### Headless (Custom UI)
-
-```tsx
-import { useState } from "react";
-import { useDateRangePicker } from "react-date-range-picker-headless";
-
-function MyRangePicker() {
-  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
-    start: null,
-    end: null,
-  });
-  const picker = useDateRangePicker({ value: range, onChange: setRange });
-
-  return (
-    <div ref={picker.containerRef}>
-      <button onClick={picker.handleToggle}>{picker.displayValue || "Select range"}</button>
-      {picker.isOpen && (
-        <div ref={picker.popupRef}>
-          {/* Build your own calendar UI using picker.calendar, picker.getDayProps, etc. */}
-        </div>
-      )}
-    </div>
-  );
-}
-```
-
-### shadcn/ui
-
-```bash
-npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
-npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-picker.json
-npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-time-picker.json
-npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-time-picker.json
-npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
+<DateRangePicker.Root value={range} onChange={setRange}>
+  <DateRangePicker.Trigger />
+  <DateRangePicker.Content>
+    <DateRangePicker.Header>
+      <DateRangePicker.PrevButton />
+      <DateRangePicker.Title />
+      <DateRangePicker.NextButton />
+    </DateRangePicker.Header>
+    <DateRangePicker.Grid />
+    <DateRangePicker.Footer>
+      <DateRangePicker.Presets />
+      <DateRangePicker.ClearButton />
+      <DateRangePicker.CancelButton />
+      <DateRangePicker.ConfirmButton />
+    </DateRangePicker.Footer>
+  </DateRangePicker.Content>
+</DateRangePicker.Root>
 ```
 
 ## Documentation

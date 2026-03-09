@@ -99,9 +99,24 @@ If your shadcn/ui project uses `next-themes` with the `class` strategy, dark mod
 </ThemeProvider>
 ```
 
+## npm vs shadcn Registry
+
+There are two ways to use this package in a shadcn/ui project:
+
+|                   | npm Install                                     | shadcn Registry                  |
+| ----------------- | ----------------------------------------------- | -------------------------------- |
+| **Install**       | `npm install react-date-range-picker-tailwind4` | `npx shadcn add <url>`           |
+| **Code location** | `node_modules/`                                 | Your project (`src/components/`) |
+| **CSS imports**   | `rdrp-reset.css` + `rdrp-styles.css`            | None needed                      |
+| **Customization** | Props and className overrides                   | Edit source code directly        |
+| **Updates**       | `npm update`                                    | Re-run `npx shadcn add`          |
+| **Best for**      | Use as-is, easy updates                         | Deep customization needs         |
+
+**npm** is simpler — install, import CSS, use. **Registry** gives you full ownership of the source code, same as how shadcn/ui's built-in components (Button, Dialog, etc.) work.
+
 ## shadcn Registry
 
-You can also install components directly via the shadcn CLI:
+Install components directly via the shadcn CLI:
 
 ```bash
 npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
@@ -111,7 +126,7 @@ npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-
 npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
 ```
 
-This copies the component source into your project at `components/ui/`, letting you modify it directly.
+This copies the component source into your project, letting you modify it directly. No CSS file imports are needed — the copied components use Tailwind utility classes that reference your existing shadcn tokens.
 
 ## Customizing Beyond shadcn Defaults
 

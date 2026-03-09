@@ -14,25 +14,37 @@ import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
 
 The Tailwind v4 package provides date picker components styled with Tailwind CSS v4 utility classes and semantic design tokens.
 
-## Installation
+## Choose Your Installation Method
+
+There are 3 ways to install, depending on your project:
+
+| Method               | Best for                   | CSS Imports                          | Customization        |
+| -------------------- | -------------------------- | ------------------------------------ | -------------------- |
+| **npm (standalone)** | Tailwind v4 without shadcn | `rdrp-theme.css` + `rdrp-styles.css` | Props & className    |
+| **npm (shadcn/ui)**  | shadcn/ui projects         | `rdrp-reset.css` + `rdrp-styles.css` | Props & className    |
+| **shadcn Registry**  | Full source control        | None                                 | Edit source directly |
+
+**npm methods** keep components in `node_modules` — update with `npm update`.
+**shadcn Registry** copies source code into your project — you own it and can modify anything, but updates require re-running the command.
+
+## Option A: npm Install (Standalone Tailwind v4)
 
 <PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-Import the component styles in your main CSS file:
+Your project doesn't have semantic design tokens like `--color-primary`, so import `rdrp-theme.css` which provides a default Slate + Sky palette:
 
 ```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
 @import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
-If your project does **not** already define semantic design tokens (e.g. shadcn/ui projects already have them), also import the default theme:
+## Option B: npm Install (shadcn/ui Projects)
 
-```css
-@import "react-date-range-picker-tailwind4/rdrp-theme.css";
-```
+<PackageInstall pkg="react-date-range-picker-tailwind4" />
 
-### shadcn/ui Projects
-
-shadcn/ui already defines the required tokens. You only need the component styles:
+shadcn/ui already defines `--color-primary`, `--color-background`, etc. The picker reads these tokens automatically, so no theme file is needed — just the reset (for Tailwind class scanning) and styles:
 
 ```css
 /* app/globals.css or src/index.css */
@@ -42,16 +54,19 @@ shadcn/ui already defines the required tokens. You only need the component style
 @import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
-### Standalone Tailwind v4 Projects
+## Option C: shadcn Registry
 
-For projects without shadcn/ui, import both the theme tokens and component styles:
+Components are copied directly into your project as source code. No CSS import needed — the copied components use Tailwind utility classes (`bg-primary`, `text-foreground`, etc.) which reference your existing shadcn tokens.
 
-```css
-/* src/index.css */
-@import "tailwindcss";
-@import "react-date-range-picker-tailwind4/rdrp-theme.css";
-@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```bash
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
 ```
+
+This is the same pattern as shadcn/ui's built-in components (Button, Dialog, etc.) — the source lives in your project, and you can modify it however you want.
 
 ## Semantic Tokens
 

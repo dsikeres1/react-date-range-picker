@@ -10,24 +10,46 @@
 
 ## Installation
 
+There are 3 ways to use this package depending on your project setup:
+
+| Method               | Best for                                | What you get                                                 |
+| -------------------- | --------------------------------------- | ------------------------------------------------------------ |
+| **npm (standalone)** | Tailwind v4 without shadcn              | Components in `node_modules`, themed with default palette    |
+| **npm (shadcn/ui)**  | shadcn/ui projects                      | Components in `node_modules`, auto-matches your shadcn theme |
+| **shadcn Registry**  | shadcn/ui projects wanting full control | Source code copied into your project, fully editable         |
+
+### Option A: npm Install (Standalone Tailwind v4)
+
 ```bash
 npm install react-date-range-picker-tailwind4
 ```
 
-Import the theme CSS in your main CSS file. This automatically registers the component's Tailwind classes — no extra config needed:
-
 ```css
-/* In your main CSS file */
+/* src/index.css */
+@import "tailwindcss";
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
 ```
 
-> **shadcn/ui users:** You already have the design tokens defined. Import `rdrp-reset.css` instead:
->
-> ```css
-> @import "react-date-range-picker-tailwind4/rdrp-reset.css";
-> ```
+`rdrp-theme.css` provides default color tokens (Slate + Sky palette). You can override them in your CSS.
 
-### shadcn/ui Registry
+### Option B: npm Install (shadcn/ui Projects)
+
+```bash
+npm install react-date-range-picker-tailwind4
+```
+
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+No `rdrp-theme.css` needed — your shadcn/ui project already defines `--color-primary`, `--color-background`, etc. The picker inherits your theme automatically.
+
+### Option C: shadcn Registry (Full Source Control)
 
 ```bash
 npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
@@ -36,6 +58,8 @@ npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-time-p
 npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-time-picker.json
 npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
 ```
+
+No CSS import needed. Components are copied into your project and use Tailwind classes directly. You can edit the source to customize anything. Trade-off: updates require re-running the command.
 
 ## Quick Start
 
