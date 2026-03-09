@@ -21,17 +21,17 @@ Tailwind v4 paketi, Tailwind CSS v4 yardımcı sınıfları ve anlamsal tasarım
 Varsayılan tema belirteçlerini içe aktarın (projeniz bunları zaten tanımlıyorsa bunu atlayın, örneğin shadcn/ui):
 
 ```css
-@import "react-date-range-picker-tailwind4/theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
 ## Tailwind Preflight ve Sıfırlama
 
 Bu paket, projenizde Tailwind CSS Preflight'ın (varsayılan olan) etkin olduğunu varsayar.
 Ortamınız Preflight'ı devre dışı bırakırsa (ör. Docusaurus, bazı Mikro Ön Uçlar), düğme stilleri bozulabilir.
-Bu durumda, düğme stillerini manuel olarak başlatmak için sağlanan `reset.css` dosyasını içe aktarın:
+Bu durumda, düğme stillerini manuel olarak başlatmak için sağlanan `rdrp-reset.css` dosyasını içe aktarın:
 
 ```tsx
-import "react-date-range-picker-tailwind4/reset.css";
+import "react-date-range-picker-tailwind4/rdrp-reset.css";
 ```
 
 ## Anlamsal Belirteçler

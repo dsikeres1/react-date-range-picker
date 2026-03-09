@@ -21,17 +21,17 @@ Pakiet Tailwind v4 dostarcza komponenty do wyboru daty, stylizowane za pomocą k
 Zaimportuj domyślne tokeny motywu (pomiń ten krok, jeśli Twój projekt już je definiuje, np. shadcn/ui):
 
 ```css
-@import "react-date-range-picker-tailwind4/theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
 ## Tailwind Preflight i Reset
 
 Ten pakiet zakłada, że w Twoim projekcie jest włączony Tailwind CSS Preflight (co jest domyślne).
 Jeśli Twoje środowisko wyłącza Preflight (np. Docusaurus, niektóre mikrofrontendy), style przycisków mogą się zepsuć.
-W takim przypadku zaimportuj dostarczony plik `reset.css`, aby ręcznie zainicjować style przycisków:
+W takim przypadku zaimportuj dostarczony plik `rdrp-reset.css`, aby ręcznie zainicjować style przycisków:
 
 ```tsx
-import "react-date-range-picker-tailwind4/reset.css";
+import "react-date-range-picker-tailwind4/rdrp-reset.css";
 ```
 
 ## Semantyczne Tokeny

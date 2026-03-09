@@ -21,17 +21,17 @@ Tailwind v4パッケージは、Tailwind CSS v4のユーティリティクラス
 デフォルトのテーマトークンをインポートします（プロジェクトで既に定義されている場合はスキップしてください。例: shadcn/ui）：
 
 ```css
-@import "react-date-range-picker-tailwind4/theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
 ## Tailwind Preflightとリセット
 
 このパッケージは、プロジェクトでTailwind CSS Preflightが有効になっていること（デフォルト）を前提としています。
 もしお使いの環境でPreflightが無効になっている場合（例：Docusaurus、一部のマイクロフロントエンド）、ボタンのスタイルが崩れる可能性があります。
-その場合は、提供されている`reset.css`をインポートして、ボタンスタイルを手動で初期化してください：
+その場合は、提供されている`rdrp-reset.css`をインポートして、ボタンスタイルを手動で初期化してください：
 
 ```tsx
-import "react-date-range-picker-tailwind4/reset.css";
+import "react-date-range-picker-tailwind4/rdrp-reset.css";
 ```
 
 ## セマンティックトークン

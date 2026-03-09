@@ -21,17 +21,17 @@ El paquete Tailwind v4 proporciona componentes de selector de fecha estilizados 
 Importa los tokens del tema predeterminado (omite esto si tu proyecto ya los define, por ejemplo, shadcn/ui):
 
 ```css
-@import "react-date-range-picker-tailwind4/theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
 ## Tailwind Preflight & Reset
 
 Este paquete asume que tu proyecto tiene Tailwind CSS Preflight habilitado (que es el predeterminado).
 Si tu entorno deshabilita Preflight (por ejemplo, Docusaurus, algunos Micro Frontends), los estilos de los botones pueden romperse.
-En ese caso, importa el `reset.css` proporcionado para inicializar manualmente los estilos de los botones:
+En ese caso, importa el `rdrp-reset.css` proporcionado para inicializar manualmente los estilos de los botones:
 
 ```tsx
-import "react-date-range-picker-tailwind4/reset.css";
+import "react-date-range-picker-tailwind4/rdrp-reset.css";
 ```
 
 ## Tokens Semánticos
