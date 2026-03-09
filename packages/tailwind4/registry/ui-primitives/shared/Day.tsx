@@ -109,6 +109,8 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
       isRangeSingle,
     } = props;
 
+    const showFocusRing = isFocused && !isSelected && !isRangeStart && !isRangeEnd;
+
     return (
       <button
         ref={ref}
@@ -139,8 +141,8 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
           isRangeSingle && rangeSingleClassName,
           isDisabled && "rdrp-day-disabled",
           isDisabled && disabledClassName,
-          isFocused && "rdrp-day-focused",
-          isFocused && focusedClassName,
+          showFocusRing && "rdrp-day-focused",
+          showFocusRing && focusedClassName,
         )}
         onClick={onClick}
         onMouseEnter={onMouseEnter}

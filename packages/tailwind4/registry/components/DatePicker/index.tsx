@@ -1,7 +1,7 @@
 import * as C from "./Compound";
 import type { DatePickerRootProps } from "../../ui-primitives/index";
 
-export interface DatePickerProps extends DatePickerRootProps {
+export interface DatePickerProps extends Omit<DatePickerRootProps, "children"> {
   hideHeader?: boolean;
   hideFooter?: boolean;
 }

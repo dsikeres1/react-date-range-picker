@@ -2,7 +2,7 @@ import * as C from "./Compound";
 import type { DateTimePickerRootProps } from "../../ui-primitives/index";
 import { dateTimeClassNames } from "../../theme";
 
-export interface DateTimePickerProps extends DateTimePickerRootProps {
+export interface DateTimePickerProps extends Omit<DateTimePickerRootProps, "children"> {
   hideHeader?: boolean;
   hideFooter?: boolean;
 }
