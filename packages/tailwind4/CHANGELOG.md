@@ -1,5 +1,12 @@
 # react-date-range-picker-tailwind4
 
+## 0.2.2
+
+### Patch Changes
+
+- Fix registry theme divergence from npm (16 mismatched values) and add missing Omit<children> to 3 Simple wrapper types
+  - react-date-range-picker-headless@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes

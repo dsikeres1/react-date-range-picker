@@ -1,5 +1,7 @@
 # react-date-range-picker-headless
 
+## 0.2.2
+
 ## 0.2.1
 
 ### Patch Changes

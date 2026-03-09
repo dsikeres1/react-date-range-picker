@@ -1,5 +1,11 @@
 # react-date-range-picker-tailwind3
 
+## 0.2.2
+
+### Patch Changes
+
+- react-date-range-picker-headless@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes
