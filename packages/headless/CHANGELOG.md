@@ -1,5 +1,11 @@
 # react-date-range-picker-headless
 
+## 0.1.4
+
+### Patch Changes
+
+- f2cdff4: fix: registry type bugs (FormNameProps, RangeTimeSectionRenderProps, timeConfig -> time), README preset getValue -> value
+
 ## 0.1.3
 
 ### Patch Changes
