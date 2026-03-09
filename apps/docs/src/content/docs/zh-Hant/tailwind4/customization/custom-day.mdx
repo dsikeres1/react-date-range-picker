@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: Custom Day Cell
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/tailwind4/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/tailwind4/Customization/CompoundCustomDay.tsx?raw";
+
+# 自訂日期儲存格
+
+使用 `Grid` 和 `Day` render props 來自訂每個日期的呈現方式。這讓您可以在個別日期儲存格中新增事件指示器、自訂樣式或任何額外內容。
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 日期 Render Props
+
+| 屬性             | 類型         | 描述                       |
+| ---------------- | ------------ | -------------------------- |
+| `date`           | `Date`       | 日期物件                   |
+| `day`            | `number`     | 月份中的第幾天 (1-31)      |
+| `isToday`        | `boolean`    | 是否為今天                 |
+| `isSelected`     | `boolean`    | 此日期是否被選取           |
+| `isDisabled`     | `boolean`    | 此日期是否被禁用           |
+| `isInRange`      | `boolean`    | 此日期是否在選取的範圍內   |
+| `isRangeStart`   | `boolean`    | 是否為範圍的起始           |
+| `isRangeEnd`     | `boolean`    | 是否為範圍的結束           |
+| `isInHoverRange` | `boolean`    | 此日期是否在懸停預覽範圍內 |
+| `isHoverTarget`  | `boolean`    | 是否為懸停的終點           |
+| `isOutsideDay`   | `boolean`    | 此日期是否屬於相鄰的月份   |
+| `isHighlighted`  | `boolean`    | 此日期是否有一個醒目提示點 |
+| `isFocused`      | `boolean`    | 此日期是否具有鍵盤焦點     |
+| `onClick`        | `() => void` | 點擊處理常式               |
+| `onMouseEnter`   | `() => void` | 滑鼠進入處理常式           |
+| `onMouseLeave`   | `() => void` | 滑鼠離開處理常式           |

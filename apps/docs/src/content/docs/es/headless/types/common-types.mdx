@@ -1,0 +1,43 @@
+---
+sidebar_position: 5
+title: Common Types
+---
+
+# Tipos Comunes
+
+Alias de tipos compartidos utilizados en todo el paquete headless.
+
+```tsx
+import type {
+  DatePickerSize,
+  WeekDay,
+  CaptionLayout,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  MinuteStep,
+  SecondStep,
+  CalendarMonth,
+  DateUnit,
+} from "react-date-range-picker-headless";
+```
+
+## DatePickerSize
+
+Variante de tamaño de la interfaz de usuario. Los hooks headless lo pasan sin usarlo. Los componentes con estilo lo usan para el dimensionamiento visual.
+
+```tsx
+type DatePickerSize = "x-large" | "large" | "medium" | "small";
+```
+
+## WeekDay
+
+Día de la semana como una cadena de texto. Se utiliza en la opción `weekStartsOn`.
+
+```tsx
+type WeekDay = "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday";
+```
+
+## CaptionLayout
+
+Modo de diseño del encabezado del calendario.

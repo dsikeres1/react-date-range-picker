@@ -1,0 +1,22 @@
+---
+sidebar_position: 3
+sidebar_label: Custom Day Cell
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/tailwind4/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/tailwind4/Customization/CompoundCustomDay.tsx?raw";
+
+# Пользовательская ячейка дня
+
+Настройте отображение каждого дня с помощью render-пропов `Grid` и `Day`. Это позволяет добавлять индикаторы событий, пользовательские стили или любой дополнительный контент в отдельные ячейки дней.
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render

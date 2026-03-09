@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/tailwind4/DateRangeTimePicker/Basic";
+import BasicSource from "@examples/tailwind4/DateRangeTimePicker/Basic.tsx?raw";
+import Inline from "@examples/tailwind4/DateRangeTimePicker/Inline";
+import InlineSource from "@examples/tailwind4/DateRangeTimePicker/Inline.tsx?raw";
+
+# DateRangeTimePicker
+
+Komponent do wyboru zakresu dat i czasu z podwójnymi kalendarzami i panelami czasu dla początku i końca.
+
+## Podstawowe użycie
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Tryb wbudowany
+
+Wyświetla kalendarze i panele czasu wbudowane, bez elementu wyzwalającego wyskakujące okienko.
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

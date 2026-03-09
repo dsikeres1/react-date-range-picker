@@ -1,0 +1,106 @@
+---
+sidebar_position: 1
+title: Overview
+---
+
+import PackageInstall from "@/components/PackageInstall.astro";
+
+# Headless
+
+แพ็คเกจ headless (`react-date-range-picker-headless`) มี hooks และ context providers ที่ไม่มีสไตล์มาให้ มันมีการจัดการ state, ตรรกะของปฏิทิน, การนำทางด้วยคีย์บอร์ด, และฟีเจอร์การเข้าถึงทั้งหมด -- แต่ไม่มี CSS และไม่มีความคิดเห็นเกี่ยวกับมาร์กอัป
+
+คุณนำ UI ของคุณมาเอง
+
+## การติดตั้ง
+
+<PackageInstall pkg="react-date-range-picker-headless" />
+
+## เมื่อใดที่ควรใช้ Headless
+
+- คุณมีระบบการออกแบบ (design system) พร้อมไลบรารีคอมโพเนนต์ของตัวเอง
+- คุณต้องการควบคุมทุกองค์ประกอบได้อย่างสมบูรณ์แบบ (pixel-perfect)
+- คุณกำลังสร้างตัวเลือกวันที่แบบกำหนดเองสำหรับกรณีการใช้งานเฉพาะ
+- คุณต้องการผสานรวมกับ CSS framework ที่ไม่มีในแพ็คเกจที่จัดสไตล์ไว้ให้
+
+หากคุณต้องการคอมโพเนนต์ที่จัดสไตล์พร้อมใช้งาน โปรดดูที่ [Styled](/docs/styled/getting-started), [Tailwind v4](/docs/tailwind4/getting-started), หรือ [Tailwind v3](/docs/tailwind3/getting-started) แทน
+
+## มันทำงานอย่างไร
+
+1. เลือก hook ตามกรณีการใช้งานของคุณ
+2. ส่ง options (value, onChange, config)
+3. รับ state และ handlers กลับมา
+4. แสดงผล UI ของคุณเองโดยใช้ค่าที่ได้กลับมา
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  const {
+    isOpen,
+    calendar,
+    getDayProps,
+    displayValue,
+    handleToggle,
+    handleDateClick,
+    handleConfirm,
+    handlePrevMonth,
+    handleNextMonth,
+    locale,
+  } = useDatePicker({ value, onChange: setValue });
+
+  return (
+    <div>
+      <button onClick={handleToggle}>{displayValue || locale.placeholder}</button>
+      {isOpen && (
+        <div>
+          <div>
+            <button onClick={handlePrevMonth}>{locale.prevMonth}</button>
+            <span>{locale.formatMonthYear(calendar.month)}</span>
+            <button onClick={handleNextMonth}>{locale.nextMonth}</button>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}>
+            {calendar.weeks.flat().map((day, i) => {
+              if (!day) return <span key={i} />;
+              const props = getDayProps(day);
+              return (
+                <button
+                  key={i}
+                  onClick={() => handleDateClick(day)}
+                  style={{
+                    background: props.isSelected ? "#0ea5e9" : "transparent",
+                    color: props.isDisabled ? "#ccc" : props.isToday ? "#0ea5e9" : "inherit",
+                  }}
+                >
+                  {props.day}
+                </button>
+              );
+            })}
+          </div>
+          <button onClick={handleConfirm}>{locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Hooks ที่มีให้ใช้งาน
+
+| Hook                                                                         | กรณีการใช้งาน                        |
+| ---------------------------------------------------------------------------- | ------------------------------------ |
+| [`useDatePicker`](/docs/headless/hooks/use-date-picker)                      | การเลือกวันที่เดียว                  |
+| [`useDateRangePicker`](/docs/headless/hooks/use-date-range-picker)           | การเลือกช่วงวันที่พร้อมปฏิทินคู่     |
+| [`useDateTimePicker`](/docs/headless/hooks/use-date-time-picker)             | การเลือกวันที่ + เวลา                |
+| [`useDateRangeTimePicker`](/docs/headless/hooks/use-date-range-time-picker)  | การเลือกช่วงวันที่ + เวลา            |
+| [`useTimePicker`](/docs/headless/hooks/use-time-picker)                      | วงล้อเลื่อนสำหรับเวลาเท่านั้น        |
+| [`useStandaloneTimePicker`](/docs/headless/hooks/use-standalone-time-picker) | ตัวเลือกเวลาที่มีพฤติกรรมการเปิด/ปิด |
+
+## ขั้นตอนถัดไป
+
+- [การสร้าง UI แบบกำหนดเอง](/docs/headless/building-custom-ui) -- คำแนะนำฉบับเต็มเกี่ยวกับรูปแบบ headless
+- [ข้อมูลอ้างอิง Hooks](/docs/headless/hooks/use-date-picker) -- เอกสาร hook โดยละเอียด
+- [Contexts](/docs/headless/contexts) -- รูปแบบ Provider สำหรับคอมโพเนนต์แบบผสม
+- [ยูทิลิตี้เกี่ยวกับวันที่](/docs/headless/date-utilities) -- ฟังก์ชันช่วยเหลือที่ส่งออกจาก headless

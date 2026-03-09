@@ -1,0 +1,32 @@
+---
+sidebar_position: 6
+sidebar_label: Time Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundTimePicker from "@examples/tailwind4/Customization/CompoundTimePicker";
+import CompoundTimePickerSource from "@examples/tailwind4/Customization/CompoundTimePicker.tsx?raw";
+import CompoundTimePickerTwelveHour from "@examples/tailwind4/Customization/CompoundTimePickerTwelveHour";
+import CompoundTimePickerTwelveHourSource from "@examples/tailwind4/Customization/CompoundTimePickerTwelveHour.tsx?raw";
+
+# Próbnik Czasu
+
+Użyj złożonych komponentów `TimePicker`, aby zbudować niestandardowy interfejs wyboru czasu. Ten przykład zastępuje domyślny wyzwalacz stylizowanym przyciskiem, zachowując standardowy panel czasu i stopkę.
+
+<CodeDemo source={CompoundTimePickerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundTimePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Format 12-godzinny
+
+Skonfiguruj format 12-godzinny za pomocą `time`:
+
+<CodeDemo source={CompoundTimePickerTwelveHourSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundTimePickerTwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

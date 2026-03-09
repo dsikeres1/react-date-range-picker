@@ -1,0 +1,52 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/styled/DatePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/styled/DatePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/styled/DatePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DatePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/styled/DatePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DatePicker/FormIntegration.tsx?raw";
+
+# Zachowanie
+
+## Zamykanie po wyborze
+
+Gdy opcja `shouldCloseOnSelect` jest włączona, wybór daty powoduje automatyczne zatwierdzenie i zamknięcie kalendarza.
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Wiele miesięcy
+
+Wyświetlaj wiele miesięcy obok siebie.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Integracja z formularzem
+
+Użyj propa `name`, aby dodać ukryte pole (input) do natywnej obsługi formularzy.
+
+<Admonition type="tip">
+  Style przycisku "Wyślij" w tym przykładzie są niestandardowe — biblioteka dostarcza tylko
+  komponent wyboru daty.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

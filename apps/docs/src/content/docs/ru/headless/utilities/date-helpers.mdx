@@ -1,0 +1,230 @@
+---
+sidebar_position: 1
+title: Date Helpers
+---
+
+# Утилиты для работы с датами
+
+Пакет headless экспортирует набор нативных вспомогательных функций для работы с `Date`. Они заменяют необходимость в библиотеках, таких как dayjs или date-fns — библиотека не имеет внешних зависимостей для работы с датами.
+
+Все функции являются чистыми (они возвращают новые объекты Date, а не изменяют входные данные).
+
+## Импорт
+
+```tsx
+import {
+  today,
+  parseDate,
+  startOf,
+  endOf,
+  add,
+  subtract,
+  isSame,
+  isBefore,
+  isAfter,
+  diff,
+  daysInMonth,
+  setYear,
+  setMonth,
+  setDate,
+  setHour,
+  setMinute,
+  setSecond,
+  formatBasic,
+} from "react-date-range-picker-headless";
+```
+
+## Тип DateUnit
+
+Большинство функций принимают параметр `DateUnit`:
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```
+
+## Функции
+
+### today
+
+Возвращает текущую дату/время.
+
+```tsx
+const now = today(); // new Date()
+```
+
+### parseDate
+
+Разбирает значение в объект Date. Возвращает `new Date()`, если входное значение ложно.
+
+```tsx
+parseDate("2026-03-01"); // Date
+parseDate(1709251200000); // Date from timestamp
+parseDate(existingDate); // Clone
+parseDate(null); // new Date() (fallback)
+```
+
+**Сигнатура:** `parseDate(date?: Date | string | number | null): Date`
+
+### startOf
+
+Получить начало единицы времени.
+
+```tsx
+startOf(date, "day"); // 2026-03-01 00:00:00.000
+startOf(date, "month"); // 2026-03-01 00:00:00.000
+startOf(date, "year"); // 2026-01-01 00:00:00.000
+startOf(date, "week"); // Start of week (default Sunday)
+startOf(date, "week", 1); // Start of week (Monday)
+```
+
+**Сигнатура:** `startOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### endOf
+
+Получить конец единицы времени.
+
+```tsx
+endOf(date, "day"); // 2026-03-01 23:59:59.999
+endOf(date, "month"); // 2026-03-31 23:59:59.999
+endOf(date, "year"); // 2026-12-31 23:59:59.999
+```
+
+**Сигнатура:** `endOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### add
+
+Добавить промежуток времени к дате.
+
+```tsx
+add(date, 1, "day"); // Tomorrow
+add(date, 3, "month"); // 3 months later
+add(date, -1, "year"); // 1 year ago
+add(date, 2, "hour"); // 2 hours later
+```
+
+Обрабатывает переполнение месяцев (например, 31 января + 1 месяц = 28 февраля, а не 3 марта).
+
+**Сигнатура:** `add(date: Date, amount: number, unit: DateUnit): Date`
+
+### subtract
+
+Вычесть промежуток времени из даты. Эквивалентно `add(date, -amount, unit)`.
+
+```tsx
+subtract(date, 7, "day"); // 7 days ago
+subtract(date, 1, "month"); // 1 month ago
+```
+
+**Сигнатура:** `subtract(date: Date, amount: number, unit: DateUnit): Date`
+
+### isSame
+
+Проверить, совпадают ли две даты с заданной точностью.
+
+```tsx
+isSame(date1, date2, "day"); // Same calendar day?
+isSame(date1, date2, "month"); // Same month?
+isSame(date1, date2, "year"); // Same year?
+isSame(null, date2, "day"); // false (null-safe)
+```
+
+**Сигнатура:** `isSame(date1: Date | null | undefined, date2: Date | null | undefined, unit?: DateUnit): boolean`
+
+### isBefore
+
+Проверить, является ли первая дата более ранней, чем вторая, с заданной точностью.
+
+```tsx
+isBefore(date1, date2, "day"); // Is date1 on an earlier day?
+isBefore(date1, date2); // Millisecond comparison
+```
+
+**Сигнатура:** `isBefore(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### isAfter
+
+Проверить, является ли первая дата более поздней, чем вторая, с заданной точностью.
+
+```tsx
+isAfter(date1, date2, "day"); // Is date1 on a later day?
+```
+
+**Сигнатура:** `isAfter(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### diff
+
+Получить разницу между двумя датами в заданной единице.
+
+```tsx
+diff(date1, date2, "day"); // Number of days between
+diff(date1, date2, "month"); // Number of months between
+diff(date1, date2, "year"); // Number of years between
+```
+
+**Сигнатура:** `diff(diff(date1: Date, date2: Date, unit: DateUnit): number)`
+
+### daysInMonth
+
+Получить количество дней в месяце для указанной даты.
+
+```tsx
+daysInMonth(new Date(2026, 1)); // 28 (February 2026)
+daysInMonth(new Date(2026, 0)); // 31 (January 2026)
+```
+
+**Сигнатура:** `daysInMonth(date: Date): number`
+
+### setYear / setMonth / setDate / setHour / setMinute / setSecond
+
+Установить определенную часть даты, возвращая новый объект Date.
+
+```tsx
+setYear(date, 2027); // Change year to 2027
+setMonth(date, 5); // Change to June (0-indexed)
+setDate(date, 15); // Change to 15th
+setHour(date, 14); // Change to 2 PM
+setMinute(date, 30); // Change to :30
+setSecond(date, 0); // Change to :00
+```
+
+`setYear` и `setMonth` обрабатывают переполнение (например, 29 февраля в високосном году, установленное для невисокосного года, округляется до 28 февраля).
+
+**Сигнатуры:**
+
+- `setYear(date: Date, year: number): Date`
+- `setMonth(date: Date, month: number): Date`
+- `setDate(date: Date, day: number): Date`
+- `setHour(date: Date, hour: number): Date`
+- `setMinute(date: Date, minute: number): Date`
+- `setSecond(date: Date, second: number): Date`
+
+### formatBasic
+
+Отформатировать дату, используя строку шаблона.
+
+```tsx
+formatBasic(date, "YYYY-MM-DD"); // "2026-03-01"
+formatBasic(date, "YYYY/MM/DD HH:mm:ss"); // "2026/03/01 14:30:00"
+formatBasic(date, "M/D"); // "3/1"
+formatBasic(date, "hh:mm A"); // Note: A token not supported, use period from hook
+```
+
+**Поддерживаемые токены:**
+
+| Токен  | Вывод                     | Пример |
+| ------ | ------------------------- | ------ |
+| `YYYY` | 4-значный год             | `2026` |
+| `MM`   | 2-значный месяц           | `03`   |
+| `M`    | Месяц (без дополнения)    | `3`    |
+| `DD`   | 2-значный день            | `01`   |
+| `D`    | День (без дополнения)     | `1`    |
+| `HH`   | 2-значный час (24ч)       | `14`   |
+| `H`    | Час (24ч, без дополнения) | `14`   |
+| `hh`   | 2-значный час (12ч)       | `02`   |
+| `h`    | Час (12ч, без дополнения) | `2`    |
+| `mm`   | 2-значная минута          | `30`   |
+| `m`    | Минута (без дополнения)   | `30`   |
+| `ss`   | 2-значная секунда         | `05`   |
+| `s`    | Секунда (без дополнения)  | `5`    |
+
+**Сигнатура:** `formatBasic(date: Date, format: string): string`

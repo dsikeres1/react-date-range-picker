@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind4/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind4/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind4/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind4/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind4/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind4/Customization/CompoundWebFonts.tsx?raw";
+
+# Tipografi
+
+Tailwind v4 paketi, Tailwind'in varsayılan `font-sans` sınıfını (`ui-sans-serif, system-ui, sans-serif, ...`) kullanır. CSS `font-family` özelliği kalıtım yoluyla geçtiği için, seçicinin yazı tipini bir `fontFamily` stiline sahip bir kapsayıcı ile sarmalayarak geçersiz kılabilirsiniz. Kapsayıcının yazı tipi, tüm seçici öğelerine kademeli olarak uygulanır.
+
+## Yazı Tipi Ailesi
+
+Yazı tiplerini değiştirmek için seçiciyi sarın ve sarmalayıcı üzerinde `fontFamily` ayarlayın:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Web Yazı Tiplerini Kullanma (Noto Sans)
+
+Çalışma zamanında bir web yazı tipi yükleyin ve bir sarmalayıcı aracılığıyla uygulayın. Bu örnek, Google Fonts'tan [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) yazı tipini yükler:
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="Üretim ortamında kullanım">
+Gerçek bir projede, yazı tipini çalışma zamanında enjekte etmek yerine HTML'inizin `<head>` bölümündeki bir `<link>` etiketi aracılığıyla veya CSS paketleyiciniz üzerinden yükleyin. Buradaki `useEffect` yaklaşımı yalnızca tanıtım amaçlıdır.
+</Admonition>
+
+## Web Yazı Tipi Galerisi
+
+Tipografinin seçicinin görünümünü ne kadar çarpıcı bir şekilde değiştirdiğini görmek için farklı web yazı tiplerini karşılaştırın. Aşağıdaki tüm yazı tipleri çok dilli işlemeyi (Latin, CJK, Korece) destekler.
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

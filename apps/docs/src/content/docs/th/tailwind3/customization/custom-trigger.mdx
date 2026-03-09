@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind3/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind3/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind3/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# ทริกเกอร์แบบกำหนดเอง
+
+แทนที่ทริกเกอร์เริ่มต้นด้วยองค์ประกอบของคุณเองโดยใช้ render prop คอมโพเนนต์ `Trigger` ยอมรับฟังก์ชันลูกที่รับสถานะและ callbacks ช่วยให้คุณสามารถเรนเดอร์ปุ่มหรืออินพุตที่กำหนดเองได้
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render Props ของทริกเกอร์
+
+| Prop           | ประเภท           | คำอธิบาย                               |
+| -------------- | ---------------- | -------------------------------------- |
+| `displayValue` | `string`         | วันที่ที่เลือกในรูปแบบที่จัดรูปแบบแล้ว |
+| `placeholder`  | `string`         | ข้อความ Placeholder                    |
+| `hasValue`     | `boolean`        | สถานะว่ามีการเลือกวันที่หรือไม่        |
+| `isOpen`       | `boolean`        | สถานะว่าป๊อปอัปเปิดอยู่หรือไม่         |
+| `onToggle`     | `() => void`     | สลับการเปิด/ปิดป๊อปอัป                 |
+| `onClear`      | `() => void`     | ล้างค่าที่เลือก                        |
+| `locale`       | `Locale`         | อ็อบเจกต์ locale ปัจจุบัน              |
+| `triggerRef`   | `(node) => void` | Ref callback สำหรับการจัดตำแหน่ง       |
+
+## ทริกเกอร์สำหรับตัวเลือกช่วงวันที่
+
+รูปแบบเดียวกันนี้ใช้ได้กับ `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,79 @@
+---
+sidebar_position: 4
+sidebar_label: "Custom Footer"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/styled/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/styled/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/styled/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/styled/Customization/CompoundNoFooter.tsx?raw";
+
+# 自訂頁尾
+
+使用您自己的按鈕和佈局建立一個完全自訂的頁尾，或完全移除某些部分以獲得一個極簡的選擇器。
+
+## 重排頁尾
+
+重排頁尾按鈕或新增按鈕，例如 `TodayButton`。`DateTimePicker` 複合元件包含一個帶有 `TimePanel` 的 `TimeSection` 用於時間選擇，而 `Footer` 則作為操作按鈕的容器。
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+您也可以完全跳過內建的操作按鈕，並在 `Footer` 內使用您自己的元素：
+
+```tsx
+<DatePicker.Footer>
+  <button onClick={() => setValue(new Date())}>Set Today</button>
+  <button onClick={() => setValue(null)}>Clear</button>
+</DatePicker.Footer>
+```
+
+## 極簡佈局
+
+省略您不需要的任何部分。例如，一個沒有頁首、頁尾或觸發器的無標頭行內日曆：
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+或是一個沒有頁尾的選擇器：
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## 新增自訂 Class 名稱
+
+每個複合組件部分都接受一個 `className` prop，它會與預設的樣式化 CSS 類別合併：
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} className="my-picker">
+  <DatePicker.Trigger className="my-trigger" />
+  <DatePicker.Content className="my-content">
+    <DatePicker.Header className="my-header">
+      <DatePicker.PrevButton className="my-nav" />
+      <DatePicker.Title className="my-title" />
+      <DatePicker.NextButton className="my-nav" />
+    </DatePicker.Header>
+    <DatePicker.Grid className="my-grid" />
+  </DatePicker.Content>
+</DatePicker.Root>
+```

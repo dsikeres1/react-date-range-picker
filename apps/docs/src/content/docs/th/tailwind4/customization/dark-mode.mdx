@@ -1,0 +1,185 @@
+---
+sidebar_position: 9
+---
+
+# โหมดมืด
+
+แพ็คเกจ Tailwind v4 รองรับโหมดมืดผ่านระบบโทเค็นเชิงความหมาย (semantic token system) เนื่องจากสีทั้งหมดอ้างอิงถึงตัวแปร CSS การเปลี่ยนไปใช้โหมดมืดจึงเป็นเพียงการกำหนดค่าตัวแปรเหล่านั้นใหม่
+
+## วิธีการทำงาน
+
+คอมโพเนนต์ใช้คลาสอรรถประโยชน์เชิงความหมาย เช่น `bg-primary`, `text-foreground`, และ `border-border` ซึ่งจะแปลงเป็นตัวแปร CSS (`--color-primary`, `--color-foreground` เป็นต้น) ที่คุณกำหนดใน CSS ของโปรเจกต์ โหมดมืดทำงานโดยการกำหนดค่าทางเลือกสำหรับตัวแปรเหล่านี้ภายใต้ dark selector
+
+## การตั้งค่า
+
+### การใช้แอตทริบิวต์ `data-theme`
+
+กำหนดค่าโทเค็นสำหรับโหมดสว่างและโหมดมืดโดยใช้ `data-theme` selectors:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+
+[data-theme="dark"] {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+สลับโหมดมืดโดยการตั้งค่าแอตทริบิวต์:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div data-theme={dark ? "dark" : "light"}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+### การใช้คลาส `.dark`
+
+หากเฟรมเวิร์กของคุณใช้คลาส `.dark` (เช่น Next.js กับ `next-themes`) ให้กำหนดโทเค็นภายใต้คลาสนั้น:
+
+```css
+@theme {
+  /* Light tokens */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  /* ... */
+}
+```
+
+### การใช้การตั้งค่าของระบบ
+
+ใช้ `@media (prefers-color-scheme: dark)` เพื่อให้เป็นไปตามการตั้งค่าของระบบปฏิบัติการ:
+
+```css
+@theme {
+  /* Light tokens */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: oklch(0.145 0.004 285.823);
+    --color-foreground: oklch(0.985 0.001 285.823);
+    /* ... */
+  }
+}
+```
+
+## การผสานรวมกับ next-themes
+
+รูปแบบที่พบบ่อยเมื่อใช้ Next.js และ `next-themes`:
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+```css
+/* globals.css */
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  /* ... all light tokens */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  /* ... all dark tokens */
+}
+```
+
+ตัวเลือกวันที่ (picker) จะเลือกค่าโทเค็นที่ถูกต้องโดยอัตโนมัติตามธีมที่เปลี่ยนแปลง
+
+## จุดไฮไลต์ในโหมดมืด
+
+จุดไฮไลต์ใช้ `after:bg-amber-500 dark:after:bg-amber-400` (ซึ่งเป็นสีที่กำหนดไว้ตายตัวของ Tailwind ไม่ใช่โทเค็น) เพื่อให้แน่ใจว่าสามารถมองเห็นได้ชัดเจนในทั้งสองโหมด นี่เป็นสีเดียวในคอมโพเนนต์ที่ไม่ได้เป็นแบบเชิงความหมาย (non-semantic) หากคุณต้องการเปลี่ยนแปลง ให้ใช้ Compound Component API พร้อมกับการเรนเดอร์ `Day` แบบกำหนดเอง:
+
+```tsx
+<DatePicker.Day date={date}>
+  {(props) => (
+    <button /* ... */>
+      {props.day}
+      {props.isHighlighted && (
+        <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+      )}
+    </button>
+  )}
+</DatePicker.Day>
+```
+
+## การบังคับใช้โหมดที่ต้องการ
+
+หากต้องการบังคับใช้โหมดสว่างหรือมืดโดยไม่คำนึงถึงการตั้งค่าของระบบ ให้ตั้งค่าธีมโดยตรง:
+
+```tsx
+{
+  /* Always light */
+}
+<div data-theme="light">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Always dark */
+}
+<div data-theme="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```

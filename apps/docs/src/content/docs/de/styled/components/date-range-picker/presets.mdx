@@ -1,0 +1,20 @@
+---
+sidebar_position: 2
+sidebar_label: With Presets
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import WithPresets from "@examples/styled/DateRangePicker/WithPresets";
+import WithPresetsSource from "@examples/styled/DateRangePicker/WithPresets.tsx?raw";
+
+# Mit Voreinstellungen
+
+Definieren Sie voreingestellte Datumsbereiche für eine schnelle Auswahl. Jede Voreinstellung hat ein `label` und einen `value`, der ein statisches Objekt oder eine Funktion, die eines zurückgibt, sein kann.
+
+<CodeDemo source={WithPresetsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <WithPresets client:load />
+  </ExampleWrapper>
+</CodeDemo>

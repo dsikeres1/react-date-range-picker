@@ -1,0 +1,106 @@
+---
+sidebar_position: 1
+title: Overview
+---
+
+import PackageInstall from "@/components/PackageInstall.astro";
+
+# Headless
+
+Headless 包 (`react-date-range-picker-headless`) 提供无样式的钩子和上下文提供程序。它包含所有状态管理、日历逻辑、键盘导航和可访问性功能——但没有 CSS 和标记主张。
+
+你可以自带 UI。
+
+## 安装
+
+<PackageInstall pkg="react-date-range-picker-headless" />
+
+## 何时使用 Headless
+
+- 你有自己的组件库的设计系统
+- 你想要对每个元素进行像素级的完美控制
+- 你正在为特定用例构建自定义日期选择器
+- 你希望与样式化包未涵盖的 CSS 框架集成
+
+如果你想要开箱即用的样式化组件，请参阅 [Styled](/docs/styled/getting-started)、[Tailwind v4](/docs/tailwind4/getting-started) 或 [Tailwind v3](/docs/tailwind3/getting-started)。
+
+## 工作原理
+
+1. 根据你的用例选择一个钩子
+2. 传递选项 (`value`、`onChange`、`config`)
+3. 获取返回的状态和处理程序
+4. 使用返回的值渲染你自己的 UI
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  const {
+    isOpen,
+    calendar,
+    getDayProps,
+    displayValue,
+    handleToggle,
+    handleDateClick,
+    handleConfirm,
+    handlePrevMonth,
+    handleNextMonth,
+    locale,
+  } = useDatePicker({ value, onChange: setValue });
+
+  return (
+    <div>
+      <button onClick={handleToggle}>{displayValue || locale.placeholder}</button>
+      {isOpen && (
+        <div>
+          <div>
+            <button onClick={handlePrevMonth}>{locale.prevMonth}</button>
+            <span>{locale.formatMonthYear(calendar.month)}</span>
+            <button onClick={handleNextMonth}>{locale.nextMonth}</button>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}>
+            {calendar.weeks.flat().map((day, i) => {
+              if (!day) return <span key={i} />;
+              const props = getDayProps(day);
+              return (
+                <button
+                  key={i}
+                  onClick={() => handleDateClick(day)}
+                  style={{
+                    background: props.isSelected ? "#0ea5e9" : "transparent",
+                    color: props.isDisabled ? "#ccc" : props.isToday ? "#0ea5e9" : "inherit",
+                  }}
+                >
+                  {props.day}
+                </button>
+              );
+            })}
+          </div>
+          <button onClick={handleConfirm}>{locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## 可用的钩子
+
+| 钩子                                                                         | 用例                          |
+| ---------------------------------------------------------------------------- | ----------------------------- |
+| [`useDatePicker`](/docs/headless/hooks/use-date-picker)                      | 单个日期选择                  |
+| [`useDateRangePicker`](/docs/headless/hooks/use-date-range-picker)           | 带双日历的日期范围选择        |
+| [`useDateTimePicker`](/docs/headless/hooks/use-date-time-picker)             | 日期 + 时间选择               |
+| [`useDateRangeTimePicker`](/docs/headless/hooks/use-date-range-time-picker)  | 日期范围 + 时间选择           |
+| [`useTimePicker`](/docs/headless/hooks/use-time-picker)                      | 纯时间滚动选择器              |
+| [`useStandaloneTimePicker`](/docs/headless/hooks/use-standalone-time-picker) | 具有打开/关闭行为的时间选择器 |
+
+## 后续步骤
+
+- [Building Custom UI](/docs/headless/building-custom-ui) -- Headless 模式的完整演练
+- [Hooks Reference](/docs/headless/hooks/use-date-picker) -- 详细的钩子文档
+- [Contexts](/docs/headless/contexts) -- 用于复合组件的提供程序模式
+- [Date Utilities](/docs/headless/date-utilities) -- 从 headless 导出的辅助函数

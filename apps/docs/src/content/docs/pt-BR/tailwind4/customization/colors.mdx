@@ -1,0 +1,34 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind4/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind4/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind4/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind4/Customization/CompoundColorThemePopup.tsx?raw";
+
+# Cores
+
+Troque os temas de cores em tempo de execução sobrescrevendo as propriedades personalizadas de CSS em um elemento wrapper. Como o pacote Tailwind v4 lê todas as cores de tokens semânticos, alterar as variáveis CSS subjacentes reformula instantaneamente todo o seletor.
+
+O pacote Tailwind v4 usa o formato **oklch** para tokens semânticos. Sobrescreva `--color-primary` e `--color-primary-foreground` para reformular o seletor:
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Modo Popup
+
+A mesma técnica funciona com seletores popup:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

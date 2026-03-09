@@ -1,0 +1,230 @@
+---
+sidebar_position: 1
+title: Date Helpers
+---
+
+# 日期工具程式
+
+Headless 套件匯出一組原生的 `Date` 輔助函式。它們取代了對 dayjs 或 date-fns 等函式庫的需求——此函式庫沒有任何外部日期依賴項。
+
+所有函式都是純函式（它們會回傳新的 Date 物件，而不是修改輸入）。
+
+## 匯入
+
+```tsx
+import {
+  today,
+  parseDate,
+  startOf,
+  endOf,
+  add,
+  subtract,
+  isSame,
+  isBefore,
+  isAfter,
+  diff,
+  daysInMonth,
+  setYear,
+  setMonth,
+  setDate,
+  setHour,
+  setMinute,
+  setSecond,
+  formatBasic,
+} from "react-date-range-picker-headless";
+```
+
+## DateUnit 類型
+
+大多數函式都接受一個 `DateUnit` 參數：
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```
+
+## 函式
+
+### today
+
+回傳目前的日期/時間。
+
+```tsx
+const now = today(); // new Date()
+```
+
+### parseDate
+
+將一個值解析為 Date 物件。如果輸入為 falsy，則回傳 `new Date()`。
+
+```tsx
+parseDate("2026-03-01"); // Date
+parseDate(1709251200000); // Date from timestamp
+parseDate(existingDate); // Clone
+parseDate(null); // new Date() (fallback)
+```
+
+**簽名:** `parseDate(date?: Date | string | number | null): Date`
+
+### startOf
+
+取得一個時間單位的開始。
+
+```tsx
+startOf(date, "day"); // 2026-03-01 00:00:00.000
+startOf(date, "month"); // 2026-03-01 00:00:00.000
+startOf(date, "year"); // 2026-01-01 00:00:00.000
+startOf(date, "week"); // Start of week (default Sunday)
+startOf(date, "week", 1); // Start of week (Monday)
+```
+
+**簽名:** `startOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### endOf
+
+取得一個時間單位的結束。
+
+```tsx
+endOf(date, "day"); // 2026-03-01 23:59:59.999
+endOf(date, "month"); // 2026-03-31 23:59:59.999
+endOf(date, "year"); // 2026-12-31 23:59:59.999
+```
+
+**簽名:** `endOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### add
+
+將一段時間新增到日期中。
+
+```tsx
+add(date, 1, "day"); // Tomorrow
+add(date, 3, "month"); // 3 months later
+add(date, -1, "year"); // 1 year ago
+add(date, 2, "hour"); // 2 hours later
+```
+
+處理月份溢位（例如 1 月 31 日 + 1 個月 = 2 月 28 日，而不是 3 月 3 日）。
+
+**簽名:** `add(date: Date, amount: number, unit: DateUnit): Date`
+
+### subtract
+
+從日期中減去一段時間。相當於 `add(date, -amount, unit)`。
+
+```tsx
+subtract(date, 7, "day"); // 7 days ago
+subtract(date, 1, "month"); // 1 month ago
+```
+
+**簽名:** `subtract(date: Date, amount: number, unit: DateUnit): Date`
+
+### isSame
+
+檢查兩個日期在給定的時間單位精度下是否相同。
+
+```tsx
+isSame(date1, date2, "day"); // Same calendar day?
+isSame(date1, date2, "month"); // Same month?
+isSame(date1, date2, "year"); // Same year?
+isSame(null, date2, "day"); // false (null-safe)
+```
+
+**簽名:** `isSame(date1: Date | null | undefined, date2: Date | null | undefined, unit?: DateUnit): boolean`
+
+### isBefore
+
+在給定的精度下，檢查第一個日期是否在第二個日期之前。
+
+```tsx
+isBefore(date1, date2, "day"); // Is date1 on an earlier day?
+isBefore(date1, date2); // Millisecond comparison
+```
+
+**簽名:** `isBefore(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### isAfter
+
+在給定的精度下，檢查第一個日期是否在第二個日期之後。
+
+```tsx
+isAfter(date1, date2, "day"); // Is date1 on a later day?
+```
+
+**簽名:** `isAfter(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### diff
+
+取得兩個日期之間以給定單位表示的差異。
+
+```tsx
+diff(date1, date2, "day"); // Number of days between
+diff(date1, date2, "month"); // Number of months between
+diff(date1, date2, "year"); // Number of years between
+```
+
+**簽名:** `diff(date1: Date, date2: Date, unit: DateUnit): number`
+
+### daysInMonth
+
+取得一個日期的月份中的天數。
+
+```tsx
+daysInMonth(new Date(2026, 1)); // 28 (February 2026)
+daysInMonth(new Date(2026, 0)); // 31 (January 2026)
+```
+
+**簽名:** `daysInMonth(date: Date): number`
+
+### setYear / setMonth / setDate / setHour / setMinute / setSecond
+
+設定日期的特定部分，並回傳一個新的 Date。
+
+```tsx
+setYear(date, 2027); // Change year to 2027
+setMonth(date, 5); // Change to June (0-indexed)
+setDate(date, 15); // Change to 15th
+setHour(date, 14); // Change to 2 PM
+setMinute(date, 30); // Change to :30
+setSecond(date, 0); // Change to :00
+```
+
+`setYear` 和 `setMonth` 會處理溢位（例如，將閏年的 2 月 29 日設定為非閏年，會被限制為 2 月 28 日）。
+
+**簽名:**
+
+- `setYear(date: Date, year: number): Date`
+- `setMonth(date: Date, month: number): Date`
+- `setDate(date: Date, day: number): Date`
+- `setHour(date: Date, hour: number): Date`
+- `setMinute(date: Date, minute: number): Date`
+- `setSecond(date: Date, second: number): Date`
+
+### formatBasic
+
+使用範本字串格式化日期。
+
+```tsx
+formatBasic(date, "YYYY-MM-DD"); // "2026-03-01"
+formatBasic(date, "YYYY/MM/DD HH:mm:ss"); // "2026/03/01 14:30:00"
+formatBasic(date, "M/D"); // "3/1"
+formatBasic(date, "hh:mm A"); // Note: A token not supported, use period from hook
+```
+
+**支援的符號:**
+
+| 符號   | 輸出                     | 範例   |
+| ------ | ------------------------ | ------ |
+| `YYYY` | 4 位數年份               | `2026` |
+| `MM`   | 2 位數月份               | `03`   |
+| `M`    | 月份 (無填充)            | `3`    |
+| `DD`   | 2 位數日期               | `01`   |
+| `D`    | 日期 (無填充)            | `1`    |
+| `HH`   | 2 位數小時 (24 小時制)   | `14`   |
+| `H`    | 小時 (24 小時制，無填充) | `14`   |
+| `hh`   | 2 位數小時 (12 小時制)   | `02`   |
+| `h`    | 小時 (12 小時制，無填充) | `2`    |
+| `mm`   | 2 位數分鐘               | `30`   |
+| `m`    | 分鐘 (無填充)            | `30`   |
+| `ss`   | 2 位數秒鐘               | `05`   |
+| `s`    | 秒鐘 (無填充)            | `5`    |
+
+**簽名:** `formatBasic(date: Date, format: string): string`

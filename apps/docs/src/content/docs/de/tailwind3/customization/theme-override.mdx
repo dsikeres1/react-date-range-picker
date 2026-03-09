@@ -1,0 +1,209 @@
+---
+sidebar_position: 10
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Theme überschreiben
+
+Das Tailwind v3-Paket verwendet konkrete Tailwind-Utility-Klassen (z.B. `sky-500`, `slate-100`) für das gesamte Styling. Sie können das Erscheinungsbild anpassen, indem Sie das aus dem Paket exportierte Theme-Objekt überschreiben.
+
+## Standard-Theme
+
+Das Theme ist als eine Reihe von exportierten Objekten definiert, von denen jedes Klassennamen-Strings für einen Komponententeil enthält. Hier ist eine Übersicht über die Standard-Farbpalette:
+
+| Rolle               | Helle Klasse | Dunkle Klasse |
+| ------------------- | ------------ | ------------- |
+| Primär              | `sky-500`    | `sky-500`     |
+| Primärtext          | `sky-500`    | `sky-400`     |
+| Hintergrund         | `white`      | `slate-950`   |
+| Oberfläche Hover    | `slate-100`  | `slate-800`   |
+| Text                | `slate-900`  | `slate-50`    |
+| Gedämpfter Text     | `slate-500`  | `slate-400`   |
+| Rand                | `slate-200`  | `slate-800`   |
+| Bereich Hintergrund | `sky-50`     | `sky-950/50`  |
+| Gefahr              | `red-500`    | `red-600`     |
+
+## Theme-Objektstruktur
+
+Das Theme ist in mehrere benannte Exporte aufgeteilt:
+
+```ts
+import {
+  rootClassNames,
+  triggerClassNames,
+  headerClassNames,
+  gridClassNames,
+  dayClassNames,
+  footerClassNames,
+  contentClassNames,
+  rangeClassNames,
+  dateTimeClassNames,
+  timePanelClassNames,
+} from "react-date-range-picker-tailwind3";
+```
+
+Jedes Objekt enthält Schlüssel, die auf vollständige Tailwind-Klassen-Strings verweisen. Zum Beispiel:
+
+```ts
+// dayClassNames
+{
+  day: "flex items-center justify-center w-9 h-9 mx-[1px] rounded-md transition-colors cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 ...",
+  today: "font-bold text-sky-500 dark:text-sky-400",
+  selected: "bg-sky-500 dark:bg-sky-500 text-white font-semibold ...",
+  inRange: "bg-sky-50 dark:bg-sky-950/50 text-slate-900 dark:text-slate-50 rounded-none mx-0 ...",
+  rangeStart: "bg-sky-500 dark:bg-sky-500 text-white rounded-r-none mx-0 ...",
+  rangeEnd: "bg-sky-500 dark:bg-sky-500 text-white rounded-l-none mx-0 ...",
+  // ...
+}
+```
+
+## Überschreiben mit Compound-Komponenten
+
+Der einfachste Weg, das Theme anzupassen, ist über die Compound Component API. Jeder Teil akzeptiert eine `className`-Prop, die mit den Standardwerten mithilfe von `twMerge` zusammengeführt wird, sodass widersprüchliche Utilities korrekt aufgelöst werden.
+
+### Primärfarbe ändern
+
+Ersetzen Sie `sky` durch `violet` für den ausgewählten Tag und verwandte Zustände:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+function VioletPicker() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  return (
+    <DatePicker.Root value={value} onChange={setValue}>
+      <DatePicker.Trigger className="hover:border-violet-500/50 focus-visible:ring-violet-500 focus-visible:border-violet-500" />
+      <DatePicker.Content>
+        <DatePicker.Header>
+          <DatePicker.PrevButton className="focus-visible:ring-violet-500" />
+          <DatePicker.Title />
+          <DatePicker.NextButton className="focus-visible:ring-violet-500" />
+        </DatePicker.Header>
+        <DatePicker.Grid
+          dayClassName="hover:bg-violet-50 dark:hover:bg-violet-950/50 focus-visible:ring-violet-500"
+          dayTodayClassName="text-violet-500 dark:text-violet-400"
+          daySelectedClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayInRangeClassName="bg-violet-50 dark:bg-violet-950/50 hover:bg-violet-100"
+          dayRangeStartClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayRangeEndClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayFocusedClassName="ring-violet-500"
+        />
+        <DatePicker.Footer>
+          <DatePicker.ClearButton />
+          <DatePicker.CancelButton />
+          <DatePicker.ConfirmButton className="bg-violet-500 hover:bg-violet-500/90 focus-visible:ring-violet-500" />
+        </DatePicker.Footer>
+      </DatePicker.Content>
+    </DatePicker.Root>
+  );
+}
+```
+
+### Eigener Hintergrund
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger className="bg-slate-50 dark:bg-slate-900" />
+  <DatePicker.Content className="bg-slate-50 dark:bg-slate-900">{/* ... */}</DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Ein benutzerdefiniertes Theme-Objekt erstellen
+
+Für ein app-weites Rebranding erstellen Sie eine Wrapper-Komponente, die Ihre benutzerdefinierten Klassen auf alle Teile anwendet:
+
+```tsx
+// components/MyDatePicker.tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+const myTheme = {
+  trigger: "hover:border-emerald-500/50 focus-visible:ring-emerald-500",
+  dayToday: "text-emerald-500 dark:text-emerald-400",
+  daySelected: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  dayInRange: "bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100",
+  dayRangeStart: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  dayRangeEnd: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  confirmButton: "bg-emerald-500 hover:bg-emerald-500/90 focus-visible:ring-emerald-500",
+  focusRing: "focus-visible:ring-emerald-500",
+};
+
+export function MyDatePicker(props) {
+  return (
+    <DatePicker.Root {...props}>
+      <DatePicker.Trigger className={myTheme.trigger} />
+      <DatePicker.Content>
+        <DatePicker.Header>
+          <DatePicker.PrevButton className={myTheme.focusRing} />
+          <DatePicker.Title />
+          <DatePicker.NextButton className={myTheme.focusRing} />
+        </DatePicker.Header>
+        <DatePicker.Grid
+          dayTodayClassName={myTheme.dayToday}
+          daySelectedClassName={myTheme.daySelected}
+          dayInRangeClassName={myTheme.dayInRange}
+          dayRangeStartClassName={myTheme.dayRangeStart}
+          dayRangeEndClassName={myTheme.dayRangeEnd}
+          dayFocusedClassName={myTheme.focusRing}
+        />
+        <DatePicker.Footer>
+          <DatePicker.ClearButton />
+          <DatePicker.CancelButton />
+          <DatePicker.ConfirmButton className={myTheme.confirmButton} />
+        </DatePicker.Footer>
+      </DatePicker.Content>
+    </DatePicker.Root>
+  );
+}
+```
+
+Verwenden Sie es in Ihrer gesamten App:
+
+```tsx
+<MyDatePicker value={date} onChange={setDate} />
+```
+
+## Grid-Tagesklassen-Props
+
+Die `Grid`-Komponente gibt tagesbezogene className-Props an jede `Day`-Zelle weiter. Dies sind die verfügbaren Überschreibungen:
+
+| Prop                      | Standard-Klassenmuster      | Beschreibung                      |
+| ------------------------- | --------------------------- | --------------------------------- |
+| `dayClassName`            | Basis-Tagesstile            | Basisklassen für alle Tageszellen |
+| `dayTodayClassName`       | `text-sky-500`              | Heutige-Tag-Anzeige               |
+| `daySelectedClassName`    | `bg-sky-500 text-white`     | Ausgewählter Tag                  |
+| `dayDisabledClassName`    | `opacity-50`                | Deaktivierte Tage                 |
+| `dayOutsideClassName`     | `text-slate-500/50`         | Tage außerhalb des Monats         |
+| `dayHighlightedClassName` | `after:bg-amber-500`        | Hervorhebungspunkt                |
+| `dayInRangeClassName`     | `bg-sky-50`                 | Tage innerhalb des Bereichs       |
+| `dayRangeStartClassName`  | `bg-sky-500 rounded-r-none` | Starttag des Bereichs             |
+| `dayRangeEndClassName`    | `bg-sky-500 rounded-l-none` | Endtag des Bereichs               |
+| `dayRangeSingleClassName` | `bg-sky-500`                | Einzeltagesbereich                |
+| `dayHoverRangeClassName`  | `bg-sky-50/50`              | Hover-Vorschaubereich             |
+| `dayHoverTargetClassName` | `bg-sky-100`                | Hover-Endpunkt                    |
+| `dayFocusedClassName`     | `ring-sky-500`              | Tastaturfokusring                 |
+| `dayEmptyClassName`       | `invisible`                 | Platzhalter für leere Zelle       |
+
+## Tailwind Content-Pfad
+
+Wenn Sie mit benutzerdefinierten Farbklassen überschreiben, stellen Sie sicher, dass diese in Ihren Tailwind Content-Pfaden enthalten sind. Klassen, die in Ihren Komponentendateien definiert sind, werden standardmäßig gescannt, aber wenn Sie sie in einer separaten Konfigurationsdatei definieren, fügen Sie diesen Pfad ebenfalls hinzu:
+
+```js
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+    // Fügen Sie Ihre Theme-Konfiguration hinzu, wenn sie in einer separaten Datei ist
+    "./src/config/date-picker-theme.ts",
+  ],
+};
+```
+
+<Admonition type="tip">
+  Wenn Sie semantisches, auf Tokens basierendes Theming (wie shadcn/ui) anstelle von konkreten
+  Farbklassen wünschen, ziehen Sie die Verwendung des [Tailwind
+  v4-Pakets](/docs/tailwind4/getting-started) in Betracht, das auf CSS-Variablen basierende
+  semantische Tokens verwendet.
+</Admonition>

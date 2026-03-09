@@ -1,0 +1,20 @@
+---
+sidebar_position: 2
+sidebar_label: With Presets
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import WithPresets from "@examples/tailwind4/DateRangeTimePicker/WithPresets";
+import WithPresetsSource from "@examples/tailwind4/DateRangeTimePicker/WithPresets.tsx?raw";
+
+# 预设范围
+
+将时间选择与预设日期范围相结合，以便快速选择。
+
+<CodeDemo source={WithPresetsSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <WithPresets client:load />
+  </ExampleWrapper>
+</CodeDemo>

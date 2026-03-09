@@ -1,0 +1,214 @@
+---
+sidebar_position: 2
+sidebar_label: "CSS Variables"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomColors from "@examples/styled/Customization/CustomColors";
+import CustomColorsSource from "@examples/styled/Customization/CustomColors.tsx?raw";
+import CustomFont from "@examples/styled/Customization/CustomFont";
+import CustomFontSource from "@examples/styled/Customization/CustomFont.tsx?raw";
+import CustomBorderRadius from "@examples/styled/Customization/CustomBorderRadius";
+import CustomBorderRadiusSource from "@examples/styled/Customization/CustomBorderRadius.tsx?raw";
+import CustomSize from "@examples/styled/Customization/CustomSize";
+import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw";
+
+# CSS変数
+
+`styled`パッケージは、すべての視覚的な値にCSSカスタムプロパティ（変数）を使用します。コンポーネントのコードに触れることなく外観をカスタマイズするには、`.rdrp-root`または任意の親要素でこれらを上書きします。
+
+## 上書き方法
+
+すべての変数は`.rdrp-root`のスコープ内にあります。独自のCSSでこれらを上書きします：
+
+```css
+/* カスタムテーマ */
+.rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-border-radius-lg: 12px;
+}
+```
+
+または、ラッパークラスを使用して特定のインスタンスに上書きをスコープします：
+
+```css
+.my-purple-picker .rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-color-primary-light: #ede9fe;
+  --rdrp-color-primary-lighter: #f5f3ff;
+}
+```
+
+```tsx
+<div className="my-purple-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## 変数リファレンス
+
+### 色
+
+| 変数                            | デフォルト (ライト)        | 説明                                                   |
+| ------------------------------- | -------------------------- | ------------------------------------------------------ |
+| `--rdrp-color-primary`          | `#3b82f6`                  | プライマリアクションカラー（選択された日、確認ボタン） |
+| `--rdrp-color-primary-hover`    | `#2563eb`                  | プライマリホバー状態                                   |
+| `--rdrp-color-primary-light`    | `#dbeafe`                  | 範囲の背景、薄いプライマリアクセント                   |
+| `--rdrp-color-primary-lighter`  | `#eff6ff`                  | アクティブなプリセットの背景                           |
+| `--rdrp-color-primary-disabled` | `#93c5fd`                  | 無効化された確認ボタン                                 |
+| `--rdrp-color-bg`               | `#ffffff`                  | 背景色                                                 |
+| `--rdrp-color-bg-hover`         | `#f3f4f6`                  | 日、ボタンのホバー背景                                 |
+| `--rdrp-color-bg-subtle`        | `#f9fafb`                  | 薄い背景                                               |
+| `--rdrp-color-text`             | `#374151`                  | デフォルトのテキストカラー                             |
+| `--rdrp-color-text-strong`      | `#111827`                  | 強いテキスト（タイトル、アクティブな時間）             |
+| `--rdrp-color-text-muted`       | `#6b7280`                  | ミュートされたテキスト（ナビゲーションボタン、ラベル） |
+| `--rdrp-color-text-placeholder` | `#6b7280`                  | プレースホルダーテキスト                               |
+| `--rdrp-color-text-disabled`    | `#d1d5db`                  | 無効な日のテキスト                                     |
+| `--rdrp-color-text-outside`     | `#9ca3af`                  | 月外の日                                               |
+| `--rdrp-color-text-inverse`     | `#ffffff`                  | プライマリ背景上のテキスト                             |
+| `--rdrp-color-text-danger`      | `#ef4444`                  | クリア/危険ボタンのテキスト                            |
+| `--rdrp-color-text-today`       | `#2563eb`                  | 今日のインジケーターカラー                             |
+| `--rdrp-color-border`           | `#d1d5db`                  | デフォルトの境界線                                     |
+| `--rdrp-color-border-light`     | `#e5e7eb`                  | 薄い境界線（ポップアップ、セレクト）                   |
+| `--rdrp-color-border-subtle`    | `#f3f4f6`                  | 薄い境界線（フッター、プリセット）                     |
+| `--rdrp-color-border-hover`     | `#93c5fd`                  | 境界線のホバー状態                                     |
+| `--rdrp-color-highlight-dot`    | `#f59e0b`                  | ハイライトドットの色                                   |
+| `--rdrp-highlight-dot-size`     | `4px`                      | ハイライトドットの直径                                 |
+| `--rdrp-color-range-bg`         | `#dbeafe`                  | 範囲内の日の背景                                       |
+| `--rdrp-color-hover-range-bg`   | `#eff6ff`                  | ホバー範囲プレビューの背景                             |
+| `--rdrp-color-hover-target-bg`  | `#bfdbfe`                  | ホバーエンドポイントの背景                             |
+| `--rdrp-color-time-highlight`   | `rgba(59, 130, 246, 0.08)` | 時間パネルのハイライトバー                             |
+
+### タイポグラフィ
+
+| 変数                          | デフォルト        | 説明                                 |
+| ----------------------------- | ----------------- | ------------------------------------ |
+| `--rdrp-font-family`          | System font stack | フォントファミリー                   |
+| `--rdrp-font-size-xs`         | `11px`            | 極小（スモールサイズの曜日ヘッダー） |
+| `--rdrp-font-size-sm`         | `12px`            | 小（曜日ヘッダー、ラベル）           |
+| `--rdrp-font-size-base`       | `13px`            | 基本（日のセル、ボタン）             |
+| `--rdrp-font-size-md`         | `14px`            | 中（トリガー、時間アイテム）         |
+| `--rdrp-font-size-lg`         | `15px`            | 大（ヘッダータイトル）               |
+| `--rdrp-font-weight-normal`   | `400`             | 通常の太さ                           |
+| `--rdrp-font-weight-medium`   | `500`             | 中程度の太さ                         |
+| `--rdrp-font-weight-semibold` | `600`             | セミボールドの太さ                   |
+| `--rdrp-font-weight-bold`     | `700`             | 太字（今日のインジケーター）         |
+
+### 間隔
+
+| 変数                 | デフォルト | 説明          |
+| -------------------- | ---------- | ------------- |
+| `--rdrp-spacing-xs`  | `2px`      | 極小の間隔    |
+| `--rdrp-spacing-sm`  | `4px`      | 小さい間隔    |
+| `--rdrp-spacing-md`  | `8px`      | 中程度の間隔  |
+| `--rdrp-spacing-lg`  | `12px`     | 大きい間隔    |
+| `--rdrp-spacing-xl`  | `16px`     | 特大の間隔    |
+| `--rdrp-spacing-2xl` | `24px`     | 2倍特大の間隔 |
+
+### 境界線
+
+| 変数                        | デフォルト | 説明                             |
+| --------------------------- | ---------- | -------------------------------- |
+| `--rdrp-border-radius-sm`   | `4px`      | 小さい半径                       |
+| `--rdrp-border-radius-md`   | `6px`      | 中程度の半径（ボタン、セレクト） |
+| `--rdrp-border-radius-lg`   | `8px`      | 大きい半径（日、トリガー）       |
+| `--rdrp-border-radius-xl`   | `12px`     | 特大の半径（ポップアップ）       |
+| `--rdrp-border-radius-full` | `9999px`   | 完全な半径（ハイライトドット）   |
+| `--rdrp-border-width`       | `1px`      | 境界線の幅                       |
+
+### 影
+
+| 変数                   | デフォルト                    | 説明                 |
+| ---------------------- | ----------------------------- | -------------------- |
+| `--rdrp-shadow-popup`  | `0 10px 25px rgba(0,0,0,0.1)` | ポップアップの影     |
+| `--rdrp-shadow-inline` | `0 4px 12px rgba(0,0,0,0.06)` | インラインモードの影 |
+| `--rdrp-shadow-sm`     | `0 2px 6px rgba(0,0,0,0.04)`  | 小さい影             |
+
+### サイズ
+
+| 変数                       | デフォルト | 説明                             |
+| -------------------------- | ---------- | -------------------------------- |
+| `--rdrp-cell-size`         | `36px`     | 日のセルの幅/高さ                |
+| `--rdrp-nav-btn-size`      | `28px`     | ナビゲーションボタンのサイズ     |
+| `--rdrp-weekday-height`    | `28px`     | 曜日ヘッダー行の高さ             |
+| `--rdrp-grid-min-height`   | `216px`    | カレンダーグリッドの最小の高さ   |
+| `--rdrp-panel-min-width`   | `252px`    | 単一カレンダーパネルの幅         |
+| `--rdrp-dual-gap`          | `24px`     | デュアルカレンダー間のギャップ   |
+| `--rdrp-trigger-min-width` | `200px`    | トリガーボタンの最小幅           |
+| `--rdrp-trigger-padding-x` | `14px`     | トリガーの水平パディング         |
+| `--rdrp-trigger-padding-y` | `8px`      | トリガーの垂直パディング         |
+| `--rdrp-popup-padding`     | `16px`     | ポップアップの内側パディング     |
+| `--rdrp-popup-gap`         | `6px`      | ポップアップコンテンツのギャップ |
+| `--rdrp-btn-padding-x`     | `14px`     | フッターボタンの水平パディング   |
+| `--rdrp-btn-padding-y`     | `6px`      | フッターボタンの垂直パディング   |
+| `--rdrp-preset-min-width`  | `140px`    | プリセットサイドバーの最小幅     |
+
+### タイムピッカー
+
+| 変数                          | デフォルト | 説明                         |
+| ----------------------------- | ---------- | ---------------------------- |
+| `--rdrp-time-item-height`     | `32px`     | 時間スクロールアイテムの高さ |
+| `--rdrp-time-panel-height`    | `176px`    | 時間パネルの合計の高さ       |
+| `--rdrp-time-column-height`   | `160px`    | スクロール可能な列の高さ     |
+| `--rdrp-time-panel-min-width` | `120px`    | 時間パネルの最小幅           |
+| `--rdrp-time-colon-width`     | `12px`     | コロン区切り文字の幅         |
+
+### Z-index
+
+| 変数                  | デフォルト | 説明                        |
+| --------------------- | ---------- | --------------------------- |
+| `--rdrp-z-popup`      | `50`       | ポップアップのz-index       |
+| `--rdrp-z-day-button` | `20`       | フォーカスされた日のz-index |
+
+### トランジション
+
+| 変数                       | デフォルト | 説明                                     |
+| -------------------------- | ---------- | ---------------------------------------- |
+| `--rdrp-transition-fast`   | `0.1s`     | 速いトランジション（日のホバー）         |
+| `--rdrp-transition-normal` | `0.15s`    | 通常のトランジション（トリガー、ボタン） |
+
+## ライブデモ
+
+### カスタムカラー（紫のテーマ）
+
+プライマリーカラー変数を上書きして、全く異なるカラースキームを作成します。この例では、紫/バイオレットトーンの**DatePicker**を使用しています。
+
+<CodeDemo source={CustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### カスタムフォント（セリフ）
+
+フォントはCSSを通じて継承されるため、ピッカーをカスタムの`font-family`を持つdivでラップすると、すべてのテキストに適用されます。この例では、Georgiaセリフフォントを使用した**DateRangePicker**を使用しています。
+
+<CodeDemo source={CustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### シャープな角（境界線半径なし）
+
+すべての境界線半径変数を`0px`に設定して、完全に四角い外観にします。
+
+<CodeDemo source={CustomBorderRadiusSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomBorderRadius client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### CSS変数によるカスタムサイズ
+
+組み込みの`size`プロパティを使用する代わりに、個々のサイズ変数を上書きして精密な制御を行います。この例では、カスタムのセルサイズとフォントサイズを持つ**DateRangePicker**を使用しています。
+
+<CodeDemo source={CustomSizeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSize client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,57 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/tailwind3/DateRangeTimePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/tailwind3/DateRangeTimePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/tailwind3/DateRangeTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind3/DateRangeTimePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/tailwind3/DateRangeTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind3/DateRangeTimePicker/FormIntegration.tsx?raw";
+
+# Verhalten
+
+## Bei Auswahl schließen
+
+Wenn `shouldCloseOnSelect` aktiviert ist, bestätigt und schließt der Picker automatisch, wenn eine Voreinstellung angeklickt wird.
+
+<Admonition type="info">
+  Bei Pickern mit aktivierter Zeitauswahl gilt `shouldCloseOnSelect` nur für Klicks auf
+  Voreinstellungen – nicht für Klicks auf Daten, da der Benutzer die Zeit noch einstellen muss.
+</Admonition>
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Mehrere Monate
+
+Zeigen Sie mehr als die standardmäßigen zwei Monate nebeneinander an.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Formularintegration
+
+Verwenden Sie die `name`-Prop, um versteckte Eingabefelder für die native Formularübermittlung einzuschließen.
+
+<Admonition type="tip">
+  Das Styling des Absende-Buttons in diesem Beispiel ist benutzerdefiniert – die Bibliothek stellt
+  nur den Datums-Picker zur Verfügung.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

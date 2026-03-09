@@ -1,0 +1,171 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Karanlık Mod
+
+Tailwind v3 paketi, Tailwind'in `dark:` varyantını kullanarak tam karanlık mod desteği içerir. Her bileşen öğesi, açıkça belirtilmiş karanlık mod sınıflarına sahiptir.
+
+## Nasıl Çalışır
+
+Tailwind v3 teması, baştan sona `dark:` varyantlarına sahip somut renk sınıfları kullanır. Örneğin:
+
+```
+bg-white dark:bg-slate-950
+text-slate-900 dark:text-slate-50
+border-slate-200 dark:border-slate-800
+```
+
+Karanlık mod, Tailwind'in `dark:` varyantı tetiklendiğinde etkinleşir; bu, Tailwind yapılandırmanızın `darkMode` stratejisine bağlıdır.
+
+## Tailwind Yapılandırması
+
+### Sınıf Stratejisi (Önerilen)
+
+Tailwind yapılandırmanızda `darkMode: "class"` ayarlayın. Karanlık mod, `<html>` etiketinde veya bir üst öğede `dark` sınıfı bulunduğunda etkinleşir:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+};
+```
+
+Karanlık modu değiştirin:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+Veya sınıfı `<html>` etiketine uygulayın:
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### Seçici Stratejisi
+
+Tailwind v3.4 ve üzeri, `[data-theme="dark"]` veya herhangi bir özel seçici kullanmanıza olanak tanıyan `darkMode: "selector"` özelliğini destekler:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### Medya Stratejisi
+
+İşletim sistemi tercihini takip etmek için `darkMode: "media"` ayarlayın (veya atlayın - bu varsayılandır):
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: "media",
+  // ...
+};
+```
+
+Ek bir kurulum gerekmez. Seçici, `prefers-color-scheme` özelliğini takip edecektir.
+
+## Renk Çiftleri
+
+Seçici boyunca kullanılan açık/karanlık renk çiftleri şunlardır:
+
+| Öğe            | Açık Mod            | Karanlık Mod                 |
+| -------------- | ------------------- | ---------------------------- |
+| Arka Plan      | `bg-white`          | `dark:bg-slate-950`          |
+| Metin          | `text-slate-900`    | `dark:text-slate-50`         |
+| Soluk metin    | `text-slate-500`    | `dark:text-slate-400`        |
+| Kenarlık       | `border-slate-200`  | `dark:border-slate-800`      |
+| Hover bg       | `bg-slate-100`      | `dark:bg-slate-800`          |
+| Birincil       | `bg-sky-500`        | `dark:bg-sky-500`            |
+| Birincil metin | `text-sky-500`      | `dark:text-sky-400`          |
+| Aralık bg      | `bg-sky-50`         | `dark:bg-sky-950/50`         |
+| Hover aralık   | `bg-sky-50/50`      | `dark:bg-sky-950/30`         |
+| Odak halkası   | `ring-sky-500`      | `ring-sky-500`               |
+| Halka ofseti   | `ring-offset-white` | `dark:ring-offset-slate-950` |
+
+## Docusaurus ile Entegrasyon
+
+Eğer Docusaurus kullanıyorsanız (`<html>` üzerinde `data-theme` kullanan), Tailwind'in seçici stratejisini yapılandırın:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  // ...
+};
+```
+
+Docusaurus, karanlık mod etkin olduğunda `<html data-theme="dark">` ayarlar ve Tailwind'in `dark:` varyantı bu seçicide tetiklenir.
+
+## next-themes ile Entegrasyon
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes`, `<html>` etiketine `dark` sınıfını ekler/kaldırır. Tailwind yapılandırmanızda `darkMode: "class"` ile seçici otomatik olarak değişir.
+
+## Belirli Bir Modu Zorlama
+
+Seçiciyi her zaman açık veya karanlık modu kullanmaya zorlamak için, onu uygun sınıfa sahip bir kapsayıcıya sarın:
+
+```tsx
+{
+  /* Her zaman açık — "dark" sınıfı atası yok */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Her zaman karanlık */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+`darkMode: "class"` kullanırken, `dark` sınıfı bir üst öğede veya `<html>` etiketinde olmalıdır. Seçicinin kendisi karanlık mod geçişini yönetmez.
+</Admonition>

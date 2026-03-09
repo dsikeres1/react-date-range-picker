@@ -1,0 +1,32 @@
+---
+sidebar_position: 6
+sidebar_label: "Time Picker"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundTimePicker from "@examples/styled/Customization/CompoundTimePicker";
+import CompoundTimePickerSource from "@examples/styled/Customization/CompoundTimePicker.tsx?raw";
+import CompoundTimePickerTwelveHour from "@examples/styled/Customization/CompoundTimePickerTwelveHour";
+import CompoundTimePickerTwelveHourSource from "@examples/styled/Customization/CompoundTimePickerTwelveHour.tsx?raw";
+
+# Sélecteur d'heure
+
+Utilisez l'API composée `TimePicker` pour créer un sélecteur d'heure personnalisé avec un déclencheur personnalisé.
+
+<CodeDemo source={CompoundTimePickerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundTimePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Format 12 heures
+
+Configurez le format 12 heures avec `time`:
+
+<CodeDemo source={CompoundTimePickerTwelveHourSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundTimePickerTwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

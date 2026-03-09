@@ -1,0 +1,32 @@
+---
+sidebar_position: 6
+sidebar_label: Time Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundTimePicker from "@examples/tailwind4/Customization/CompoundTimePicker";
+import CompoundTimePickerSource from "@examples/tailwind4/Customization/CompoundTimePicker.tsx?raw";
+import CompoundTimePickerTwelveHour from "@examples/tailwind4/Customization/CompoundTimePickerTwelveHour";
+import CompoundTimePickerTwelveHourSource from "@examples/tailwind4/Customization/CompoundTimePickerTwelveHour.tsx?raw";
+
+# ตัวเลือกเวลา
+
+ใช้คอมโพเนนต์ `TimePicker` เพื่อสร้าง UI การเลือกเวลาที่กำหนดเอง ตัวอย่างนี้จะแทนที่ทริกเกอร์เริ่มต้นด้วยปุ่มที่มีสไตล์ในขณะที่ยังคงแผงเวลาและส่วนท้ายมาตรฐานไว้
+
+<CodeDemo source={CompoundTimePickerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundTimePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## รูปแบบ 12 ชั่วโมง
+
+กำหนดค่ารูปแบบ 12 ชั่วโมงด้วย `time`:
+
+<CodeDemo source={CompoundTimePickerTwelveHourSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundTimePickerTwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

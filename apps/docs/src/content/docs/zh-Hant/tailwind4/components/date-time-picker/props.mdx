@@ -1,0 +1,55 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# 屬性
+
+| 屬性                  | 類型                                          | 預設值      | 描述                           |
+| --------------------- | --------------------------------------------- | ----------- | ------------------------------ |
+| `value`               | `Date \| null`                                | --          | 選定的日期時間值               |
+| `onChange`            | `(dateTime: Date \| null) => void`            | --          | 值變更時的回呼函式             |
+| `time`                | `TimeConfig`                                  | --          | 時間面板設定                   |
+| `minDate`             | `Date`                                        | --          | 可選的最小日期                 |
+| `maxDate`             | `Date`                                        | --          | 可選的最大日期                 |
+| `locale`              | `Partial<Locale>`                             | --          | 自訂地區設定                   |
+| `initialMonth`        | `Date`                                        | --          | 初始顯示的月份                 |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | 元件大小                       |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | 一週的第一天                   |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | 將日期標記為禁用               |
+| `displayFormat`       | `string`                                      | --          | 自訂顯示格式                   |
+| `open`                | `boolean`                                     | --          | 受控的開啟狀態                 |
+| `initialOpen`         | `boolean`                                     | --          | 初始開啟狀態 (非受控)          |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | 開啟狀態變更時的回呼函式       |
+| `required`            | `boolean`                                     | `false`     | 禁用清除值                     |
+| `showOutsideDays`     | `boolean`                                     | `false`     | 顯示相鄰月份的日期             |
+| `highlightDates`      | `Date[]`                                      | --          | 要突顯的日期                   |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | 點擊預設選項時自動確認         |
+| `numberOfMonths`      | `number`                                      | `1`         | 要顯示的月份數量               |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | 標題導覽樣式                   |
+| `fromYear`            | `number`                                      | --          | 下拉選單的起始年份             |
+| `toYear`              | `number`                                      | --          | 下拉選單的結束年份             |
+| `disablePast`         | `boolean`                                     | `false`     | 禁用今天之前的日期             |
+| `disableFuture`       | `boolean`                                     | `false`     | 禁用今天之後的日期             |
+| `inline`              | `boolean`                                     | `false`     | 行內顯示日曆 (無彈出視窗)      |
+| `name`                | `string`                                      | --          | 用於表單提交的隱藏輸入欄位名稱 |
+| `placeholder`         | `string`                                      | --          | 觸發器的預留位置文字           |
+| `hideHeader`          | `boolean`                                     | `false`     | 隱藏導覽標頭                   |
+| `hideFooter`          | `boolean`                                     | `false`     | 隱藏操作頁腳                   |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** 時間顯示精度。預設為 "minute"。 */
+  precision?: "hour" | "minute" | "second";
+  /** 12 小時或 24 小時格式。預設為 "24"。 */
+  hourFormat?: "12" | "24";
+  /** 分鐘遞增步長。預設為 5。 */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** 秒鐘遞增步長。預設為 1。 */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** 每個滾輪選項的高度 (px)。預設為 32。 */
+  itemHeight?: number;
+}
+```

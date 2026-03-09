@@ -1,0 +1,82 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/tailwind4/DatePicker/Sizes";
+import SizesSource from "@examples/tailwind4/DatePicker/Sizes.tsx?raw";
+import CustomFormat from "@examples/tailwind4/DatePicker/CustomFormat";
+import CustomFormatSource from "@examples/tailwind4/DatePicker/CustomFormat.tsx?raw";
+import CustomLocale from "@examples/tailwind4/DatePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind4/DatePicker/CustomLocale.tsx?raw";
+import WeekStartsOn from "@examples/tailwind4/DatePicker/WeekStartsOn";
+import WeekStartsOnSource from "@examples/tailwind4/DatePicker/WeekStartsOn.tsx?raw";
+import ShowOutsideDays from "@examples/tailwind4/DatePicker/ShowOutsideDays";
+import ShowOutsideDaysSource from "@examples/tailwind4/DatePicker/ShowOutsideDays.tsx?raw";
+import CaptionDropdown from "@examples/tailwind4/DatePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind4/DatePicker/CaptionDropdown.tsx?raw";
+
+# Appearance
+
+## Sizes
+
+มีให้เลือก 4 ขนาด: `small`, `medium`, `large` และ `x-large`
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Custom Format
+
+ปรับแต่งรูปแบบการแสดงผลตามต้องการ
+
+<CodeDemo source={CustomFormatSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomFormat client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Custom Locale
+
+กำหนด locale แบบกำหนดเองสำหรับการรองรับหลายภาษา โดยใช้ `createLocale` จากแพ็กเกจ headless
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Week Starts On
+
+เปลี่ยนวันเริ่มต้นของสัปดาห์ ค่าเริ่มต้นคือ `"sunday"`
+
+<CodeDemo source={WeekStartsOnSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <WeekStartsOn client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Show Outside Days
+
+แสดงวันจากเดือนที่อยู่ติดกันเพื่อเติมเต็มตารางปฏิทิน ค่าเริ่มต้นคือ `false`
+
+<CodeDemo source={ShowOutsideDaysSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <ShowOutsideDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Caption Dropdown
+
+เปลี่ยนการนำทางเดือน/ปีจากลูกศรเป็นดรอปดาวน์ด้วย `captionLayout="dropdown"` ใช้ `fromYear` และ `toYear` เพื่อกำหนดช่วงของปี
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

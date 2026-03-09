@@ -1,0 +1,47 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# 컴파운드 컴포넌트
+
+Tailwind v3 패키지는 각 피커의 내부 구조와 렌더링을 완전히 제어할 수 있는 컴파운드 컴포넌트 API를 제공합니다. 단일 모놀리식 컴포넌트 대신, 개별 파트들로 피커를 구성합니다.
+
+## 동작 방식
+
+모든 피커(예: `DatePicker`)는 간단한 컴포넌트이면서 동시에 컴파운드 파트들의 네임스페이스입니다:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+// Simple usage — renders default layout
+<DatePicker value={value} onChange={setValue} />
+
+// Compound usage — full control over structure
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## 사용 가능한 파트
+
+### DatePicker
+
+| 파트                 | 설명                                                                                |
+| -------------------- | ----------------------------------------------------------------------------------- |
+| `DatePicker.Root`    | Provider + 컨테이너. 모든 피커 props(`value`, `onChange`, `minDate` 등)를 받습니다. |
+| `DatePicker.Trigger` | 팝업을 열고 닫는 버튼. 선택된 값을 표시합니다.                                      |
+| `DatePicker.Content` |

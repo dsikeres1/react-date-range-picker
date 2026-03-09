@@ -1,0 +1,315 @@
+---
+sidebar_position: 4
+title: Contexts
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ContextExample from "@examples/headless/ContextExample";
+import ContextExampleSource from "@examples/headless/ContextExample.tsx?raw";
+
+# 上下文
+
+`headless` 包提供了包裹 hooks 并通过 React Context 暴露其状态的 Context provider。这启用了**复合组件模式**——将你的 UI 拆分成小的、专注的子组件，这些子组件从 context 中读取状态，而不是向下传递 props。
+
+## 为何使用 Contexts？
+
+如果不使用 context，你需要通过 props 传递每个状态片段：
+
+```tsx
+// 不使用 context —— props 钻取
+function MyDatePicker() {
+  const picker = useDatePicker({ value, onChange });
+  return (
+    <MyTrigger displayValue={picker.displayValue} onToggle={picker.handleToggle} />
+    <MyCalendar calendar={picker.calendar} getDayProps={picker.getDayProps} ... />
+    <MyFooter onConfirm={picker.handleConfirm} onCancel={picker.handleCancel} ... />
+  );
+}
+```
+
+使用 context，子组件直接消费它们所需的内容：
+
+```tsx
+// 使用 context —— 复合组件
+function MyDatePicker() {
+  return (
+    <DatePickerProvider value={value} onChange={onChange}>
+      <ExampleWrapper variant="headless" client:load>
+        <MyTrigger client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyCalendar client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyFooter client:load />
+      </ExampleWrapper>
+    </DatePickerProvider>
+  );
+}
+
+function MyTrigger() {
+  const { displayValue, handleToggle } = useDatePickerContext();
+  return <button onClick={handleToggle}>{displayValue}</button>;
+}
+```
+
+## 可用的 Provider
+
+| Provider                      | 内部使用的 Hook          | 消费者 Hook                       |
+| ----------------------------- | ------------------------ | --------------------------------- |
+| `DatePickerProvider`          | `useDatePicker`          | `useDatePickerContext()`          |
+| `DateRangePickerProvider`     | `useDateRangePicker`     | `useDateRangePickerContext()`     |
+| `DateTimePickerProvider`      | `useDateTimePicker`      | `useDateTimePickerContext()`      |
+| `DateRangeTimePickerProvider` | `useDateRangeTimePicker` | `useDateRangeTimePickerContext()` |
+
+每个 provider 都会渲染一个**类型化 context**（特定于该选择器类型）和一个**统一的 PickerContext**（在所有类型之间共享）。
+
+```tsx
+import {
+  DatePickerProvider,
+  DateRangePickerProvider,
+  DateTimePickerProvider,
+  DateRangeTimePickerProvider,
+} from "react-date-range-picker-headless";
+```
+
+### DatePickerProvider
+
+包裹 `useDatePicker`。提供 `DatePickerContext` + `PickerContext`。
+
+```tsx
+import type { DatePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| 属性          | 类型                           | 描述                                          |
+| ------------- | ------------------------------ | --------------------------------------------- |
+| `children`    | `ReactNode`                    | **必需。**子组件。                            |
+| `value`       | `Date \| null`                 | **必需。**当前日期。                          |
+| `onChange`    | `(date: Date \| null) => void` | **必需。**变更处理函数。                      |
+| `inline`      | `boolean`                      | 内联渲染（无弹出窗口）。                      |
+| `size`        | `DatePickerSize`               | 尺寸变体。                                    |
+| `placeholder` | `string`                       | 触发器占位符。                                |
+| `name`        | `string`                       | 表单字段名称。                                |
+| _...rest_     | `BaseDatePickerOptions`        | 所有基本选项（minDate、maxDate、locale 等）。 |
+
+**消费者 hook：**`useDatePickerContext()` 返回 `UseDatePickerReturn`。
+
+### DateRangePickerProvider
+
+包裹 `useDateRangePicker`。提供 `DateRangePickerContext` + `PickerContext`。
+
+```tsx
+import type { DateRangePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| 属性                     | 类型                                                          | 描述                     |
+| ------------------------ | ------------------------------------------------------------- | ------------------------ |
+| `children`               | `ReactNode`                                                   | **必需。**子组件。       |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | **必需。**当前范围。     |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | **必需。**变更处理函数。 |
+| `inline`                 | `boolean`                                                     | 内联渲染。               |
+| `size`                   | `DatePickerSize`                                              | 尺寸变体。               |
+| `placeholder`            | `string`                                                      | 触发器占位符。           |
+| `name`                   | `string`                                                      | 表单字段名称。           |
+| `maxDays`                | `number`                                                      | 范围内的最大天数。       |
+| `minDays`                | `number`                                                      | 范围内的最小天数。       |
+| `presets`                | `DateRangePreset[]`                                           | 范围预设。               |
+| `allowSingleDateInRange` | `boolean`                                                     | 允许单日范围。           |
+| _...rest_                | `BaseDatePickerOptions`                                       | 所有基本选项。           |
+
+**消费者 hook：**`useDateRangePickerContext()` 返回 `UseDateRangePickerReturn`。
+
+### DateTimePickerProvider
+
+包裹 `useDateTimePicker`。提供 `DateTimePickerContext` + `PickerContext`。
+
+```tsx
+import type { DateTimePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| 属性          | 类型                               | 描述                     |
+| ------------- | ---------------------------------- | ------------------------ |
+| `children`    | `ReactNode`                        | **必需。**子组件。       |
+| `value`       | `Date \| null`                     | **必需。**当前日期时间。 |
+| `onChange`    | `(dateTime: Date \| null) => void` | **必需。**变更处理函数。 |
+| `time`        | `TimeConfig`                       | 时间配置。               |
+| `inline`      | `boolean`                          | 内联渲染。               |
+| `size`        | `DatePickerSize`                   | 尺寸变体。               |
+| `placeholder` | `string`                           | 触发器占位符。           |
+| `name`        | `string`                           | 表单字段名称。           |
+| _...rest_     | `BaseDatePickerOptions`            | 所有基本选项。           |
+
+**消费者 hook：**`useDateTimePickerContext()` 返回 `UseDateTimePickerReturn`。
+
+### DateRangeTimePickerProvider
+
+包裹 `useDateRangeTimePicker`。提供 `DateRangeTimePickerContext` + `PickerContext`。
+
+```tsx
+import type { DateRangeTimePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| 属性                     | 类型                                                          | 描述                     |
+| ------------------------ | ------------------------------------------------------------- | ------------------------ |
+| `children`               | `ReactNode`                                                   | **必需。**子组件。       |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | **必需。**当前范围。     |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | **必需。**变更处理函数。 |
+| `time`                   | `TimeConfig`                                                  | 时间配置。               |
+| `inline`                 | `boolean`                                                     | 内联渲染。               |
+| `size`                   | `DatePickerSize`                                              | 尺寸变体。               |
+| `placeholder`            | `string`                                                      | 触发器占位符。           |
+| `name`                   | `string`                                                      | 表单字段名称。           |
+| `maxDays`                | `number`                                                      | 范围内的最大天数。       |
+| `minDays`                | `number`                                                      | 范围内的最小天数。       |
+| `presets`                | `DateRangePreset[]`                                           | 范围预设。               |
+| `allowSingleDateInRange` | `boolean`                                                     | 允许单日范围。           |
+| _...rest_                | `BaseDatePickerOptions`                                       | 所有基本选项。           |
+
+**消费者 hook：**`useDateRangeTimePickerContext()` 返回 `UseDateRangeTimePickerReturn`。
+
+## PickerContext (统一)
+
+每个 provider 还注入一个**统一的 `PickerContext`**。这是一个超集 context，包含每种选择器类型的所有字段，并为特定于选择器的值提供可选字段。
+
+```tsx
+import { usePickerContext } from "react-date-range-picker-headless";
+
+function MyGenericHeader() {
+  const { locale, handlePrevMonth, handleNextMonth, calendars } = usePickerContext();
+  return (
+    <div>
+      <button onClick={handlePrevMonth}>{locale.prevMonth}</button>
+      <span>{locale.formatMonthYear(calendars[0].month)}</span>
+      <button onClick={handleNextMonth}>{locale.nextMonth}</button>
+    </div>
+  );
+}
+```
+
+统一的 context 允许你构建可在所有选择器类型中工作的**共享子组件**。样式化包（`styled`、`tailwind3`、`tailwind4`）在内部使用此模式——它们的 `Header`、`Grid`、`Footer` 等组件都消费 `PickerContext`。
+
+### PickerContext 字段
+
+```tsx
+import { PickerContext, usePickerContext } from "react-date-range-picker-headless";
+import type { PickerContextValue } from "react-date-range-picker-headless";
+```
+
+```tsx
+function usePickerContext(): PickerContextValue;
+```
+
+如果在选择器 provider 之外使用，则会抛出错误。
+
+#### 核心字段 (始终存在)
+
+| 字段                | 类型                                              |
+| ------------------- | ------------------------------------------------- |
+| `isOpen`            | `boolean`                                         |
+| `locale`            | `Locale`                                          |
+| `focusedDate`       | `Date \| null`                                    |
+| `displayValue`      | `string`                                          |
+| `hasValue`          | `boolean`                                         |
+| `canConfirm`        | `boolean`                                         |
+| `calendars`         | `CalendarMonth[]`                                 |
+| `getDayProps`       | `(date: Date, referenceMonth?: Date) => DayProps` |
+| `handleToggle`      | `() => void`                                      |
+| `handleOpen`        | `() => void`                                      |
+| `handleClose`       | `() => void`                                      |
+| `handleConfirm`     | `() => void`                                      |
+| `handleCancel`      | `() => void`                                      |
+| `handleClear`       | `() => void`                                      |
+| `handleGoToToday`   | `() => void`                                      |
+| `handlePrevMonth`   | `() => void`                                      |
+| `handleNextMonth`   | `() => void`                                      |
+| `handleKeyDown`     | `(e: KeyboardEvent<HTMLElement>) => void`         |
+| `handleDateClick`   | `(date: Date) => void`                            |
+| `containerRef`      | `RefObject<HTMLDivElement \| null>`               |
+| `popupRef`          | `RefObject<HTMLDivElement \| null>`               |
+| `years`             | `number[]`                                        |
+| `months`            | `number[]`                                        |
+| `handleYearSelect`  | `(year: number, calendarIndex?: number) => void`  |
+| `handleMonthSelect` | `(month: number, calendarIndex?: number) => void` |
+
+#### UI 传递字段
+
+| 字段              | 类型                          |
+| ----------------- | ----------------------------- |
+| `value`           | `unknown`                     |
+| `endName`         | `string \| undefined`         |
+| `required`        | `boolean \| undefined`        |
+| `inline`          | `boolean \| undefined`        |
+| `showOutsideDays` | `boolean \| undefined`        |
+| `size`            | `DatePickerSize \| undefined` |
+| `placeholder`     | `string \| undefined`         |
+| `name`            | `string \| undefined`         |
+| `captionLayout`   | `CaptionLayout \| undefined`  |
+
+#### 范围特定字段 (可选)
+
+| 字段                | 类型                                               |
+| ------------------- | -------------------------------------------------- |
+| `handleDateHover`   | `((date: Date \| null) => void) \| undefined`      |
+| `presets`           | `DateRangePreset[] \| undefined`                   |
+| `handlePresetClick` | `((preset: DateRangePreset) => void) \| undefined` |
+| `activePresetIndex` | `number \| undefined`                              |
+
+#### 单一时间字段 (可选, DateTimePicker)
+
+| 字段                      | 类型                                             |
+| ------------------------- | ------------------------------------------------ |
+| `resolvedTimeConfig`      | `Required<TimeConfig> \| undefined`              |
+| `tempHour`                | `number \| undefined`                            |
+| `tempMinute`              | `number \| undefined`                            |
+| `tempSecond`              | `number \| undefined`                            |
+| `tempPeriod`              | `TimePeriod \| undefined`                        |
+| `handleHourChange`        | `((hour: number) => void) \| undefined`          |
+| `handleMinuteChange`      | `((minute: number) => void) \| undefined`        |
+| `handleSecondChange`      | `((second: number) => void) \| undefined`        |
+| `handlePeriodChange`      | `((period: TimePeriod) => void) \| undefined`    |
+| `isTimePickerOpen`        | `boolean \| undefined`                           |
+| `handleTimePickerOpen`    | `(() => void) \| undefined`                      |
+| `handleTimePickerClose`   | `(() => void) \| undefined`                      |
+| `handleTimePickerConfirm` | `(() => void) \| undefined`                      |
+| `handleTimePickerCancel`  | `(() => void) \| undefined`                      |
+| `timePickerRef`           | `RefObject<HTMLDivElement \| null> \| undefined` |
+| `timeDisplayValue`        | `string \| undefined`                            |
+
+#### 范围时间字段 (可选, DateRangeTimePicker)
+
+| 字段                           | 类型                                             |
+| ------------------------------ | ------------------------------------------------ |
+| `startHour`                    | `number \| undefined`                            |
+| `startMinute`                  | `number \| undefined`                            |
+| `startSecond`                  | `number \| undefined`                            |
+| `startPeriod`                  | `TimePeriod \| undefined`                        |
+| `endHour`                      | `number \| undefined`                            |
+| `endMinute`                    | `number \| undefined`                            |
+| `endSecond`                    | `number \| undefined`                            |
+| `endPeriod`                    | `TimePeriod \| undefined`                        |
+| `handleStartHourChange`        | `((hour: number) => void) \| undefined`          |
+| `handleStartMinuteChange`      | `((minute: number) => void) \| undefined`        |
+| `handleStartSecondChange`      | `((second: number) => void) \| undefined`        |
+| `handleStartPeriodChange`      | `((period: TimePeriod) => void) \| undefined`    |
+| `handleEndHourChange`          | `((hour: number) => void) \| undefined`          |
+| `handleEndMinuteChange`        | `((minute: number) => void) \| undefined`        |
+| `handleEndSecondChange`        | `((second: number) => void) \| undefined`        |
+| `handleEndPeriodChange`        | `((period: TimePeriod) => void) \| undefined`    |
+| `isStartTimePickerOpen`        | `boolean \| undefined`                           |
+| `isEndTimePickerOpen`          | `boolean \| undefined`                           |
+| `handleStartTimePickerOpen`    | `(() => void) \| undefined`                      |
+| `handleStartTimePickerClose`   | `(() => void) \| undefined`                      |
+| `handleStartTimePickerConfirm` | `(() => void) \| undefined`                      |
+| `handleStartTimePickerCancel`  | `(() => void) \| undefined`                      |
+| `handleEndTimePickerOpen`      | `(() => void) \| undefined`                      |
+| `handleEndTimePickerClose`     | `(() => void) \| undefined`                      |
+| `handleEndTimePickerConfirm`   | `(() => void) \| undefined`                      |
+| `handleEndTimePickerCancel`    | `(() => void) \| undefined`                      |
+| `startTimePickerRef`           | `RefObject<HTMLDivElement \| null> \| undefined` |
+| `endTimePickerRef`             | `RefObject<HTMLDivElement \| null> \| undefined` |
+| `startTimeDisplayValue`        | `string \| undefined`                            |
+| `endTimeDisplayValue`          | `string \| undefined`                            |
+
+## 类型化 vs 统一 Contexts

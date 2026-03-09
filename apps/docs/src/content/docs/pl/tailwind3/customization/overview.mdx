@@ -1,0 +1,46 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Komponenty Złożone
+
+Paczka Tailwind v3 udostępnia API Komponentów Złożonych (Compound Component API), które daje pełną kontrolę nad wewnętrzną strukturą i renderowaniem każdego pickera. Zamiast pojedynczego, monolitycznego komponentu, picker jest składany z pojedynczych części.
+
+## Jak to działa
+
+Każdy picker (np. `DatePicker`) jest jednocześnie prostym komponentem i przestrzenią nazw dla jego złożonych części:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+// Proste użycie — renderuje domyślny układ
+<DatePicker value={value} onChange={setValue} />
+
+// Złożone użycie — pełna kontrola nad strukturą
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Dostępne części
+
+### DatePicker
+
+| Część                | Opis                                                                                                |
+| -------------------- | --------------------------------------------------------------------------------------------------- |
+| `DatePicker.Root`    | Dostawca + kontener. Akceptuje wszystkie właściwości pickera (`value`, `onChange`, `minDate`, itp.) |
+| `DatePicker.Trigger` | Przycisk otwierający/zamykający okienko. Wyświetla wybraną                                          |

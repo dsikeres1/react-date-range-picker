@@ -1,0 +1,57 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/tailwind4/DateRangeTimePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/tailwind4/DateRangeTimePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/tailwind4/DateRangeTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind4/DateRangeTimePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/tailwind4/DateRangeTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind4/DateRangeTimePicker/FormIntegration.tsx?raw";
+
+# Comportamiento
+
+## Cerrar al Seleccionar
+
+Cuando `shouldCloseOnSelect` está activado, el selector se confirma y cierra automáticamente al hacer clic en un preajuste.
+
+<Admonition type="info">
+  Para los selectores con hora activada, `shouldCloseOnSelect` solo se aplica a los clics en
+  preajustes, no a los clics en fechas, ya que el usuario aún necesita establecer la hora.
+</Admonition>
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Múltiples Meses
+
+Muestra más de los dos meses predeterminados uno al lado del otro.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Integración con Formularios
+
+Usa la prop `name` para incluir campos de entrada ocultos para el envío de formularios nativos.
+
+<Admonition type="tip">
+  El estilo del botón de envío en este ejemplo es personalizado; la biblioteca solo proporciona el
+  selector de fechas.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

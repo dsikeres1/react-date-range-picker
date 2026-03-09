@@ -1,0 +1,167 @@
+---
+sidebar_position: 10
+---
+
+# Semantic Tokens
+
+The Tailwind v4 package uses semantic CSS variables (design tokens) for all colors. These tokens decouple the component styles from specific color values, making theming straightforward. The token naming convention follows the same pattern used by [shadcn/ui](https://ui.shadcn.com/).
+
+## Token System
+
+Instead of hardcoded colors like `bg-sky-500`, the Tailwind v4 components use semantic utilities like `bg-primary`, `text-foreground`, and `border-border`. These map to CSS variables you define in your project.
+
+```
+bg-primary        → var(--color-primary)
+text-foreground   → var(--color-foreground)
+border-border     → var(--color-border)
+```
+
+## Required Tokens
+
+Define these tokens in your CSS using Tailwind v4's `@theme` directive:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+## Token Reference
+
+| Token                        | Used For                                         | Example Utilities            |
+| ---------------------------- | ------------------------------------------------ | ---------------------------- |
+| `--color-background`         | Page/app background                              | `bg-background`              |
+| `--color-foreground`         | Default text color                               | `text-foreground`            |
+| `--color-popover`            | Popup background                                 | `bg-popover`                 |
+| `--color-popover-foreground` | Popup text                                       | `text-popover-foreground`    |
+| `--color-primary`            | Selected day, confirm button, range endpoints    | `bg-primary`, `text-primary` |
+| `--color-primary-foreground` | Text on primary backgrounds                      | `text-primary-foreground`    |
+| `--color-muted-foreground`   | Muted text (placeholders, weekdays, nav buttons) | `text-muted-foreground`      |
+| `--color-accent`             | Hover backgrounds for days and buttons           | `bg-accent`                  |
+| `--color-accent-foreground`  | Text on accent backgrounds                       | `text-accent-foreground`     |
+| `--color-destructive`        | Clear/danger button text                         | `text-destructive`           |
+| `--color-border`             | General borders (footer, presets, popup)         | `border-border`              |
+| `--color-input`              | Input/trigger border                             | `border-input`               |
+| `--color-ring`               | Focus ring color                                 | `ring-ring`                  |
+
+## How Tokens Map to Components
+
+Here's how the tokens are applied across the picker:
+
+### Trigger
+
+- Background: `bg-background`
+- Border: `border-input`
+- Text: inherited from `text-foreground` on root
+- Placeholder: `text-muted-foreground`
+- Focus ring: `ring-ring`
+
+### Popup
+
+- Background: `bg-popover`
+- Text: `text-popover-foreground`
+- Border: `border-border`
+
+### Calendar Days
+
+- Default hover: `bg-accent` / `text-accent-foreground`
+- Selected: `bg-primary` / `text-primary-foreground`
+- Today: `text-primary`
+- In range: `bg-primary/10`
+- Range start/end: `bg-primary` / `text-primary-foreground`
+- Disabled: `text-muted-foreground` with reduced opacity
+
+### Footer
+
+- Border: `border-border`
+- Cancel button: `border-input`, hover `bg-accent`
+- Confirm button: `bg-primary` / `text-primary-foreground`
+- Clear button: `text-destructive`
+
+## Customizing Tokens
+
+### Change the Primary Color
+
+Change `--color-primary` and `--color-primary-foreground` to rebrand the picker:
+
+```css
+@theme {
+  /* Purple primary */
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+}
+```
+
+### Warm Color Scheme
+
+```css
+@theme {
+  --color-background: oklch(0.99 0.005 80);
+  --color-foreground: oklch(0.2 0.02 60);
+
+  --color-popover: oklch(0.99 0.005 80);
+  --color-popover-foreground: oklch(0.2 0.02 60);
+
+  --color-primary: oklch(0.6 0.2 40);
+  --color-primary-foreground: oklch(0.98 0.005 80);
+
+  --color-accent: oklch(0.95 0.02 80);
+  --color-accent-foreground: oklch(0.2 0.02 60);
+
+  --color-border: oklch(0.9 0.01 80);
+  --color-input: oklch(0.9 0.01 80);
+  --color-ring: oklch(0.85 0.02 80);
+}
+```
+
+### Dark Mode Tokens
+
+For dark mode, override the tokens under a `.dark` selector or `@media (prefers-color-scheme: dark)`:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... light values */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+See [Dark Mode](/docs/tailwind4/customization/dark-mode) for more details.
+
+## Existing shadcn/ui Projects
+
+If your project already has shadcn/ui tokens defined, the picker will use them automatically with no extra configuration. The token names are intentionally compatible. See [shadcn Registry](/docs/tailwind4/customization/shadcn-registry) for more.

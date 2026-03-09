@@ -1,0 +1,22 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDate from "@examples/tailwind3/DateTimePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/tailwind3/DateTimePicker/MinMaxDate.tsx?raw";
+
+# ข้อจำกัด
+
+## วันที่ต่ำสุดและสูงสุด
+
+จำกัดวันที่ที่สามารถเลือกได้ให้อยู่ในช่วงที่กำหนด
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

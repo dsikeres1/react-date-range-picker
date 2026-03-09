@@ -1,0 +1,51 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Props
+
+| Prop                     | Type                                                          | Default     | 描述                                          |
+| ------------------------ | ------------------------------------------------------------- | ----------- | --------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --          | 选定的日期范围值                              |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | 值更改时的回调函数                            |
+| `presets`                | `DateRangePreset[]`                                           | --          | 预定义的日期范围预设                          |
+| `maxDays`                | `number`                                                      | --          | 范围内允许的最大天数（含）                    |
+| `minDays`                | `number`                                                      | --          | 范围内要求的最小天数（含）                    |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`      | 允许开始日期等于结束日期的范围                |
+| `minDate`                | `Date`                                                        | --          | 最小可选日期                                  |
+| `maxDate`                | `Date`                                                        | --          | 最大可选日期                                  |
+| `locale`                 | `Partial<Locale>`                                             | --          | 自定义区域设置配置                            |
+| `initialMonth`           | `Date`                                                        | --          | 初始显示的月份                                |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`  | 组件尺寸                                      |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`  | 一周的第一天                                  |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --          | 将日期标记为禁用                              |
+| `displayFormat`          | `string`                                                      | --          | 自定义显示格式（例如 `"YYYY/MM/DD"`）         |
+| `open`                   | `boolean`                                                     | --          | 受控的打开状态                                |
+| `initialOpen`            | `boolean`                                                     | --          | 初始打开状态（非受控）                        |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --          | 打开状态更改时的回调函数                      |
+| `required`               | `boolean`                                                     | `false`     | 禁用清除值                                    |
+| `showOutsideDays`        | `boolean`                                                     | `false`     | 显示相邻月份的日期                            |
+| `highlightDates`         | `Date[]`                                                      | --          | 要高亮的日期                                  |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`     | 选择结束日期时自动确认                        |
+| `numberOfMonths`         | `number`                                                      | `2`         | 要显示的月份数量                              |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"` | 标题导航样式                                  |
+| `fromYear`               | `number`                                                      | --          | 下拉菜单的起始年份                            |
+| `toYear`                 | `number`                                                      | --          | 下라菜单的结束年份                            |
+| `disablePast`            | `boolean`                                                     | `false`     | 禁用今天之前的日期                            |
+| `disableFuture`          | `boolean`                                                     | `false`     | 禁用今天之后的日期                            |
+| `inline`                 | `boolean`                                                     | `false`     | 内联显示日历（无弹出窗口）                    |
+| `name`                   | `string`                                                      | --          | 用于表单提交的隐藏输入框名称（开始日期）      |
+| `endName`                | `string`                                                      | --          | 结束日期的隐藏输入框名称（默认为 `name-end`） |
+| `placeholder`            | `string`                                                      | --          | 触发器的占位符文本                            |
+| `hideHeader`             | `boolean`                                                     | `false`     | 隐藏导航头部                                  |
+| `hideFooter`             | `boolean`                                                     | `false`     | 隐藏操作页脚                                  |
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

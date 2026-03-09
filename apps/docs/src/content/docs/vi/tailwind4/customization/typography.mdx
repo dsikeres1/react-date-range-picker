@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind4/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind4/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind4/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind4/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind4/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind4/Customization/CompoundWebFonts.tsx?raw";
+
+# Kiểu chữ
+
+Gói Tailwind v4 sử dụng lớp `font-sans` mặc định của Tailwind (`ui-sans-serif, system-ui, sans-serif, ...`). Vì `font-family` trong CSS được kế thừa, bạn có thể ghi đè phông chữ của bộ chọn bằng cách bọc nó trong một thẻ chứa có kiểu `fontFamily`. Phông chữ của thẻ bọc sẽ được áp dụng cho tất cả các phần tử của bộ chọn.
+
+## Họ phông chữ
+
+Bọc bộ chọn và đặt `fontFamily` trên thẻ bọc để chuyển đổi phông chữ:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Sử dụng Web Fonts (Noto Sans)
+
+Tải một phông chữ web trong lúc chạy và áp dụng nó thông qua một thẻ bọc. Ví dụ này tải [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) từ Google Fonts:
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="Sử dụng trong môi trường production">
+Trong một dự án thực tế, hãy tải phông chữ thông qua thẻ `<link>` trong `<head>` của HTML hoặc thông qua trình đóng gói CSS của bạn thay vì chèn vào lúc chạy. Cách tiếp cận dùng `useEffect` ở đây chỉ nhằm mục đích minh họa.
+</Admonition>
+
+## Thư viện Phông chữ Web
+
+So sánh các phông chữ web khác nhau để xem kiểu chữ thay đổi giao diện của bộ chọn một cách đáng kể như thế nào. Tất cả các phông chữ dưới đây đều hỗ trợ hiển thị đa ngôn ngữ (Latin, CJK, tiếng Hàn).
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

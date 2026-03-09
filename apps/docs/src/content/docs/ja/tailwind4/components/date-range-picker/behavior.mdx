@@ -1,0 +1,51 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/tailwind4/DateRangePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/tailwind4/DateRangePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/tailwind4/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind4/DateRangePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/tailwind4/DateRangePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind4/DateRangePicker/FormIntegration.tsx?raw";
+
+# 動作
+
+## 選択時に閉じる
+
+`shouldCloseOnSelect` が有効な場合、終了日を選択するとピッカーが自動的に確定し閉じます。
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 複数月表示
+
+デフォルトの2ヶ月以上を並べて表示します。
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## フォーム連携
+
+`name` prop を使用して、ネイティブのフォーム送信用の非表示入力を含めることができます。
+
+<Admonition type="tip">
+  この例の送信ボタンのスタイルはカスタムです — ライブラリが提供するのは日付ピッカーのみです。
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

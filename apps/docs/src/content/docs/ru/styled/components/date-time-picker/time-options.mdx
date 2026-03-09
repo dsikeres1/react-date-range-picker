@@ -1,0 +1,48 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinuteStep from "@examples/styled/DateTimePicker/MinuteStep";
+import MinuteStepSource from "@examples/styled/DateTimePicker/MinuteStep.tsx?raw";
+import SecondPrecision from "@examples/styled/DateTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/styled/DateTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/styled/DateTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/styled/DateTimePicker/TwelveHour.tsx?raw";
+
+# Настройки времени
+
+Настройте поведение панели времени с помощью пропа `time`.
+
+## Шаг минут
+
+Установите шаг приращения минут. Полезно для планирования с фиксированными интервалами.
+
+<CodeDemo source={MinuteStepSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinuteStep client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Точность до секунд
+
+Отобразите столбец секунд, установив `precision` в значение `"second"`.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 12-часовой формат
+
+Переключитесь на 12-часовой формат с переключателем AM/PM.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

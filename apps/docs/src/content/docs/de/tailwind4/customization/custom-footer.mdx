@@ -1,0 +1,55 @@
+---
+sidebar_position: 4
+sidebar_label: Custom Footer
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/tailwind4/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/tailwind4/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/tailwind4/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/tailwind4/Customization/CompoundNoFooter.tsx?raw";
+
+# Benutzerdefinierte Fußzeile
+
+## Neu angeordnete Fußzeile
+
+Ordnen Sie die Schaltflächen in der Fußzeile neu an oder fügen Sie neue wie den `TodayButton` hinzu. Da jede Schaltfläche ein unabhängiger Teil des Baukastens ist, steuern Sie die Reihenfolge und das Layout.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Minimales Layout
+
+Lassen Sie alle Teile weg, die Sie nicht benötigen. Lassen Sie zum Beispiel die Fußzeile für einen minimalen Popup-Kalender ganz weg:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Klassen überschreiben
+
+Jeder Teil des Baukastens akzeptiert eine `className`-Prop. Das Tailwind v4-Paket verwendet `cn()` (ein `clsx` + `twMerge`-Dienstprogramm), um Ihre Klassen mit den Standardeinstellungen zusammenzuführen, sodass widersprüchliche Dienstprogramme korrekt aufgelöst werden:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+<DatePicker.Root value={value} onChange={setValue}>
+  {/* Breite und Innenabstand des Triggers überschreiben */}
+  <DatePicker.Trigger className="min-w-[300px] px-4 py-3" />
+  <DatePicker.Content className="rounded-2xl shadow-xl">
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title className="text-lg" />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>;
+```

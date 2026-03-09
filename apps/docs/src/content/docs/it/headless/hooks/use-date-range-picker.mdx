@@ -1,0 +1,205 @@
+---
+sidebar_position: 2
+title: useDateRangePicker
+---
+
+# useDateRangePicker
+
+듀얼 월 캘린더, 호버 미리보기, 사전 설정 범위를 지원하는 날짜 범위 선택을 위한 Hook입니다.
+
+## Import
+
+```tsx
+import { useDateRangePicker } from "react-date-range-picker-headless";
+```
+
+## 사용법
+
+```tsx
+import { useState } from "react";
+import { useDateRangePicker } from "react-date-range-picker-headless";
+
+function MyDateRangePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangePicker({
+    value: range,
+    onChange: setRange,
+    presets: [
+      {
+        label: "Last 7 days",
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setDate(start.getDate() - 6);
+          return { start, end };
+        },
+      },
+    ],
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* 두 개의 캘린더를 나란히 표시 */}
+          {[picker.leftCalendar, picker.rightCalendar].map((cal, calIdx) => (
+            <div key={calIdx}>
+              <span>{picker.locale.formatMonthYear(cal.month)}</span>
+              {cal.weeks.flat().map((day, i) => {
+                if (!day) return <span key={i} />;
+                const dp = picker.getDayProps(day, cal.month);
+                return (
+                  <button
+                    key={i}
+                    onClick={() => picker.handleDateClick(day)}
+                    onMouseEnter={() => picker.handleDateHover(day)}
+                    onMouseLeave={() => picker.handleDateHover(null)}
+                  >
+                    {dp.day}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+
+          {/* 사전 설정 */}
+          {picker.presets.map((preset, i) => (
+            <button
+              key={i}
+              onClick={() => picker.handlePresetClick(preset)}
+              style={{ fontWeight: i === picker.activePresetIndex ? "bold" : "normal" }}
+            >
+              {preset.label}
+            </button>
+          ))}
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## 옵션
+
+| 옵션                     | 타입                                                          | 기본값             | 설명                                                                 |
+| ------------------------ | ------------------------------------------------------------- | ------------------ | -------------------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --                 | **필수.** 현재 범위 값입니다.                                        |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --                 | **필수.** 범위가 변경될 때 호출됩니다.                               |
+| `maxDays`                | `number`                                                      | --                 | 범위 내에서 허용되는 최대 일수 (포함).                               |
+| `minDays`                | `number`                                                      | --                 | 범위 내에서 필요한 최소 일수 (포함).                                 |
+| `presets`                | `DateRangePreset[]`                                           | --                 | 사전 정의된 날짜 범위 프리셋 (예: "지난 7일", "이번 달").            |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`             | `false`일 경우, 시작 날짜와 종료 날짜가 같은 범위 선택을 방지합니다. |
+| `minDate`                | `Date`                                                        | --                 | 선택 가능한 가장 이른 날짜.                                          |
+| `maxDate`                | `Date`                                                        | --                 | 선택 가능한 가장 늦은 날짜.                                          |
+| `locale`                 | `Partial<Locale>`                                             | `DEFAULT_LOCALE`   | 로케일 문자열을 재정의합니다.                                        |
+| `initialMonth`           | `Date`                                                        | --                 | 초기에 표시할 월.                                                    |
+| `size`                   | `DatePickerSize`                                              | --                 | UI를 통해 전달됩니다.                                                |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`         | 한 주의 시작 요일.                                                   |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --                 | 특정 날짜를 비활성화하는 사용자 정의 함수.                           |
+| `displayFormat`          | `string`                                                      | --                 | 표시 값에 대한 사용자 정의 형식 문자열.                              |
+| `open`                   | `boolean`                                                     | --                 | 제어되는 열림 상태.                                                  |
+| `initialOpen`            | `boolean`                                                     | `false`            | 초기 열림 상태 (비제어).                                             |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --                 | 열림 상태가 변경될 때의 콜백.                                        |
+| `required`               | `boolean`                                                     | `false`            | true일 때, `handleClear`는 아무 작업도 수행하지 않습니다.            |
+| `today`                  | `Date`                                                        | `new Date()`       | 오늘 날짜를 재정의합니다.                                            |
+| `onMonthChange`          | `(month: Date) => void`                                       | --                 | 표시된 월이 변경될 때의 콜백.                                        |
+| `disablePast`            | `boolean`                                                     | `false`            | 오늘 이전의 모든 날짜를 비활성화합니다.                              |
+| `disableFuture`          | `boolean`                                                     | `false`            | 오늘 이후의 모든 날짜를 비활성화합니다.                              |
+| `showOutsideDays`        | `boolean`                                                     | `false`            | 인접한 달의 날짜를 표시합니다.                                       |
+| `highlightDates`         | `Date[]`                                                      | --                 | 강조할 날짜 배열.                                                    |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`            | 종료 날짜가 선택되면 자동으로 확인합니다.                            |
+| `numberOfMonths`         | `number`                                                      | `2`                | 표시할 캘린더 월의 수.                                               |
+| `captionLayout`          | `CaptionLayout`                                               | `"buttons"`        | 캡션 레이아웃 모드.                                                  |
+| `fromYear`               | `number`                                                      | current year - 100 | 드롭다운의 시작 연도.                                                |
+| `toYear`                 | `number`                                                      | current year + 10  | 드롭다운의 종료 연도.                                                |
+
+## 반환 값
+
+| 이름                | 타입                                              | 설명                                                                                                                                       |
+| ------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `isOpen`            | `boolean`                                         | 팝업이 열려 있는지 여부.                                                                                                                   |
+| `tempStartDate`     | `Date \| null`                                    | 임시 시작 날짜 (확인 전).                                                                                                                  |
+| `tempEndDate`       | `Date \| null`                                    | 임시 종료 날짜 (확인 전).                                                                                                                  |
+| `hoveredDate`       | `Date \| null`                                    | 현재 호버된 날짜 (범위 미리보기용).                                                                                                        |
+| `leftMonth`         | `Date`                                            | 왼쪽 캘린더에 표시된 월.                                                                                                                   |
+| `rightMonth`        | `Date`                                            | 오른쪽 캘린더에 표시된 월.                                                                                                                 |
+| `locale`            | `Locale`                                          | 해결된 로케일 객체.                                                                                                                        |
+| `leftCalendar`      | `CalendarMonth`                                   | 왼쪽 패널의 캘린더 데이터.                                                                                                                 |
+| `rightCalendar`     | `CalendarMonth`                                   | 오른쪽 패널의 캘린더 데이터.                                                                                                               |
+| `calendars`         | `CalendarMonth[]`                                 | 모든 캘린더 월의 배열.                                                                                                                     |
+| `getDayProps`       | `(date: Date, referenceMonth?: Date) => DayProps` | 캘린더의 날짜 셀에 대한 플래그를 계산합니다. 다중 월 레이아웃에서 월 외부의 날짜 감지가 올바르게 작동하도록 `referenceMonth`를 전달하세요. |
+| `displayValue`      | `string`                                          | 확인된 범위의 포맷된 문자열.                                                                                                               |
+| `hasValue`          | `boolean`                                         | 현재 범위가 확인되었는지 여부.                                                                                                             |
+| `canConfirm`        | `boolean`                                         | 현재 선택이 확인에 유효한지 여부.                                                                                                          |
+| `handleDateClick`   | `(date: Date) => void`                            | 날짜 셀 클릭을 처리합니다. 첫 번째 클릭은 시작 날짜를, 두 번째 클릭은 종료 날짜를 설정합니다.                                              |
+| `handleDateHover`   | `(date: Date \| null) => void`                    | 범위 미리보기를 위한 마우스 호버를 처리합니다.                                                                                             |
+| `handlePrevMonth`   | `() => void`                                      | 두 캘린더를 모두 한 달 뒤로 이동합니다.                                                                                                    |
+| `handleNextMonth`   | `() => void`                                      | 두 캘린더를 모두 한 달 앞으로 이동합니다.                                                                                                  |
+| `handleOpen`        | `() => void`                                      | 팝업을 엽니다.                                                                                                                             |
+| `handleClose`       | `() => void`                                      | 팝업을 닫습니다.                                                                                                                           |
+| `handleToggle`      | `() => void`                                      | 팝업을 토글합니다.                                                                                                                         |
+| `handleConfirm`     | `() => void`                                      | 선택을 확인하고 닫습니다.                                                                                                                  |
+| `handleCancel`      | `() => void`                                      | 취소하고 이전 값으로 되돌립니다.                                                                                                           |
+| `handleClear`       | `() => void`                                      | 범위를 지웁니다 (`required`인 경우 아무 작업도 하지 않음).                                                                                 |
+| `handleGoToToday`   | `() => void`                                      | 오늘 날짜가 있는 월로 이동합니다.                                                                                                          |
+| `containerRef`      | `RefObject<HTMLDivElement \| null>`               | 바깥 영역 클릭 감지를 위해 래퍼에 연결합니다.                                                                                              |
+| `popupRef`          | `RefObject<HTMLDivElement \| null>`               | 팝업 요소에 연결합니다.                                                                                                                    |
+| `focusedDate`       | `Date \| null`                                    | 키보드로 포커스된 날짜.                                                                                                                    |
+| `handleKeyDown`     | `(e: KeyboardEvent<HTMLElement>) => void`         | 키보드 네비게이션 핸들러.                                                                                                                  |
+| `presets`           | `DateRangePreset[]`                               | 프리셋 배열 (렌더링을 위해 그대로 전달).                                                                                                   |
+| `handlePresetClick` | `(preset: DateRangePreset) => void`               | 프리셋 범위를 적용합니다.                                                                                                                  |
+| `activePresetIndex` | `number`                                          | 현재 선택과 일치하는 프리셋의 인덱스 (없으면 -1).                                                                                          |
+| `years`             | `number[]`                                        | 드롭다운 모드를 위한 연도 배열.                                                                                                            |
+| `months`            | `number[]`                                        | 드롭다운 모드를 위한 월 인덱스 배열.                                                                                                       |
+| `handleYearSelect`  | `(year: number, calendarIndex?: number) => void`  | 표시된 연도를 설정합니다.                                                                                                                  |
+| `handleMonthSelect` | `(month: number, calendarIndex?: number) => void` | 표시된 월을 설정합니다.                                                                                                                    |
+
+## 주요 동작
+
+### 범위 선택 흐름
+
+1. 첫 번째 클릭은 **시작 날짜**를 설정합니다 (종료 날짜는 지워짐)
+2. 두 번째 클릭은 **종료 날짜**를 설정합니다 (시작 날짜보다 이전이면 자동 교체)
+3. 세 번째 클릭은 범위를 재설정하고 새로운 범위를 시작합니다
+
+### 호버 미리보기
+
+사용자가 시작 날짜는 선택했지만 아직 종료 날짜를 선택하지 않은 동안, `handleDateHover`는 `hoveredDate`를 업데이트합니다. `getDayProps` 함수는 이를 사용하여 `isInHoverRange`와 `isHoverTarget`을 계산하여 잠재적인 범위의 미리보기를 표시할 수 있도록 합니다.
+
+### 프리셋
+
+프리셋은 정적 객체이거나 팩토리 함수일 수 있습니다:
+
+```tsx
+const presets = [
+  { label: "Today", value: { start: new Date(), end: new Date() } },
+  {
+    label: "Last 30 days",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setDate(start.getDate() - 29);
+      return { start, end };
+    },
+  },
+];
+```
+
+`activePresetIndex`는 현재 선택과 일치하는 프리셋의 인덱스를 반환하며, 일치하는 것이 없으면 `-1`을 반환합니다.
+
+### maxDays / minDays
+
+`maxDays`가 설정되면, 시작 날짜로부터 허용된 범위를 벗어나는 날짜는 자동으로 비활성화됩니다. `minDays`가 설정되면, 시작 날짜에 너무 가까운 날짜는 비활성화됩니다.
+
+### shouldCloseOnSelect
+
+범위 선택기(range picker)의 경우, `shouldCloseOnSelect`는 **시작 날짜가 아닌 종료 날짜**가 선택되었을 때 자동 확인을 트리거합니다.

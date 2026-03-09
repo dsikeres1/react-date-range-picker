@@ -1,0 +1,77 @@
+---
+sidebar_position: 3
+title: useDateTimePicker
+---
+
+# useDateTimePicker
+
+日付と時刻を組み合わせて選択するためのフックです。`useDatePicker` を拡張し、時刻の状態（hour, minute, second, am/pm）とネストされたタイムピッカーを追加します。
+
+## インポート
+
+```tsx
+import { useDateTimePicker } from "react-date-range-picker-headless";
+```
+
+## 使用方法
+
+```tsx
+import { useState } from "react";
+import { useDateTimePicker } from "react-date-range-picker-headless";
+
+function MyDateTimePicker() {
+  const [dateTime, setDateTime] = useState<Date | null>(null);
+
+  const picker = useDateTimePicker({
+    value: dateTime,
+    onChange: setDateTime,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 5 },
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.dateTimePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* カレンダー (useDatePicker と同じ) */}
+          <div>
+            <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+            <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+            <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+          </div>
+          {/* ...カレンダーグリッド... */}
+
+          {/* 時刻表示 */}
+          <div>
+            <span>Time: {picker.timeDisplayValue}</span>
+          </div>
+
+          {/* 時刻コントロール */}
+          <div>
+            <input
+              type="number"
+              value={picker.tempHour}
+              onChange={(e) => picker.handleHourChange(Number(e.target.value))}
+            />
+            <span>:</span>
+            <input
+              type="number"
+              value={picker.tempMinute}
+              onChange={(e) => picker.handleMinuteChange(Number(e.target.value))}
+            />
+          </div>
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## オプション
+
+| オプション | 型  | デフォルト | 説明 |
+| ---------- | --- | ---------- | ---- |

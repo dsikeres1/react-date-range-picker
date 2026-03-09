@@ -1,0 +1,196 @@
+---
+sidebar_position: 1
+title: Accessibility
+description: Klavye navigasyonu, ARIA nitelikleri, odak yönetimi ve WCAG uyumluluğu.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Erişilebilirlik
+
+Tüm seçici bileşenleri, yerleşik erişilebilirlik desteğiyle birlikte gelir. Klavye navigasyonu, ARIA nitelikleri ve odak yönetimi, her varyantta — Styled, Tailwind v3/v4 ve Headless — kutudan çıktığı gibi çalışır.
+
+Standart kullanım için ek bir yapılandırma gerekmez. Bu sayfa, özel kullanıcı arayüzlerinde kalıpları denetleyebilmeniz, genişletebilmeniz veya çoğaltabilmeniz için nelerin dahil edildiğini belgeler.
+
+## Klavye Navigasyonu
+
+### Takvim Seçiciler
+
+| Tuş               | Eylem                                                    |
+| ----------------- | -------------------------------------------------------- |
+| `ArrowLeft`       | Odaklanmayı önceki güne taşı                             |
+| `ArrowRight`      | Odaklanmayı sonraki güne taşı                            |
+| `ArrowUp`         | Odaklanmayı önceki haftaya taşı (aynı haftanın günü)     |
+| `ArrowDown`       | Odaklanmayı sonraki haftaya taşı (aynı haftanın günü)    |
+| `Enter` / `Space` | Odaklanılan günü seç                                     |
+| `Escape`          | Değişiklikleri iptal et ve açılır pencereyi kapat        |
+| `Tab`             | Sonraki odaklanılabilir öğeye git (tarayıcı varsayılanı) |
+
+**Devre dışı bırakılmış tarih atlama:** Ok tuşlarıyla gezinirken, devre dışı bırakılmış tarihler otomatik olarak atlanır. Seçici, bir sonraki etkin tarihi bulmak için hareket yönünde 365 güne kadar arama yapar.
+
+**Otomatik ay kaydırma:** Klavye odağı farklı bir aydaki bir güne geçtiğinde, takvim görünümü o ayı gösterecek şekilde güncellenir.
+
+### Zaman Seçici
+
+| Tuş      | Eylem                                             |
+| -------- | ------------------------------------------------- |
+| `Escape` | Değişiklikleri iptal et ve açılır pencereyi kapat |
+
+Zaman seçimi, tıklama/dokunma etkileşimli bir kaydırma tekerleği arayüzü kullanır. Kaydırma sütunları, hassas değer seçimi için `scroll-snap` kullanır.
+
+## ARIA Nitelikleri
+
+Her etkileşimli öğe uygun ARIA rollerine ve niteliklerine sahiptir:
+
+### Açılır Pencere & Kapsayıcı
+
+| Öğe                        | Nitelik                 | Değer                                  |
+| -------------------------- | ----------------------- | -------------------------------------- |
+| Açılır pencere kapsayıcısı | `role`                  | `"dialog"`                             |
+| Satır içi kapsayıcı        | `role`                  | `"group"`                              |
+| Kapsayıcı                  | `aria-label`            | Yerel ayardan gelen yer tutucu metin   |
+| Kapsayıcı                  | `aria-activedescendant` | Mevcut odaklanmış gün hücresinin ID'si |
+
+### Tetikleyici Düğme
+
+| Nitelik         | Değer                         |
+| --------------- | ----------------------------- |
+| `aria-expanded` | `true` açılır pencere açıkken |
+| `aria-haspopup` | `"dialog"`                    |
+
+### Takvim Izgarası
+
+| Öğe                       | Nitelik         | Değer                                                            |
+| ------------------------- | --------------- | ---------------------------------------------------------------- |
+| Izgara sarmalayıcı        | `role`          | `"grid"`                                                         |
+| Hafta satırı              | `role`          | `"row"`                                                          |
+| Hafta günü başlık hücresi | `role`          | `"columnheader"`                                                 |
+| Gün hücresi               | `role`          | `"gridcell"`                                                     |
+| Gün hücresi               | `aria-selected` | Seçildiğinde `true`                                              |
+| Gün hücresi               | `aria-current`  | Hücre bugün olduğunda `"date"`                                   |
+| Gün hücresi               | `aria-label`    | Biçimlendirilmiş tarih dizesi (ör. `"2026-03-04"`)               |
+| Gün hücresi               | `disabled`      | Devre dışı bırakılmış tarihlerde ayarlanır (yerel HTML niteliği) |
+
+### Navigasyon & Açılır Menüler
+
+| Öğe                | Nitelik      | Değer                                        |
+| ------------------ | ------------ | -------------------------------------------- |
+| Önceki ay düğmesi  | `aria-label` | `"Önceki ay"` (`locale.prevMonthLabel`'dan)  |
+| Sonraki ay düğmesi | `aria-label` | `"Sonraki ay"` (`locale.nextMonthLabel`'dan) |
+| Ay açılır menüsü   | `aria-label` | `"Ay seç"` (`locale.selectMonthLabel`'dan)   |
+| Yıl açılır menüsü  | `aria-label` | `"Yıl seç"` (`locale.selectYearLabel`'dan)   |
+
+### Zaman Sütunları
+
+| Öğe               | Nitelik            | Değer                                        |
+| ----------------- | ------------------ | -------------------------------------------- |
+| Saat sütunu       | `role`             | `"listbox"`                                  |
+| Saat sütunu       | `aria-orientation` | `"vertical"`                                 |
+| Saat sütunu       | `aria-label`       | `"Saatler"` (`locale.hourLabel`'dan)         |
+| Dakika sütunu     | `role`             | `"listbox"`                                  |
+| Dakika sütunu     | `aria-orientation` | `"vertical"`                                 |
+| Dakika sütunu     | `aria-label`       | `"Dakikalar"` (`locale.minuteLabel`'dan)     |
+| Saniye sütunu     | `role`             | `"listbox"`                                  |
+| Saniye sütunu     | `aria-orientation` | `"vertical"`                                 |
+| Saniye sütunu     | `aria-label`       | `"Saniyeler"` (`locale.secondLabel`'dan)     |
+| Zaman öğesi       | `role`             | `"option"` (dolgu öğeleri: `"presentation"`) |
+| Zaman öğesi       | `aria-selected`    | öğe mevcut değer olduğunda `true`            |
+| Dönem değiştirici | `aria-label`       | Mevcut dönem + ", AM/PM değiştir"            |
+| Temizle düğmesi   | `aria-label`       | `"Temizle"` (`locale.clear`'dan)             |
+
+Tüm etiket dizeleri [yerel ayar sistemi](/docs/guides/internationalization) aracılığıyla özelleştirilebilir.
+
+## Odak Yönetimi
+
+### Gezici Tabindex
+
+Takvim ızgarası **gezici tabindex** modelini kullanır:
+
+- Yalnızca o an odaklanmış gün hücresi `tabIndex={0}`'a sahiptir (sekmeyle gezilebilir).
+- Diğer tüm gün hücreleri `tabIndex={-1}`'e sahiptir (sekmeyle gezilemez, ancak ok tuşlarıyla odaklanılabilir).
+- Bu, `Tab` tuşunun odağı takvim ızgarasının dışına (sonraki kontrole) taşıdığı ve ok tuşlarının odağı ızgara içinde hareket ettirdiği anlamına gelir.
+
+### Açılır Pencere Odak Yakalama
+
+Açılır pencere modu, `@floating-ui/react`'ten `FloatingFocusManager`'ı şu amaçlarla kullanır:
+
+- Açıkken odağı açılır pencere içinde yakalar.
+- Açılır pencere kapandığında odağı tetikleyici düğmeye döndürür.
+- Sekme ile açılır pencereden arka plan içeriğine geçilmesini engeller.
+
+### Yerel Öğeler
+
+Ay ve yıl seçimi, doğası gereği klavyeyle erişilebilir olan yerel `<select>` öğelerini kullanır. Gün hücreleri, uygun devre dışı bırakma durumlarıyla yerel `<button>` öğelerini kullanır.
+
+## WCAG 2.1 Uyumluluğu
+
+Aşağıdaki WCAG 2.1 başarı ölçütleri ele alınmıştır:
+
+| Ölçüt                        | Seviye | Nasıl Ele Alındığı                                                                               |
+| ---------------------------- | ------ | ------------------------------------------------------------------------------------------------ |
+| **1.3.1** Bilgi ve İlişkiler | A      | Anlamsal HTML — `<button>`, `<select>`, grid/gridcell rolleri                                    |
+| **2.1.1** Klavye             | A      | Tüm işlevselliğe klavye üzerinden erişilebilir (ok tuşları, Enter, Escape)                       |
+| **2.4.3** Odak Sırası        | A      | Mantıksal sekme sırası; açılır pencere odak yöneticisi kullanır                                  |
+| **2.4.7** Görünür Odak       | AA     | Tüm etkileşimli öğelerde `:focus-visible` dış çizgisi (2px solid primary)                        |
+| **4.1.2** İsim, Rol, Değer   | A      | Tüm etkileşimli öğelerin `aria-label` veya metin içeriği aracılığıyla erişilebilir adları vardır |
+
+<Admonition type="note">
+  Stil paketleri (Styled, Tailwind v3/v4) varsayılan olarak görünür odak göstergeleri içerir.
+  Headless paketiyle özel bir kullanıcı arayüzü oluşturursanız, kendi odak stillerinizi sağlamanız
+  gerekir.
+</Admonition>
+
+## Headless: Erişilebilir Özel Arayüzler Oluşturma
+
+Headless paketini doğrudan kullanıyorsanız, özel kullanıcı arayüzünüzün şunları içerdiğinden emin olun:
+
+### 1. Klavye işleyicisini uygula
+
+Ok tuşuyla gezinmenin çalışması için `handleKeyDown`'u açılır pencere kapsayıcınıza geçirin:
+
+```tsx
+const { handleKeyDown, ... } = useDatePicker({ value, onChange });
+
+<div onKeyDown={handleKeyDown}>
+  {/* calendar grid */}
+</div>
+```
+
+### 2. Gün hücrelerinde doğru tabIndex'i ayarla
+
+`getDayProps()`'tan gelen `isFocused` bayrağını kullanın:
+
+```tsx
+const dayProps = getDayProps(date);
+
+<button
+  role="gridcell"
+  tabIndex={dayProps.isFocused ? 0 : -1}
+  aria-selected={dayProps.isSelected}
+  aria-current={dayProps.isToday ? "date" : undefined}
+  aria-label={locale.formatDate(date)}
+>
+  {dayProps.day}
+</button>;
+```
+
+### 3. Izgaranıza ARIA rolleri ekleyin
+
+```tsx
+<div role="grid" aria-label={locale.placeholder}>
+  <div role="row">
+    {locale.weekdays.map((wd) => (
+      <div key={wd} role="columnheader">
+        {wd}
+      </div>
+    ))}
+  </div>
+  {calendar.weeks.map((week, i) => (
+    <div key={i} role="row">
+      {/* day cells with role="gridcell" */}
+    </div>
+  ))}
+</div>
+```
+
+Tam bir kılavuz için [Özel Kullanıcı Arayüzü Oluşturma](/docs/headless/building-custom-ui) bölümüne bakın.

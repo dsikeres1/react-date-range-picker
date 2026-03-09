@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind3/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind3/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind3/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind3/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind3/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind3/Customization/CompoundWebFonts.tsx?raw";
+
+# 字体
+
+Tailwind v3 包使用 Tailwind 的默认 `font-sans` 类 (`ui-sans-serif, system-ui, sans-serif, ...`)。由于 CSS `font-family` 是继承的，您可以通过将其包装在带有 `fontFamily` 样式的容器中来覆盖选择器的字体。包装器的字体会级联到所有选择器元素中。
+
+## 字体族
+
+包装选择器并在包装器上设置 `fontFamily` 以切换字体：
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 使用网页字体 (Noto Sans)
+
+在运行时加载网页字体并通过包装器应用它。此示例从 Google Fonts 加载 [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans)：
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="生产环境用法">
+在实际项目中，通过 HTML `<head>` 中的 `<link>` 标签或通过您的 CSS 打包工具加载字体，而不是在运行时注入。此处的 `useEffect` 方法仅用于演示目的。
+</Admonition>
+
+## 网页字体库
+
+比较不同的网页字体，看看字体如何显著改变选择器的外观。以下所有字体都支持多语言渲染（拉丁文、中日韩文、韩文）。
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

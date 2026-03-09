@@ -1,0 +1,66 @@
+---
+sidebar_position: 3
+title: Browser Compatibility
+description: Desteklenen tarayıcılar, kullanılan CSS özellikleri ve JavaScript API'leri.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Tarayıcı Uyumluluğu
+
+## Destek Matrisi
+
+| Tarayıcı         | Minimum Sürüm  |
+| ---------------- | -------------- |
+| Chrome           | 88+            |
+| Edge             | 88+ (Chromium) |
+| Firefox          | 85+            |
+| Safari           | 15.4+          |
+| iOS Safari       | 15.4+          |
+| Samsung Internet | 15+            |
+
+**IE 11 desteklenmemektedir.** Kütüphane, CSS özel özelliklerine, modern JavaScript API'lerine ve React 18+ sürümüne dayanmaktadır.
+
+Safari 15.4 minimumu, Styled paketinin odak göstergesi stillerinde kullanılan `:focus-visible` desteği tarafından belirlenir.
+
+## CSS Özellikleri
+
+| Özellik                  | Kullanıldığı Yer                      | İlk Desteklendiği Sürüm                |
+| ------------------------ | ------------------------------------- | -------------------------------------- |
+| CSS Özel Özellikleri     | Tüm stil paketleri (temalama)         | Chrome 49, Firefox 31, Safari 9.1      |
+| `:focus-visible`         | Odak göstergeleri (Styled)            | Chrome 86, Firefox 85, **Safari 15.4** |
+| `color-scheme`           | Karanlık mod yerel girdileri (Styled) | Chrome 81, Firefox 96, Safari 12.1     |
+| `prefers-color-scheme`   | Otomatik karanlık mod (Styled)        | Chrome 76, Firefox 67, Safari 12.1     |
+| `prefers-reduced-motion` | Hareket azaltma (Styled)              | Chrome 74, Firefox 63, Safari 10.1     |
+| `scroll-snap-type`       | Zaman seçici kaydırması (Styled)      | Chrome 69, Firefox 68, Safari 11       |
+| Flexbox                  | Düzen                                 | Evrensel                               |
+| CSS Grid                 | Takvim ızgarası                       | Chrome 57, Firefox 52, Safari 10.1     |
+
+## JavaScript API'leri
+
+| API                                 | Kullanan                                          | İlk Desteklendiği Sürüm            |
+| ----------------------------------- | ------------------------------------------------- | ---------------------------------- |
+| `Intl.DateTimeFormat`               | `createLocale()` yerel ayar oluşturma             | Tüm modern tarayıcılar             |
+| `Intl.DateTimeFormat.formatToParts` | AM/PM etiket çıkarma                              | Chrome 57, Firefox 51, Safari 11   |
+| `ResizeObserver`                    | `@floating-ui/react` açılır pencere konumlandırma | Chrome 64, Firefox 69, Safari 13.1 |
+| React 18+ hook'ları                 | Tüm hook'lar ve bileşenler                        | React 18.0+                        |
+
+## Pakete Özgü Notlar
+
+### Headless
+
+CSS bağımlılığı yoktur. Yalnızca React 18+ ve standart JavaScript API'lerini gerektirir. React'ı destekleyen herhangi bir ortamla uyumludur.
+
+### Styled
+
+CSS özel özelliklerini, `:focus-visible`, `color-scheme` ve `scroll-snap-type` kullanır. Tarayıcı desteğindeki darboğaz **Safari 15.4+**'dır (`:focus-visible` için).
+
+Kaydırma tabanlı zaman seçici, gizli kaydırma çubuklarıyla birlikte `scroll-snap-type: y mandatory` kullanır. Kaydırma davranışı, değişen atalet/momentum uygulamaları nedeniyle platformlar arasında biraz farklı hissedilebilir.
+
+### Tailwind v3
+
+Tailwind CSS v3 gerektirir. Headless ile aynı JavaScript uyumluluğuna sahiptir. CSS desteği, Tailwind v3 çıktısına bağlıdır (geniş çapta uyumludur).
+
+### Tailwind v4
+
+Modern CSS özelliklerini (`@layer`, `@property`, CSS iç içe geçme) kullanan Tailwind CSS v4'ü gerektirir. Ayrıntılar için [Tailwind CSS v4 tarayıcı desteği](https://tailwindcss.com/docs/compatibility)

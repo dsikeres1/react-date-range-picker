@@ -1,0 +1,32 @@
+---
+sidebar_position: 6
+sidebar_label: Time Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundTimePicker from "@examples/tailwind4/Customization/CompoundTimePicker";
+import CompoundTimePickerSource from "@examples/tailwind4/Customization/CompoundTimePicker.tsx?raw";
+import CompoundTimePickerTwelveHour from "@examples/tailwind4/Customization/CompoundTimePickerTwelveHour";
+import CompoundTimePickerTwelveHourSource from "@examples/tailwind4/Customization/CompoundTimePickerTwelveHour.tsx?raw";
+
+# Bộ chọn thời gian
+
+Sử dụng các thành phần kết hợp `TimePicker` để xây dựng giao diện người dùng chọn thời gian tùy chỉnh. Ví dụ này thay thế trình kích hoạt mặc định bằng một nút được tạo kiểu trong khi vẫn giữ lại bảng điều khiển thời gian và chân trang tiêu chuẩn.
+
+<CodeDemo source={CompoundTimePickerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundTimePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Định dạng 12 giờ
+
+Định cấu hình định dạng 12 giờ với `time`:
+
+<CodeDemo source={CompoundTimePickerTwelveHourSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundTimePickerTwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

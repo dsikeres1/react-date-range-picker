@@ -1,0 +1,49 @@
+---
+sidebar_position: 1
+sidebar_label: "Overview"
+---
+
+# Составные компоненты
+
+Пакет styled предоставляет API составных компонентов (Compound Component), который дает вам полный контроль над внутренней структурой и рендерингом каждого выбора. Вместо одного монолитного компонента вы составляете выбор из отдельных частей.
+
+## Как это работает
+
+Каждый выбор (например, `DatePicker`) является одновременно простым компонентом и пространством имен для составных частей:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/styles.css";
+
+// Simple usage — renders default layout
+<DatePicker value={value} onChange={setValue} />
+
+// Compound usage — full control over structure
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Доступные части
+
+### DatePicker
+
+| Часть                | Описание                                                                                      |
+| -------------------- | --------------------------------------------------------------------------------------------- |
+| `DatePicker.Root`    | Провайдер + контейнер. Принимает все свойства выбора (`value`, `onChange`, `minDate` и т. д.) |
+| `DatePicker.Trigger` | Кнопка, открывающая/закрывающая всплывающее окно. Отображает выбранное значение.              |
+
+| `DatePicker

@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/styled/DateRangeTimePicker/Basic";
+import BasicSource from "@examples/styled/DateRangeTimePicker/Basic.tsx?raw";
+import Inline from "@examples/styled/DateRangeTimePicker/Inline";
+import InlineSource from "@examples/styled/DateRangeTimePicker/Inline.tsx?raw";
+
+# DateRangeTimePicker
+
+Um componente de seleção de intervalo de datas e horas com calendários duplos e painéis de tempo para início e fim.
+
+## Uso Básico
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Modo Inline
+
+Exibe os calendários e painéis de tempo em linha (inline) sem um gatilho de pop-up.
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

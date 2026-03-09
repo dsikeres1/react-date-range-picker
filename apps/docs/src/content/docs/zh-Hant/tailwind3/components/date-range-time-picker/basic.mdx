@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/tailwind3/DateRangeTimePicker/Basic";
+import BasicSource from "@examples/tailwind3/DateRangeTimePicker/Basic.tsx?raw";
+import Inline from "@examples/tailwind3/DateRangeTimePicker/Inline";
+import InlineSource from "@examples/tailwind3/DateRangeTimePicker/Inline.tsx?raw";
+
+# DateRangeTimePicker
+
+一個日期與時間範圍選擇元件，包含用於開始與結束的雙日曆及時間面板。
+
+## 基本用法
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 內聯模式
+
+無需彈出觸發器，直接內聯顯示日曆和時間面板。
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

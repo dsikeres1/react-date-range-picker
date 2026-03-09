@@ -1,0 +1,82 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Required from "@examples/tailwind4/DatePicker/Required";
+import RequiredSource from "@examples/tailwind4/DatePicker/Required.tsx?raw";
+import MinMaxDate from "@examples/tailwind4/DatePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/tailwind4/DatePicker/MinMaxDate.tsx?raw";
+import DisabledDates from "@examples/tailwind4/DatePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind4/DatePicker/DisabledDates.tsx?raw";
+import DisablePastFuture from "@examples/tailwind4/DatePicker/DisablePastFuture";
+import DisablePastFutureSource from "@examples/tailwind4/DatePicker/DisablePastFuture.tsx?raw";
+import HighlightDates from "@examples/tailwind4/DatePicker/HighlightDates";
+import HighlightDatesSource from "@examples/tailwind4/DatePicker/HighlightDates.tsx?raw";
+import InitialMonth from "@examples/tailwind4/DatePicker/InitialMonth";
+import InitialMonthSource from "@examples/tailwind4/DatePicker/InitialMonth.tsx?raw";
+
+# 제약 조건
+
+## 필수 입력
+
+`required`가 설정되면 지우기 버튼이 비활성화되고 값을 비울 수 없습니다.
+
+<CodeDemo source={RequiredSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Required client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 최소 및 최대 날짜
+
+`minDate`와 `maxDate`를 사용하여 선택 가능한 날짜를 특정 범위로 제한합니다.
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 비활성화된 날짜
+
+`isDateUnavailable`를 사용하여 특정 날짜를 동적으로 비활성화합니다.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 과거 / 미래 비활성화
+
+`disablePast` 또는 `disableFuture`를 사용하여 오늘 이전/이후의 날짜를 빠르게 비활성화합니다.
+
+<CodeDemo source={DisablePastFutureSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisablePastFuture client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 날짜 강조
+
+`highlightDates` prop을 사용하여 특정 날짜(예: 공휴일, 이벤트)를 시각적으로 강조합니다.
+
+<CodeDemo source={HighlightDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <HighlightDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 초기 월
+
+피커가 처음 열릴 때 표시될 초기 월을 설정합니다.
+
+<CodeDemo source={InitialMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <InitialMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,22 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDate from "@examples/tailwind3/DateTimePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/tailwind3/DateTimePicker/MinMaxDate.tsx?raw";
+
+# Limites
+
+## Datas Mínima e Máxima
+
+Restrinja as datas selecionáveis a um intervalo específico.
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

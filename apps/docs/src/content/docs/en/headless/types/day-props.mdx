@@ -1,0 +1,60 @@
+---
+sidebar_position: 1
+title: DayProps
+---
+
+# DayProps
+
+Per-cell computed flags returned by `getDayProps()`. Describes the visual and interactive state of a single calendar day cell.
+
+```tsx
+import type { DayProps } from "react-date-range-picker-headless";
+```
+
+## Fields
+
+| Field                | Type      | Description                                                                          |
+| -------------------- | --------- | ------------------------------------------------------------------------------------ |
+| `date`               | `Date`    | The Date object for this cell.                                                       |
+| `day`                | `number`  | Day of month (1-31).                                                                 |
+| `isToday`            | `boolean` | This date is today (or the `today` override).                                        |
+| `isSelected`         | `boolean` | This date is currently selected.                                                     |
+| `isDisabled`         | `boolean` | This date is disabled by `minDate`, `maxDate`, or `isDateUnavailable`.               |
+| `isInRange`          | `boolean` | This date is between the range start and end (exclusive of start/end themselves).    |
+| `isRangeStart`       | `boolean` | This date is the first date of a selected range.                                     |
+| `isRangeEnd`         | `boolean` | This date is the last date of a selected range.                                      |
+| `isInHoverRange`     | `boolean` | This date is in the hover preview range (between start and hovered date).            |
+| `isHoverTarget`      | `boolean` | This date is the currently hovered date.                                             |
+| `hasLeftConnection`  | `boolean` | Connected to the previous day (for continuous range background rendering).           |
+| `hasRightConnection` | `boolean` | Connected to the next day (for continuous range background rendering).               |
+| `isConsecutiveRange` | `boolean` | Part of a multi-day selected range.                                                  |
+| `isFocused`          | `boolean` | This date has keyboard focus.                                                        |
+| `dayOfWeek`          | `number`  | Day of the week (0 = Sunday, 6 = Saturday).                                          |
+| `isOutsideDay`       | `boolean` | This day belongs to a different month (prev/next) when `showOutsideDays` is enabled. |
+| `isHighlighted`      | `boolean` | This day is in the `highlightDates` array.                                           |
+| `isRangeSingle`      | `boolean` | This day is both the range start and range end (single-day range).                   |
+
+## TypeScript Definition
+
+```tsx
+interface DayProps {
+  date: Date;
+  day: number;
+  isToday: boolean;
+  isSelected: boolean;
+  isDisabled: boolean;
+  isInRange: boolean;
+  isRangeStart: boolean;
+  isRangeEnd: boolean;
+  isInHoverRange: boolean;
+  isHoverTarget: boolean;
+  hasLeftConnection: boolean;
+  hasRightConnection: boolean;
+  isConsecutiveRange: boolean;
+  isFocused: boolean;
+  dayOfWeek: number;
+  isOutsideDay: boolean;
+  isHighlighted: boolean;
+  isRangeSingle: boolean;
+}
+```

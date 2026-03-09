@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# Building Custom UI
+
+This guide walks through the pattern for building your own date picker UI on top of the headless hooks.
+
+## The Pattern
+
+Every headless hook follows the same pattern:
+
+1. **Call the hook** with your options (value, onChange, configuration)
+2. **Destructure the return value** to get state, computed values, and handlers
+3. **Render your own markup** using the returned values
+4. **Wire up interactions** by calling the provided handlers
+
+The hook manages all the complexity -- calendar generation, date math, open/close state, keyboard navigation, range logic -- and you focus purely on presentation.
+
+## Example: Custom Date Picker
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Key Concepts
+
+### getDayProps
+
+The `getDayProps` function is the core of calendar rendering. For each date cell, it returns a `DayProps` object with 18 boolean/number flags that describe the cell's state:
+
+```tsx
+const dp = getDayProps(day);
+
+// Selection state
+dp.isSelected; // Currently selected date
+dp.isToday; // Today's date
+
+// Range state (for range pickers)
+dp.isInRange; // Between start and end dates
+dp.isRangeStart; // First date of the range
+dp.isRangeEnd; // Last date of the range
+dp.isInHoverRange; // In the hover preview range
+dp.isHoverTarget; // The hovered date itself
+dp.isRangeSingle; // Both range start and range end (single-day range)
+
+// Visual connection helpers
+dp.hasLeftConnection; // Connected to previous day (for range backgrounds)
+dp.hasRightConnection; // Connected to next day
+dp.isConsecutiveRange; // Part of a multi-day range
+
+// State
+dp.isDisabled; // Disabled by minDate/maxDate/isDateUnavailable
+dp.isFocused; // Has keyboard focus
+dp.isOutsideDay; // Belongs to adjacent month (when showOutsideDays is enabled)
+dp.isHighlighted; // In the highlightDates array
+
+// Data
+dp.date; // The Date object
+dp.day; // Day of month number
+dp.dayOfWeek; // 0-6 (Sunday-Saturday)
+```
+
+### Refs for Click-Outside
+
+The hooks return `containerRef` and `popupRef`. Attach these to your wrapper and popup elements -- the hook uses them to detect outside clicks and close the popup automatically.
+
+### Keyboard Navigation
+
+The `handleKeyDown` handler supports arrow keys, Enter, Escape, and Tab for full keyboard navigation. Attach it to the popup container.
+
+### Locale
+
+All user-facing strings come from the `locale` object. You can customize any string by passing a partial `locale` option:
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "OK",
+    cancel: "Back",
+    placeholder: "Pick a date...",
+  },
+});
+```
+
+## Next Steps
+
+- [Hook Reference](/docs/headless/hooks/use-date-picker) -- Full options and return values for each hook
+- [Contexts](/docs/headless/contexts) -- Use providers for compound component patterns
+- [Date Utilities](/docs/headless/date-utilities) -- Helper functions for date manipulation

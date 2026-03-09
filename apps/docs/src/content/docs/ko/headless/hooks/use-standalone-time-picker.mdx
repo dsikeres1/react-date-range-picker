@@ -1,0 +1,150 @@
+---
+sidebar_position: 7
+title: useStandaloneTimePicker
+---
+
+# useStandaloneTimePicker
+
+열기/닫기 및 외부 클릭(click-outside) 동작으로 시간 상태를 관리합니다.
+
+## 가져오기
+
+```tsx
+import { useStandaloneTimePicker } from "react-date-range-picker-headless";
+```
+
+## 사용법
+
+```tsx
+import { useState } from "react";
+import { useStandaloneTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [time, setTime] = useState<Date | null>(null);
+
+  const picker = useStandaloneTimePicker({
+    value: time,
+    onChange: setTime,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 5 },
+    placeholder: "Select time",
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.hasValue ? picker.displayValue : "Select time"}
+      </button>
+
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          <div>
+            <span>{String(picker.tempHour).padStart(2, "0")}</span>
+            <span>:</span>
+            <span>{String(picker.tempMinute).padStart(2, "0")}</span>
+          </div>
+
+          {/* Hook up hour/minute controls */}
+          <input
+            type="range"
+            min={0}
+            max={23}
+            value={picker.tempHour}
+            onChange={(e) => picker.handleHourChange(Number(e.target.value))}
+          />
+          <input
+            type="range"
+            min={0}
+            max={55}
+            step={5}
+            value={picker.tempMinute}
+            onChange={(e) => picker.handleMinuteChange(Number(e.target.value))}
+          />
+
+          <div>
+            <button onClick={picker.handleClear}>Clear</button>
+            <button onClick={picker.handleCancel}>Cancel</button>
+            <button onClick={picker.handleConfirm}>Confirm</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## 옵션
+
+| 옵션            | 타입                           | 기본값                                                                    | 설명                                                               |
+| --------------- | ------------------------------ | ------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `value`         | `Date \| null`                 | --                                                                        | **필수.** 현재 시간을 나타내는 Date 객체 (시간 부분만 사용됩니다). |
+| `onChange`      | `(date: Date \| null) => void` | --                                                                        | **필수.** 시간이 확정될 때 호출됩니다.                             |
+| `time`          | `TimeConfig`                   | `{ precision: "minute", hourFormat: "24", minuteStep: 5, secondStep: 1 }` | 타임 피커 설정.                                                    |
+| `locale`        | `Partial<Locale>`              | `DEFAULT_LOCALE`                                                          | 로케일 문자열을 재정의합니다.                                      |
+| `displayFormat` | `string`                       | --                                                                        | 트리거 표시에 사용할 사용자 정의 포맷 문자열.                      |
+| `placeholder`   | `string`                       | --                                                                        | 값이 선택되지 않았을 때의 플레이스홀더 텍스트.                     |
+| `open`          | `boolean`                      | --                                                                        | 제어되는 열림 상태.                                                |
+| `initialOpen`   | `boolean`                      | `false`                                                                   | 초기 열림 상태 (비제어).                                           |
+| `onOpenChange`  | `(open: boolean) => void`      | --                                                                        | 열림 상태가 변경될 때의 콜백.                                      |
+| `required`      | `boolean`                      | `false`                                                                   | `true`일 경우, `handleClear`는 아무 작업도 수행하지 않습니다.      |
+| `inline`        | `boolean`                      | `false`                                                                   | 트리거/팝업 없이 항상 패널을 표시합니다.                           |
+| `name`          | `string`                       | --                                                                        | 폼 제출을 위한 숨은 input의 이름.                                  |
+
+## 반환 값
+
+| 이름                 | 타입                                | 설명                                                                       |
+| -------------------- | ----------------------------------- | -------------------------------------------------------------------------- |
+| `isOpen`             | `boolean`                           | 팝업이 현재 열려 있는지 여부.                                              |
+| `handleOpen`         | `() => void`                        | 팝업을 엽니다.                                                             |
+| `handleClose`        | `() => void`                        | 팝업을 닫습니다.                                                           |
+| `handleToggle`       | `() => void`                        | 팝업을 토글합니다.                                                         |
+| `tempHour`           | `number`                            | 현재 임시 시간 값.                                                         |
+| `tempMinute`         | `number`                            | 현재 임시 분 값.                                                           |
+| `tempSecond`         | `number`                            | 현재 임시 초 값.                                                           |
+| `tempPeriod`         | `TimePeriod`                        | 현재 AM/PM 주기.                                                           |
+| `handleHourChange`   | `(hour: number) => void`            | 임시 시간을 업데이트합니다.                                                |
+| `handleMinuteChange` | `(minute: number) => void`          | 임시 분을 업데이트합니다.                                                  |
+| `handleSecondChange` | `(second: number) => void`          | 임시 초를 업데이트합니다.                                                  |
+| `handlePeriodChange` | `(period: TimePeriod) => void`      | AM/PM 주기를 업데이트합니다.                                               |
+| `handleConfirm`      | `() => void`                        | 임시 시간을 확정하고, `onChange`를 호출한 뒤, 팝업을 닫습니다.             |
+| `handleCancel`       | `() => void`                        | 원래 값으로 되돌리고 팝업을 닫습니다.                                      |
+| `handleClear`        | `() => void`                        | 값을 지우고 닫습니다. `required`가 true이면 아무 작업도 수행하지 않습니다. |
+| `displayValue`       | `string`                            | 트리거를 위한 포맷된 시간 문자열 (확정된 값).                              |
+| `timeDisplayValue`   | `string`                            | 패널을 위한 포맷된 시간 문자열 (임시 값).                                  |
+| `hasValue`           | `boolean`                           | 시간 값이 현재 설정되어 있는지 여부.                                       |
+| `canConfirm`         | `boolean`                           | 확인 버튼이 활성화되어야 하는지 여부.                                      |
+| `locale`             | `Locale`                            | 해결된 로케일 객체.                                                        |
+| `resolvedTimeConfig` | `Required<TimeConfig>`              | 완전히 해결된 시간 설정.                                                   |
+| `containerRef`       | `RefObject<HTMLDivElement \| null>` | 외부 컨테이너를 위한 Ref (외부 클릭 감지에 사용됨).                        |
+| `popupRef`           | `RefObject<HTMLDivElement \| null>` | 팝업 엘리먼트를 위한 Ref (외부 클릭 감지에 사용됨).                        |
+| `handleKeyDown`      | `(e: KeyboardEvent) => void`        | 키보드 핸들러 (취소하려면 Escape 키).                                      |
+
+## 주요 동작
+
+### 열기/닫기
+
+팝업은 제어되거나 비제어될 수 있습니다. `open` prop이 제공되면, 훅은 이를 진실의 원천(source of truth)으로 사용합니다. 그렇지 않으면, 내부 상태가 사용되며 `initialOpen`이 시작 값이 됩니다.
+
+### 외부 클릭
+
+`containerRef`와 `popupRef` 양쪽 모두의 바깥을 클릭하면 `handleCancel`이 트리거되어 원래 값으로 되돌리고 팝업을 닫습니다.
+
+### 키보드
+
+팝업이 열려 있는 동안 `Escape` 키를 누르면 `handleCancel`이 트리거됩니다.
+
+### 인라인 모드
+
+`inline`이 `true`일 때, 패널은 항상 보이며 변경 사항이 즉시 적용됩니다 (자동 동기화). 열기/닫기 로직은 무시됩니다.
+
+### 임시 상태 패턴
+
+이 훅은 `handleConfirm`이 호출될 때만 커밋되는 임시 상태를 유지합니다:
+
+- `handleConfirm` -- 임시 상태를 `onChange`에 쓰고 팝업을 닫습니다
+- `handleCancel` -- 임시 상태를 현재 `value`로 되돌리고 닫습니다
+- `handleClear` -- `onChange(null)`를 호출하고 닫습니다
+
+### 표시 값
+
+- `displayValue` -- 커밋된 `value`의 포맷된 문자열 (트리거용)
+- `timeDisplayValue` -- 임시 값의 포맷된 문자열 (패널용)

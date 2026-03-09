@@ -1,0 +1,32 @@
+---
+sidebar_position: 6
+sidebar_label: "Time Picker"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundTimePicker from "@examples/styled/Customization/CompoundTimePicker";
+import CompoundTimePickerSource from "@examples/styled/Customization/CompoundTimePicker.tsx?raw";
+import CompoundTimePickerTwelveHour from "@examples/styled/Customization/CompoundTimePickerTwelveHour";
+import CompoundTimePickerTwelveHourSource from "@examples/styled/Customization/CompoundTimePickerTwelveHour.tsx?raw";
+
+# 시간 선택기
+
+`TimePicker` compound API를 사용하여 커스텀 트리거를 갖춘 사용자 지정 시간 선택기를 만드세요.
+
+<CodeDemo source={CompoundTimePickerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundTimePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 12시간 형식
+
+`time` 속성으로 12시간 형식을 설정하세요:
+
+<CodeDemo source={CompoundTimePickerTwelveHourSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundTimePickerTwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

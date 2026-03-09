@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/styled/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/styled/DateRangePicker/CustomLocale";
+import CustomLocaleSource from "@examples/styled/DateRangePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/styled/DateRangePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/styled/DateRangePicker/CaptionDropdown.tsx?raw";
+
+# ลักษณะที่ปรากฏ
+
+## หลายเดือน
+
+แสดงผลมากกว่า 2 เดือนข้างกัน ค่าเริ่มต้นคือ `2` สำหรับตัวเลือกช่วงวันที่
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Locale ที่กำหนดเอง
+
+ใช้ `createLocale` จากแพ็คเกจ headless เพื่อปรับแต่งชื่อเดือน/วันและข้อความ UI
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## ดรอปดาวน์สำหรับคำบรรยาย
+
+เปลี่ยนจากการนำทางด้วยปุ่มเป็นการเลือกจากดรอปดาวน์สำหรับเดือนและปี มีประโยชน์สำหรับการเลือกวันที่ที่ห่างไกลจากเดือนปัจจุบัน
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

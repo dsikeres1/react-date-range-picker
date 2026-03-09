@@ -1,0 +1,214 @@
+---
+sidebar_position: 2
+sidebar_label: "CSS Variables"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomColors from "@examples/styled/Customization/CustomColors";
+import CustomColorsSource from "@examples/styled/Customization/CustomColors.tsx?raw";
+import CustomFont from "@examples/styled/Customization/CustomFont";
+import CustomFontSource from "@examples/styled/Customization/CustomFont.tsx?raw";
+import CustomBorderRadius from "@examples/styled/Customization/CustomBorderRadius";
+import CustomBorderRadiusSource from "@examples/styled/Customization/CustomBorderRadius.tsx?raw";
+import CustomSize from "@examples/styled/Customization/CustomSize";
+import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw";
+
+# ตัวแปร CSS
+
+แพ็คเกจ styled ใช้คุณสมบัติ CSS ที่กำหนดเอง (ตัวแปร) สำหรับค่าที่มองเห็นได้ทั้งหมด สามารถปรับแต่งค่าเหล่านี้ได้บน `.rdrp-root` หรือองค์ประกอบแม่ใดๆ เพื่อปรับแต่งลักษณะที่ปรากฏโดยไม่ต้องแก้ไขโค้ดของคอมโพเนนต์
+
+## วิธีการปรับแต่งค่า
+
+ตัวแปรทั้งหมดถูกกำหนดขอบเขตภายใต้ `.rdrp-root` สามารถปรับแต่งค่าได้ในไฟล์ CSS ของคุณเอง:
+
+```css
+/* ธีมที่คุณกำหนดเอง */
+.rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-border-radius-lg: 12px;
+}
+```
+
+หรือกำหนดขอบเขตการปรับแต่งค่าสำหรับอินสแตนซ์เฉพาะโดยใช้คลาสครอบ:
+
+```css
+.my-purple-picker .rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-color-primary-light: #ede9fe;
+  --rdrp-color-primary-lighter: #f5f3ff;
+}
+```
+
+```tsx
+<div className="my-purple-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## การอ้างอิงตัวแปร
+
+### สี
+
+| ตัวแปร                          | ค่าเริ่มต้น (สว่าง)        | คำอธิบาย                                           |
+| ------------------------------- | -------------------------- | -------------------------------------------------- |
+| `--rdrp-color-primary`          | `#3b82f6`                  | สีหลักสำหรับการกระทำ (วันที่เลือก, ปุ่มยืนยัน)     |
+| `--rdrp-color-primary-hover`    | `#2563eb`                  | สถานะ hover หลัก                                   |
+| `--rdrp-color-primary-light`    | `#dbeafe`                  | พื้นหลังของช่วง, สีหลักแบบอ่อน                     |
+| `--rdrp-color-primary-lighter`  | `#eff6ff`                  | พื้นหลังของค่าที่ตั้งไว้ล่วงหน้าที่ใช้งานอยู่      |
+| `--rdrp-color-primary-disabled` | `#93c5fd`                  | ปุ่มยืนยันที่ถูกปิดใช้งาน                          |
+| `--rdrp-color-bg`               | `#ffffff`                  | สีพื้นหลัง                                         |
+| `--rdrp-color-bg-hover`         | `#f3f4f6`                  | พื้นหลัง hover สำหรับวัน, ปุ่ม                     |
+| `--rdrp-color-bg-subtle`        | `#f9fafb`                  | พื้นหลังแบบเรียบง่าย                               |
+| `--rdrp-color-text`             | `#374151`                  | สีข้อความเริ่มต้น                                  |
+| `--rdrp-color-text-strong`      | `#111827`                  | ข้อความเข้ม (หัวข้อ, เวลาที่ใช้งาน)                |
+| `--rdrp-color-text-muted`       | `#6b7280`                  | ข้อความแบบเบา (ปุ่มนำทาง, ป้ายกำกับ)               |
+| `--rdrp-color-text-placeholder` | `#6b7280`                  | ข้อความ Placeholder                                |
+| `--rdrp-color-text-disabled`    | `#d1d5db`                  | ข้อความของวันที่ถูกปิดใช้งาน                       |
+| `--rdrp-color-text-outside`     | `#9ca3af`                  | วันที่อยู่นอกเดือนปัจจุบัน                         |
+| `--rdrp-color-text-inverse`     | `#ffffff`                  | ข้อความบนพื้นหลังสีหลัก                            |
+| `--rdrp-color-text-danger`      | `#ef4444`                  | ข้อความปุ่มล้าง/อันตราย                            |
+| `--rdrp-color-text-today`       | `#2563eb`                  | สีตัวบ่งชี้ของวันนี้                               |
+| `--rdrp-color-border`           | `#d1d5db`                  | เส้นขอบเริ่มต้น                                    |
+| `--rdrp-color-border-light`     | `#e5e7eb`                  | เส้นขอบแบบสว่าง (ป๊อปอัป, ตัวเลือก)                |
+| `--rdrp-color-border-subtle`    | `#f3f4f6`                  | เส้นขอบแบบเรียบง่าย (ส่วนท้าย, ค่าที่ตั้งล่วงหน้า) |
+| `--rdrp-color-border-hover`     | `#93c5fd`                  | สถานะ hover ของเส้นขอบ                             |
+| `--rdrp-color-highlight-dot`    | `#f59e0b`                  | สีจุดไฮไลท์                                        |
+| `--rdrp-highlight-dot-size`     | `4px`                      | เส้นผ่านศูนย์กลางจุดไฮไลท์                         |
+| `--rdrp-color-range-bg`         | `#dbeafe`                  | พื้นหลังของวันที่อยู่ในช่วง                        |
+| `--rdrp-color-hover-range-bg`   | `#eff6ff`                  | พื้นหลังแสดงตัวอย่างช่วงที่ hover                  |
+| `--rdrp-color-hover-target-bg`  | `#bfdbfe`                  | พื้นหลังจุดสิ้นสุดที่ hover                        |
+| `--rdrp-color-time-highlight`   | `rgba(59, 130, 246, 0.08)` | แถบไฮไลท์ของแผงเวลา                                |
+
+### การพิมพ์
+
+| ตัวแปร                        | ค่าเริ่มต้น       | คำอธิบาย                               |
+| ----------------------------- | ----------------- | -------------------------------------- |
+| `--rdrp-font-family`          | System font stack | ตระกูลฟอนต์                            |
+| `--rdrp-font-size-xs`         | `11px`            | เล็กพิเศษ (หัวข้อวันในสัปดาห์ขนาดเล็ก) |
+| `--rdrp-font-size-sm`         | `12px`            | เล็ก (หัวข้อวันในสัปดาห์, ป้ายกำกับ)   |
+| `--rdrp-font-size-base`       | `13px`            | พื้นฐาน (เซลล์วัน, ปุ่ม)               |
+| `--rdrp-font-size-md`         | `14px`            | กลาง (ทริกเกอร์, รายการเวลา)           |
+| `--rdrp-font-size-lg`         | `15px`            | ใหญ่ (ชื่อหัวข้อ)                      |
+| `--rdrp-font-weight-normal`   | `400`             | น้ำหนักปกติ                            |
+| `--rdrp-font-weight-medium`   | `500`             | น้ำหนักปานกลาง                         |
+| `--rdrp-font-weight-semibold` | `600`             | น้ำหนักกึ่งหนา                         |
+| `--rdrp-font-weight-bold`     | `700`             | น้ำหนักหนา (ตัวบ่งชี้วันนี้)           |
+
+### ระยะห่าง
+
+| ตัวแปร               | ค่าเริ่มต้น | คำอธิบาย                 |
+| -------------------- | ----------- | ------------------------ |
+| `--rdrp-spacing-xs`  | `2px`       | ระยะห่างเล็กพิเศษ        |
+| `--rdrp-spacing-sm`  | `4px`       | ระยะห่างเล็กน้อย         |
+| `--rdrp-spacing-md`  | `8px`       | ระยะห่างปานกลาง          |
+| `--rdrp-spacing-lg`  | `12px`      | ระยะห่างขนาดใหญ่         |
+| `--rdrp-spacing-xl`  | `16px`      | ระยะห่างใหญ่พิเศษ        |
+| `--rdrp-spacing-2xl` | `24px`      | ระยะห่างใหญ่พิเศษ 2 เท่า |
+
+### เส้นขอบ
+
+| ตัวแปร                      | ค่าเริ่มต้น | คำอธิบาย                       |
+| --------------------------- | ----------- | ------------------------------ |
+| `--rdrp-border-radius-sm`   | `4px`       | รัศมีขนาดเล็ก                  |
+| `--rdrp-border-radius-md`   | `6px`       | รัศมีขนาดกลาง (ปุ่ม, ตัวเลือก) |
+| `--rdrp-border-radius-lg`   | `8px`       | รัศมีขนาดใหญ่ (วัน, ทริกเกอร์) |
+| `--rdrp-border-radius-xl`   | `12px`      | รัศมีขนาดใหญ่พิเศษ (ป๊อปอัป)   |
+| `--rdrp-border-radius-full` | `9999px`    | รัศมีเต็ม (จุดไฮไลท์)          |
+| `--rdrp-border-width`       | `1px`       | ความกว้างเส้นขอบ               |
+
+### เงา
+
+| ตัวแปร                 | ค่าเริ่มต้น                   | คำอธิบาย         |
+| ---------------------- | ----------------------------- | ---------------- |
+| `--rdrp-shadow-popup`  | `0 10px 25px rgba(0,0,0,0.1)` | เงาของป๊อปอัป    |
+| `--rdrp-shadow-inline` | `0 4px 12px rgba(0,0,0,0.06)` | เงาในโหมดอินไลน์ |
+| `--rdrp-shadow-sm`     | `0 2px 6px rgba(0,0,0,0.04)`  | เงาขนาดเล็ก      |
+
+### ขนาด
+
+| ตัวแปร                     | ค่าเริ่มต้น | คำอธิบาย                                         |
+| -------------------------- | ----------- | ------------------------------------------------ |
+| `--rdrp-cell-size`         | `36px`      | ความกว้าง/สูงของเซลล์วัน                         |
+| `--rdrp-nav-btn-size`      | `28px`      | ขนาดปุ่มนำทาง                                    |
+| `--rdrp-weekday-height`    | `28px`      | ความสูงของแถวหัวข้อวันในสัปดาห์                  |
+| `--rdrp-grid-min-height`   | `216px`     | ความสูงขั้นต่ำของตารางปฏิทิน                     |
+| `--rdrp-panel-min-width`   | `252px`     | ความกว้างของแผงปฏิทินเดี่ยว                      |
+| `--rdrp-dual-gap`          | `24px`      | ช่องว่างระหว่างปฏิทินคู่                         |
+| `--rdrp-trigger-min-width` | `200px`     | ความกว้างขั้นต่ำของปุ่มทริกเกอร์                 |
+| `--rdrp-trigger-padding-x` | `14px`      | Padding แนวนอนของทริกเกอร์                       |
+| `--rdrp-trigger-padding-y` | `8px`       | Padding แนวตั้งของทริกเกอร์                      |
+| `--rdrp-popup-padding`     | `16px`      | Padding ภายในของป๊อปอัป                          |
+| `--rdrp-popup-gap`         | `6px`       | ช่องว่างเนื้อหาของป๊อปอัป                        |
+| `--rdrp-btn-padding-x`     | `14px`      | Padding แนวนอนของปุ่มส่วนท้าย                    |
+| `--rdrp-btn-padding-y`     | `6px`       | Padding แนวตั้งของปุ่มส่วนท้าย                   |
+| `--rdrp-preset-min-width`  | `140px`     | ความกว้างขั้นต่ำของแถบด้านข้างค่าที่ตั้งล่วงหน้า |
+
+### ตัวเลือกเวลา
+
+| ตัวแปร                        | ค่าเริ่มต้น | คำอธิบาย                      |
+| ----------------------------- | ----------- | ----------------------------- |
+| `--rdrp-time-item-height`     | `32px`      | ความสูงของรายการเลื่อนเวลา    |
+| `--rdrp-time-panel-height`    | `176px`     | ความสูงรวมของแผงเวลา          |
+| `--rdrp-time-column-height`   | `160px`     | ความสูงของคอลัมน์ที่เลื่อนได้ |
+| `--rdrp-time-panel-min-width` | `120px`     | ความกว้างขั้นต่ำของแผงเวลา    |
+| `--rdrp-time-colon-width`     | `12px`      | ความกว้างของตัวคั่นโคลอน      |
+
+### Z-index
+
+| ตัวแปร                | ค่าเริ่มต้น | คำอธิบาย                  |
+| --------------------- | ----------- | ------------------------- |
+| `--rdrp-z-popup`      | `50`        | z-index ของป๊อปอัป        |
+| `--rdrp-z-day-button` | `20`        | z-index ของวันที่ถูกโฟกัส |
+
+### การเปลี่ยนผ่าน
+
+| ตัวแปร                     | ค่าเริ่มต้น | คำอธิบาย                               |
+| -------------------------- | ----------- | -------------------------------------- |
+| `--rdrp-transition-fast`   | `0.1s`      | การเปลี่ยนผ่านที่รวดเร็ว (hover บนวัน) |
+| `--rdrp-transition-normal` | `0.15s`     | การเปลี่ยนผ่านปกติ (ทริกเกอร์, ปุ่ม)   |
+
+## ตัวอย่างสด
+
+### สีที่กำหนดเอง (ธีมสีม่วง)
+
+ปรับแต่งค่าตัวแปรสีหลักเพื่อสร้างชุดสีที่แตกต่างไปจากเดิมอย่างสิ้นเชิง ตัวอย่างนี้ใช้ **DatePicker** ที่มีโทนสีม่วงไวโอเล็ต
+
+<CodeDemo source={CustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### ฟอนต์ที่กำหนดเอง (Serif)
+
+ฟอนต์จะถูกส่งต่อผ่าน CSS ดังนั้นการครอบตัวเลือกด้วย div ที่มี `font-family` ที่กำหนดเองจะนำไปใช้กับข้อความทั้งหมด ตัวอย่างนี้ใช้ **DateRangePicker** กับฟอนต์ Georgia serif
+
+<CodeDemo source={CustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### มุมแหลม (ไม่มีรัศมีขอบ)
+
+ตั้งค่าตัวแปรรัศมีขอบทั้งหมดเป็น `0px` เพื่อให้ได้ลักษณะที่เป็นสี่เหลี่ยมจัตุรัสอย่างสมบูรณ์
+
+<CodeDemo source={CustomBorderRadiusSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomBorderRadius client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### กำหนดขนาดเองผ่านตัวแปร CSS
+
+แทนที่จะใช้ prop `size` ที่มีมาให้, สามารถปรับแต่งค่าตัวแปรขนาดแต่ละตัวเพื่อการควบคุมที่แม่นยำยิ่งขึ้น ตัวอย่างนี้ใช้ **DateRangePicker** ที่มีขนาดเซลล์และขนาดฟอนต์ที่กำหนดเอง
+
+<CodeDemo source={CustomSizeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSize client:load />
+  </ExampleWrapper>
+</CodeDemo>

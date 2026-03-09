@@ -1,0 +1,39 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind3/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind3/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind3/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind3/Customization/CompoundColorThemePopup.tsx?raw";
+
+# Цвета
+
+Пакет Tailwind v3 использует **жестко закодированные утилитарные классы Tailwind** (например, `bg-sky-500`) вместо переменных CSS. Чтобы изменить цвета, используйте Compound API и динамически переопределяйте имена классов дней:
+
+<Admonition type="info">
+  В отличие от пакета styled (который использует переменные CSS), Tailwind v3 требует использования
+  Compound API для переопределения цветов во время выполнения. См. [Переопределение
+  темы](/docs/tailwind3/customization/theme-override) для получения более подробной информации.
+</Admonition>
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Всплывающий режим
+
+Этот же метод работает и для всплывающих палитр:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

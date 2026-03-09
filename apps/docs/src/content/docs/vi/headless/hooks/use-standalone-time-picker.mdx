@@ -1,0 +1,150 @@
+---
+sidebar_position: 7
+title: useStandaloneTimePicker
+---
+
+# useStandaloneTimePicker
+
+Quản lý trạng thái thời gian với hành vi mở/đóng và nhấp chuột bên ngoài.
+
+## Nhập
+
+```tsx
+import { useStandaloneTimePicker } from "react-date-range-picker-headless";
+```
+
+## Cách sử dụng
+
+```tsx
+import { useState } from "react";
+import { useStandaloneTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [time, setTime] = useState<Date | null>(null);
+
+  const picker = useStandaloneTimePicker({
+    value: time,
+    onChange: setTime,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 5 },
+    placeholder: "Chọn thời gian",
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.hasValue ? picker.displayValue : "Chọn thời gian"}
+      </button>
+
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          <div>
+            <span>{String(picker.tempHour).padStart(2, "0")}</span>
+            <span>:</span>
+            <span>{String(picker.tempMinute).padStart(2, "0")}</span>
+          </div>
+
+          {/* Kết nối các điều khiển giờ/phút */}
+          <input
+            type="range"
+            min={0}
+            max={23}
+            value={picker.tempHour}
+            onChange={(e) => picker.handleHourChange(Number(e.target.value))}
+          />
+          <input
+            type="range"
+            min={0}
+            max={55}
+            step={5}
+            value={picker.tempMinute}
+            onChange={(e) => picker.handleMinuteChange(Number(e.target.value))}
+          />
+
+          <div>
+            <button onClick={picker.handleClear}>Xóa</button>
+            <button onClick={picker.handleCancel}>Hủy</button>
+            <button onClick={picker.handleConfirm}>Xác nhận</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Tùy chọn
+
+| Tùy chọn        | Kiểu                           | Mặc định                                                                  | Mô tả                                                                                   |
+| --------------- | ------------------------------ | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `value`         | `Date \| null`                 | --                                                                        | **Bắt buộc.** Thời gian hiện tại dưới dạng đối tượng Date (chỉ sử dụng phần thời gian). |
+| `onChange`      | `(date: Date \| null) => void` | --                                                                        | **Bắt buộc.** Được gọi khi thời gian được xác nhận.                                     |
+| `time`          | `TimeConfig`                   | `{ precision: "minute", hourFormat: "24", minuteStep: 5, secondStep: 1 }` | Cấu hình bộ chọn thời gian.                                                             |
+| `locale`        | `Partial<Locale>`              | `DEFAULT_LOCALE`                                                          | Ghi đè các chuỗi bản địa hóa.                                                           |
+| `displayFormat` | `string`                       | --                                                                        | Chuỗi định dạng tùy chỉnh cho hiển thị của trình kích hoạt.                             |
+| `placeholder`   | `string`                       | --                                                                        | Văn bản giữ chỗ khi không có giá trị nào được chọn.                                     |
+| `open`          | `boolean`                      | --                                                                        | Trạng thái mở được kiểm soát.                                                           |
+| `initialOpen`   | `boolean`                      | `false`                                                                   | Trạng thái mở ban đầu (không được kiểm soát).                                           |
+| `onOpenChange`  | `(open: boolean) => void`      | --                                                                        | Callback khi trạng thái mở thay đổi.                                                    |
+| `required`      | `boolean`                      | `false`                                                                   | Khi là true, `handleClear` không thực hiện hành động nào.                               |
+| `inline`        | `boolean`                      | `false`                                                                   | Luôn hiển thị bảng điều khiển mà không có trình kích hoạt/cửa sổ bật lên.               |
+| `name`          | `string`                       | --                                                                        | Tên input ẩn để gửi biểu mẫu.                                                           |
+
+## Giá trị trả về
+
+| Tên                  | Kiểu                                | Mô tả                                                                    |
+| -------------------- | ----------------------------------- | ------------------------------------------------------------------------ |
+| `isOpen`             | `boolean`                           | Liệu cửa sổ bật lên có đang mở hay không.                                |
+| `handleOpen`         | `() => void`                        | Mở cửa sổ bật lên.                                                       |
+| `handleClose`        | `() => void`                        | Đóng cửa sổ bật lên.                                                     |
+| `handleToggle`       | `() => void`                        | Bật/tắt cửa sổ bật lên.                                                  |
+| `tempHour`           | `number`                            | Giá trị giờ tạm thời hiện tại.                                           |
+| `tempMinute`         | `number`                            | Giá trị phút tạm thời hiện tại.                                          |
+| `tempSecond`         | `number`                            | Giá trị giây tạm thời hiện tại.                                          |
+| `tempPeriod`         | `TimePeriod`                        | Khoảng thời gian AM/PM hiện tại.                                         |
+| `handleHourChange`   | `(hour: number) => void`            | Cập nhật giờ tạm thời.                                                   |
+| `handleMinuteChange` | `(minute: number) => void`          | Cập nhật phút tạm thời.                                                  |
+| `handleSecondChange` | `(second: number) => void`          | Cập nhật giây tạm thời.                                                  |
+| `handlePeriodChange` | `(period: TimePeriod) => void`      | Cập nhật khoảng thời gian AM/PM.                                         |
+| `handleConfirm`      | `() => void`                        | Xác nhận thời gian tạm thời, gọi `onChange`, và đóng cửa sổ bật lên.     |
+| `handleCancel`       | `() => void`                        | Hoàn nguyên về giá trị ban đầu và đóng cửa sổ bật lên.                   |
+| `handleClear`        | `() => void`                        | Xóa giá trị và đóng. Không thực hiện hành động nào nếu `required`.       |
+| `displayValue`       | `string`                            | Chuỗi thời gian đã định dạng cho trình kích hoạt (giá trị đã xác nhận).  |
+| `timeDisplayValue`   | `string`                            | Chuỗi thời gian đã định dạng cho bảng điều khiển (giá trị tạm thời).     |
+| `hasValue`           | `boolean`                           | Liệu một giá trị thời gian có đang được thiết lập hay không.             |
+| `canConfirm`         | `boolean`                           | Liệu nút xác nhận có nên được bật hay không.                             |
+| `locale`             | `Locale`                            | Đối tượng bản địa hóa đã được giải quyết.                                |
+| `resolvedTimeConfig` | `Required<TimeConfig>`              | Cấu hình thời gian đã được giải quyết hoàn toàn.                         |
+| `containerRef`       | `RefObject<HTMLDivElement \| null>` | Ref cho vùng chứa bên ngoài (dùng để phát hiện nhấp chuột bên ngoài).    |
+| `popupRef`           | `RefObject<HTMLDivElement \| null>` | Ref cho phần tử cửa sổ bật lên (dùng để phát hiện nhấp chuột bên ngoài). |
+| `handleKeyDown`      | `(e: KeyboardEvent) => void`        | Trình xử lý bàn phím (Escape để hủy).                                    |
+
+## Các hành vi chính
+
+### Mở/Đóng
+
+Cửa sổ bật lên có thể được kiểm soát hoặc không được kiểm soát. Khi `open` được cung cấp, hook sẽ sử dụng nó làm nguồn đáng tin cậy. Nếu không, trạng thái nội bộ sẽ được sử dụng với `initialOpen` làm giá trị bắt đầu.
+
+### Nhấp chuột bên ngoài
+
+Nhấp chuột bên ngoài cả `containerRef` và `popupRef` sẽ kích hoạt `handleCancel`, hoàn nguyên về giá trị ban đầu và đóng cửa sổ bật lên.
+
+### Bàn phím
+
+Nhấn `Escape` trong khi cửa sổ bật lên đang mở sẽ kích hoạt `handleCancel`.
+
+### Chế độ nội tuyến
+
+Khi `inline` là `true`, bảng điều khiển luôn hiển thị và các thay đổi được áp dụng ngay lập tức (tự động đồng bộ hóa). Logic mở/đóng bị bỏ qua.
+
+### Mẫu trạng thái tạm thời
+
+Hook này duy trì trạng thái tạm thời chỉ được xác nhận khi `handleConfirm` được gọi:
+
+- `handleConfirm` -- ghi trạng thái tạm thời vào `onChange` và đóng cửa sổ bật lên
+- `handleCancel` -- hoàn nguyên trạng thái tạm thời về `value` hiện tại và đóng
+- `handleClear` -- gọi `onChange(null)` và đóng
+
+### Giá trị hiển thị
+
+- `displayValue` -- chuỗi đã định dạng của `value` đã xác nhận (dành cho trình kích hoạt)
+- `timeDisplayValue` -- chuỗi đã định dạng của các giá trị tạm thời (dành cho bảng điều khiển)

@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind4/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind4/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind4/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind4/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind4/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind4/Customization/CompoundWebFonts.tsx?raw";
+
+# Typographie
+
+Le paquet Tailwind v4 utilise la classe par défaut `font-sans` de Tailwind (`ui-sans-serif, system-ui, sans-serif, ...`). Étant donné que la propriété CSS `font-family` est héritée, vous pouvez surcharger la police du sélecteur en l'enveloppant dans un conteneur avec un style `fontFamily`. La police du conteneur se propage à tous les éléments du sélecteur.
+
+## Famille de polices
+
+Enveloppez le sélecteur et définissez `fontFamily` sur le conteneur pour changer de police :
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Utilisation des polices Web (Noto Sans)
+
+Chargez une police Web à l'exécution et appliquez-la via un conteneur. Cet exemple charge [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) depuis Google Fonts :
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="Utilisation en production">
+Dans un projet réel, chargez la police via une balise `<link>` dans votre `<head>` HTML ou via votre empaqueteur CSS au lieu de l'injecter à l'exécution. L'approche avec `useEffect` ici est uniquement à des fins de démonstration.
+</Admonition>
+
+## Galerie de polices Web
+
+Comparez différentes polices Web pour voir à quel point la typographie change radicalement l'apparence du sélecteur. Toutes les polices ci-dessous prennent en charge le rendu multilingue (latin, CJK, coréen).
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

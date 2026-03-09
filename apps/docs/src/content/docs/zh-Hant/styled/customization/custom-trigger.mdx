@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: "Custom Trigger"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/styled/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/styled/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/styled/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/styled/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# 自訂觸發器
+
+用您自己的按鈕或輸入框替換預設的觸發器。`Trigger` 元件接受一個 render prop，讓您可以完全控制觸發器的外觀和行為。
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 觸發器 Render Props
+
+| Prop           | Type             | 說明                    |
+| -------------- | ---------------- | ----------------------- |
+| `displayValue` | `string`         | 格式化後的已選日期      |
+| `placeholder`  | `string`         | 預留位置文字            |
+| `hasValue`     | `boolean`        | 是否已選擇日期          |
+| `isOpen`       | `boolean`        | 彈出視窗是否開啟        |
+| `onToggle`     | `() => void`     | 切換彈出視窗的開啟/關閉 |
+| `onClear`      | `() => void`     | 清除選擇                |
+| `locale`       | `Locale`         | 目前的語系物件          |
+| `triggerRef`   | `(node) => void` | 用於定位的 Ref 回呼函式 |
+
+## 範圍選擇器觸發器
+
+同樣的模式也適用於 `DateRangePicker`：
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

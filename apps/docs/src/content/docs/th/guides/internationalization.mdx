@@ -1,0 +1,40 @@
+---
+sidebar_position: 2
+title: Internationalization
+description: การปรับแต่ง Locale, การสลับภาษา, และการแทนที่การจัดรูปแบบ
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# การปรับแต่งให้เข้ากับสากล (Internationalization)
+
+ไลบรารีนี้ใช้ `Intl.DateTimeFormat` API ของเบราว์เซอร์เพื่อสร้างชื่อเดือน, ป้ายกำกับวันในสัปดาห์, และข้อความ AM/PM ที่สอดคล้องกับแต่ละท้องถิ่น ไม่จำเป็นต้องใช้ไลบรารี i18n ภายนอก
+
+## เริ่มต้นใช้งานฉบับย่อ
+
+ใช้ `createLocale()` เพื่อสร้าง locale จากแท็กภาษา BCP 47 จากนั้นส่งผ่านพร็อพ `locale`:
+
+```tsx
+import { createLocale } from "react-date-range-picker-headless";
+import { DatePicker } from "react-date-range-picker-styled";
+
+const ko = createLocale("ko", {
+  confirm: "확인",
+  cancel: "취소",
+  clear: "초기화",
+  placeholder: "날짜 선택",
+});
+
+function App() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} locale={ko} />;
+}
+```
+
+ซึ่งทำงานได้กับทุกเวอร์ชัน (Tailwind v3, Tailwind v4, Headless)
+
+## สิ่งที่ createLocale สร้างขึ้นโดยอัตโนมัติ
+
+`createLocale(localeKey, overrides?)` ใช้ `Intl.DateTimeFormat` เพื่อสืบทอดค่าต่อไปนี้โดยอัตโนมัติ:
+
+| ฟิลด์ | แหล่งที่มา | ตัวอย่าง (`"ko"`)

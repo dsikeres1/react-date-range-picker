@@ -1,0 +1,198 @@
+---
+sidebar_position: 3
+title: useDateTimePicker
+---
+
+# useDateTimePicker
+
+Hook do jednoczesnego wyboru daty i godziny. Rozszerza `useDatePicker` o stan czasu (godzina, minuta, sekunda, okres) oraz zagnieżdżony selektor czasu.
+
+## Import
+
+```tsx
+import { useDateTimePicker } from "react-date-range-picker-headless";
+```
+
+## Użycie
+
+```tsx
+import { useState } from "react";
+import { useDateTimePicker } from "react-date-range-picker-headless";
+
+function MyDateTimePicker() {
+  const [dateTime, setDateTime] = useState<Date | null>(null);
+
+  const picker = useDateTimePicker({
+    value: dateTime,
+    onChange: setDateTime,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 5 },
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.dateTimePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Kalendarz (tak samo jak w useDatePicker) */}
+          <div>
+            <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+            <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+            <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+          </div>
+          {/* ...siatka kalendarza... */}
+
+          {/* Wyświetlanie czasu */}
+          <div>
+            <span>Time: {picker.timeDisplayValue}</span>
+          </div>
+
+          {/* Kontrolki czasu */}
+          <div>
+            <input
+              type="number"
+              value={picker.tempHour}
+              onChange={(e) => picker.handleHourChange(Number(e.target.value))}
+            />
+            <span>:</span>
+            <input
+              type="number"
+              value={picker.tempMinute}
+              onChange={(e) => picker.handleMinuteChange(Number(e.target.value))}
+            />
+          </div>
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Opcje
+
+| Opcja                 | Typ                                | Domyślnie                                                                 | Opis                                                                                     |
+| --------------------- | ---------------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `value`               | `Date \| null`                     | --                                                                        | **Wymagane.** Aktualna wartość daty i godziny.                                           |
+| `onChange`            | `(dateTime: Date \| null) => void` | --                                                                        | **Wymagane.** Wywoływane, gdy data i godzina ulegną zmianie.                             |
+| `time`                | `TimeConfig`                       | `{ precision: "minute", hourFormat: "24", minuteStep: 5, secondStep: 1 }` | Konfiguracja selektora czasu.                                                            |
+| `minDate`             | `Date`                             | --                                                                        | Najwcześniejsza możliwa do wybrania data.                                                |
+| `maxDate`             | `Date`                             | --                                                                        | Najpóźniejsza możliwa do wybrania data.                                                  |
+| `locale`              | `Partial<Locale>`                  | `DEFAULT_LOCALE`                                                          | Zastępuje ciągi znaków z lokalizacji.                                                    |
+| `initialMonth`        | `Date`                             | --                                                                        | Początkowy miesiąc do wyświetlenia.                                                      |
+| `size`                | `DatePickerSize`                   | --                                                                        | Przekazywane do interfejsu użytkownika.                                                  |
+| `weekStartsOn`        | `WeekDay`                          | `"sunday"`                                                                | Pierwszy dzień tygodnia.                                                                 |
+| `isDateUnavailable`   | `(date: Date) => boolean`          | --                                                                        | Niestandardowa funkcja do wyłączania określonych dat.                                    |
+| `displayFormat`       | `string`                           | --                                                                        | Niestandardowy ciąg formatujący dla wyświetlanej wartości.                               |
+| `open`                | `boolean`                          | --                                                                        | Kontrolowany stan otwarcia.                                                              |
+| `initialOpen`         | `boolean`                          | `false`                                                                   | Początkowy stan otwarcia.                                                                |
+| `onOpenChange`        | `(open: boolean) => void`          | --                                                                        | Funkcja zwrotna wywoływana przy zmianie stanu otwarcia.                                  |
+| `required`            | `boolean`                          | `false`                                                                   | Gdy `true`, `handleClear` nie wykonuje żadnej operacji.                                  |
+| `today`               | `Date`                             | `new Date()`                                                              | Zastępuje dzisiejszą datę.                                                               |
+| `onMonthChange`       | `(month: Date) => void`            | --                                                                        | Funkcja zwrotna wywoływana przy zmianie miesiąca.                                        |
+| `disablePast`         | `boolean`                          | `false`                                                                   | Wyłącza przeszłe daty.                                                                   |
+| `disableFuture`       | `boolean`                          | `false`                                                                   | Wyłącza przyszłe daty.                                                                   |
+| `showOutsideDays`     | `boolean`                          | `false`                                                                   | Pokazuje dni z sąsiednich miesięcy.                                                      |
+| `highlightDates`      | `Date[]`                           | --                                                                        | Daty do wyróżnienia.                                                                     |
+| `shouldCloseOnSelect` | `boolean`                          | `false`                                                                   | W przypadku selektorów daty i godziny, dotyczy tylko kliknięć na presety, a nie na daty. |
+| `numberOfMonths`      | `number`                           | `1`                                                                       | Liczba miesięcy kalendarza.                                                              |
+| `captionLayout`       | `CaptionLayout`                    | `"buttons"`                                                               | Tryb układu nagłówka.                                                                    |
+| `fromYear`            | `number`                           | current year - 100                                                        | Rok początkowy dla listy rozwijanej.                                                     |
+| `toYear`              | `number`                           | current year + 10                                                         | Rok końcowy dla listy rozwijanej.                                                        |
+
+## Zwracane wartości
+
+### Stan daty
+
+| Nazwa          | Typ            | Opis                           |
+| -------------- | -------------- | ------------------------------ |
+| `isOpen`       | `boolean`      | Czy okienko jest otwarte.      |
+| `tempDate`     | `Date \| null` | Tymczasowo wybrana data.       |
+| `currentMonth` | `Date`         | Aktualnie wyświetlany miesiąc. |
+| `locale`       | `Locale`       | Rozwiązany obiekt lokalizacji. |
+
+### Stan czasu
+
+| Nazwa              | Typ          | Opis                                       |
+| ------------------ | ------------ | ------------------------------------------ |
+| `isTimePickerOpen` | `boolean`    | Czy podpanel selektora czasu jest otwarty. |
+| `tempHour`         | `number`     | Aktualna tymczasowa wartość godziny.       |
+| `tempMinute`       | `number`     | Aktualna tymczasowa wartość minuty.        |
+| `tempSecond`       | `number`     | Aktualna tymczasowa wartość sekundy.       |
+| `tempPeriod`       | `TimePeriod` | Aktualny okres AM/PM (`"AM"` lub `"PM"`).  |
+
+### Akcje daty
+
+| Nazwa             | Typ                    | Opis                                           |
+| ----------------- | ---------------------- | ---------------------------------------------- |
+| `handleDateClick` | `(date: Date) => void` | Obsługuje kliknięcie komórki dnia.             |
+| `handlePrevMonth` | `() => void`           | Przechodzi do poprzedniego miesiąca.           |
+| `handleNextMonth` | `() => void`           | Przechodzi do następnego miesiąca.             |
+| `handleOpen`      | `() => void`           | Otwiera okienko.                               |
+| `handleClose`     | `() => void`           | Zamyka okienko.                                |
+| `handleToggle`    | `() => void`           | Przełącza widoczność okienka.                  |
+| `handleConfirm`   | `() => void`           | Zatwierdza datę i godzinę, a następnie zamyka. |
+| `handleCancel`    | `() => void`           | Anuluje i cofa zmiany.                         |
+| `handleClear`     | `() => void`           | Czyści wartość.                                |
+| `handleGoToToday` | `() => void`           | Przechodzi do dzisiaj.                         |
+
+### Akcje czasu
+
+| Nazwa                     | Typ                            | Opis                                 |
+| ------------------------- | ------------------------------ | ------------------------------------ |
+| `handleHourChange`        | `(hour: number) => void`       | Aktualizuje godzinę.                 |
+| `handleMinuteChange`      | `(minute: number) => void`     | Aktualizuje minutę.                  |
+| `handleSecondChange`      | `(second: number) => void`     | Aktualizuje sekundę.                 |
+| `handlePeriodChange`      | `(period: TimePeriod) => void` | Przełącza AM/PM.                     |
+| `handleTimePickerOpen`    | `() => void`                   | Otwiera podpanel selektora czasu.    |
+| `handleTimePickerClose`   | `() => void`                   | Zamyka podpanel selektora czasu.     |
+| `handleTimePickerConfirm` | `() => void`                   | Zatwierdza podpanel selektora czasu. |
+| `handleTimePickerCancel`  | `() => void`                   | Anuluje podpanel selektora czasu.    |
+
+### Wartości obliczone
+
+| Nazwa                | Typ                                               | Opis                                                                 |
+| -------------------- | ------------------------------------------------- | -------------------------------------------------------------------- |
+| `calendar`           | `CalendarMonth`                                   | Dane kalendarza dla bieżącego miesiąca.                              |
+| `calendars`          | `CalendarMonth[]`                                 | Tablica miesięcy kalendarza.                                         |
+| `getDayProps`        | `(date: Date, referenceMonth?: Date) => DayProps` | Właściwości komórki dnia.                                            |
+| `displayValue`       | `string`                                          | Sformatowany ciąg daty i godziny.                                    |
+| `timeDisplayValue`   | `string`                                          | Sformatowany ciąg godziny.                                           |
+| `hasValue`           | `boolean`                                         | Czy wartość jest zatwierdzona.                                       |
+| `canConfirm`         | `boolean`                                         | Czy zatwierdzenie jest prawidłowe.                                   |
+| `containerRef`       | `RefObject<HTMLDivElement \| null>`               | Referencja do kontenera.                                             |
+| `popupRef`           | `RefObject<HTMLDivElement \| null>`               | Referencja do okienka.                                               |
+| `timePickerRef`      | `RefObject<HTMLDivElement \| null>`               | Referencja do podpanelu selektora czasu.                             |
+| `focusedDate`        | `Date \| null`                                    | Data zaznaczona za pomocą klawiatury.                                |
+| `handleKeyDown`      | `(e: KeyboardEvent<HTMLElement>) => void`         | Obsługa klawiatury.                                                  |
+| `resolvedTimeConfig` | `Required<TimeConfig>`                            | Rozwiązana konfiguracja czasu z wypełnionymi wartościami domyślnymi. |
+| `years`              | `number[]`                                        | Lata dla trybu listy rozwijanej.                                     |
+| `months`             | `number[]`                                        | Miesiące dla trybu listy rozwijanej.                                 |
+| `handleYearSelect`   | `(year: number, calendarIndex?: number) => void`  | Ustawia rok.                                                         |
+| `handleMonthSelect`  | `(month: number, calendarIndex?: number) => void` | Ustawia miesiąc.                                                     |
+
+## Kluczowe zachowania
+
+### Konfiguracja czasu
+
+Opcja `time` akceptuje obiekt `TimeConfig`:
+
+```tsx
+interface TimeConfig {
+  precision?: "hour" | "minute" | "second"; // default: "minute"
+  hourFormat?: "12" | "24"; // default: "24"
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30; // default: 5
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30; // default: 1
+  itemHeight?: number; // default: 32
+}
+```
+
+### shouldCloseOnSelect
+
+W przypadku selektorów daty i godziny, `shouldCloseOnSelect` jest wyzwalane tylko przy **kliknięciach na presety**, a nie na daty. Dzieje się tak, ponieważ użytkownik musi jeszcze ustawić godzinę po wybraniu daty.
+
+### resolvedTimeConfig
+
+Zwracana wartość `resolvedTimeConfig` zawiera w pełni rozwiązaną konfigurację czasu ze wszystkimi wypełnionymi wartościami domyślnymi. Użyj jej podczas budowania komponentów interfejsu użytkownika związanych z czasem, aby uniknąć ponownego obliczania wartości domyślnych.

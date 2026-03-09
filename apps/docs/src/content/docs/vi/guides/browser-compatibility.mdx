@@ -1,0 +1,70 @@
+---
+sidebar_position: 3
+title: Browser Compatibility
+description: Các trình duyệt được hỗ trợ, các tính năng CSS và API JavaScript được sử dụng.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Khả năng tương thích với trình duyệt
+
+## Ma trận hỗ trợ
+
+| Trình duyệt      | Phiên bản tối thiểu |
+| ---------------- | ------------------- |
+| Chrome           | 88+                 |
+| Edge             | 88+ (Chromium)      |
+| Firefox          | 85+                 |
+| Safari           | 15.4+               |
+| iOS Safari       | 15.4+               |
+| Samsung Internet | 15+                 |
+
+**Không hỗ trợ IE 11.** Thư viện này dựa vào các thuộc tính tùy chỉnh CSS, API JavaScript hiện đại và React 18+.
+
+Yêu cầu tối thiểu Safari 15.4 được xác định bởi sự hỗ trợ cho `:focus-visible` được sử dụng trong các kiểu chỉ báo tập trung của gói Styled.
+
+## Các tính năng CSS
+
+| Tính năng                | Được sử dụng trong              | Hỗ trợ lần đầu                         |
+| ------------------------ | ------------------------------- | -------------------------------------- |
+| CSS Custom Properties    | Tất cả các gói styled (chủ đề)  | Chrome 49, Firefox 31, Safari 9.1      |
+| `:focus-visible`         | Chỉ báo tập trung (Styled)      | Chrome 86, Firefox 85, **Safari 15.4** |
+| `color-scheme`           | Input gốc ở chế độ tối (Styled) | Chrome 81, Firefox 96, Safari 12.1     |
+| `prefers-color-scheme`   | Chế độ tối tự động (Styled)     | Chrome 76, Firefox 67, Safari 12.1     |
+| `prefers-reduced-motion` | Giảm chuyển động (Styled)       | Chrome 74, Firefox 63, Safari 10.1     |
+| `scroll-snap-type`       | Cuộn chọn thời gian (Styled)    | Chrome 69, Firefox 68, Safari 11       |
+| Flexbox                  | Bố cục                          | Universal                              |
+| CSS Grid                 | Lưới lịch                       | Chrome 57, Firefox 52, Safari 10.1     |
+
+## Các API JavaScript
+
+| API                                 | Được sử dụng bởi                             | Hỗ trợ lần đầu                     |
+| ----------------------------------- | -------------------------------------------- | ---------------------------------- |
+| `Intl.DateTimeFormat`               | Tạo ngôn ngữ địa phương với `createLocale()` | Tất cả các trình duyệt hiện đại    |
+| `Intl.DateTimeFormat.formatToParts` | Trích xuất nhãn AM/PM                        | Chrome 57, Firefox 51, Safari 11   |
+| `ResizeObserver`                    | Định vị popup với `@floating-ui/react`       | Chrome 64, Firefox 69, Safari 13.1 |
+| React 18+ hooks                     | Tất cả các hook và component                 | React 18.0+                        |
+
+## Ghi chú cụ thể cho từng gói
+
+### Headless
+
+Không có phụ thuộc CSS. Chỉ yêu cầu React 18+ và các API JavaScript tiêu chuẩn. Tương thích với mọi môi trường hỗ trợ React.
+
+### Styled
+
+Sử dụng các thuộc tính tùy chỉnh CSS, `:focus-visible`, `color-scheme`, và `scroll-snap-type`. Rào cản hỗ trợ trình duyệt là **Safari 15.4+** (cho `:focus-visible`).
+
+Bộ chọn thời gian dựa trên cuộn sử dụng `scroll-snap-type: y mandatory` với thanh cuộn ẩn. Hành vi cuộn có thể cảm thấy hơi khác nhau giữa các nền tảng do các cách triển khai quán tính/động lượng khác nhau.
+
+### Tailwind v3
+
+Yêu cầu Tailwind CSS v3. Khả năng tương thích JavaScript giống như Headless. Hỗ trợ CSS phụ thuộc vào đầu ra của Tailwind v3 (tương thích rộng rãi).
+
+### Tailwind v4
+
+Yêu cầu Tailwind CSS v4, bản thân nó sử dụng các tính năng CSS hiện đại (`@layer`, `@property`, CSS nesting). Xem [hỗ trợ trình duyệt của Tailwind CSS v4](https://tailwindcss.com/docs/compatibility) để biết chi tiết.
+
+## Polyfills
+
+Đối với các dự án

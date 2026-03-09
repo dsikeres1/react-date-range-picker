@@ -1,0 +1,111 @@
+---
+sidebar_position: 8
+sidebar_label: "Typography"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/styled/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/styled/Customization/CompoundCustomFont.tsx?raw";
+import CompoundCustomFontPopup from "@examples/styled/Customization/CompoundCustomFontPopup";
+import CompoundCustomFontPopupSource from "@examples/styled/Customization/CompoundCustomFontPopup.tsx?raw";
+import CompoundNotoSans from "@examples/styled/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/styled/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/styled/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/styled/Customization/CompoundWebFonts.tsx?raw";
+import CSSCustomFont from "@examples/styled/Customization/CSSCustomFont";
+import CSSCustomFontSource from "@examples/styled/Customization/CSSCustomFont.tsx?raw";
+
+# 字体
+
+`styled` 包默认使用**系统字体栈**：
+
+```css
+--rdrp-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+```
+
+它在每个平台上都使用操作系统原生字体进行渲染（macOS 上是 San Francisco，Windows 上是 Segoe UI，Android 上是 Roboto）。系统字体提供了良好的多语言支持，因为操作系统会自动处理中日韩、阿拉伯语和其他脚本的回退。
+
+要覆盖此设置，请在任何祖先元素上设置 `--rdrp-font-family` —— 它会自动应用到选择器中。
+
+## CSS 变量内联样式
+
+通过包装器元素上的 `style` 属性覆盖字体：
+
+<CodeDemo source={CSSCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CSSCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 字体族
+
+通过在包装器上设置 `--rdrp-font-family` 来切换字体族：
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 使用网页字体 (Noto Sans)
+
+对于需要跨平台一致渲染或国际化的项目，可以加载像 [Noto Sans](https://fonts.google.com/noto) 这样的网页字体并覆盖该变量：
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/styles.css";
+
+// 1. 在你的 HTML 或 CSS 中加载 Noto Sans：
+//    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+// 2. 覆盖字体变量：
+<div style={{ "--rdrp-font-family": '"Noto Sans", sans-serif' } as React.CSSProperties}>
+  <DatePicker value={value} onChange={setValue} inline />
+</div>;
+```
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 网页字体库
+
+比较不同的网页字体，看看字体排印如何显著改变选择器的外观。以下所有字体都支持多语言渲染（拉丁文、中日韩文、韩文）。
+
+<Admonition type="warning" title="仅供演示">
+  以下字体从 Google Fonts CDN 加载，仅用于演示目的。本库**不**捆绑任何网页字体 ——
+  您需要在自己的项目中加载它们。
+</Admonition>
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 字体大小与粗细
+
+通过覆盖大小和粗细变量来微调字体排印的密度：
+
+| 变量                          | 默认值 | 描述             |
+| ----------------------------- | ------ | ---------------- |
+| `--rdrp-font-size-xs`         | `11px` | 最小的文本       |
+| `--rdrp-font-size-sm`         | `12px` | 星期标签         |
+| `--rdrp-font-size-base`       | `13px` | 日期单元格、按钮 |
+| `--rdrp-font-size-md`         | `14px` | 触发器、时间项   |
+| `--rdrp-font-size-lg`         | `15px` | 月份标题         |
+| `--rdrp-font-weight-normal`   | `400`  | 基础粗细         |
+| `--rdrp-font-weight-medium`   | `500`  | 中等强调         |
+| `--rdrp-font-weight-semibold` | `600`  | 选定日期、标题   |
+| `--rdrp-font-weight-bold`     | `700`  | 今日指示器       |
+
+<CodeDemo source={CompoundCustomFontPopupSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFontPopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

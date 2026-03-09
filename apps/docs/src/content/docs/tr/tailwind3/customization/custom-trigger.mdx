@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind3/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind3/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind3/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Özel Tetikleyici
+
+Varsayılan tetikleyiciyi bir render prop kullanarak kendi elemanınızla değiştirin. `Trigger` bileşeni, durumu ve geri aramaları alan bir fonksiyon alt bileşeni kabul eder, bu da herhangi bir özel düğme veya girdi oluşturmanıza olanak tanır.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Tetikleyici Render Props
+
+| Prop           | Tür              | Açıklama                             |
+| -------------- | ---------------- | ------------------------------------ |
+| `displayValue` | `string`         | Biçimlendirilmiş seçili tarih        |
+| `placeholder`  | `string`         | Yer tutucu metni                     |
+| `hasValue`     | `boolean`        | Bir tarihin seçili olup olmadığı     |
+| `isOpen`       | `boolean`        | Açılır pencerenin açık olup olmadığı |
+| `onToggle`     | `() => void`     | Açılır pencereyi aç/kapat            |
+| `onClear`      | `() => void`     | Seçimi temizle                       |
+| `locale`       | `Locale`         | Mevcut yerel ayar nesnesi            |
+| `triggerRef`   | `(node) => void` | Konumlandırma için ref geri araması  |
+
+## Aralıklı Seçici Tetikleyicisi
+
+Aynı desen `DateRangePicker` ile de çalışır:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

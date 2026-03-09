@@ -1,0 +1,34 @@
+---
+sidebar_position: 2
+title: Internationalization
+description: Anpassung von Gebietsschemata, Sprachumschaltung und Überschreiben von Formatierungen.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Internationalisierung
+
+Die Bibliothek verwendet die `Intl.DateTimeFormat`-API des Browsers, um gebietsschema-abhängige Monatsnamen, Wochentagsbezeichnungen und AM/PM-Texte zu generieren. Es ist keine externe i18n-Bibliothek erforderlich.
+
+## Schnellstart
+
+Verwenden Sie `createLocale()`, um ein Gebietsschema aus einem BCP 47-Sprach-Tag zu generieren, und übergeben Sie es dann über die `locale`-Prop:
+
+```tsx
+import { createLocale } from "react-date-range-picker-headless";
+import { DatePicker } from "react-date-range-picker-styled";
+
+const de = createLocale("de", {
+  confirm: "Bestätigen",
+  cancel: "Abbrechen",
+  clear: "Löschen",
+  placeholder: "Datum auswählen",
+});
+
+function App() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} locale={de} />;
+}
+```
+
+Dies funktioniert auch mit jeder anderen Variante (Tailwind v3, Tailwind v4, Headless).

@@ -1,0 +1,39 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind3/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind3/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind3/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind3/Customization/CompoundColorThemePopup.tsx?raw";
+
+# カラー
+
+Tailwind v3パッケージは、CSS変数の代わりに**ハードコードされたTailwindユーティリティクラス**（例: `bg-sky-500`）を使用します。色を切り替えるには、Compound APIを使用して日のクラス名を動的にオーバーライドします:
+
+<Admonition type="info">
+  styledパッケージ（CSS変数を使用）とは異なり、Tailwind
+  v3は実行時に色をオーバーライドするためにCompound
+  APIが必要です。詳細については、[テーマのオーバーライド](/docs/tailwind3/customization/theme-override)を参照してください。
+</Admonition>
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## ポップアップモード
+
+同じテクニックはポップアップピッカーでも機能します:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

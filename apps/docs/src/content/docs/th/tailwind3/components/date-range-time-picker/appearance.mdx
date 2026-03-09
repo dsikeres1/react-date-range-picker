@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/tailwind3/DateRangeTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind3/DateRangeTimePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/tailwind3/DateRangeTimePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind3/DateRangeTimePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/tailwind3/DateRangeTimePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind3/DateRangeTimePicker/CaptionDropdown.tsx?raw";
+
+# ลักษณะที่ปรากฏ
+
+## หลายเดือน
+
+แสดงผลมากกว่า 2 เดือนข้างกัน ค่าเริ่มต้นคือ `2` สำหรับตัวเลือกช่วงวันที่
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Locale ที่กำหนดเอง
+
+ใช้ `createLocale` จากแพ็คเกจ headless เพื่อปรับแต่งชื่อเดือน/วัน และข้อความใน UI
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## ดรอปดาวน์สำหรับ Caption
+
+เปลี่ยนจากการนำทางด้วยปุ่มไปเป็นตัวเลือกแบบดรอปดาวน์สำหรับเดือนและปี มีประโยชน์สำหรับการเลือกวันที่ที่อยู่ไกลจากเดือนปัจจุบัน
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

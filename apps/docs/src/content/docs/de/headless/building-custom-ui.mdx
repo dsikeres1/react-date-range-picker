@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# Erstellen einer benutzerdefinierten Benutzeroberfläche
+
+Diese Anleitung führt Sie durch das Muster zum Erstellen Ihrer eigenen Datumsauswahl-Benutzeroberfläche auf Basis der Headless-Hooks.
+
+## Das Muster
+
+Jeder Headless-Hook folgt demselben Muster:
+
+1. **Rufen Sie den Hook auf** mit Ihren Optionen (value, onChange, Konfiguration)
+2. **Destrukturieren Sie den Rückgabewert**, um Zustand, berechnete Werte und Handler zu erhalten
+3. **Rendern Sie Ihr eigenes Markup** unter Verwendung der zurückgegebenen Werte
+4. **Verbinden Sie Interaktionen**, indem Sie die bereitgestellten Handler aufrufen
+
+Der Hook verwaltet die gesamte Komplexität – Kalendererstellung, Datumsberechnungen, Öffnen/Schließen-Zustand, Tastaturnavigation, Bereichslogik – und Sie konzentrieren sich ausschließlich auf die Präsentation.
+
+## Beispiel: Benutzerdefinierter Date Picker
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Wichtige Konzepte
+
+### getDayProps
+
+Die `getDayProps`-Funktion ist der Kern des Kalender-Renderings. Für jede Datumszelle gibt sie ein `DayProps`-Objekt mit 18 booleschen/numerischen Flags zurück, die den Zustand der Zelle beschreiben:
+
+```tsx
+const dp = getDayProps(day);
+
+// Auswahlzustand
+dp.isSelected; // Aktuell ausgewähltes Datum
+dp.isToday; // Heutiges Datum
+
+// Bereichszustand (für Bereichsauswahlen)
+dp.isInRange; // Zwischen Start- und Enddatum
+dp.isRangeStart; // Erstes Datum des Bereichs
+dp.isRangeEnd; // Letztes Datum des Bereichs
+dp.isInHoverRange; // Im Hover-Vorschaubereich
+dp.isHoverTarget; // Das überfahrene Datum selbst
+dp.isRangeSingle; // Sowohl Bereichsstart als auch -ende (eintägiger Bereich)
+
+// Helfer für visuelle Verbindungen
+dp.hasLeftConnection; // Verbunden mit dem Vortag (für Bereichshintergründe)
+dp.hasRightConnection; // Verbunden mit dem nächsten Tag
+dp.isConsecutiveRange; // Teil eines mehrtägigen Bereichs
+
+// Zustand
+dp.isDisabled; // Deaktiviert durch minDate/maxDate/isDateUnavailable
+dp.isFocused; // Hat Tastaturfokus
+dp.isOutsideDay; // Gehört zum benachbarten Monat (wenn showOutsideDays aktiviert ist)
+dp.isHighlighted; // Im highlightDates-Array
+
+// Daten
+dp.date; // Das Date-Objekt
+dp.day; // Tag des Monats (Nummer)
+dp.dayOfWeek; // 0-6 (Sonntag-Samstag)
+```
+
+### Refs für Klicks außerhalb
+
+Die Hooks geben `containerRef` und `popupRef` zurück. Hängen Sie diese an Ihre Wrapper- und Popup-Elemente an – der Hook verwendet sie, um Klicks außerhalb zu erkennen und das Popup automatisch zu schließen.
+
+### Tastaturnavigation
+
+Der `handleKeyDown`-Handler unterstützt Pfeiltasten, Enter, Escape und Tab für eine vollständige Tastaturnavigation. Hängen Sie ihn an den Popup-Container an.
+
+### Locale
+
+Alle benutzerseitigen Zeichenfolgen stammen aus dem `locale`-Objekt. Sie können jede Zeichenfolge anpassen, indem Sie eine partielle `locale`-Option übergeben:
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "OK",
+    cancel: "Zurück",
+    placeholder: "Datum auswählen...",
+  },
+});
+```
+
+## Nächste Schritte
+
+- [Hook Reference](/docs/headless/hooks/use-date-picker) -- Vollständige Optionen und Rückgabewerte für jeden Hook
+- [Contexts](/docs/headless/contexts) -- Verwenden Sie Provider für zusammengesetzte Komponentenmuster
+- [Date Utilities](/docs/headless/date-utilities) -- Hilfsfunktionen zur Datumsmanipulation

@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# Construindo UI Personalizada
+
+Este guia apresenta o padrão para construir sua própria UI de seletor de data sobre os hooks headless.
+
+## O Padrão
+
+Todo hook headless segue o mesmo padrão:
+
+1.  **Chame o hook** com suas opções (value, onChange, configuration)
+2.  **Desestruture o valor de retorno** para obter estado, valores computados e manipuladores
+3.  **Renderize sua própria marcação** usando os valores retornados
+4.  **Conecte as interações** chamando os manipuladores fornecidos
+
+O hook gerencia toda a complexidade -- geração de calendário, matemática de datas, estado de aberto/fechado, navegação por teclado, lógica de intervalo -- e você foca puramente na apresentação.
+
+## Exemplo: Seletor de Data Personalizado
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Conceitos Chave
+
+### getDayProps
+
+A função `getDayProps` é o núcleo da renderização do calendário. Para cada célula de data, ela retorna um objeto `DayProps` com 18 flags booleanas/numéricas que descrevem o estado da célula:
+
+```tsx
+const dp = getDayProps(day);
+
+// Estado de seleção
+dp.isSelected; // Data atualmente selecionada
+dp.isToday; // Data de hoje
+
+// Estado de intervalo (para seletores de intervalo)
+dp.isInRange; // Entre as datas de início e fim
+dp.isRangeStart; // Primeira data do intervalo
+dp.isRangeEnd; // Última data do intervalo
+dp.isInHoverRange; // No intervalo de pré-visualização do hover
+dp.isHoverTarget; // A própria data sob o hover
+dp.isRangeSingle; // Início e fim do intervalo são os mesmos (intervalo de um único dia)
+
+// Ajudantes de conexão visual
+dp.hasLeftConnection; // Conectado ao dia anterior (para fundos de intervalo)
+dp.hasRightConnection; // Conectado ao dia seguinte
+dp.isConsecutiveRange; // Parte de um intervalo de múltiplos dias
+
+// Estado
+dp.isDisabled; // Desabilitado por minDate/maxDate/isDateUnavailable
+dp.isFocused; // Possui foco do teclado
+dp.isOutsideDay; // Pertence ao mês adjacente (quando showOutsideDays está habilitado)
+dp.isHighlighted; // No array highlightDates
+
+// Dados
+dp.date; // O objeto Date
+dp.day; // Número do dia do mês
+dp.dayOfWeek; // 0-6 (Domingo-Sábado)
+```
+
+### Refs para Click-Outside
+
+Os hooks retornam `containerRef` e `popupRef`. Anexe-os aos seus elementos de contêiner e popup -- o hook os utiliza para detectar cliques externos e fechar o popup automaticamente.
+
+### Navegação por Teclado
+
+O manipulador `handleKeyDown` suporta as teclas de seta, Enter, Escape e Tab para navegação completa por teclado. Anexe-o ao contêiner do popup.
+
+### Localização
+
+Todas as strings voltadas para o usuário vêm do objeto `locale`. Você pode personalizar qualquer string passando uma opção `locale` parcial:
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "OK",
+    cancel: "Voltar",
+    placeholder: "Escolha uma data...",
+  },
+});
+```
+
+## Próximos Passos
+
+- [Referência dos Hooks](/docs/headless/hooks/use-date-picker) -- Opções completas e valores de retorno para cada hook
+- [Contextos](/docs/headless/contexts) -- Use providers para padrões de componentes compostos
+- [Utilitários de Data](/docs/headless/date-utilities) -- Funções auxiliares para manipulação de datas

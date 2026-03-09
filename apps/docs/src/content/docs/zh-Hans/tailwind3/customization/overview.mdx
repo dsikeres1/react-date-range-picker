@@ -1,0 +1,72 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# 复合组件
+
+Tailwind v3 包提供了一个复合组件 API，让您可以完全控制每个选择器的内部结构和渲染。您不再使用单个庞大的组件，而是由各个部分组成选择器。
+
+## 工作原理
+
+每个选择器 (例如 `DatePicker`) 既是一个简单的组件，也是一个复合部分的命名空间：
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+// 简单用法 — 渲染默认布局
+<DatePicker value={value} onChange={setValue} />
+
+// 复合用法 — 完全控制结构
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## 可用部分
+
+### DatePicker
+
+| 部分                       | 描述                                                                  |
+| -------------------------- | --------------------------------------------------------------------- |
+| `DatePicker.Root`          | 提供者 + 容器。接受所有选择器属性 (`value`, `onChange`, `minDate` 等) |
+| `DatePicker.Trigger`       | 打开/关闭弹出窗口的按钮。显示所选值。                                 |
+| `DatePicker.Content`       | 弹出容器 (或当在 Root 上设置 `inline` 时的内联容器)                   |
+| `DatePicker.Header`        | 月份导航行                                                            |
+| `DatePicker.PrevButton`    | 导航到上一个月                                                        |
+| `DatePicker.NextButton`    | 导航到下一个月                                                        |
+| `DatePicker.Title`         | 当前月份/年份显示 (支持下拉选择)                                      |
+| `DatePicker.Grid`          | 带有星期标题和日期单元格的日历网格                                    |
+| `DatePicker.Day`           | 单个日期单元格 (在 Grid 的 render prop 内部使用)                      |
+| `DatePicker.Footer`        | 操作按钮容器                                                          |
+| `DatePicker.ClearButton`   | 清除所选值                                                            |
+| `DatePicker.CancelButton`  | 取消并关闭                                                            |
+| `DatePicker.ConfirmButton` | 确认选择                                                              |
+| `DatePicker.TodayButton`   | 导航到今天                                                            |
+
+### DateRangePicker
+
+包含上述所有部分，外加：
+
+| 部分                         | 描述               |
+| ---------------------------- | ------------------ |
+| `DateRangePicker.Calendars`  | 双日历容器         |
+| `DateRangePicker.Presets`    | 预设范围侧边栏容器 |
+| `DateRangePicker.PresetItem` | 单个预设按钮       |
+
+### DateTimePicker / DateRangeTimePicker
+
+包含它们各自的基础部分，并通过简单 API 集成了时间面板。当使用启用时间的选择器的复合部分时，时间面板会自动渲染。

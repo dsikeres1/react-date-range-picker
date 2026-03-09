@@ -1,0 +1,51 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Props
+
+| Prop                     | Type                                                          | Default     | คำอธิบาย                                                             |
+| :----------------------- | :------------------------------------------------------------ | :---------- | :------------------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --          | ค่าช่วงวันที่ที่เลือก                                                |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | Callback เมื่อค่าเปลี่ยนแปลง                                         |
+| `presets`                | `DateRangePreset[]`                                           | --          | ชุดช่วงวันที่ที่กำหนดไว้ล่วงหน้า                                     |
+| `maxDays`                | `number`                                                      | --          | จำนวนวันสูงสุดที่อนุญาตในช่วง (รวม)                                  |
+| `minDays`                | `number`                                                      | --          | จำนวนวันขั้นต่ำที่ต้องการในช่วง (รวม)                                |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`      | อนุญาตให้ช่วงวันที่เริ่มต้นและสิ้นสุดเป็นวันเดียวกัน                 |
+| `minDate`                | `Date`                                                        | --          | วันที่เก่าที่สุดที่เลือกได้                                          |
+| `maxDate`                | `Date`                                                        | --          | วันที่ใหม่ที่สุดที่เลือกได้                                          |
+| `locale`                 | `Partial<Locale>`                                             | --          | การกำหนดค่า locale แบบกำหนดเอง                                       |
+| `initialMonth`           | `Date`                                                        | --          | เดือนที่แสดงผลเริ่มต้น                                               |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`  | ขนาดของคอมโพเนนต์                                                    |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`  | วันแรกของสัปดาห์                                                     |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --          | ทำเครื่องหมายวันที่เป็นไม่พร้อมใช้งาน                                |
+| `displayFormat`          | `string`                                                      | --          | รูปแบบการแสดงผลที่กำหนดเอง (เช่น `"YYYY/MM/DD"`)                     |
+| `open`                   | `boolean`                                                     | --          | สถานะการเปิด/ปิดแบบควบคุม (controlled)                               |
+| `initialOpen`            | `boolean`                                                     | --          | สถานะการเปิด/ปิดเริ่มต้น (uncontrolled)                              |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --          | Callback เมื่อสถานะการเปิด/ปิดเปลี่ยนแปลง                            |
+| `required`               | `boolean`                                                     | `false`     | ปิดการใช้งานการล้างค่า                                               |
+| `showOutsideDays`        | `boolean`                                                     | `false`     | แสดงวันจากเดือนที่อยู่ติดกัน                                         |
+| `highlightDates`         | `Date[]`                                                      | --          | วันที่ที่ต้องการเน้น                                                 |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`     | ยืนยันอัตโนมัติเมื่อเลือกวันที่สิ้นสุด                               |
+| `numberOfMonths`         | `number`                                                      | `2`         | จำนวนเดือนที่จะแสดง                                                  |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"` | สไตล์การนำทางของหัวเรื่อง                                            |
+| `fromYear`               | `number`                                                      | --          | ปีเริ่มต้นสำหรับเมนูแบบเลื่อนลง                                      |
+| `toYear`                 | `number`                                                      | --          | ปีสิ้นสุดสำหรับเมนูแบบเลื่อนลง                                       |
+| `disablePast`            | `boolean`                                                     | `false`     | ปิดการใช้งานวันที่ก่อนวันนี้                                         |
+| `disableFuture`          | `boolean`                                                     | `false`     | ปิดการใช้งานวันที่หลังวันนี้                                         |
+| `inline`                 | `boolean`                                                     | `false`     | แสดงปฏิทินแบบอินไลน์ (ไม่มีป๊อปอัป)                                  |
+| `name`                   | `string`                                                      | --          | ชื่อ input ที่ซ่อนไว้สำหรับการส่งฟอร์ม (วันที่เริ่มต้น)              |
+| `endName`                | `string`                                                      | --          | ชื่อ input ที่ซ่อนไว้สำหรับวันที่สิ้นสุด (ค่าเริ่มต้นคือ `name-end`) |
+| `placeholder`            | `string`                                                      | --          | ข้อความ placeholder ของตัวกระตุ้น                                    |
+| `hideHeader`             | `boolean`                                                     | `false`     | ซ่อนส่วนหัวการนำทาง                                                  |
+| `hideFooter`             | `boolean`                                                     | `false`     | ซ่อนส่วนท้ายที่มีปุ่มดำเนินการ                                       |
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

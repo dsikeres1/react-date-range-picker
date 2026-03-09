@@ -1,0 +1,230 @@
+---
+sidebar_position: 1
+title: Date Helpers
+---
+
+# Date Utilities
+
+The headless package exports a set of native `Date` helper functions. These replace the need for libraries like dayjs or date-fns -- the library has zero external date dependencies.
+
+All functions are pure (they return new Date objects rather than mutating the input).
+
+## Import
+
+```tsx
+import {
+  today,
+  parseDate,
+  startOf,
+  endOf,
+  add,
+  subtract,
+  isSame,
+  isBefore,
+  isAfter,
+  diff,
+  daysInMonth,
+  setYear,
+  setMonth,
+  setDate,
+  setHour,
+  setMinute,
+  setSecond,
+  formatBasic,
+} from "react-date-range-picker-headless";
+```
+
+## DateUnit Type
+
+Most functions accept a `DateUnit` parameter:
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```
+
+## Functions
+
+### today
+
+Returns the current date/time.
+
+```tsx
+const now = today(); // new Date()
+```
+
+### parseDate
+
+Parse a value into a Date object. Returns `new Date()` if the input is falsy.
+
+```tsx
+parseDate("2026-03-01"); // Date
+parseDate(1709251200000); // Date from timestamp
+parseDate(existingDate); // Clone
+parseDate(null); // new Date() (fallback)
+```
+
+**Signature:** `parseDate(date?: Date | string | number | null): Date`
+
+### startOf
+
+Get the start of a unit of time.
+
+```tsx
+startOf(date, "day"); // 2026-03-01 00:00:00.000
+startOf(date, "month"); // 2026-03-01 00:00:00.000
+startOf(date, "year"); // 2026-01-01 00:00:00.000
+startOf(date, "week"); // Start of week (default Sunday)
+startOf(date, "week", 1); // Start of week (Monday)
+```
+
+**Signature:** `startOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### endOf
+
+Get the end of a unit of time.
+
+```tsx
+endOf(date, "day"); // 2026-03-01 23:59:59.999
+endOf(date, "month"); // 2026-03-31 23:59:59.999
+endOf(date, "year"); // 2026-12-31 23:59:59.999
+```
+
+**Signature:** `endOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### add
+
+Add an amount of time to a date.
+
+```tsx
+add(date, 1, "day"); // Tomorrow
+add(date, 3, "month"); // 3 months later
+add(date, -1, "year"); // 1 year ago
+add(date, 2, "hour"); // 2 hours later
+```
+
+Handles month overflow (e.g. Jan 31 + 1 month = Feb 28, not Mar 3).
+
+**Signature:** `add(date: Date, amount: number, unit: DateUnit): Date`
+
+### subtract
+
+Subtract an amount of time from a date. Equivalent to `add(date, -amount, unit)`.
+
+```tsx
+subtract(date, 7, "day"); // 7 days ago
+subtract(date, 1, "month"); // 1 month ago
+```
+
+**Signature:** `subtract(date: Date, amount: number, unit: DateUnit): Date`
+
+### isSame
+
+Check if two dates are the same at a given unit of precision.
+
+```tsx
+isSame(date1, date2, "day"); // Same calendar day?
+isSame(date1, date2, "month"); // Same month?
+isSame(date1, date2, "year"); // Same year?
+isSame(null, date2, "day"); // false (null-safe)
+```
+
+**Signature:** `isSame(date1: Date | null | undefined, date2: Date | null | undefined, unit?: DateUnit): boolean`
+
+### isBefore
+
+Check if the first date is before the second at a given precision.
+
+```tsx
+isBefore(date1, date2, "day"); // Is date1 on an earlier day?
+isBefore(date1, date2); // Millisecond comparison
+```
+
+**Signature:** `isBefore(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### isAfter
+
+Check if the first date is after the second at a given precision.
+
+```tsx
+isAfter(date1, date2, "day"); // Is date1 on a later day?
+```
+
+**Signature:** `isAfter(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### diff
+
+Get the difference between two dates in a given unit.
+
+```tsx
+diff(date1, date2, "day"); // Number of days between
+diff(date1, date2, "month"); // Number of months between
+diff(date1, date2, "year"); // Number of years between
+```
+
+**Signature:** `diff(date1: Date, date2: Date, unit: DateUnit): number`
+
+### daysInMonth
+
+Get the number of days in a date's month.
+
+```tsx
+daysInMonth(new Date(2026, 1)); // 28 (February 2026)
+daysInMonth(new Date(2026, 0)); // 31 (January 2026)
+```
+
+**Signature:** `daysInMonth(date: Date): number`
+
+### setYear / setMonth / setDate / setHour / setMinute / setSecond
+
+Set a specific part of a date, returning a new Date.
+
+```tsx
+setYear(date, 2027); // Change year to 2027
+setMonth(date, 5); // Change to June (0-indexed)
+setDate(date, 15); // Change to 15th
+setHour(date, 14); // Change to 2 PM
+setMinute(date, 30); // Change to :30
+setSecond(date, 0); // Change to :00
+```
+
+`setYear` and `setMonth` handle overflow (e.g. Feb 29 in a leap year, set to a non-leap year, clamps to Feb 28).
+
+**Signatures:**
+
+- `setYear(date: Date, year: number): Date`
+- `setMonth(date: Date, month: number): Date`
+- `setDate(date: Date, day: number): Date`
+- `setHour(date: Date, hour: number): Date`
+- `setMinute(date: Date, minute: number): Date`
+- `setSecond(date: Date, second: number): Date`
+
+### formatBasic
+
+Format a date using a template string.
+
+```tsx
+formatBasic(date, "YYYY-MM-DD"); // "2026-03-01"
+formatBasic(date, "YYYY/MM/DD HH:mm:ss"); // "2026/03/01 14:30:00"
+formatBasic(date, "M/D"); // "3/1"
+formatBasic(date, "hh:mm A"); // Note: A token not supported, use period from hook
+```
+
+**Supported tokens:**
+
+| Token  | Output                 | Example |
+| ------ | ---------------------- | ------- |
+| `YYYY` | 4-digit year           | `2026`  |
+| `MM`   | 2-digit month          | `03`    |
+| `M`    | Month (no padding)     | `3`     |
+| `DD`   | 2-digit day            | `01`    |
+| `D`    | Day (no padding)       | `1`     |
+| `HH`   | 2-digit hour (24h)     | `14`    |
+| `H`    | Hour (24h, no padding) | `14`    |
+| `hh`   | 2-digit hour (12h)     | `02`    |
+| `h`    | Hour (12h, no padding) | `2`     |
+| `mm`   | 2-digit minute         | `30`    |
+| `m`    | Minute (no padding)    | `30`    |
+| `ss`   | 2-digit second         | `05`    |
+| `s`    | Second (no padding)    | `5`     |
+
+**Signature:** `formatBasic(date: Date, format: string): string`

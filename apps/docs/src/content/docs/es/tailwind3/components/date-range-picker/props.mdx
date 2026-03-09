@@ -1,0 +1,51 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Props
+
+| Prop                     | Type                                                          | Default     | Description                                                           |
+| ------------------------ | ------------------------------------------------------------- | ----------- | --------------------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --          | Valor del rango de fechas seleccionado                                |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | Callback cuando el valor cambia                                       |
+| `presets`                | `DateRangePreset[]`                                           | --          | Preajustes de rangos de fecha predefinidos                            |
+| `maxDays`                | `number`                                                      | --          | Días máximos permitidos en el rango (inclusivo)                       |
+| `minDays`                | `number`                                                      | --          | Días mínimos requeridos en el rango (inclusivo)                       |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`      | Permitir un rango donde el inicio es igual al final                   |
+| `minDate`                | `Date`                                                        | --          | Fecha mínima seleccionable                                            |
+| `maxDate`                | `Date`                                                        | --          | Fecha máxima seleccionable                                            |
+| `locale`                 | `Partial<Locale>`                                             | --          | Configuración de localización personalizada                           |
+| `initialMonth`           | `Date`                                                        | --          | Mes inicial mostrado                                                  |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`  | Tamaño del componente                                                 |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`  | Primer día de la semana                                               |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --          | Marcar fechas como deshabilitadas                                     |
+| `displayFormat`          | `string`                                                      | --          | Formato de visualización personalizado (ej. `"YYYY/MM/DD"`)           |
+| `open`                   | `boolean`                                                     | --          | Estado de apertura controlado                                         |
+| `initialOpen`            | `boolean`                                                     | --          | Estado de apertura inicial (no controlado)                            |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --          | Callback cuando el estado de apertura cambia                          |
+| `required`               | `boolean`                                                     | `false`     | Deshabilitar la limpieza del valor                                    |
+| `showOutsideDays`        | `boolean`                                                     | `false`     | Mostrar días de meses adyacentes                                      |
+| `highlightDates`         | `Date[]`                                                      | --          | Fechas a resaltar                                                     |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`     | Autoconfirmar cuando se selecciona la fecha final                     |
+| `numberOfMonths`         | `number`                                                      | `2`         | Número de meses a mostrar                                             |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"` | Estilo de navegación del encabezado                                   |
+| `fromYear`               | `number`                                                      | --          | Año de inicio para el desplegable                                     |
+| `toYear`                 | `number`                                                      | --          | Año de fin para el desplegable                                        |
+| `disablePast`            | `boolean`                                                     | `false`     | Deshabilitar fechas anteriores a hoy                                  |
+| `disableFuture`          | `boolean`                                                     | `false`     | Deshabilitar fechas posteriores a hoy                                 |
+| `inline`                 | `boolean`                                                     | `false`     | Mostrar el calendario en línea (sin popup)                            |
+| `name`                   | `string`                                                      | --          | Nombre del input oculto para envío de formulario (fecha de inicio)    |
+| `endName`                | `string`                                                      | --          | Nombre del input oculto para la fecha de fin (por defecto `name-end`) |
+| `placeholder`            | `string`                                                      | --          | Texto del placeholder del disparador                                  |
+| `hideHeader`             | `boolean`                                                     | `false`     | Ocultar el encabezado de navegación                                   |
+| `hideFooter`             | `boolean`                                                     | `false`     | Ocultar el pie de página de acciones                                  |
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

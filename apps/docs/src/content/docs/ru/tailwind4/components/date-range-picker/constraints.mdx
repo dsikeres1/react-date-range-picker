@@ -1,0 +1,46 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/tailwind4/DateRangePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/tailwind4/DateRangePicker/MinMaxDays.tsx?raw";
+import DisabledDates from "@examples/tailwind4/DateRangePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind4/DateRangePicker/DisabledDates.tsx?raw";
+import AllowSingleDate from "@examples/tailwind4/DateRangePicker/AllowSingleDate";
+import AllowSingleDateSource from "@examples/tailwind4/DateRangePicker/AllowSingleDate.tsx?raw";
+
+# Ограничения
+
+## Минимальное и максимальное количество дней
+
+Ограничьте длину диапазона с помощью `minDays` и `maxDays` (включительно). Пользователи не могут подтвердить диапазон короче `minDays` или длиннее `maxDays`.
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Недоступные даты
+
+Используйте `isDateUnavailable` для динамического отключения определенных дат. Недоступные даты не могут быть выбраны в качестве начала или конца диапазона.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Разрешить одну дату
+
+По умолчанию разрешен диапазон, в котором дата начала совпадает с датой окончания. Установите `allowSingleDateInRange={false}`, чтобы требовать как минимум две разные даты.
+
+<CodeDemo source={AllowSingleDateSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <AllowSingleDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

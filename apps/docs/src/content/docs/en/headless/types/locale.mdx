@@ -1,0 +1,94 @@
+---
+sidebar_position: 3
+title: Locale
+---
+
+# Locale
+
+Interface for all user-facing strings. Pass a `Partial<Locale>` to any hook to override specific strings -- unspecified fields fall back to `DEFAULT_LOCALE`.
+
+```tsx
+import type { Locale } from "react-date-range-picker-headless";
+```
+
+## Fields
+
+| Field                  | Type                                                                         | Description                                                             |
+| ---------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `weekdays`             | `string[]`                                                                   | 7 weekday abbreviations starting from Sunday. E.g. `["Su", "Mo", ...]`. |
+| `months`               | `string[]`                                                                   | 12 month names. E.g. `["January", "February", ...]`.                    |
+| `confirm`              | `string`                                                                     | Confirm button label. Default: `"Confirm"`.                             |
+| `cancel`               | `string`                                                                     | Cancel button label. Default: `"Cancel"`.                               |
+| `clear`                | `string`                                                                     | Clear button label. Default: `"Clear"`.                                 |
+| `today`                | `string`                                                                     | Today button label. Default: `"Today"`.                                 |
+| `placeholder`          | `string`                                                                     | Single date placeholder. Default: `"Select date"`.                      |
+| `rangePlaceholder`     | `string`                                                                     | Date range placeholder. Default: `"Select date range"`.                 |
+| `dateTimePlaceholder`  | `string`                                                                     | Date-time placeholder. Default: `"Select date and time"`.               |
+| `rangeTimePlaceholder` | `string`                                                                     | Range-time placeholder. Default: `"Select date range and time"`.        |
+| `timePlaceholder`      | `string`                                                                     | Time-only placeholder. Default: `"Select time"`.                        |
+| `am`                   | `string`                                                                     | AM label. Default: `"AM"`.                                              |
+| `pm`                   | `string`                                                                     | PM label. Default: `"PM"`.                                              |
+| `yearLabel`            | `string`                                                                     | Year column header. Default: `""`.                                      |
+| `monthLabel`           | `string`                                                                     | Month column header. Default: `""`.                                     |
+| `hourLabel`            | `string`                                                                     | Hour column aria-label. Default: `"Hours"`.                             |
+| `minuteLabel`          | `string`                                                                     | Minute column aria-label. Default: `"Minutes"`.                         |
+| `secondLabel`          | `string`                                                                     | Second column aria-label. Default: `"Seconds"`.                         |
+| `hoursLabel`           | `string`                                                                     | Hours accessible label. Default: `"Hours"`.                             |
+| `minutesLabel`         | `string`                                                                     | Minutes accessible label. Default: `"Minutes"`.                         |
+| `secondsLabel`         | `string`                                                                     | Seconds accessible label. Default: `"Seconds"`.                         |
+| `startTimeLabel`       | `string`                                                                     | Start time label. Default: `"Start time"`.                              |
+| `endTimeLabel`         | `string`                                                                     | End time label. Default: `"End time"`.                                  |
+| `rangeSeparator`       | `string`                                                                     | Separator between range start/end in display. Default: `" ~ "`.         |
+| `prevMonth`            | `string`                                                                     | Previous month button text. Default: `"\u2039"` (single left angle).    |
+| `nextMonth`            | `string`                                                                     | Next month button text. Default: `"\u203A"` (single right angle).       |
+| `prevMonthLabel`       | `string`                                                                     | Previous month accessible label. Default: `"Previous month"`.           |
+| `nextMonthLabel`       | `string`                                                                     | Next month accessible label. Default: `"Next month"`.                   |
+| `selectYearLabel`      | `string`                                                                     | Year dropdown accessible label. Default: `"Select year"`.               |
+| `selectMonthLabel`     | `string`                                                                     | Month dropdown accessible label. Default: `"Select month"`.             |
+| `formatMonthYear`      | `(month: Date) => string`                                                    | Format month header. Default: `"January 2026"`.                         |
+| `formatDate`           | `(date: Date) => string`                                                     | Format single date display. Default: `"2026-01-15"`.                    |
+| `formatDateTime`       | `(date: Date, precision?: TimePrecision, hourFormat?: HourFormat) => string` | Format date-time display. Default: `"2026-01-15 14:30"`.                |
+| `formatTime`           | `(hour, minute, second, period?) => string`                                  | Format time display. Default: `"14:30:00"`.                             |
+| `formatRange`          | `(start: string, end: string) => string`                                     | Format range display. Default: `"start ~ end"`.                         |
+
+## TypeScript Definition
+
+```tsx
+interface Locale {
+  weekdays: string[];
+  months: string[];
+  confirm: string;
+  cancel: string;
+  clear: string;
+  today: string;
+  placeholder: string;
+  rangePlaceholder: string;
+  dateTimePlaceholder: string;
+  rangeTimePlaceholder: string;
+  timePlaceholder: string;
+  am: string;
+  pm: string;
+  yearLabel: string;
+  monthLabel: string;
+  hourLabel: string;
+  minuteLabel: string;
+  secondLabel: string;
+  hoursLabel: string;
+  minutesLabel: string;
+  secondsLabel: string;
+  startTimeLabel: string;
+  endTimeLabel: string;
+  rangeSeparator: string;
+  prevMonth: string;
+  nextMonth: string;
+  prevMonthLabel: string;
+  nextMonthLabel: string;
+  selectYearLabel: string;
+  selectMonthLabel: string;
+  formatMonthYear: (month: Date) => string;
+  formatDate: (date: Date) => string;
+  formatDateTime: (date: Date, precision?: TimePrecision, hourFormat?: HourFormat) => string;
+  formatTime: (hour: number, minute: number, second: number, period?: TimePeriod) => string;
+  formatRange: (start: string, end: string) => string;
+}
+```

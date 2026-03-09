@@ -1,0 +1,100 @@
+---
+import { locales, localeLabels, defaultLocale, type SupportedLocale } from "@/lib/i18n";
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = defaultLocale } = Astro.props;
+---
+
+<div class="relative">
+  <button
+    id="lang-btn"
+    type="button"
+    class="flex items-center gap-1 rounded-md p-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+    aria-label="Select language"
+  >
+    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <path d="M2 12h20"></path>
+      <path
+        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+      ></path>
+    </svg>
+    <span class="hidden text-xs sm:inline" id="lang-label">
+      {localeLabels[lang as SupportedLocale] ?? "English"}
+    </span>
+  </button>
+
+  <div
+    id="lang-dropdown"
+    class="absolute right-0 top-full z-50 mt-1 hidden max-h-80 w-44 overflow-y-auto rounded-lg border border-border bg-background py-1 shadow-lg"
+  >
+    {
+      locales.map((locale) => (
+        <button
+          type="button"
+          class:list={[
+            "lang-option flex w-full items-center px-3 py-1.5 text-left text-sm transition-colors hover:bg-accent",
+            locale === lang ? "font-medium text-primary" : "text-foreground",
+          ]}
+          data-lang={locale}
+        >
+          {localeLabels[locale]}
+        </button>
+      ))
+    }
+  </div>
+</div>
+
+<script is:inline define:vars={{ lang, defaultLocale, localeKeys: [...locales] }}>
+  const btn = document.getElementById("lang-btn");
+  const dropdown = document.getElementById("lang-dropdown");
+
+  // Toggle dropdown
+  btn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdown?.classList.toggle("hidden");
+  });
+
+  // Close on outside click
+  document.addEventListener("click", () => {
+    dropdown?.classList.add("hidden");
+  });
+
+  // Handle language switch
+  dropdown?.addEventListener("click", (e) => {
+    const target = e.target?.closest?.(".lang-option");
+    if (!target) return;
+    const targetLang = target.getAttribute("data-lang");
+    if (!targetLang || targetLang === lang) return;
+
+    const base = document.querySelector("meta[name='base-url']")?.getAttribute("content") || "";
+    const pathname = location.pathname;
+    const afterBase = pathname.slice(base.length);
+
+    // Parse: "/docs/ko/tailwind4/..." or "/docs/tailwind4/..."
+    if (!afterBase.startsWith("/docs/")) {
+      // Not on a docs page — just store preference
+      localStorage.setItem("preferred-lang", targetLang);
+      return;
+    }
+
+    const afterDocs = afterBase.slice("/docs/".length);
+    const segments = afterDocs.split("/");
+
+    // Detect current lang from URL (Astro lowercases slugs)
+    const currentLangInUrl =
+      localeKeys.find((k) => k.toLowerCase() === segments[0]?.toLowerCase()) ?? defaultLocale;
+    const pathWithoutLang =
+      currentLangInUrl === defaultLocale ? afterDocs : segments.slice(1).join("/");
+
+    // Build new path (use lowercase locale in URL)
+    const langPrefix = targetLang === defaultLocale ? "" : targetLang.toLowerCase() + "/";
+    const newPath = base + "/docs/" + langPrefix + pathWithoutLang;
+
+    localStorage.setItem("preferred-lang", targetLang);
+    location.href = newPath;
+  });
+</script>

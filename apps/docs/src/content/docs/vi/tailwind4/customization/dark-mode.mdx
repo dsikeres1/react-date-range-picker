@@ -1,0 +1,185 @@
+---
+sidebar_position: 9
+---
+
+# Chế độ tối
+
+Gói Tailwind v4 hỗ trợ chế độ tối thông qua hệ thống token ngữ nghĩa. Vì tất cả các màu đều tham chiếu đến biến CSS, việc chuyển sang chế độ tối chỉ đơn giản là định nghĩa lại các biến đó.
+
+## Cách hoạt động
+
+Các thành phần sử dụng các lớp tiện ích ngữ nghĩa như `bg-primary`, `text-foreground`, và `border-border`. Chúng được phân giải thành các biến CSS (`--color-primary`, `--color-foreground`, v.v.) mà bạn định nghĩa trong CSS của dự án. Chế độ tối hoạt động bằng cách cung cấp các giá trị thay thế cho các biến này dưới một bộ chọn tối.
+
+## Cài đặt
+
+### Sử dụng thuộc tính `data-theme`
+
+Định nghĩa các giá trị token cho chế độ sáng và tối bằng cách sử dụng bộ chọn `data-theme`:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+
+[data-theme="dark"] {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+Chuyển đổi chế độ tối bằng cách đặt thuộc tính:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div data-theme={dark ? "dark" : "light"}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+### Sử dụng lớp `.dark`
+
+Nếu framework của bạn sử dụng một lớp `.dark` (ví dụ: Next.js với `next-themes`), hãy định nghĩa các token dưới lớp đó:
+
+```css
+@theme {
+  /* Light tokens */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  /* ... */
+}
+```
+
+### Sử dụng tùy chọn hệ thống
+
+Sử dụng `@media (prefers-color-scheme: dark)` để tuân theo cài đặt của hệ điều hành:
+
+```css
+@theme {
+  /* Light tokens */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: oklch(0.145 0.004 285.823);
+    --color-foreground: oklch(0.985 0.001 285.823);
+    /* ... */
+  }
+}
+```
+
+## Tích hợp với next-themes
+
+Một mẫu phổ biến với Next.js và `next-themes`:
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+```css
+/* globals.css */
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  /* ... all light tokens */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  /* ... all dark tokens */
+}
+```
+
+Bộ chọn sẽ tự động lấy các giá trị token chính xác khi chủ đề thay đổi.
+
+## Chấm nổi bật trong chế độ tối
+
+Chấm nổi bật sử dụng `after:bg-amber-500 dark:after:bg-amber-400` (một màu Tailwind cụ thể, không phải token) để đảm bảo khả năng hiển thị tốt trong cả hai chế độ. Đây là màu duy nhất không theo ngữ nghĩa trong thành phần. Nếu bạn cần thay đổi nó, hãy sử dụng Compound Component API với một `Day` render tùy chỉnh:
+
+```tsx
+<DatePicker.Day date={date}>
+  {(props) => (
+    <button /* ... */>
+      {props.day}
+      {props.isHighlighted && (
+        <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+      )}
+    </button>
+  )}
+</DatePicker.Day>
+```
+
+## Ép buộc một chế độ cụ thể
+
+Để ép buộc chế độ sáng hoặc tối bất kể tùy chọn hệ thống, hãy đặt chủ đề một cách tường minh:
+
+```tsx
+{
+  /* Always light */
+}
+<div data-theme="light">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Always dark */
+}
+<div data-theme="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```

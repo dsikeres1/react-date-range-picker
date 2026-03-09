@@ -1,0 +1,167 @@
+---
+sidebar_position: 10
+---
+
+# Anlamsal Token'lar
+
+Tailwind v4 paketi, tüm renkler için anlamsal CSS değişkenleri (tasarım token'ları) kullanır. Bu token'lar, bileşen stillerini belirli renk değerlerinden ayırarak temalamayı basit hale getirir. Token adlandırma kuralı, [shadcn/ui](https://ui.shadcn.com/) tarafından kullanılanla aynı modeli takip eder.
+
+## Token Sistemi
+
+Tailwind v4 bileşenleri, `bg-sky-500` gibi sabit kodlanmış renkler yerine `bg-primary`, `text-foreground` ve `border-border` gibi anlamsal yardımcı programları kullanır. Bunlar, projenizde tanımladığınız CSS değişkenlerine eşlenir.
+
+```
+bg-primary        → var(--color-primary)
+text-foreground   → var(--color-foreground)
+border-border     → var(--color-border)
+```
+
+## Gerekli Token'lar
+
+Bu token'ları CSS'inizde Tailwind v4'ün `@theme` yönergesini kullanarak tanımlayın:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+## Token Referansı
+
+| Token                        | Kullanım Amacı                                                 | Örnek Yardımcı Programlar    |
+| ---------------------------- | -------------------------------------------------------------- | ---------------------------- |
+| `--color-background`         | Sayfa/uygulama arkaplanı                                       | `bg-background`              |
+| `--color-foreground`         | Varsayılan metin rengi                                         | `text-foreground`            |
+| `--color-popover`            | Açılır pencere arkaplanı                                       | `bg-popover`                 |
+| `--color-popover-foreground` | Açılır pencere metni                                           | `text-popover-foreground`    |
+| `--color-primary`            | Seçili gün, onay butonu, aralık uç noktaları                   | `bg-primary`, `text-primary` |
+| `--color-primary-foreground` | Birincil arkaplanlar üzerindeki metin                          | `text-primary-foreground`    |
+| `--color-muted-foreground`   | Sessiz metin (yer tutucular, hafta günleri, gezinme butonları) | `text-muted-foreground`      |
+| `--color-accent`             | Günler ve butonlar için üzerine gelme arkaplanları             | `bg-accent`                  |
+| `--color-accent-foreground`  | Vurgu arkaplanları üzerindeki metin                            | `text-accent-foreground`     |
+| `--color-destructive`        | Temizle/tehlike butonu metni                                   | `text-destructive`           |
+| `--color-border`             | Genel kenarlıklar (altbilgi, hazır ayarlar, açılır pencere)    | `border-border`              |
+| `--color-input`              | Giriş/tetikleyici kenarlığı                                    | `border-input`               |
+| `--color-ring`               | Odak halkası rengi                                             | `ring-ring`                  |
+
+## Token'lar Bileşenlere Nasıl Eşlenir
+
+Token'ların seçici boyunca nasıl uygulandığı aşağıda açıklanmıştır:
+
+### Tetikleyici
+
+- Arkaplan: `bg-background`
+- Kenarlık: `border-input`
+- Metin: kök dizindeki `text-foreground`den miras alınır
+- Yer tutucu: `text-muted-foreground`
+- Odak halkası: `ring-ring`
+
+### Açılır Pencere
+
+- Arkaplan: `bg-popover`
+- Metin: `text-popover-foreground`
+- Kenarlık: `border-border`
+
+### Takvim Günleri
+
+- Varsayılan üzerine gelme: `bg-accent` / `text-accent-foreground`
+- Seçili: `bg-primary` / `text-primary-foreground`
+- Bugün: `text-primary`
+- Aralık içinde: `bg-primary/10`
+- Aralık başlangıcı/bitişi: `bg-primary` / `text-primary-foreground`
+- Devre dışı: azaltılmış opaklık ile `text-muted-foreground`
+
+### Altbilgi
+
+- Kenarlık: `border-border`
+- İptal butonu: `border-input`, üzerine gelindiğinde `bg-accent`
+- Onay butonu: `bg-primary` / `text-primary-foreground`
+- Temizle butonu: `text-destructive`
+
+## Token'ları Özelleştirme
+
+### Birincil Rengi Değiştirme
+
+Seçiciyi yeniden markalamak için `--color-primary` ve `--color-primary-foreground` değerlerini değiştirin:
+
+```css
+@theme {
+  /* Mor birincil */
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+}
+```
+
+### Sıcak Renk Şeması
+
+```css
+@theme {
+  --color-background: oklch(0.99 0.005 80);
+  --color-foreground: oklch(0.2 0.02 60);
+
+  --color-popover: oklch(0.99 0.005 80);
+  --color-popover-foreground: oklch(0.2 0.02 60);
+
+  --color-primary: oklch(0.6 0.2 40);
+  --color-primary-foreground: oklch(0.98 0.005 80);
+
+  --color-accent: oklch(0.95 0.02 80);
+  --color-accent-foreground: oklch(0.2 0.02 60);
+
+  --color-border: oklch(0.9 0.01 80);
+  --color-input: oklch(0.9 0.01 80);
+  --color-ring: oklch(0.85 0.02 80);
+}
+```
+
+### Koyu Mod Token'ları
+
+Koyu mod için, token'ları bir `.dark` seçicisi veya `@media (prefers-color-scheme: dark)` altında geçersiz kılın:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... açık tema değerleri */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+Daha fazla ayrıntı için [Koyu Mod](/docs/tailwind4/customization/dark-mode) bölümüne bakın.
+
+## Mevcut shadcn/ui Projeleri
+
+Projenizde zaten tanımlanmış shadcn/ui token'ları varsa, seçici bunları ekstra bir yapılandırma olmadan otomatik olarak kullanacaktır. Token adları kasıtlı olarak uyumlu olacak şekilde yapılmıştır. Daha fazlası için [shadcn Registry](/docs/tailwind4/customization/shadcn-registry) bölümüne bakın.

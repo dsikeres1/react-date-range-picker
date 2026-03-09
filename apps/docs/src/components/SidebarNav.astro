@@ -1,0 +1,130 @@
+---
+import type { SidebarItem } from "@/lib/sidebar";
+
+interface Props {
+  items: SidebarItem[];
+  currentPath: string;
+}
+
+const { items, currentPath } = Astro.props;
+
+function isActiveOrContainsActive(item: SidebarItem, path: string): boolean {
+  if (item.href) {
+    return item.href === path || item.href + "/" === path || item.href === path + "/";
+  }
+  if (item.items) {
+    return item.items.some((child) => isActiveOrContainsActive(child, path));
+  }
+  return false;
+}
+---
+
+<nav>
+  {
+    items.map((item) => (
+      <Fragment>
+        {item.items ? (
+          <div class="mt-5 first:mt-0" data-sidebar-group>
+            <button
+              type="button"
+              class="group flex w-full items-center justify-between rounded-md px-2 py-1.5 text-sm font-semibold tracking-wide text-foreground/90 hover:text-foreground"
+              data-sidebar-toggle
+              data-expanded={isActiveOrContainsActive(item, currentPath) ? "true" : "false"}
+              aria-expanded={isActiveOrContainsActive(item, currentPath) ? "true" : "false"}
+            >
+              {item.label}
+              <svg
+                class="size-4 shrink-0 text-muted-foreground transition-transform duration-200"
+                data-sidebar-chevron
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7" />
+              </svg>
+            </button>
+            <ul class="mt-1 space-y-0.5 overflow-hidden" data-sidebar-content>
+              {item.items.map((child) => (
+                <li>
+                  {child.items ? (
+                    <div class="mt-2 first:mt-1" data-sidebar-group>
+                      <button
+                        type="button"
+                        class="group flex w-full items-center justify-between rounded-md px-2 py-1 text-[13px] font-medium text-foreground/70 hover:text-foreground/90"
+                        data-sidebar-toggle
+                        data-expanded={
+                          isActiveOrContainsActive(child, currentPath) ? "true" : "false"
+                        }
+                        aria-expanded={
+                          isActiveOrContainsActive(child, currentPath) ? "true" : "false"
+                        }
+                      >
+                        {child.label}
+                        <svg
+                          class="size-3.5 shrink-0 text-muted-foreground/60 transition-transform duration-200"
+                          data-sidebar-chevron
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="2"
+                          stroke="currentColor"
+                        >
+                          <path stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7" />
+                        </svg>
+                      </button>
+                      <ul
+                        class="mt-0.5 ml-2 space-y-0.5 overflow-hidden border-l border-sidebar-border pl-3"
+                        data-sidebar-content
+                      >
+                        {child.items.map((grandchild) => (
+                          <li>
+                            <a
+                              href={grandchild.href}
+                              class:list={[
+                                "block rounded-md px-2 py-1.5 text-[13px] transition-colors",
+                                currentPath === grandchild.href ||
+                                currentPath === grandchild.href + "/"
+                                  ? "bg-primary/10 font-medium text-primary"
+                                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                              ]}
+                            >
+                              {grandchild.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <a
+                      href={child.href}
+                      class:list={[
+                        "block rounded-md px-2 py-1.5 text-[13px] transition-colors",
+                        currentPath === child.href || currentPath === child.href + "/"
+                          ? "bg-primary/10 font-medium text-primary"
+                          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                      ]}
+                    >
+                      {child.label}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <a
+            href={item.href}
+            class:list={[
+              "mt-1 block rounded-md px-2 py-1.5 text-[13px] font-medium transition-colors first:mt-0",
+              currentPath === item.href || currentPath === item.href + "/"
+                ? "bg-primary/10 text-primary"
+                : "text-foreground/80 hover:bg-accent hover:text-accent-foreground",
+            ]}
+          >
+            {item.label}
+          </a>
+        )}
+      </Fragment>
+    ))
+  }
+</nav>

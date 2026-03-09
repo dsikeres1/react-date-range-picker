@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/tailwind3/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind3/DateRangePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/tailwind3/DateRangePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind3/DateRangePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/tailwind3/DateRangePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind3/DateRangePicker/CaptionDropdown.tsx?raw";
+
+# 外觀
+
+## 多個月份
+
+並排顯示超過 2 個月份。對於範圍選擇器，預設為 `2`。
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 自訂語系
+
+使用 headless 套件中的 `createLocale` 來自訂月份/星期名稱和 UI 字串。
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 標題下拉選單
+
+將月份和年份的導覽方式從按鈕切換為下拉選單。這對於選擇遠離當前月份的日期很有用。
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

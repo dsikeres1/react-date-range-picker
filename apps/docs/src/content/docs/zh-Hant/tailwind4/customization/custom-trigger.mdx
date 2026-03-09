@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind4/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind4/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind4/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind4/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# 自訂觸發器
+
+使用 `Trigger` render prop 將預設的觸發器按鈕替換為您自己的元素。當您將一個函式作為子項傳遞給 `DatePicker.Trigger` 時，您會收到狀態和回呼函式，以建構您想要的任何觸發器 UI。
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 觸發器 Render Props
+
+| Prop           | Type             | 描述                    |
+| -------------- | ---------------- | ----------------------- |
+| `displayValue` | `string`         | 格式化後的選定日期      |
+| `placeholder`  | `string`         | 預留位置文字            |
+| `hasValue`     | `boolean`        | 是否有選定日期          |
+| `isOpen`       | `boolean`        | 彈出視窗是否開啟        |
+| `onToggle`     | `() => void`     | 切換彈出視窗的開啟/關閉 |
+| `onClear`      | `() => void`     | 清除選取項目            |
+| `locale`       | `Locale`         | 目前的地區設定物件      |
+| `triggerRef`   | `(node) => void` | 用於定位的 ref 回呼函式 |
+
+## 範圍選擇器觸發器
+
+同樣的模式也適用於 `DateRangePicker`：
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

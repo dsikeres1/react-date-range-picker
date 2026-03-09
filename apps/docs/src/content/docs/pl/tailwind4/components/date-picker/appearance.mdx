@@ -1,0 +1,82 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/tailwind4/DatePicker/Sizes";
+import SizesSource from "@examples/tailwind4/DatePicker/Sizes.tsx?raw";
+import CustomFormat from "@examples/tailwind4/DatePicker/CustomFormat";
+import CustomFormatSource from "@examples/tailwind4/DatePicker/CustomFormat.tsx?raw";
+import CustomLocale from "@examples/tailwind4/DatePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind4/DatePicker/CustomLocale.tsx?raw";
+import WeekStartsOn from "@examples/tailwind4/DatePicker/WeekStartsOn";
+import WeekStartsOnSource from "@examples/tailwind4/DatePicker/WeekStartsOn.tsx?raw";
+import ShowOutsideDays from "@examples/tailwind4/DatePicker/ShowOutsideDays";
+import ShowOutsideDaysSource from "@examples/tailwind4/DatePicker/ShowOutsideDays.tsx?raw";
+import CaptionDropdown from "@examples/tailwind4/DatePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind4/DatePicker/CaptionDropdown.tsx?raw";
+
+# Wygląd
+
+## Rozmiary
+
+Cztery wbudowane rozmiary: `small`, `medium`, `large` i `x-large`.
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Niestandardowy format
+
+Dostosuj ciąg znaków formatu wyświetlania.
+
+<CodeDemo source={CustomFormatSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomFormat client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Niestandardowa lokalizacja
+
+Dostarcz niestandardową lokalizację do internacjonalizacji za pomocą `createLocale` z pakietu headless.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Tydzień zaczyna się od
+
+Zmień pierwszy dzień tygodnia. Domyślnie jest to `"sunday"`.
+
+<CodeDemo source={WeekStartsOnSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <WeekStartsOn client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Pokaż dni zewnętrzne
+
+Wyświetlaj dni z sąsiednich miesięcy, aby wypełnić siatkę kalendarza. Domyślnie ustawione na `false`.
+
+<CodeDemo source={ShowOutsideDaysSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <ShowOutsideDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Rozwijany nagłówek
+
+Zmień nawigację miesiąca/roku ze strzałek na listy rozwijane za pomocą `captionLayout="dropdown"`. Użyj `fromYear` i `toYear`, aby ustawić zakres lat.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,58 @@
+---
+sidebar_position: 5
+title: Locale Helpers
+---
+
+# Auxiliares de Localização
+
+Funções para criar e mesclar configurações de localidade.
+
+```tsx
+import {
+  DEFAULT_LOCALE,
+  mergeLocale,
+  createLocale,
+  resolveLocale,
+  weekdayToNumber,
+} from "react-date-range-picker-headless";
+```
+
+## DEFAULT_LOCALE
+
+O objeto de localidade padrão em inglês. Todos os campos são preenchidos com strings em inglês.
+
+|      |          |
+| ---- | -------- |
+| Tipo | `Locale` |
+
+```tsx
+DEFAULT_LOCALE.weekdays; // ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+DEFAULT_LOCALE.months; // ["January", "February", ..., "December"]
+DEFAULT_LOCALE.confirm; // "Confirm"
+DEFAULT_LOCALE.placeholder; // "Select date"
+```
+
+## mergeLocale
+
+Mescla uma localidade parcial na localidade padrão.
+
+|            |                                                  |
+| ---------- | ------------------------------------------------ |
+| Assinatura | `mergeLocale(partial?: Partial<Locale>): Locale` |
+
+Retorna `DEFAULT_LOCALE` se nenhuma parcial for fornecida. Quando `rangeSeparator` é substituído mas `formatRange` não é, `formatRange` é automaticamente regenerado para usar o novo separador.
+
+```tsx
+mergeLocale(); // DEFAULT_LOCALE
+
+mergeLocale({
+  confirm: "OK",
+  cancel: "Back",
+  rangeSeparator: " - ",
+});
+// { ...DEFAULT_LOCALE, confirm: "OK", cancel: "Back", rangeSeparator: " - ", formatRange: (s, e) => `${s} - ${e}` }
+```
+
+## createLocale
+
+Cria uma localidade a partir de uma chave de localidade BCP 47 usando `Intl.DateTimeFormat`.

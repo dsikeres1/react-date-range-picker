@@ -1,0 +1,34 @@
+---
+sidebar_position: 2
+title: Internationalization
+description: 地區化自訂、語言切換和格式化覆寫。
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 國際化
+
+本函式庫使用瀏覽器的 `Intl.DateTimeFormat` API 來產生符合地區設定的月份名稱、星期標籤和上午/下午文字。不需要外部的 i18n 函式庫。
+
+## 快速入門
+
+使用 `createLocale()` 從一個 BCP 47 語言標籤產生地區設定，然後透過 `locale` prop 傳遞它：
+
+```tsx
+import { createLocale } from "react-date-range-picker-headless";
+import { DatePicker } from "react-date-range-picker-styled";
+
+const ko = createLocale("ko", {
+  confirm: "확인",
+  cancel: "취소",
+  clear: "초기화",
+  placeholder: "날짜 선택",
+});
+
+function App() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} locale={ko} />;
+}
+```
+
+這也適用於任何其他變體

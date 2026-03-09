@@ -1,0 +1,37 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Props
+
+| Prop                  | Type                                          | Default     | Mô tả                                                |
+| --------------------- | --------------------------------------------- | ----------- | ---------------------------------------------------- |
+| `value`               | `Date \| null`                                | --          | Giá trị ngày đã chọn                                 |
+| `onChange`            | `(date: Date \| null) => void`                | --          | Hàm gọi lại khi giá trị thay đổi                     |
+| `minDate`             | `Date`                                        | --          | Ngày tối thiểu có thể chọn                           |
+| `maxDate`             | `Date`                                        | --          | Ngày tối đa có thể chọn                              |
+| `locale`              | `Partial<Locale>`                             | --          | Cấu hình ngôn ngữ tùy chỉnh                          |
+| `initialMonth`        | `Date`                                        | --          | Tháng hiển thị ban đầu                               |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | Kích thước thành phần                                |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | Ngày đầu tiên của tuần                               |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | Đánh dấu ngày là không khả dụng                      |
+| `displayFormat`       | `string`                                      | --          | Định dạng hiển thị tùy chỉnh (ví dụ: `"YYYY/MM/DD"`) |
+| `open`                | `boolean`                                     | --          | Trạng thái mở được kiểm soát                         |
+| `initialOpen`         | `boolean`                                     | --          | Trạng thái mở ban đầu (không kiểm soát)              |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | Hàm gọi lại khi trạng thái mở thay đổi               |
+| `required`            | `boolean`                                     | `false`     | Vô hiệu hóa việc xóa giá trị                         |
+| `showOutsideDays`     | `boolean`                                     | `false`     | Hiển thị các ngày từ các tháng liền kề               |
+| `highlightDates`      | `Date[]`                                      | --          | Các ngày cần làm nổi bật                             |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | Tự động xác nhận khi nhấp vào ngày                   |
+| `numberOfMonths`      | `number`                                      | `1`         | Số tháng hiển thị                                    |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | Kiểu điều hướng tiêu đề                              |
+| `fromYear`            | `number`                                      | --          | Năm bắt đầu cho danh sách thả xuống                  |
+| `toYear`              | `number`                                      | --          | Năm kết thúc cho danh sách thả xuống                 |
+| `disablePast`         | `boolean`                                     | `false`     | Vô hiệu hóa các ngày trước hôm nay                   |
+| `disableFuture`       | `boolean`                                     | `false`     | Vô hiệu hóa các ngày sau hôm nay                     |
+| `inline`              | `boolean`                                     | `false`     | Hiển thị lịch nội tuyến (không có cửa sổ bật lên)    |
+| `name`                | `string`                                      | --          | Tên input ẩn để gửi biểu mẫu                         |
+| `placeholder`         | `string`                                      | --          | Văn bản giữ chỗ cho trình kích hoạt                  |
+| `hideHeader`          | `boolean`                                     | `false`     | Ẩn tiêu đề điều hướng                                |
+| `hideFooter`          | `boolean`                                     | `false`     | Ẩn chân trang hành động                              |

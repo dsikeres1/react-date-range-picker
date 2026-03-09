@@ -1,0 +1,36 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import SecondPrecision from "@examples/styled/DateRangeTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/styled/DateRangeTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/styled/DateRangeTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/styled/DateRangeTimePicker/TwelveHour.tsx?raw";
+
+# Zaman Seçenekleri
+
+`time` prop'u aracılığıyla zaman paneli davranışını yapılandırın.
+
+## Saniye Hassasiyeti
+
+Başlangıç ve bitiş zaman panelleri için saniye sütununu gösterin.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 12-Saat Formatı
+
+Başlangıç ve bitiş zaman panelleri için AM/PM değiştiricisi ile 12 saat formatına geçin.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,39 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Các Thành phần Hợp chất (Compound Components)
+
+Gói Tailwind v3 cung cấp một API Thành phần Hợp chất cho phép bạn kiểm soát hoàn toàn cấu trúc và kết xuất nội bộ của mỗi bộ chọn. Thay vì một thành phần nguyên khối duy nhất, bạn có thể tự lắp ráp bộ chọn từ các bộ phận riêng lẻ.
+
+## Cách Hoạt động
+
+Mỗi bộ chọn (ví dụ: `DatePicker`) vừa là một thành phần đơn giản, vừa là một không gian tên của các bộ phận hợp thành:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+// Cách dùng đơn giản — kết xuất bố cục mặc định
+<DatePicker value={value} onChange={setValue} />
+
+// Cách dùng hợp chất — kiểm soát hoàn toàn cấu trúc
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Các Bộ

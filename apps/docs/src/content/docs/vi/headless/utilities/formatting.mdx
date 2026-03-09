@@ -1,0 +1,88 @@
+---
+sidebar_position: 2
+title: Formatting
+---
+
+# Tiện ích định dạng
+
+Các hàm để định dạng ngày, giờ và số để hiển thị.
+
+```tsx
+import {
+  formatDate,
+  formatDateTime,
+  formatTimeDisplay,
+  padNumber,
+} from "react-date-range-picker-headless";
+```
+
+## formatDate
+
+Định dạng ngày với một chuỗi định dạng tùy chỉnh.
+
+|                    |                                                   |
+| ------------------ | ------------------------------------------------- |
+| Chữ ký             | `formatDate(date: Date, format?: string): string` |
+| Định dạng mặc định | `"YYYY.MM.DD"`                                    |
+
+```tsx
+formatDate(new Date(2026, 2, 1)); // "2026.03.01"
+formatDate(new Date(2026, 2, 1), "YYYY-MM-DD"); // "2026-03-01"
+formatDate(new Date(2026, 2, 1), "M/D"); // "3/1"
+```
+
+## formatDateTime
+
+Định dạng ngày kèm giờ bằng một chuỗi định dạng tùy chỉnh.
+
+|                    |                                                       |
+| ------------------ | ----------------------------------------------------- |
+| Chữ ký             | `formatDateTime(date: Date, format?: string): string` |
+| Định dạng mặc định | `"YYYY.MM.DD HH:mm"`                                  |
+
+```tsx
+formatDateTime(new Date(2026, 2, 1, 14, 30)); // "2026.03.01 14:30"
+formatDateTime(new Date(2026, 2, 1, 14, 30), "YYYY-MM-DD HH:mm:ss"); // "2026-03-01 14:30:00"
+```
+
+## formatTimeDisplay
+
+Định dạng một chuỗi hiển thị thời gian dựa trên một `TimeConfig` đã được giải quyết.
+
+|        |                                                                                                                                                                 |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Chữ ký | `formatTimeDisplay(hour: number, minute: number, second: number, period: TimePeriod, config: Required<TimeConfig>, amLabel?: string, pmLabel?: string): string` |
+
+| Tham số   | Type                   | Mặc định | Mô tả                                  |
+| --------- | ---------------------- | -------- | -------------------------------------- |
+| `hour`    | `number`               | --       | Giá trị giờ (định dạng 24h nội bộ).    |
+| `minute`  | `number`               | --       | Giá trị phút.                          |
+| `second`  | `number`               | --       | Giá trị giây.                          |
+| `period`  | `TimePeriod`           | --       | SA/CH (dùng để hiển thị ở chế độ 12h). |
+| `config`  | `Required<TimeConfig>` | --       | Cấu hình thời gian đã được giải quyết. |
+| `amLabel` | `string`               | `"AM"`   | Nhãn hiển thị SA.                      |
+| `pmLabel` | `string`               | `"PM"`   | Nhãn hiển thị CH.                      |
+
+```tsx
+import { resolveTimeConfig, formatTimeDisplay } from "react-date-range-picker-headless";
+
+const config = resolveTimeConfig({ precision: "minute", hourFormat: "24" });
+formatTimeDisplay(14, 30, 0, "PM", config); // "14:30"
+
+const config12 = resolveTimeConfig({ precision: "second", hourFormat: "12" });
+formatTimeDisplay(14, 30, 15, "PM", config12); // "02:30:15 PM"
+```
+
+## padNumber
+
+Thêm số 0 vào trước một số để thành chuỗi 2 chữ số.
+
+|        |                                  |
+| ------ | -------------------------------- |
+| Chữ ký | `padNumber(num: number): string` |
+
+```tsx
+padNumber(1); // "01"
+padNumber(12); // "12"
+padNumber(0); // "00"
+```

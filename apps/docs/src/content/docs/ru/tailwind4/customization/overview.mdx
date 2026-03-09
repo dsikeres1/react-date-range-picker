@@ -1,0 +1,46 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Составные компоненты
+
+Пакет для Tailwind v4 предоставляет API составных компонентов, которое дает вам полный контроль над внутренней структурой и рендерингом каждого средства выбора. Вместо одного монолитного компонента вы собираете средство выбора из отдельных частей.
+
+## Как это работает
+
+Каждое средство выбора (например, `DatePicker`) является одновременно и простым компонентом, и пространством имен для составных частей:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+// Простое использование -- рендерит макет по умолчанию
+<DatePicker value={value} onChange={setValue} />
+
+// Составное использование -- полный контроль над структурой
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+С помощью составных компонентов вы можете:
+
+- **Заменять** любую часть своей собственной реализацией (например, пользовательский триггер, пользовательская ячейка дня)
+- **Изменять** макет (например, перемещать кнопки в футере, добавлять кнопку "Сегодня")
+- **Удалять** ненужные части (например, убрать футер для минималистичного календаря)
+- **Переопределять классы** для любой части через свойство `className`
+
+На следующих страницах рассматри

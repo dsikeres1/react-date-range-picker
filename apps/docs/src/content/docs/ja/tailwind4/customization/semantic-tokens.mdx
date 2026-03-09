@@ -1,0 +1,167 @@
+---
+sidebar_position: 10
+---
+
+# セマンティックトークン
+
+Tailwind v4 パッケージは、すべての色にセマンティック CSS 変数 (デザイントークン) を使用します。これらのトークンは、コンポーネントのスタイルを特定の色値から切り離し、テーマ設定を容易にします。トークンの命名規則は、[shadcn/ui](https://ui.shadcn.com/) で使用されているのと同じパターンに従います。
+
+## トークンシステム
+
+Tailwind v4 コンポーネントは、`bg-sky-500` のようなハードコードされた色の代わりに、`bg-primary`、`text-foreground`、`border-border` のようなセマンティックユーティリティを使用します。これらは、プロジェクトで定義する CSS 変数にマッピングされます。
+
+```
+bg-primary        → var(--color-primary)
+text-foreground   → var(--color-foreground)
+border-border     → var(--color-border)
+```
+
+## 必須トークン
+
+Tailwind v4 の `@theme` ディレクティブを使用して、これらのトークンを CSS で定義します:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+## トークンリファレンス
+
+| トークン                     | 用途                                                                  | ユーティリティ例             |
+| ---------------------------- | --------------------------------------------------------------------- | ---------------------------- |
+| `--color-background`         | ページ/アプリの背景                                                   | `bg-background`              |
+| `--color-foreground`         | デフォルトのテキスト色                                                | `text-foreground`            |
+| `--color-popover`            | ポップアップの背景                                                    | `bg-popover`                 |
+| `--color-popover-foreground` | ポップアップのテキスト                                                | `text-popover-foreground`    |
+| `--color-primary`            | 選択された日、確認ボタン、範囲の端点                                  | `bg-primary`, `text-primary` |
+| `--color-primary-foreground` | `primary` 背景上のテキスト                                            | `text-primary-foreground`    |
+| `--color-muted-foreground`   | ミュートされたテキスト (プレースホルダー、曜日、ナビゲーションボタン) | `text-muted-foreground`      |
+| `--color-accent`             | 日やボタンのホバー背景                                                | `bg-accent`                  |
+| `--color-accent-foreground`  | `accent` 背景上のテキスト                                             | `text-accent-foreground`     |
+| `--color-destructive`        | クリア/危険ボタンのテキスト                                           | `text-destructive`           |
+| `--color-border`             | 一般的な境界線 (フッター、プリセット、ポップアップ)                   | `border-border`              |
+| `--color-input`              | 入力/トリガーの境界線                                                 | `border-input`               |
+| `--color-ring`               | フォーカスリングの色                                                  | `ring-ring`                  |
+
+## トークンとコンポーネントのマッピング
+
+ピッカー全体でトークンがどのように適用されるかを以下に示します:
+
+### トリガー
+
+- 背景: `bg-background`
+- 境界線: `border-input`
+- テキスト: ルートの `text-foreground` から継承
+- プレースホルダー: `text-muted-foreground`
+- フォーカスリング: `ring-ring`
+
+### ポップアップ
+
+- 背景: `bg-popover`
+- テキスト: `text-popover-foreground`
+- 境界線: `border-border`
+
+### カレンダーの日付
+
+- デフォルトホバー: `bg-accent` / `text-accent-foreground`
+- 選択済み: `bg-primary` / `text-primary-foreground`
+- 今日: `text-primary`
+- 範囲内: `bg-primary/10`
+- 範囲の開始/終了: `bg-primary` / `text-primary-foreground`
+- 無効: `text-muted-foreground` と不透明度を下げたもの
+
+### フッター
+
+- 境界線: `border-border`
+- キャンセルボタン: `border-input`、ホバーで `bg-accent`
+- 確認ボタン: `bg-primary` / `text-primary-foreground`
+- クリアボタン: `text-destructive`
+
+## トークンのカスタマイズ
+
+### プライマリカラーの変更
+
+ピッカーのブランドイメージを変更するには、`--color-primary` と `--color-primary-foreground` を変更します:
+
+```css
+@theme {
+  /* 紫色のプライマリ */
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+}
+```
+
+### 暖色系のカラースキーム
+
+```css
+@theme {
+  --color-background: oklch(0.99 0.005 80);
+  --color-foreground: oklch(0.2 0.02 60);
+
+  --color-popover: oklch(0.99 0.005 80);
+  --color-popover-foreground: oklch(0.2 0.02 60);
+
+  --color-primary: oklch(0.6 0.2 40);
+  --color-primary-foreground: oklch(0.98 0.005 80);
+
+  --color-accent: oklch(0.95 0.02 80);
+  --color-accent-foreground: oklch(0.2 0.02 60);
+
+  --color-border: oklch(0.9 0.01 80);
+  --color-input: oklch(0.9 0.01 80);
+  --color-ring: oklch(0.85 0.02 80);
+}
+```
+
+### ダークモードのトークン
+
+ダークモードでは、`.dark` セレクタまたは `@media (prefers-color-scheme: dark)` の下でトークンを上書きします:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... ライトモードの値 */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+詳細については、[ダークモード](/docs/tailwind4/customization/dark-mode) を参照してください。
+
+## 既存の shadcn/ui プロジェクト
+
+プロジェクトにすでに shadcn/ui トークンが定義されている場合、ピッカーは追加設定なしで自動的にそれらを使用します。トークン名は意図的に互換性があるように作られています。詳細は [shadcn Registry](/docs/tailwind4/customization/shadcn-registry) を参照してください。

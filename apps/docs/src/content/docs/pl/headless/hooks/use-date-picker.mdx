@@ -1,0 +1,157 @@
+---
+sidebar_position: 1
+title: useDatePicker
+---
+
+# useDatePicker
+
+Główny hook do wyboru pojedynczej daty. Zarządza stanem kalendarza, zachowaniem otwierania/zamykania, nawigacją za pomocą klawiatury i formatowaniem daty.
+
+## Import
+
+```tsx
+import { useDatePicker } from "react-date-range-picker-headless";
+```
+
+## Użycie
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  const picker = useDatePicker({
+    value: date,
+    onChange: setDate,
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.placeholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Nagłówek kalendarza */}
+          <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+          <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+          <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+
+          {/* Siatka kalendarza */}
+          {picker.calendar.weeks.flat().map((day, i) => {
+            if (!day) return <span key={i} />;
+            const dp = picker.getDayProps(day);
+            return (
+              <button key={i} onClick={() => picker.handleDateClick(day)} disabled={dp.isDisabled}>
+                {dp.day}
+              </button>
+            );
+          })}
+
+          {/* Stopka */}
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Opcje
+
+| Opcja                 | Typ                            | Domyślnie         | Opis                                                                                                    |
+| --------------------- | ------------------------------ | ----------------- | ------------------------------------------------------------------------------------------------------- |
+| `value`               | `Date \| null`                 | --                | **Wymagane.** Aktualnie wybrana data.                                                                   |
+| `onChange`            | `(date: Date \| null) => void` | --                | **Wymagane.** Wywoływane, gdy zmieni się wybrana data.                                                  |
+| `minDate`             | `Date`                         | --                | Najwcześniejsza data do wyboru.                                                                         |
+| `maxDate`             | `Date`                         | --                | Najpóźniejsza data do wyboru.                                                                           |
+| `locale`              | `Partial<Locale>`              | `DEFAULT_LOCALE`  | Zastąp ciągi znaków lokalizacji.                                                                        |
+| `initialMonth`        | `Date`                         | --                | Miesiąc do wyświetlenia na początku (domyślnie wartość lub dzisiaj).                                    |
+| `size`                | `DatePickerSize`               | --                | Przekazywanie do UI dla stylizowanych komponentów. Hooki headless ignorują to.                          |
+| `weekStartsOn`        | `WeekDay`                      | `"sunday"`        | Pierwszy dzień tygodnia.                                                                                |
+| `isDateUnavailable`   | `(date: Date) => boolean`      | --                | Niestandardowa funkcja do wyłączania określonych dat.                                                   |
+| `displayFormat`       | `string`                       | --                | Niestandardowy ciąg formatujący dla wyświetlanej wartości (np. `"RRRR/MM/DD"`).                         |
+| `open`                | `boolean`                      | --                | Kontrolowany stan otwarcia. Gdy podany, hook nie zarządza stanem otwarcia wewnętrznie.                  |
+| `initialOpen`         | `boolean`                      | `false`           | Początkowy stan otwarcia (tryb niekontrolowany).                                                        |
+| `onOpenChange`        | `(open: boolean) => void`      | --                | Callback, gdy zmienia się stan otwarcia. Działa zarówno w trybie kontrolowanym, jak i niekontrolowanym. |
+| `required`            | `boolean`                      | `false`           | Gdy `true`, `handleClear` nic nie robi.                                                                 |
+| `today`               | `Date`                         | `new Date()`      | Zastąp dzisiejszą datę dla obliczeń `isToday` i `disablePast`/`disableFuture`.                          |
+| `onMonthChange`       | `(month: Date) => void`        | --                | Callback, gdy zmienia się wyświetlany miesiąc.                                                          |
+| `disablePast`         | `boolean`                      | `false`           | Wyłącz wszystkie daty przed dzisiaj.                                                                    |
+| `disableFuture`       | `boolean`                      | `false`           | Wyłącz wszystkie daty po dzisiaj.                                                                       |
+| `showOutsideDays`     | `boolean`                      | `false`           | Pokaż dni z sąsiednich miesięcy, aby wypełnić siatkę 6 tygodni.                                         |
+| `highlightDates`      | `Date[]`                       | --                | Tablica dat do podświetlenia w kalendarzu.                                                              |
+| `shouldCloseOnSelect` | `boolean`                      | `false`           | Automatycznie potwierdź i zamknij po kliknięciu daty.                                                   |
+| `numberOfMonths`      | `number`                       | `1`               | Liczba miesięcy do jednoczesnego wyświetlenia.                                                          |
+| `captionLayout`       | `CaptionLayout`                | `"buttons"`       | `"buttons"` dla strzałek poprzedni/następny, `"dropdown"` dla wyboru roku/miesiąca.                     |
+| `fromYear`            | `number`                       | bieżący rok - 100 | Rok początkowy dla trybu rozwijanego.                                                                   |
+| `toYear`              | `number`                       | bieżący rok + 10  | Rok końcowy dla trybu rozwijanego.                                                                      |
+
+## Zwracane wartości
+
+| Nazwa               | Typ                                               | Opis                                                                       |
+| ------------------- | ------------------------------------------------- | -------------------------------------------------------------------------- |
+| `isOpen`            | `boolean`                                         | Czy okienko jest otwarte.                                                  |
+| `tempDate`          | `Date \| null`                                    | Tymczasowo wybrana data (przed potwierdzeniem).                            |
+| `currentMonth`      | `Date`                                            | Aktualnie wyświetlany miesiąc.                                             |
+| `locale`            | `Locale`                                          | Rozwiązany obiekt lokalizacji ze wszystkimi ciągami znaków.                |
+| `calendar`          | `CalendarMonth`                                   | Dane kalendarza dla bieżącego miesiąca (zawiera `month`, `days`, `weeks`). |
+| `calendars`         | `CalendarMonth[]`                                 | Tablica miesięcy kalendarza (długość = `numberOfMonths`).                  |
+| `getDayProps`       | `(date: Date, referenceMonth?: Date) => DayProps` | Oblicz flagi dla komórki dnia kalendarza.                                  |
+| `displayValue`      | `string`                                          | Sformatowany ciąg znaków potwierdzonej wartości.                           |
+| `hasValue`          | `boolean`                                         | Czy data jest obecnie potwierdzona.                                        |
+| `canConfirm`        | `boolean`                                         | Czy bieżący wybór jest ważny do potwierdzenia.                             |
+| `handleDateClick`   | `(date: Date) => void`                            | Obsłuż kliknięcie komórki dnia.                                            |
+| `handlePrevMonth`   | `() => void`                                      | Przejdź do poprzedniego miesiąca.                                          |
+| `handleNextMonth`   | `() => void`                                      | Przejdź do następnego miesiąca.                                            |
+| `handleOpen`        | `() => void`                                      | Otwórz okienko.                                                            |
+| `handleClose`       | `() => void`                                      | Zamknij okienko (odrzuca niezatwierdzone zmiany).                          |
+| `handleToggle`      | `() => void`                                      | Przełącz okienko.                                                          |
+| `handleConfirm`     | `() => void`                                      | Potwierdź wybór i zamknij.                                                 |
+| `handleCancel`      | `() => void`                                      | Anuluj i przywróć poprzednią wartość.                                      |
+| `handleClear`       | `() => void`                                      | Wyczyść wartość (nic nie robi, jeśli `required`).                          |
+| `handleGoToToday`   | `() => void`                                      | Przejdź w kalendarzu do dzisiejszego miesiąca.                             |
+| `containerRef`      | `RefObject<HTMLDivElement \| null>`               | Dołącz do elementu otaczającego w celu wykrywania kliknięć na zewnątrz.    |
+| `popupRef`          | `RefObject<HTMLDivElement \| null>`               | Dołącz do elementu okienka.                                                |
+| `focusedDate`       | `Date \| null`                                    | Aktualnie sfokusowana data za pomocą klawiatury.                           |
+| `handleKeyDown`     | `(e: KeyboardEvent<HTMLElement>) => void`         | Handler zdarzeń klawiatury dla klawiszy strzałek, Enter, Escape, Tab.      |
+| `years`             | `number[]`                                        | Tablica lat dla trybu nagłówka z listą rozwijaną.                          |
+| `months`            | `number[]`                                        | Tablica indeksów miesięcy (0-11) dla trybu nagłówka z listą rozwijaną.     |
+| `handleYearSelect`  | `(year: number, calendarIndex?: number) => void`  | Ustaw wyświetlany rok (tryb rozwijany).                                    |
+| `handleMonthSelect` | `(month: number, calendarIndex?: number) => void` | Ustaw wyświetlany miesiąc (tryb rozwijany).                                |
+
+## Kluczowe zachowania
+
+### Kontrolowany vs Niekontrolowany stan otwarcia
+
+Domyślnie hook zarządza otwieraniem/zamykaniem wewnętrznie. Aby kontrolować to zewnętrznie, przekaż `open` i `onOpenChange`:
+
+```tsx
+const [isOpen, setIsOpen] = useState(false);
+
+const picker = useDatePicker({
+  value: date,
+  onChange: setDate,
+  open: isOpen,
+  onOpenChange: setIsOpen,
+});
+```
+
+### shouldCloseOnSelect
+
+Gdy `shouldCloseOnSelect` ma wartość `true`, kliknięcie daty natychmiast potwierdza i zamyka okienko, pomijając krok jawnego potwierdzenia.
+
+### Nawigacja za pomocą klawiatury
+
+| Klawisz                        | Akcja                            |
+| ------------------------------ | -------------------------------- |
+| Strzałki w górę/dół/lewo/prawo | Przesuwaj fokus między dniami    |
+| Enter / Spacja                 | Wybierz sfokusowaną datę         |
+| Escape                         | Anuluj i zamknij                 |
+| Tab                            | Przesuwaj fokus wewnątrz okienka |
+
+### Nagłówek z listą rozwijaną
+
+Gdy `captionLayout` ma wartość `"dropdown"`, nagłówek wyświetla listy rozwijane do wyboru roku i miesiąca zamiast przycisków poprzedni/następny. Użyj `years`, `months`, `handleYearSelect` i `handleMonthSelect` do renderowania list rozwijanych.

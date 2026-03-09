@@ -1,0 +1,32 @@
+---
+sidebar_position: 6
+sidebar_label: "Time Picker"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundTimePicker from "@examples/styled/Customization/CompoundTimePicker";
+import CompoundTimePickerSource from "@examples/styled/Customization/CompoundTimePicker.tsx?raw";
+import CompoundTimePickerTwelveHour from "@examples/styled/Customization/CompoundTimePickerTwelveHour";
+import CompoundTimePickerTwelveHourSource from "@examples/styled/Customization/CompoundTimePickerTwelveHour.tsx?raw";
+
+# 时间选择器
+
+使用 `TimePicker` 复合 API 构建带有自定义触发器的自定义时间选择器。
+
+<CodeDemo source={CompoundTimePickerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundTimePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 12 小时制
+
+使用 `time` 配置 12 小时制：
+
+<CodeDemo source={CompoundTimePickerTwelveHourSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundTimePickerTwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

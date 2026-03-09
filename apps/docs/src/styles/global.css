@@ -1,0 +1,124 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* dark: variant uses .dark class (not @media prefers-color-scheme) */
+@variant dark (&:where(.dark, .dark *));
+
+/* Scan workspace packages for Tailwind classes */
+@source "../../../../packages/tailwind4/src";
+@source "../../../../packages/tailwind3/src";
+
+/* ══════════════════════════════════════════════════════════
+   Semantic design tokens (Tailwind v4)
+
+   These map to the same Slate + Sky palette used by the
+   styled and tailwind3 packages, so all three render identically.
+   ══════════════════════════════════════════════════════════ */
+@theme {
+  /* Light mode — matches slate/sky palette */
+  --color-background: #ffffff;
+  --color-foreground: #0f172a; /* slate-900 */
+  --color-popover: #ffffff;
+  --color-popover-foreground: #0f172a; /* slate-900 */
+  --color-primary: #0ea5e9; /* sky-500 */
+  --color-primary-foreground: #ffffff;
+  --color-muted-foreground: #64748b; /* slate-500 */
+  --color-accent: #f1f5f9; /* slate-100 */
+  --color-accent-foreground: #0f172a; /* slate-900 */
+  --color-destructive: #ef4444; /* red-500 */
+  --color-border: #e2e8f0; /* slate-200 */
+  --color-input: #e2e8f0; /* slate-200 */
+  --color-ring: #0ea5e9; /* sky-500 */
+
+  /* Docs-specific tokens */
+  --color-sidebar: #f8fafc; /* slate-50 */
+  --color-sidebar-foreground: #0f172a; /* slate-900 */
+  --color-sidebar-border: #e2e8f0; /* slate-200 */
+  --color-code-bg: #f1f5f9; /* slate-100 */
+
+  /* Footer (always dark-ish) */
+  --color-footer: #020617; /* slate-950 */
+  --color-footer-foreground: #f8fafc; /* slate-50 */
+  --color-footer-muted: #94a3b8; /* slate-400 */
+  --color-footer-border: #1e293b; /* slate-800 */
+}
+
+/* ── Dark mode ── */
+.dark {
+  --color-background: #020617; /* slate-950 */
+  --color-foreground: #f8fafc; /* slate-50 */
+  --color-popover: #020617; /* slate-950 */
+  --color-popover-foreground: #f8fafc; /* slate-50 */
+  --color-primary: #0ea5e9; /* sky-500 (same as light) */
+  --color-primary-foreground: #ffffff;
+  --color-muted-foreground: #94a3b8; /* slate-400 */
+  --color-accent: #1e293b; /* slate-800 */
+  --color-accent-foreground: #f8fafc; /* slate-50 */
+  --color-destructive: #ef4444; /* red-500 */
+  --color-border: #1e293b; /* slate-800 */
+  --color-input: #1e293b; /* slate-800 */
+  --color-ring: #0ea5e9; /* sky-500 */
+
+  --color-sidebar: #020617; /* slate-950 */
+  --color-sidebar-foreground: #f8fafc; /* slate-50 */
+  --color-sidebar-border: #1e293b; /* slate-800 */
+  --color-code-bg: #1e293b; /* slate-800 */
+
+  --color-footer: #020617; /* slate-950 */
+  --color-footer-foreground: #f8fafc; /* slate-50 */
+  --color-footer-muted: #94a3b8; /* slate-400 */
+  --color-footer-border: #1e293b; /* slate-800 */
+}
+
+/* ── Hero gradient ── */
+.hero-gradient {
+  background: linear-gradient(180deg, #bae6fd 0%, transparent 100%);
+}
+
+.dark .hero-gradient {
+  background: linear-gradient(180deg, #e0f2fe20 0%, transparent 100%);
+}
+
+/* ── Prose customizations ── */
+.prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)):hover {
+  opacity: 0.8;
+}
+
+.prose :where(code):not(:where(pre *, [class~="not-prose"], [class~="not-prose"] *)) {
+  background-color: var(--color-code-bg);
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+.prose :where(th):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  border-bottom: 2px solid var(--color-border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.prose :where(td):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.5rem 0.75rem;
+}
+
+.prose :where(hr):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  border-color: var(--color-border);
+}
+
+.prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  border-left-color: var(--color-border);
+  color: var(--color-muted-foreground);
+}
+
+/* ── Sidebar accordion ── */
+[data-sidebar-content] {
+  transition: max-height 200ms ease-out;
+}

@@ -1,0 +1,80 @@
+---
+sidebar_position: 3
+title: Browser Compatibility
+description: Supported browsers, CSS features, and JavaScript APIs used.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Browser Compatibility
+
+## Support Matrix
+
+| Browser          | Minimum Version |
+| ---------------- | --------------- |
+| Chrome           | 88+             |
+| Edge             | 88+ (Chromium)  |
+| Firefox          | 85+             |
+| Safari           | 15.4+           |
+| iOS Safari       | 15.4+           |
+| Samsung Internet | 15+             |
+
+**IE 11 is not supported.** The library relies on CSS custom properties, modern JavaScript APIs, and React 18+.
+
+The Safari 15.4 minimum is determined by `:focus-visible` support used in the Styled package's focus indicator styles.
+
+## CSS Features
+
+| Feature                  | Used In                          | First Supported                        |
+| ------------------------ | -------------------------------- | -------------------------------------- |
+| CSS Custom Properties    | All styled packages (theming)    | Chrome 49, Firefox 31, Safari 9.1      |
+| `:focus-visible`         | Focus indicators (Styled)        | Chrome 86, Firefox 85, **Safari 15.4** |
+| `color-scheme`           | Dark mode native inputs (Styled) | Chrome 81, Firefox 96, Safari 12.1     |
+| `prefers-color-scheme`   | Auto dark mode (Styled)          | Chrome 76, Firefox 67, Safari 12.1     |
+| `prefers-reduced-motion` | Motion reduction (Styled)        | Chrome 74, Firefox 63, Safari 10.1     |
+| `scroll-snap-type`       | Time picker scroll (Styled)      | Chrome 69, Firefox 68, Safari 11       |
+| Flexbox                  | Layout                           | Universal                              |
+| CSS Grid                 | Calendar grid                    | Chrome 57, Firefox 52, Safari 10.1     |
+
+## JavaScript APIs
+
+| API                                 | Used By                                | First Supported                    |
+| ----------------------------------- | -------------------------------------- | ---------------------------------- |
+| `Intl.DateTimeFormat`               | `createLocale()` locale generation     | All modern browsers                |
+| `Intl.DateTimeFormat.formatToParts` | AM/PM label extraction                 | Chrome 57, Firefox 51, Safari 11   |
+| `ResizeObserver`                    | `@floating-ui/react` popup positioning | Chrome 64, Firefox 69, Safari 13.1 |
+| React 18+ hooks                     | All hooks and components               | React 18.0+                        |
+
+## Package-Specific Notes
+
+### Headless
+
+No CSS dependencies. Only requires React 18+ and standard JavaScript APIs. Compatible with any environment that supports React.
+
+### Styled
+
+Uses CSS custom properties, `:focus-visible`, `color-scheme`, and `scroll-snap-type`. The browser support bottleneck is **Safari 15.4+** (for `:focus-visible`).
+
+The scroll-based time picker uses `scroll-snap-type: y mandatory` with hidden scrollbars. Scroll behavior may feel slightly different across platforms due to varying inertia/momentum implementations.
+
+### Tailwind v3
+
+Requires Tailwind CSS v3. Same JavaScript compatibility as Headless. CSS support depends on Tailwind v3 output (widely compatible).
+
+### Tailwind v4
+
+Requires Tailwind CSS v4, which itself uses modern CSS features (`@layer`, `@property`, CSS nesting). See the [Tailwind CSS v4 browser support](https://tailwindcss.com/docs/compatibility) for details.
+
+## Polyfills
+
+For projects that need to support browsers slightly below the minimum versions:
+
+| Feature               | Polyfill                                                                                                            |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `:focus-visible`      | [`focus-visible`](https://github.com/WICG/focus-visible)                                                            |
+| `ResizeObserver`      | [`resize-observer-polyfill`](https://github.com/que-etc/resize-observer-polyfill)                                   |
+| `Intl.DateTimeFormat` | [`@formatjs/intl-datetimeformat`](https://formatjs.github.io/docs/polyfills/intl-datetimeformat/) (edge cases only) |
+
+<Admonition type="tip">
+  Most projects targeting modern browsers (released after 2022) will not need any polyfills.
+</Admonition>

@@ -1,0 +1,56 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/styled/DateRangeTimePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/styled/DateRangeTimePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/styled/DateRangeTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangeTimePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/styled/DateRangeTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DateRangeTimePicker/FormIntegration.tsx?raw";
+
+# พฤติกรรม
+
+## ปิดเมื่อเลือก
+
+เมื่อเปิดใช้งาน `shouldCloseOnSelect` ตัวเลือกจะยืนยันและปิดโดยอัตโนมัติเมื่อมีการคลิกค่าที่ตั้งไว้ล่วงหน้า
+
+<Admonition type="info">
+  สำหรับตัวเลือกที่เปิดใช้งานเวลา `shouldCloseOnSelect` จะใช้กับการคลิกค่าที่ตั้งไว้ล่วงหน้าเท่านั้น
+  — ไม่ใช่การคลิกวันที่ เนื่องจากผู้ใช้ยังคงต้องตั้งเวลา
+</Admonition>
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## หลายเดือน
+
+แสดงผลมากกว่าสองเดือนเริ่มต้นเคียงข้างกัน
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## การรวมฟอร์ม
+
+ใช้ prop `name` เพื่อรวมอินพุตที่ซ่อนอยู่สำหรับการส่งฟอร์มแบบเนทีฟ
+
+<Admonition type="tip">
+  สไตล์ของปุ่มส่งในตัวอย่างนี้เป็นแบบกำหนดเอง — ไลบรารีมีให้เพียงตัวเลือกวันที่เท่านั้น
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

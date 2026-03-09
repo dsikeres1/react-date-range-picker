@@ -1,0 +1,124 @@
+---
+sidebar_position: 5
+title: Common Types
+---
+
+# Common Types
+
+Shared type aliases used across the headless package.
+
+```tsx
+import type {
+  DatePickerSize,
+  WeekDay,
+  CaptionLayout,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  MinuteStep,
+  SecondStep,
+  CalendarMonth,
+  DateUnit,
+} from "react-date-range-picker-headless";
+```
+
+## DatePickerSize
+
+UI size variant. Headless hooks pass this through without using it. Styled components use it for visual sizing.
+
+```tsx
+type DatePickerSize = "x-large" | "large" | "medium" | "small";
+```
+
+## WeekDay
+
+Day of the week as a string. Used in the `weekStartsOn` option.
+
+```tsx
+type WeekDay = "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday";
+```
+
+## CaptionLayout
+
+Calendar header layout mode.
+
+```tsx
+type CaptionLayout = "buttons" | "dropdown";
+```
+
+| Value        | Description                                       |
+| ------------ | ------------------------------------------------- |
+| `"buttons"`  | Previous/next month navigation buttons (default). |
+| `"dropdown"` | Year and month select dropdowns.                  |
+
+## TimePrecision
+
+Controls which time columns are shown.
+
+```tsx
+type TimePrecision = "hour" | "minute" | "second";
+```
+
+| Value      | Columns Shown           |
+| ---------- | ----------------------- |
+| `"hour"`   | Hour only.              |
+| `"minute"` | Hour + minute.          |
+| `"second"` | Hour + minute + second. |
+
+## HourFormat
+
+12-hour or 24-hour time display.
+
+```tsx
+type HourFormat = "12" | "24";
+```
+
+## TimePeriod
+
+AM/PM indicator for 12-hour format.
+
+```tsx
+type TimePeriod = "AM" | "PM";
+```
+
+## MinuteStep
+
+Valid minute increment values for step-based minute selection.
+
+```tsx
+type MinuteStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## SecondStep
+
+Valid second increment values for step-based second selection.
+
+```tsx
+type SecondStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## CalendarMonth
+
+Generated calendar data for a single month.
+
+```tsx
+interface CalendarMonth {
+  month: Date;
+  days: (Date | null)[];
+  weeks: (Date | null)[][];
+}
+```
+
+| Field   | Type                 | Description                                                        |
+| ------- | -------------------- | ------------------------------------------------------------------ |
+| `month` | `Date`               | The month this calendar represents.                                |
+| `days`  | `(Date \| null)[]`   | Flat array of 42 cells (6 weeks x 7 days). `null` for empty cells. |
+| `weeks` | `(Date \| null)[][]` | 2D array of 6 weeks, each containing 7 day cells.                  |
+
+## DateUnit
+
+Unit of time for date utility functions (`startOf`, `endOf`, `add`, `subtract`, `isSame`, `isBefore`, `isAfter`, `diff`).
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```

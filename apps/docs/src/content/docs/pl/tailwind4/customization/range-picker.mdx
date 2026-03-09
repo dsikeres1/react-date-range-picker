@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: Range Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/tailwind4/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/tailwind4/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/tailwind4/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/tailwind4/Customization/CompoundRangeInline.tsx?raw";
+
+# Wybór Zakresu
+
+Zbuduj w pełni dostosowany `DateRangePicker` za pomocą komponentów złożonych. Ten przykład łączy niestandardowy wyzwalacz, pasek boczny z predefiniowanymi ustawieniami, podwójne siatki kalendarza i stopkę -- wszystko złożone z pojedynczych części.
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## W Linii z Ustawieniami Wstępnymi
+
+Wyświetl wybór zakresu w linii z paskiem bocznym z ustawieniami wstępnymi:
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

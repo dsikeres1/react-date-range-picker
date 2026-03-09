@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/tailwind4/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind4/DateRangePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/tailwind4/DateRangePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind4/DateRangePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/tailwind4/DateRangePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind4/DateRangePicker/CaptionDropdown.tsx?raw";
+
+# 외형
+
+## 다중 월
+
+2개 이상의 월을 나란히 표시합니다. 범위 선택기는 기본적으로 `2`로 설정됩니다.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 사용자 정의 로케일
+
+headless 패키지의 `createLocale`을 사용하여 월/요일 이름과 UI 문자열을 사용자 정의하세요.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 캡션 드롭다운
+
+버튼 탐색 방식에서 월과 연도를 선택하는 드롭다운으로 전환합니다. 현재 월에서 멀리 떨어진 날짜를 선택할 때 유용합니다.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

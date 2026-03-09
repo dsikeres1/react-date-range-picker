@@ -1,0 +1,195 @@
+---
+sidebar_position: 1
+title: Accessibility
+description: Keyboard navigation, ARIA attributes, focus management, and WCAG compliance.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Accessibility
+
+All picker components ship with built-in accessibility support. Keyboard navigation, ARIA attributes, and focus management work out of the box in every variant — Styled, Tailwind v3/v4, and Headless.
+
+No extra configuration is needed for standard use. This page documents what's included so you can audit, extend, or replicate the patterns in custom UIs.
+
+## Keyboard Navigation
+
+### Calendar Pickers
+
+| Key               | Action                                           |
+| ----------------- | ------------------------------------------------ |
+| `ArrowLeft`       | Move focus to previous day                       |
+| `ArrowRight`      | Move focus to next day                           |
+| `ArrowUp`         | Move focus to previous week (same weekday)       |
+| `ArrowDown`       | Move focus to next week (same weekday)           |
+| `Enter` / `Space` | Select the focused day                           |
+| `Escape`          | Cancel changes and close the popup               |
+| `Tab`             | Move to next focusable element (browser default) |
+
+**Disabled date skipping:** When navigating with arrow keys, disabled dates are automatically skipped. The picker searches up to 365 days in the direction of movement to find the next enabled date.
+
+**Auto-month scrolling:** When keyboard focus moves to a day in a different month, the calendar view updates to show that month.
+
+### Time Picker
+
+| Key      | Action                             |
+| -------- | ---------------------------------- |
+| `Escape` | Cancel changes and close the popup |
+
+Time selection uses a scroll-wheel UI with click/touch interaction. The scroll columns use `scroll-snap` for precise value selection.
+
+## ARIA Attributes
+
+Every interactive element has appropriate ARIA roles and attributes:
+
+### Popup & Container
+
+| Element          | Attribute               | Value                                |
+| ---------------- | ----------------------- | ------------------------------------ |
+| Popup container  | `role`                  | `"dialog"`                           |
+| Inline container | `role`                  | `"group"`                            |
+| Container        | `aria-label`            | Placeholder text from locale         |
+| Container        | `aria-activedescendant` | ID of the currently focused day cell |
+
+### Trigger Button
+
+| Attribute       | Value                     |
+| --------------- | ------------------------- |
+| `aria-expanded` | `true` when popup is open |
+| `aria-haspopup` | `"dialog"`                |
+
+### Calendar Grid
+
+| Element             | Attribute       | Value                                         |
+| ------------------- | --------------- | --------------------------------------------- |
+| Grid wrapper        | `role`          | `"grid"`                                      |
+| Week row            | `role`          | `"row"`                                       |
+| Weekday header cell | `role`          | `"columnheader"`                              |
+| Day cell            | `role`          | `"gridcell"`                                  |
+| Day cell            | `aria-selected` | `true` when selected                          |
+| Day cell            | `aria-current`  | `"date"` when the cell is today               |
+| Day cell            | `aria-label`    | Formatted date string (e.g. `"2026-03-04"`)   |
+| Day cell            | `disabled`      | Set on disabled dates (native HTML attribute) |
+
+### Navigation & Dropdowns
+
+| Element               | Attribute    | Value                                             |
+| --------------------- | ------------ | ------------------------------------------------- |
+| Previous month button | `aria-label` | `"Previous month"` (from `locale.prevMonthLabel`) |
+| Next month button     | `aria-label` | `"Next month"` (from `locale.nextMonthLabel`)     |
+| Month dropdown        | `aria-label` | `"Select month"` (from `locale.selectMonthLabel`) |
+| Year dropdown         | `aria-label` | `"Select year"` (from `locale.selectYearLabel`)   |
+
+### Time Columns
+
+| Element       | Attribute          | Value                                        |
+| ------------- | ------------------ | -------------------------------------------- |
+| Hour column   | `role`             | `"listbox"`                                  |
+| Hour column   | `aria-orientation` | `"vertical"`                                 |
+| Hour column   | `aria-label`       | `"Hours"` (from `locale.hourLabel`)          |
+| Minute column | `role`             | `"listbox"`                                  |
+| Minute column | `aria-orientation` | `"vertical"`                                 |
+| Minute column | `aria-label`       | `"Minutes"` (from `locale.minuteLabel`)      |
+| Second column | `role`             | `"listbox"`                                  |
+| Second column | `aria-orientation` | `"vertical"`                                 |
+| Second column | `aria-label`       | `"Seconds"` (from `locale.secondLabel`)      |
+| Time item     | `role`             | `"option"` (padding items: `"presentation"`) |
+| Time item     | `aria-selected`    | `true` when the item is the current value    |
+| Period toggle | `aria-label`       | Current period + ", toggle AM/PM"            |
+| Clear button  | `aria-label`       | `"Clear"` (from `locale.clear`)              |
+
+All label strings are customizable through the [locale system](/docs/guides/internationalization).
+
+## Focus Management
+
+### Roving Tabindex
+
+The calendar grid uses the **roving tabindex** pattern:
+
+- Only the currently focused day cell has `tabIndex={0}` (tabbable).
+- All other day cells have `tabIndex={-1}` (not tabbable, but focusable via arrow keys).
+- This means `Tab` moves focus out of the calendar grid (to the next control), and arrow keys move focus within the grid.
+
+### Popup Focus Trapping
+
+Popup mode uses `FloatingFocusManager` from `@floating-ui/react` to:
+
+- Trap focus within the popup while open.
+- Return focus to the trigger button when the popup closes.
+- Prevent tabbing out of the popup to background content.
+
+### Native Elements
+
+Month and year selection use native `<select>` elements, which are inherently keyboard accessible. Day cells use native `<button>` elements with appropriate disabled states.
+
+## WCAG 2.1 Compliance
+
+The following WCAG 2.1 success criteria are addressed:
+
+| Criterion                        | Level | How It's Addressed                                                              |
+| -------------------------------- | ----- | ------------------------------------------------------------------------------- |
+| **1.3.1** Info and Relationships | A     | Semantic HTML — `<button>`, `<select>`, grid/gridcell roles                     |
+| **2.1.1** Keyboard               | A     | All functionality reachable via keyboard (arrow keys, Enter, Escape)            |
+| **2.4.3** Focus Order            | A     | Logical tab order; popup uses focus manager                                     |
+| **2.4.7** Focus Visible          | AA    | `:focus-visible` outline (2px solid primary) on all interactive elements        |
+| **4.1.2** Name, Role, Value      | A     | All interactive elements have accessible names via `aria-label` or text content |
+
+<Admonition type="note">
+  Styling packages (Styled, Tailwind v3/v4) include visible focus indicators by default. If you
+  build a custom UI with the headless package, you must provide your own focus styles.
+</Admonition>
+
+## Headless: Building Accessible Custom UIs
+
+If you're using the headless package directly, ensure your custom UI includes:
+
+### 1. Apply keyboard handler
+
+Pass `handleKeyDown` to your popup container so arrow key navigation works:
+
+```tsx
+const { handleKeyDown, ... } = useDatePicker({ value, onChange });
+
+<div onKeyDown={handleKeyDown}>
+  {/* calendar grid */}
+</div>
+```
+
+### 2. Set correct tabIndex on day cells
+
+Use the `isFocused` flag from `getDayProps()`:
+
+```tsx
+const dayProps = getDayProps(date);
+
+<button
+  role="gridcell"
+  tabIndex={dayProps.isFocused ? 0 : -1}
+  aria-selected={dayProps.isSelected}
+  aria-current={dayProps.isToday ? "date" : undefined}
+  aria-label={locale.formatDate(date)}
+>
+  {dayProps.day}
+</button>;
+```
+
+### 3. Add ARIA roles to your grid
+
+```tsx
+<div role="grid" aria-label={locale.placeholder}>
+  <div role="row">
+    {locale.weekdays.map((wd) => (
+      <div key={wd} role="columnheader">
+        {wd}
+      </div>
+    ))}
+  </div>
+  {calendar.weeks.map((week, i) => (
+    <div key={i} role="row">
+      {/* day cells with role="gridcell" */}
+    </div>
+  ))}
+</div>
+```
+
+See [Building Custom UI](/docs/headless/building-custom-ui) for a complete walkthrough.

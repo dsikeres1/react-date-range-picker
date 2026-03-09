@@ -1,0 +1,50 @@
+---
+sidebar_position: 2
+title: Formatting
+---
+
+# ยูทิลิตี้การจัดรูปแบบ
+
+ฟังก์ชันสำหรับจัดรูปแบบวันที่, เวลา และตัวเลขเพื่อการแสดงผล
+
+```tsx
+import {
+  formatDate,
+  formatDateTime,
+  formatTimeDisplay,
+  padNumber,
+} from "react-date-range-picker-headless";
+```
+
+## formatDate
+
+จัดรูปแบบวันที่ด้วยสตริงรูปแบบที่ปรับแต่งได้
+
+|                |                                                   |
+| -------------- | ------------------------------------------------- |
+| ลายเซ็น        | `formatDate(date: Date, format?: string): string` |
+| รูปแบบเริ่มต้น | `"YYYY.MM.DD"`                                    |
+
+```tsx
+formatDate(new Date(2026, 2, 1)); // "2026.03.01"
+formatDate(new Date(2026, 2, 1), "YYYY-MM-DD"); // "2026-03-01"
+formatDate(new Date(2026, 2, 1), "M/D"); // "3/1"
+```
+
+## formatDateTime
+
+จัดรูปแบบวันและเวลาโดยใช้สตริงรูปแบบที่ปรับแต่งได้
+
+|                |                                                       |
+| -------------- | ----------------------------------------------------- |
+| ลายเซ็น        | `formatDateTime(date: Date, format?: string): string` |
+| รูปแบบเริ่มต้น | `"YYYY.MM.DD HH:mm"`                                  |
+
+```tsx
+formatDateTime(new Date(2026, 2, 1, 14, 30)); // "2026.03.01 14:30"
+formatDateTime(new Date(2026, 2, 1, 14, 30), "YYYY-MM-DD HH:mm:ss"); // "2026-03-01 14:30:00"
+```
+
+## formatTimeDisplay
+
+จัดรูปแบบสตริงแสดงเวลาตาม

@@ -1,0 +1,37 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Bileşik Bileşenler
+
+Tailwind v3 paketi, her bir seçicinin iç yapısı ve render edilmesi üzerinde tam kontrol sağlayan bir Bileşik Bileşen API'si sunar. Tek bir monolitik bileşen yerine, seçiciyi ayrı parçalardan oluşturursunuz.
+
+## Nasıl Çalışır
+
+Her seçici (ör. `DatePicker`), hem basit bir bileşen hem de bileşik parçaların bir ad alanıdır:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+// Basit kullanım — varsayılan düzeni render eder
+<DatePicker value={value} onChange={setValue} />
+
+// Bileşik kullanım — yapı üzerinde tam kontrol
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```

@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind3/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind3/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind3/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind3/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind3/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind3/Customization/CompoundWebFonts.tsx?raw";
+
+# การพิมพ์
+
+แพ็คเกจ Tailwind v3 ใช้คลาส `font-sans` เริ่มต้นของ Tailwind (`ui-sans-serif, system-ui, sans-serif, ...`) เนื่องจาก CSS `font-family` มีการสืบทอดคุณสมบัติ คุณจึงสามารถแทนที่ฟอนต์ของตัวเลือกได้โดยการหุ้มด้วยคอนเทนเนอร์ที่มีสไตล์ `fontFamily` ฟอนต์ของคอนเทนเนอร์จะถูกส่งต่อไปยังองค์ประกอบทั้งหมดของตัวเลือก
+
+## รูปแบบฟอนต์
+
+หุ้มตัวเลือกและตั้งค่า `fontFamily` บนคอนเทนเนอร์เพื่อเปลี่ยนฟอนต์:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## การใช้เว็บฟอนต์ (Noto Sans)
+
+โหลดเว็บฟอนต์ขณะรันไทม์และนำไปใช้ผ่านคอนเทนเนอร์ ตัวอย่างนี้โหลด [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) จาก Google Fonts:
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="การใช้งานจริง">
+ในโปรเจกต์จริง ควรโหลดฟอนต์ผ่านแท็ก `<link>` ใน `<head>` ของ HTML หรือผ่านตัวรวม CSS ของคุณ แทนที่จะแทรกเข้ามาขณะรันไทม์ วิธีการใช้ `useEffect` ที่นี่มีไว้เพื่อการสาธิตเท่านั้น
+</Admonition>
+
+## แกลเลอรีเว็บฟอนต์
+
+เปรียบเทียบเว็บฟอนต์ต่างๆ เพื่อดูว่าการพิมพ์เปลี่ยนแปลงรูปลักษณ์ของตัวเลือกได้อย่างไร ฟอนต์ทั้งหมดด้านล่างรองรับการแสดงผลหลายภาษา (ละติน, CJK, เกาหลี)
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

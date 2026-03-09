@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: Range Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/tailwind4/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/tailwind4/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/tailwind4/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/tailwind4/Customization/CompoundRangeInline.tsx?raw";
+
+# ตัวเลือกช่วงวันที่
+
+สร้าง `DateRangePicker` ที่ปรับแต่งได้อย่างเต็มที่ด้วยคอมโพเนนต์ประกอบ ตัวอย่างนี้รวมทริกเกอร์ที่กำหนดเอง, ไซด์บาร์ค่าที่ตั้งไว้ล่วงหน้า, ตารางปฏิทินคู่ และส่วนท้าย -- ทั้งหมดประกอบจากส่วนต่างๆ
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## อินไลน์พร้อมค่าที่ตั้งไว้ล่วงหน้า
+
+แสดงตัวเลือกช่วงวันที่แบบอินไลน์พร้อมไซด์บาร์ค่าที่ตั้งไว้ล่วงหน้า:
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

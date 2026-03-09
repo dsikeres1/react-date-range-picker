@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+sidebar_label: Props
+---
+
+# Props
+
+| 속성            | 타입                           | 기본값  | 설명                                |
+| --------------- | ------------------------------ | ------- | ----------------------------------- |
+| `value`         | `Date \| null`                 | --      | 선택된 시간 값 (시간 부분만 사용됨) |
+| `onChange`      | `(date: Date \| null) => void` | --      | 값이 변경될 때 호출되는 콜백        |
+| `time`          | `TimeConfig`                   | --      | 시간 패널 설정                      |
+| `locale`        | `Partial<Locale>`              | --      | 커스텀 로케일 설정                  |
+| `displayFormat` | `string`                       | --      | 트리거의 커스텀 표시 형식           |
+| `placeholder`   | `string`                       | --      | 트리거의 플레이스홀더 텍스트        |
+| `open`          | `boolean`                      | --      | 제어되는(Controlled) 열림 상태      |
+| `initialOpen`   | `boolean`                      | `false` | 초기 열림 상태 (비제어)             |
+| `onOpenChange`  | `(open: boolean) => void`      | --      | 열림 상태가 변경될 때 호출되는 콜백 |
+| `required`      | `boolean`                      | `false` | 값 지우기 비활성화                  |
+| `inline`        | `boolean`                      | `false` | 트리거/팝업 없이 인라인으로 렌더링  |
+| `hideFooter`    | `boolean`                      | --      | 액션 푸터 숨기기                    |
+| `name`          | `string`                       | --      | 폼 제출을 위한 숨겨진 input의 name  |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Time display precision. Defaults to "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** 12-hour or 24-hour format. Defaults to "24". */
+  hourFormat?: "12" | "24";
+  /** Minute increment step. Defaults to 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Second increment step. Defaults to 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Height (in px) of each scroll wheel item. Defaults to 32. */
+  itemHeight?: number;
+}
+```

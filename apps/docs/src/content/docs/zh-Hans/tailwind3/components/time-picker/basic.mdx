@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/tailwind3/TimePicker/Basic";
+import BasicSource from "@examples/tailwind3/TimePicker/Basic.tsx?raw";
+import Inline from "@examples/tailwind3/TimePicker/Inline";
+import InlineSource from "@examples/tailwind3/TimePicker/Inline.tsx?raw";
+
+# TimePicker
+
+带有输入触发器和弹出面板的时间选择器。点击输入框可打开带有可滚动时间列的下拉菜单。
+
+## 基本用法
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 内联
+
+在没有触发器或弹窗的情况下内联渲染时间面板。
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

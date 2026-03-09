@@ -1,0 +1,57 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/tailwind3/DateRangeTimePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/tailwind3/DateRangeTimePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/tailwind3/DateRangeTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind3/DateRangeTimePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/tailwind3/DateRangeTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind3/DateRangeTimePicker/FormIntegration.tsx?raw";
+
+# Поведение
+
+## Закрытие при выборе
+
+Когда `shouldCloseOnSelect` включен, выборщик автоматически подтверждает и закрывается при нажатии на пресет.
+
+<Admonition type="info">
+  Для выборщиков с включенным временем `shouldCloseOnSelect` применяется только к нажатиям на
+  пресеты, а не к выбору даты, так как пользователю все еще нужно установить время.
+</Admonition>
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Несколько месяцев
+
+Отображение более двух месяцев по умолчанию рядом друг с другом.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Интеграция с формой
+
+Используйте проп `name` для включения скрытых полей ввода для нативной отправки формы.
+
+<Admonition type="tip">
+  Стилизация кнопки отправки в этом примере является пользовательской — библиотека предоставляет
+  только выборщик дат.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

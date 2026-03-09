@@ -1,0 +1,207 @@
+---
+sidebar_position: 10
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 테마 재정의
+
+Tailwind v3 패키지는 모든 스타일에 구체적인 Tailwind 유틸리티 클래스(예: `sky-500`, `slate-100`)를 사용합니다. 패키지에서 내보낸 테마 객체를 재정의하여 외관을 커스터마이징할 수 있습니다.
+
+## 기본 테마
+
+테마는 내보낸 객체들의 집합으로 정의되며, 각각 컴포넌트 파트를 위한 클래스 이름 문자열을 포함합니다. 다음은 기본 색상 팔레트의 개요입니다:
+
+| 역할        | 라이트 클래스 | 다크 클래스  |
+| ----------- | ------------- | ------------ |
+| 주 색상     | `sky-500`     | `sky-500`    |
+| 주 텍스트   | `sky-500`     | `sky-400`    |
+| 배경        | `white`       | `slate-950`  |
+| 표면 호버   | `slate-100`   | `slate-800`  |
+| 텍스트      | `slate-900`   | `slate-50`   |
+| 흐린 텍스트 | `slate-500`   | `slate-400`  |
+| 테두리      | `slate-200`   | `slate-800`  |
+| 범위 배경   | `sky-50`      | `sky-950/50` |
+| 위험        | `red-500`     | `red-600`    |
+
+## 테마 객체 구조
+
+테마는 여러 개의 기명 내보내기(named exports)로 나뉩니다:
+
+```ts
+import {
+  rootClassNames,
+  triggerClassNames,
+  headerClassNames,
+  gridClassNames,
+  dayClassNames,
+  footerClassNames,
+  contentClassNames,
+  rangeClassNames,
+  dateTimeClassNames,
+  timePanelClassNames,
+} from "react-date-range-picker-tailwind3";
+```
+
+각 객체는 전체 Tailwind 클래스 문자열에 매핑되는 키를 포함합니다. 예를 들어:
+
+```ts
+// dayClassNames
+{
+  day: "flex items-center justify-center w-9 h-9 mx-[1px] rounded-md transition-colors cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 ...",
+  today: "font-bold text-sky-500 dark:text-sky-400",
+  selected: "bg-sky-500 dark:bg-sky-500 text-white font-semibold ...",
+  inRange: "bg-sky-50 dark:bg-sky-950/50 text-slate-900 dark:text-slate-50 rounded-none mx-0 ...",
+  rangeStart: "bg-sky-500 dark:bg-sky-500 text-white rounded-r-none mx-0 ...",
+  rangeEnd: "bg-sky-500 dark:bg-sky-500 text-white rounded-l-none mx-0 ...",
+  // ...
+}
+```
+
+## 컴파운드 컴포넌트로 재정의하기
+
+테마를 커스터마이징하는 가장 직관적인 방법은 컴파운드 컴포넌트 API를 사용하는 것입니다. 각 파트는 `twMerge`를 사용해 기본값과 병합되는 `className` prop을 허용하므로, 충돌하는 유틸리티가 올바르게 해결됩니다.
+
+### 주 색상 변경
+
+선택된 날짜 및 관련 상태에 대해 `sky`를 `violet`으로 교체합니다:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+function VioletPicker() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  return (
+    <DatePicker.Root value={value} onChange={setValue}>
+      <DatePicker.Trigger className="hover:border-violet-500/50 focus-visible:ring-violet-500 focus-visible:border-violet-500" />
+      <DatePicker.Content>
+        <DatePicker.Header>
+          <DatePicker.PrevButton className="focus-visible:ring-violet-500" />
+          <DatePicker.Title />
+          <DatePicker.NextButton className="focus-visible:ring-violet-500" />
+        </DatePicker.Header>
+        <DatePicker.Grid
+          dayClassName="hover:bg-violet-50 dark:hover:bg-violet-950/50 focus-visible:ring-violet-500"
+          dayTodayClassName="text-violet-500 dark:text-violet-400"
+          daySelectedClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayInRangeClassName="bg-violet-50 dark:bg-violet-950/50 hover:bg-violet-100"
+          dayRangeStartClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayRangeEndClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayFocusedClassName="ring-violet-500"
+        />
+        <DatePicker.Footer>
+          <DatePicker.ClearButton />
+          <DatePicker.CancelButton />
+          <DatePicker.ConfirmButton className="bg-violet-500 hover:bg-violet-500/90 focus-visible:ring-violet-500" />
+        </DatePicker.Footer>
+      </DatePicker.Content>
+    </DatePicker.Root>
+  );
+}
+```
+
+### 커스텀 배경
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger className="bg-slate-50 dark:bg-slate-900" />
+  <DatePicker.Content className="bg-slate-50 dark:bg-slate-900">{/* ... */}</DatePicker.Content>
+</DatePicker.Root>
+```
+
+## 커스텀 테마 객체 만들기
+
+앱 전체의 리브랜딩을 위해, 모든 파트에 커스텀 클래스를 적용하는 래퍼(wrapper) 컴포넌트를 만드세요:
+
+```tsx
+// components/MyDatePicker.tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+const myTheme = {
+  trigger: "hover:border-emerald-500/50 focus-visible:ring-emerald-500",
+  dayToday: "text-emerald-500 dark:text-emerald-400",
+  daySelected: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  dayInRange: "bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100",
+  dayRangeStart: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  dayRangeEnd: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  confirmButton: "bg-emerald-500 hover:bg-emerald-500/90 focus-visible:ring-emerald-500",
+  focusRing: "focus-visible:ring-emerald-500",
+};
+
+export function MyDatePicker(props) {
+  return (
+    <DatePicker.Root {...props}>
+      <DatePicker.Trigger className={myTheme.trigger} />
+      <DatePicker.Content>
+        <DatePicker.Header>
+          <DatePicker.PrevButton className={myTheme.focusRing} />
+          <DatePicker.Title />
+          <DatePicker.NextButton className={myTheme.focusRing} />
+        </DatePicker.Header>
+        <DatePicker.Grid
+          dayTodayClassName={myTheme.dayToday}
+          daySelectedClassName={myTheme.daySelected}
+          dayInRangeClassName={myTheme.dayInRange}
+          dayRangeStartClassName={myTheme.dayRangeStart}
+          dayRangeEndClassName={myTheme.dayRangeEnd}
+          dayFocusedClassName={myTheme.focusRing}
+        />
+        <DatePicker.Footer>
+          <DatePicker.ClearButton />
+          <DatePicker.CancelButton />
+          <DatePicker.ConfirmButton className={myTheme.confirmButton} />
+        </DatePicker.Footer>
+      </DatePicker.Content>
+    </DatePicker.Root>
+  );
+}
+```
+
+앱 전체에서 사용하세요:
+
+```tsx
+<MyDatePicker value={date} onChange={setDate} />
+```
+
+## Grid 날짜 클래스 Props
+
+`Grid` 컴포넌트는 날짜 관련 className prop들을 각각의 `Day` 셀로 전달합니다. 사용 가능한 재정의 목록은 다음과 같습니다:
+
+| Prop                      | 기본 클래스 패턴            | 설명                       |
+| ------------------------- | --------------------------- | -------------------------- |
+| `dayClassName`            | 기본 날짜 스타일            | 모든 날짜 셀의 기본 클래스 |
+| `dayTodayClassName`       | `text-sky-500`              | 오늘 표시                  |
+| `daySelectedClassName`    | `bg-sky-500 text-white`     | 선택된 날짜                |
+| `dayDisabledClassName`    | `opacity-50`                | 비활성화된 날짜            |
+| `dayOutsideClassName`     | `text-slate-500/50`         | 이번 달 외의 날짜          |
+| `dayHighlightedClassName` | `after:bg-amber-500`        | 강조 점                    |
+| `dayInRangeClassName`     | `bg-sky-50`                 | 범위 내 날짜               |
+| `dayRangeStartClassName`  | `bg-sky-500 rounded-r-none` | 범위 시작 날짜             |
+| `dayRangeEndClassName`    | `bg-sky-500 rounded-l-none` | 범위 종료 날짜             |
+| `dayRangeSingleClassName` | `bg-sky-500`                | 단일 날짜 범위             |
+| `dayHoverRangeClassName`  | `bg-sky-50/50`              | 호버 미리보기 범위         |
+| `dayHoverTargetClassName` | `bg-sky-100`                | 호버 끝점                  |
+| `dayFocusedClassName`     | `ring-sky-500`              | 키보드 포커스 링           |
+| `dayEmptyClassName`       | `invisible`                 | 빈 셀 자리 표시자          |
+
+## Tailwind 콘텐츠 경로
+
+커스텀 색상 클래스로 재정의할 때, 해당 클래스들이 Tailwind 콘텐츠 경로에 포함되어 있는지 확인하세요. 컴포넌트 파일에 정의된 클래스들은 기본적으로 스캔되지만, 별도의 설정 파일에 정의한 경우 해당 경로도 추가해야 합니다:
+
+```js
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+    // 커스텀 테마 설정이 별도의 파일에 있다면 해당 경로를 추가하세요
+    "./src/config/date-picker-theme.ts",
+  ],
+};
+```
+
+<Admonition type="tip">
+  구체적인 색상 클래스 대신 (shadcn/ui와 같은) 시맨틱 토큰 기반의 테마를 원하신다면, CSS 변수 기반의
+  시맨틱 토큰을 사용하는 [Tailwind v4 패키지](/docs/tailwind4/getting-started) 사용을 고려해 보세요.
+</Admonition>

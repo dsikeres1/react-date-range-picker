@@ -1,0 +1,32 @@
+---
+sidebar_position: 6
+sidebar_label: Time Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundTimePicker from "@examples/tailwind4/Customization/CompoundTimePicker";
+import CompoundTimePickerSource from "@examples/tailwind4/Customization/CompoundTimePicker.tsx?raw";
+import CompoundTimePickerTwelveHour from "@examples/tailwind4/Customization/CompoundTimePickerTwelveHour";
+import CompoundTimePickerTwelveHourSource from "@examples/tailwind4/Customization/CompoundTimePickerTwelveHour.tsx?raw";
+
+# タイムピッカー
+
+`TimePicker`コンパウンドコンポーネントを使用して、カスタムの時間選択UIを構築します。この例では、デフォルトのトリガーをスタイル付きのボタンに置き換えつつ、標準のタイムパネルとフッターは維持しています。
+
+<CodeDemo source={CompoundTimePickerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundTimePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 12時間形式
+
+`time`を使用して12時間形式を設定します。
+
+<CodeDemo source={CompoundTimePickerTwelveHourSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundTimePickerTwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

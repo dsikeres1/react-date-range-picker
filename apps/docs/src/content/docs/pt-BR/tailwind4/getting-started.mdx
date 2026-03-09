@@ -1,0 +1,65 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind4Basic from "@examples/tailwind4/DatePicker/Basic";
+import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
+
+# Primeiros Passos com Tailwind CSS v4
+
+O pacote Tailwind v4 fornece componentes de seletor de data estilizados com classes de utilitário do Tailwind CSS v4 e tokens de design semânticos.
+
+## Instalação
+
+<PackageInstall pkg="react-date-range-picker-tailwind4" />
+
+Nenhuma importação de CSS adicional é necessária. Os componentes usam classes de utilitário do Tailwind diretamente.
+
+## Tailwind Preflight & Reset
+
+Este pacote assume que seu projeto tem o Tailwind CSS Preflight ativado (que é o padrão).
+Se o seu ambiente desativa o Preflight (por exemplo, Docusaurus, alguns Micro Frontends), os estilos dos botões podem quebrar.
+Nesse caso, importe o `reset.css` fornecido para inicializar manualmente os estilos dos botões:
+
+```tsx
+import "react-date-range-picker-tailwind4/reset.css";
+```
+
+## Tokens Semânticos
+
+Os componentes usam variáveis CSS semânticas para a tematização. Defina-as em seu CSS:
+
+```css
+@theme {
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted: oklch(0.96 0.003 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+Esses tokens mapeiam para classes como `bg-popover`, `text-foreground`, `border-border`, etc.
+
+## Guia Rápido
+
+<CodeDemo source={Tailwind4BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Tailwind4Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## O que está incluído
+
+| Componente | Descrição

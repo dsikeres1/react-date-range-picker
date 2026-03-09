@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# การสร้าง UI แบบกำหนดเอง
+
+คู่มือนี้จะแนะนำรูปแบบการสร้าง UI ตัวเลือกวันที่ของคุณเองบน hook แบบ headless
+
+## รูปแบบ
+
+hook แบบ headless ทุกตัวใช้รูปแบบเดียวกัน:
+
+1.  **เรียกใช้ hook** พร้อมกับตัวเลือกของคุณ (`value`, `onChange`, `configuration`)
+2.  **แยกโครงสร้างค่าที่ส่งคืน** เพื่อรับ `state`, ค่าที่คำนวณได้ และ `handlers`
+3.  **แสดงผล markup ของคุณเอง** โดยใช้ค่าที่ส่งคืน
+4.  **เชื่อมต่อการโต้ตอบ** โดยการเรียกใช้ `handlers` ที่ให้มา
+
+hook จะจัดการความซับซ้อนทั้งหมด -- การสร้างปฏิทิน, การคำนวณวันที่, สถานะการเปิด/ปิด, การนำทางด้วยคีย์บอร์ด, ตรรกะของช่วง -- และคุณก็มุ่งเน้นไปที่การนำเสนอเพียงอย่างเดียว
+
+## ตัวอย่าง: ตัวเลือกวันที่แบบกำหนดเอง
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## แนวคิดหลัก
+
+### getDayProps
+
+ฟังก์ชัน `getDayProps` เป็นหัวใจหลักของการแสดงผลปฏิทิน สำหรับแต่ละเซลล์วันที่ ฟังก์ชันจะส่งคืนอ็อบเจกต์ `DayProps` ที่มีแฟล็กแบบ boolean/number 18 ตัวที่อธิบายสถานะของเซลล์:
+
+```tsx
+const dp = getDayProps(day);
+
+// สถานะการเลือก
+dp.isSelected; // วันที่ที่เลือกในปัจจุบัน
+dp.isToday; // วันที่ปัจจุบัน
+
+// สถานะช่วง (สำหรับตัวเลือกช่วง)
+dp.isInRange; // ระหว่างวันที่เริ่มต้นและสิ้นสุด
+dp.isRangeStart; // วันที่แรกของช่วง
+dp.isRangeEnd; // วันที่สุดท้ายของช่วง
+dp.isInHoverRange; // ในช่วงแสดงตัวอย่างเมื่อโฮเวอร์
+dp.isHoverTarget; // วันที่ที่โฮเวอร์อยู่
+dp.isRangeSingle; // ทั้งจุดเริ่มต้นและสิ้นสุดของช่วง (ช่วงวันเดียว)
+
+// ตัวช่วยเชื่อมต่อภาพ
+dp.hasLeftConnection; // เชื่อมต่อกับวันก่อนหน้า (สำหรับพื้นหลังของช่วง)
+dp.hasRightConnection; // เชื่อมต่อกับวันถัดไป
+dp.isConsecutiveRange; // เป็นส่วนหนึ่งของช่วงหลายวัน
+
+// สถานะ
+dp.isDisabled; // ถูกปิดใช้งานโดย minDate/maxDate/isDateUnavailable
+dp.isFocused; // มีโฟกัสจากคีย์บอร์ด
+dp.isOutsideDay; // เป็นของเดือนที่อยู่ติดกัน (เมื่อเปิดใช้งาน showOutsideDays)
+dp.isHighlighted; // อยู่ในอาร์เรย์ highlightDates
+
+// ข้อมูล
+dp.date; // อ็อบเจกต์ Date
+dp.day; // เลขวันที่ของเดือน
+dp.dayOfWeek; // 0-6 (วันอาทิตย์-วันเสาร์)
+```
+
+### Refs สำหรับการคลิกภายนอก
+
+hook จะส่งคืน `containerRef` และ `popupRef` ให้แนบสิ่งเหล่านี้เข้ากับองค์ประกอบ wrapper และ popup ของคุณ -- hook ใช้สิ่งเหล่านี้เพื่อตรวจจับการคลิกภายนอกและปิด popup โดยอัตโนมัติ
+
+### การนำทางด้วยคีย์บอร์ด
+
+handler `handleKeyDown` รองรับปุ่มลูกศร, Enter, Escape และ Tab สำหรับการนำทางด้วยคีย์บอร์ดเต็มรูปแบบ ให้แนบเข้ากับคอนเทนเนอร์ popup
+
+### Locale
+
+สตริงทั้งหมดที่ผู้ใช้เห็นมาจากอ็อบเจกต์ `locale` คุณสามารถปรับแต่งสตริงใดก็ได้โดยส่งตัวเลือก `locale` บางส่วน:
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "ตกลง",
+    cancel: "ย้อนกลับ",
+    placeholder: "เลือกวันที่...",
+  },
+});
+```
+
+## ขั้นตอนถัดไป
+
+- [Hook Reference](/docs/headless/hooks/use-date-picker) -- ตัวเลือกและค่าที่ส่งคืนทั้งหมดสำหรับแต่ละ hook
+- [Contexts](/docs/headless/contexts) -- ใช้ providers สำหรับรูปแบบส่วนประกอบแบบผสม (compound component patterns)
+- [Date Utilities](/docs/headless/date-utilities) -- ฟังก์ชันช่วยเหลือสำหรับการจัดการวันที่

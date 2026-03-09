@@ -1,0 +1,39 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind3/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind3/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind3/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind3/Customization/CompoundColorThemePopup.tsx?raw";
+
+# 색상
+
+Tailwind v3 패키지는 CSS 변수 대신 **하드코딩된 Tailwind 유틸리티 클래스**(예: `bg-sky-500`)를 사용합니다. 색상을 바꾸려면 Compound API를 사용하여 동적으로 요일 클래스 이름을 재정의해야 합니다:
+
+<Admonition type="info">
+  `styled` 패키지(CSS 변수 사용)와 달리, Tailwind v3는 런타임에 색상을 재정의하기 위해 Compound
+  API가 필요합니다. 자세한 내용은 [테마 재정의](/docs/tailwind3/customization/theme-override)를
+  참조하세요.
+</Admonition>
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 팝업 모드
+
+동일한 기술이 팝업 피커에서도 작동합니다:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

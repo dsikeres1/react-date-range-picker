@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind4/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind4/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind4/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind4/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Trình kích hoạt tùy chỉnh
+
+Thay thế nút kích hoạt mặc định bằng phần tử của riêng bạn bằng cách sử dụng render prop `Trigger`. Khi bạn truyền một hàm làm con cho `DatePicker.Trigger`, bạn sẽ nhận được trạng thái và các hàm gọi lại để xây dựng bất kỳ giao diện người dùng trình kích hoạt nào bạn muốn.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render Props của Trình kích hoạt
+
+| Prop           | Kiểu             | Mô tả                                |
+| -------------- | ---------------- | ------------------------------------ |
+| `displayValue` | `string`         | Ngày đã chọn được định dạng          |
+| `placeholder`  | `string`         | Văn bản giữ chỗ                      |
+| `hasValue`     | `boolean`        | Liệu một ngày có được chọn hay không |
+| `isOpen`       | `boolean`        | Liệu popup có đang mở hay không      |
+| `onToggle`     | `() => void`     | Bật/tắt mở/đóng popup                |
+| `onClear`      | `() => void`     | Xóa lựa chọn                         |
+| `locale`       | `Locale`         | Đối tượng locale hiện tại            |
+| `triggerRef`   | `(node) => void` | Hàm gọi lại ref để định vị           |
+
+## Trình kích hoạt cho trình chọn khoảng ngày
+
+Mô hình tương tự cũng hoạt động với `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

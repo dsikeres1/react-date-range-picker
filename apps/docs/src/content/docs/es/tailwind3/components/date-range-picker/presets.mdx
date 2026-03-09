@@ -1,0 +1,20 @@
+---
+sidebar_position: 2
+sidebar_label: With Presets
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import WithPresets from "@examples/tailwind3/DateRangePicker/WithPresets";
+import WithPresetsSource from "@examples/tailwind3/DateRangePicker/WithPresets.tsx?raw";
+
+# Con Presets
+
+Define rangos de fechas preestablecidos para una selección rápida. Cada preset tiene una `label` y un `value` que puede ser un objeto estático o una función que devuelve uno.
+
+<CodeDemo source={WithPresetsSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <WithPresets client:load />
+  </ExampleWrapper>
+</CodeDemo>

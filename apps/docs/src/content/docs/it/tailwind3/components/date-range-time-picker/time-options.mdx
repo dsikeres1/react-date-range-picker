@@ -1,0 +1,36 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import SecondPrecision from "@examples/tailwind3/DateRangeTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/tailwind3/DateRangeTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/tailwind3/DateRangeTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/tailwind3/DateRangeTimePicker/TwelveHour.tsx?raw";
+
+# Opzioni Orario
+
+Configura il comportamento del pannello dell'orario tramite la prop `time`.
+
+## Precisione al Secondo
+
+Mostra la colonna dei secondi per entrambi i pannelli dell'orario di inizio e fine.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Formato 12 Ore
+
+Passa al formato 12 ore con selettore AM/PM per entrambi i pannelli dell'orario di inizio e fine.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

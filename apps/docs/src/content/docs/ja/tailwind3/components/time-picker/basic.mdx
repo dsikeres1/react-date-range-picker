@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/tailwind3/TimePicker/Basic";
+import BasicSource from "@examples/tailwind3/TimePicker/Basic.tsx?raw";
+import Inline from "@examples/tailwind3/TimePicker/Inline";
+import InlineSource from "@examples/tailwind3/TimePicker/Inline.tsx?raw";
+
+# TimePicker
+
+入力トリガーとポップアップパネルを備えたタイムピッカー。入力をクリックすると、スクロール可能な時間列を持つドロップダウンが開きます。
+
+## 基本的な使い方
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## インライン
+
+トリガーやポップアップなしで、時間パネルをインラインでレンダリングします。
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

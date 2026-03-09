@@ -1,0 +1,47 @@
+---
+/**
+ * CodeDemo -- code block (with syntax highlighting) + optional live demo.
+ *
+ * Usage in MDX:
+ *   <CodeDemo source={rawSource}>
+ *     <MyComponent client:load />
+ *   </CodeDemo>
+ */
+import { Code } from "astro-expressive-code/components";
+
+interface Props {
+  source?: string;
+  language?: string;
+  title?: string;
+}
+
+const { source, language = "tsx", title } = Astro.props;
+const cleanSource = source?.replace(/^export default /m, "").trim();
+---
+
+{
+  cleanSource && (
+    <div class="my-4">
+      <Code code={cleanSource} lang={language} title={title} />
+    </div>
+  )
+}
+
+{
+  Astro.slots.has("default") && (
+    <div class="my-4 overflow-visible rounded-lg border border-border shadow-sm">
+      <div class="flex items-center border-b border-border bg-accent px-4 py-2">
+        <div class="flex gap-1.5">
+          <span class="inline-block size-3 rounded-full" style="background: #f25f58" />
+          <span class="inline-block size-3 rounded-full" style="background: #fbbe3c" />
+          <span class="inline-block size-3 rounded-full" style="background: #58cb42" />
+        </div>
+      </div>
+      <div class="bg-background overflow-x-auto rounded-b-lg w-full">
+        <div style="min-width: max-content;">
+          <slot />
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -1,0 +1,37 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# พร็อพ
+
+| พร็อพ                 | ประเภท                                        | ค่าเริ่มต้น | คำอธิบาย                                       |
+| --------------------- | --------------------------------------------- | ----------- | ---------------------------------------------- |
+| `value`               | `Date \| null`                                | --          | ค่าวันที่ที่เลือก                              |
+| `onChange`            | `(date: Date \| null) => void`                | --          | Callback เมื่อค่าเปลี่ยนแปลง                   |
+| `minDate`             | `Date`                                        | --          | วันที่ต่ำสุดที่สามารถเลือกได้                  |
+| `maxDate`             | `Date`                                        | --          | วันที่สูงสุดที่สามารถเลือกได้                  |
+| `locale`              | `Partial<Locale>`                             | --          | การกำหนดค่า locale เอง                         |
+| `initialMonth`        | `Date`                                        | --          | เดือนที่แสดงผลเริ่มต้น                         |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | ขนาดของคอมโพเนนต์                              |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | วันแรกของสัปดาห์                               |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | ทำเครื่องหมายวันที่เป็นปิดใช้งาน               |
+| `displayFormat`       | `string`                                      | --          | รูปแบบการแสดงผลที่กำหนดเอง (เช่น "YYYY/MM/DD") |
+| `open`                | `boolean`                                     | --          | สถานะการเปิดแบบควบคุม                          |
+| `initialOpen`         | `boolean`                                     | --          | สถานะการเปิดเริ่มต้น (ไม่ควบคุม)               |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | Callback เมื่อสถานะการเปิดเปลี่ยนแปลง          |
+| `required`            | `boolean`                                     | `false`     | ปิดการใช้งานการล้างค่า                         |
+| `showOutsideDays`     | `boolean`                                     | `false`     | แสดงวันจากเดือนข้างเคียง                       |
+| `highlightDates`      | `Date[]`                                      | --          | วันที่ที่ต้องการไฮไลท์                         |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | ยืนยันอัตโนมัติเมื่อคลิกวันที่                 |
+| `numberOfMonths`      | `number`                                      | `1`         | จำนวนเดือนที่จะแสดง                            |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | สไตล์การนำทางของหัวเรื่อง                      |
+| `fromYear`            | `number`                                      | --          | ปีเริ่มต้นสำหรับดรอปดาวน์                      |
+| `toYear`              | `number`                                      | --          | ปีสิ้นสุดสำหรับดรอปดาวน์                       |
+| `disablePast`         | `boolean`                                     | `false`     | ปิดการใช้งานวันที่ก่อนวันนี้                   |
+| `disableFuture`       | `boolean`                                     | `false`     | ปิดการใช้งานวันที่หลังวันนี้                   |
+| `inline`              | `boolean`                                     | `false`     | แสดงปฏิทินในบรรทัด (ไม่มีป๊อปอัป)              |
+| `name`                | `string`                                      | --          | ชื่อ input ที่ซ่อนอยู่สำหรับการส่งฟอร์ม        |
+| `placeholder`         | `string`                                      | --          | ข้อความ Placeholder ของทริกเกอร์               |
+| `hideHeader`          | `boolean`                                     | `false`     | ซ่อนส่วนหัวการนำทาง                            |
+| `hideFooter`          | `boolean`                                     | `false`     | ซ่อนส่วนท้ายของการกระทำ                        |

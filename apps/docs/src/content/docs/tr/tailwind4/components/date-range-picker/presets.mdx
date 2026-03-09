@@ -1,0 +1,20 @@
+---
+sidebar_position: 2
+sidebar_label: With Presets
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import WithPresets from "@examples/tailwind4/DateRangePicker/WithPresets";
+import WithPresetsSource from "@examples/tailwind4/DateRangePicker/WithPresets.tsx?raw";
+
+# Hazır Ayarlarla
+
+Hızlı seçim için hazır tarih aralıkları tanımlayın. Her hazır ayarın bir `label`'ı ve statik bir nesne veya bir nesne döndüren bir fonksiyon olabilen bir `value`'su vardır.
+
+<CodeDemo source={WithPresetsSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <WithPresets client:load />
+  </ExampleWrapper>
+</CodeDemo>

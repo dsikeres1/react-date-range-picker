@@ -1,0 +1,55 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Props
+
+| 속성                  | 타입                                          | 기본값      | 설명                                          |
+| --------------------- | --------------------------------------------- | ----------- | --------------------------------------------- |
+| `value`               | `Date \| null`                                | --          | 선택된 날짜-시간 값                           |
+| `onChange`            | `(dateTime: Date \| null) => void`            | --          | 값이 변경될 때 호출되는 콜백                  |
+| `time`                | `TimeConfig`                                  | --          | 시간 패널 설정                                |
+| `minDate`             | `Date`                                        | --          | 선택 가능한 최소 날짜                         |
+| `maxDate`             | `Date`                                        | --          | 선택 가능한 최대 날짜                         |
+| `locale`              | `Partial<Locale>`                             | --          | 커스텀 로케일 설정                            |
+| `initialMonth`        | `Date`                                        | --          | 초기에 표시할 월                              |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | 컴포넌트 크기                                 |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | 한 주의 시작 요일                             |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | 날짜를 비활성화 상태로 표시                   |
+| `displayFormat`       | `string`                                      | --          | 커스텀 표시 형식                              |
+| `open`                | `boolean`                                     | --          | 제어되는(controlled) 열림 상태                |
+| `initialOpen`         | `boolean`                                     | --          | 초기 열림 상태 (비제어)                       |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | 열림 상태가 변경될 때 호출되는 콜백           |
+| `required`            | `boolean`                                     | `false`     | 값 지우기 비활성화                            |
+| `showOutsideDays`     | `boolean`                                     | `false`     | 인접한 월의 날짜 표시                         |
+| `highlightDates`      | `Date[]`                                      | --          | 강조 표시할 날짜 목록                         |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | 프리셋 클릭 시 자동 확인                      |
+| `numberOfMonths`      | `number`                                      | `1`         | 표시할 월의 수                                |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | 캡션 내비게이션 스타일                        |
+| `fromYear`            | `number`                                      | --          | 드롭다운의 시작 연도                          |
+| `toYear`              | `number`                                      | --          | 드롭다운의 종료 연도                          |
+| `disablePast`         | `boolean`                                     | `false`     | 오늘 이전 날짜 비활성화                       |
+| `disableFuture`       | `boolean`                                     | `false`     | 오늘 이후 날짜 비활성화                       |
+| `inline`              | `boolean`                                     | `false`     | 인라인으로 캘린더 표시 (팝업 없음)            |
+| `name`                | `string`                                      | --          | 폼 제출을 위한 숨겨진 인풋(hidden input) 이름 |
+| `placeholder`         | `string`                                      | --          | 트리거의 플레이스홀더 텍스트                  |
+| `hideHeader`          | `boolean`                                     | `false`     | 내비게이션 헤더 숨기기                        |
+| `hideFooter`          | `boolean`                                     | `false`     | 액션 푸터 숨기기                              |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Time display precision. Defaults to "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** 12-hour or 24-hour format. Defaults to "24". */
+  hourFormat?: "12" | "24";
+  /** Minute increment step. Defaults to 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Second increment step. Defaults to 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Height (in px) of each scroll wheel item. Defaults to 32. */
+  itemHeight?: number;
+}
+```

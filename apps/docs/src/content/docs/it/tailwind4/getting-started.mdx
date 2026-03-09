@@ -1,0 +1,118 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind4Basic from "@examples/tailwind4/DatePicker/Basic";
+import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
+
+# Tailwind CSS v4 시작하기
+
+Tailwind v4 패키지는 Tailwind CSS v4 유틸리티 클래스와 시맨틱 디자인 토큰으로 스타일링된 데이트 피커 컴포넌트를 제공합니다.
+
+## 설치
+
+<PackageInstall pkg="react-date-range-picker-tailwind4" />
+
+별도의 CSS 파일을 가져올 필요가 없습니다. 컴포넌트는 Tailwind 유틸리티 클래스를 직접 사용합니다.
+
+## Tailwind Preflight 및 Reset
+
+이 패키지는 프로젝트에 Tailwind CSS Preflight가 활성화되어 있다고 가정합니다 (기본값).
+만약 사용자의 환경(예: Docusaurus, 일부 마이크로 프론트엔드)에서 Preflight를 비활성화하면 버튼 스타일이 깨질 수 있습니다.
+이 경우, 제공된 `reset.css`를 가져와 버튼 스타일을 수동으로 초기화하세요:
+
+```tsx
+import "react-date-range-picker-tailwind4/reset.css";
+```
+
+## 시맨틱 토큰
+
+컴포넌트는 테마 설정을 위해 시맨틱 CSS 변수를 사용합니다. CSS 파일에 다음과 같이 정의하세요:
+
+```css
+@theme {
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted: oklch(0.96 0.003 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+이 토큰들은 `bg-popover`, `text-foreground`, `border-border` 등과 같은 클래스에 매핑됩니다.
+
+## 빠른 시작
+
+<CodeDemo source={Tailwind4BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Tailwind4Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 포함된 컴포넌트
+
+| 컴포넌트              | 설명                                         |
+| --------------------- | -------------------------------------------- |
+| `DatePicker`          | 팝업 캘린더를 이용한 단일 날짜 선택          |
+| `DateRangePicker`     | 듀얼 캘린더와 프리셋을 이용한 날짜 범위 선택 |
+| `DateTimePicker`      | 시간 스크롤 패널을 이용한 날짜 + 시간 선택   |
+| `DateRangeTimePicker` | 날짜 범위 + 시간 선택                        |
+
+모든 컴포넌트는 다음을 지원합니다:
+
+- `value` / `onChange`를 통한 제어 컴포넌트
+- 키보드 탐색
+- `dark:` variant를 통한 다크 모드
+- 4가지 크기: `small`, `medium`, `large`, `x-large`
+- 커스터마이зацию을 위한 Compound Component API
+
+## TypeScript 타입
+
+모든 설정 및 데이터 타입은 패키지에서 다시 내보내므로, headless 패키지를 별도로 설치할 필요가 없습니다:
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind4";
+```
+
+이 타입들은 다음과 같은 경우에 유용합니다:
+
+- **`Locale`** — 커스텀 로케일 설정 (요일 이름, 버튼 라벨, 날짜 포맷 등)
+- **`DatePickerSize`** — `size` prop의 타입 지정 (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — 타임 피커의 정밀도, 형식, 단계 설정
+- **`DateRangePreset`** — `DateRangePicker` / `DateRangeTimePicker`를 위한 프리셋 정의
+- **`CalendarMonth`**, **`DayProps`** — Compound Component를 이용한 커스텀 렌더링
+
+자세한 타입 정의는 [Headless 타입](/docs/headless/types/common-types) 문서를 참고하세요.
+
+## 다음 단계
+
+- [DatePicker](/docs/tailwind4/components/date-picker/basic) — 단일 날짜 선택
+- [DateRangePicker](/docs/tailwind4/components/date-range-picker/basic) — 프리셋을 포함한 날짜 범위 선택
+- [Compound Components](/docs/tailwind4/customization/overview) — 내부 구조 커스터마이징
+- [Semantic Tokens](/docs/tailwind4/customization/semantic-tokens) — 디자인 토큰을 이용한 테마 설정
+- [Dark Mode](/docs/tailwind4/customization/dark-mode) — 다크 모드 지원

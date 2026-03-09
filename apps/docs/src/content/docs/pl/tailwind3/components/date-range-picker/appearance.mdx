@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/tailwind3/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind3/DateRangePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/tailwind3/DateRangePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind3/DateRangePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/tailwind3/DateRangePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind3/DateRangePicker/CaptionDropdown.tsx?raw";
+
+# Wygląd
+
+## Wiele miesięcy
+
+Wyświetlaj więcej niż 2 miesiące obok siebie. Domyślnie `2` dla wyboru zakresu.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Niestandardowa lokalizacja
+
+Użyj `createLocale` z pakietu headless, aby dostosować nazwy miesięcy/dni i ciągi znaków interfejsu użytkownika.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Rozwijane menu w nagłówku
+
+Zmień nawigację przyciskami na rozwijane selektory miesiąca i roku. Przydatne do wybierania dat odległych od bieżącego miesiąca.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

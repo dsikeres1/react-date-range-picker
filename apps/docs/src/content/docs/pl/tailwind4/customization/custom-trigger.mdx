@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind4/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind4/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind4/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind4/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Niestandardowy Wyzwalacz
+
+Zastąp domyślny przycisk wyzwalający własnym elementem, używając render prop `Trigger`. Kiedy przekażesz funkcję jako dziecko do `DatePicker.Trigger`, otrzymasz stan i wywołania zwrotne, aby zbudować dowolny interfejs wyzwalacza.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render Props Wyzwalacza
+
+| Prop           | Typ              | Opis                                               |
+| -------------- | ---------------- | -------------------------------------------------- |
+| `displayValue` | `string`         | Sformatowana wybrana data                          |
+| `placeholder`  | `string`         | Tekst zastępczy                                    |
+| `hasValue`     | `boolean`        | Czy data jest wybrana                              |
+| `isOpen`       | `boolean`        | Czy okno podręczne jest otwarte                    |
+| `onToggle`     | `() => void`     | Przełączanie otwierania/zamykania okna podręcznego |
+| `onClear`      | `() => void`     | Wyczyść zaznaczenie                                |
+| `locale`       | `Locale`         | Aktualny obiekt lokalizacji                        |
+| `triggerRef`   | `(node) => void` | Wywołanie zwrotne ref dla pozycjonowania           |
+
+## Wyzwalacz dla Wyboru Zakresu
+
+Ten sam wzorzec działa z `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

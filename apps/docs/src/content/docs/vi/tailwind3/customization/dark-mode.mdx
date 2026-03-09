@@ -1,0 +1,171 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Chế độ tối
+
+Gói Tailwind v3 bao gồm hỗ trợ chế độ tối đầy đủ bằng cách sử dụng biến thể `dark:` của Tailwind. Mọi phần tử thành phần đều có các lớp chế độ tối rõ ràng.
+
+## Cách hoạt động
+
+Chủ đề Tailwind v3 sử dụng các lớp màu cụ thể với các biến thể `dark:` xuyên suốt. Ví dụ:
+
+```
+bg-white dark:bg-slate-950
+text-slate-900 dark:text-slate-50
+border-slate-200 dark:border-slate-800
+```
+
+Chế độ tối được kích hoạt khi biến thể `dark:` của Tailwind được kích hoạt, điều này phụ thuộc vào chiến lược `darkMode` trong cấu hình Tailwind của bạn.
+
+## Cấu hình Tailwind
+
+### Chiến lược Class (Khuyến khích)
+
+Thiết lập `darkMode: "class"` trong tệp cấu hình Tailwind của bạn. Chế độ tối được kích hoạt khi có một lớp `dark` trên thẻ `<html>` hoặc một phần tử cha:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+};
+```
+
+Chuyển đổi chế độ tối:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+Hoặc áp dụng lớp trên thẻ `<html>`:
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### Chiến lược Selector
+
+Tailwind v3.4+ hỗ trợ `darkMode: "selector"`, cho phép sử dụng `[data-theme="dark"]` hoặc bất kỳ bộ chọn tùy chỉnh nào:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### Chiến lược Media
+
+Thiết lập `darkMode: "media"` (hoặc bỏ qua — đây là mặc định) để tuân theo sở thích của hệ điều hành:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: "media",
+  // ...
+};
+```
+
+Không cần thiết lập thêm. Bộ chọn sẽ tuân theo `prefers-color-scheme`.
+
+## Các cặp màu
+
+Dưới đây là các cặp màu sáng/tối được sử dụng trong bộ chọn:
+
+| Phần tử                     | Sáng                | Tối                          |
+| --------------------------- | ------------------- | ---------------------------- |
+| Nền                         | `bg-white`          | `dark:bg-slate-950`          |
+| Chữ                         | `text-slate-900`    | `dark:text-slate-50`         |
+| Chữ mờ                      | `text-slate-500`    | `dark:text-slate-400`        |
+| Viền                        | `border-slate-200`  | `dark:border-slate-800`      |
+| Nền khi di chuột            | `bg-slate-100`      | `dark:bg-slate-800`          |
+| Chính                       | `bg-sky-500`        | `dark:bg-sky-500`            |
+| Chữ chính                   | `text-sky-500`      | `dark:text-sky-400`          |
+| Nền khoảng (range)          | `bg-sky-50`         | `dark:bg-sky-950/50`         |
+| Khoảng (range) khi di chuột | `bg-sky-50/50`      | `dark:bg-sky-950/30`         |
+| Vòng lấy nét (focus ring)   | `ring-sky-500`      | `ring-sky-500`               |
+| Bù trừ vòng (ring offset)   | `ring-offset-white` | `dark:ring-offset-slate-950` |
+
+## Tích hợp với Docusaurus
+
+Nếu bạn đang sử dụng Docusaurus (sử dụng `data-theme` trên thẻ `<html>`), hãy cấu hình chiến lược selector của Tailwind:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  // ...
+};
+```
+
+Docusaurus thiết lập `<html data-theme="dark">` khi chế độ tối đang hoạt động, và biến thể `dark:` của Tailwind sẽ được kích hoạt trên bộ chọn này.
+
+## Tích hợp với next-themes
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes` thêm/xóa lớp `dark` trên thẻ `<html>`. Với `darkMode: "class"` trong tệp cấu hình Tailwind của bạn, bộ chọn sẽ tự động chuyển đổi.
+
+## Buộc một chế độ cụ thể
+
+Để buộc bộ chọn luôn sử dụng chế độ sáng hoặc tối, hãy bao bọc nó trong một container với lớp thích hợp:
+
+```tsx
+{
+  /* Luôn sáng — không có lớp "dark" ở trên */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Luôn tối */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+Khi sử dụng `darkMode: "class"`, lớp `dark` phải nằm trên một phần tử cha hoặc trên thẻ `<html>`. Bản thân bộ chọn không quản lý việc chuyển đổi chế độ tối.
+</Admonition>

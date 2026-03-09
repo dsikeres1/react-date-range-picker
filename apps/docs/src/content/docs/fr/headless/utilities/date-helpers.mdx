@@ -1,0 +1,230 @@
+---
+sidebar_position: 1
+title: Date Helpers
+---
+
+# Utilitaires de Date
+
+Le paquet headless exporte un ensemble de fonctions d'aide natives pour `Date`. Celles-ci remplacent le besoin de bibliothèques comme dayjs ou date-fns -- la bibliothèque n'a aucune dépendance externe de date.
+
+Toutes les fonctions sont pures (elles retournent de nouveaux objets Date plutôt que de modifier l'entrée).
+
+## Import
+
+```tsx
+import {
+  today,
+  parseDate,
+  startOf,
+  endOf,
+  add,
+  subtract,
+  isSame,
+  isBefore,
+  isAfter,
+  diff,
+  daysInMonth,
+  setYear,
+  setMonth,
+  setDate,
+  setHour,
+  setMinute,
+  setSecond,
+  formatBasic,
+} from "react-date-range-picker-headless";
+```
+
+## Type DateUnit
+
+La plupart des fonctions acceptent un paramètre `DateUnit` :
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```
+
+## Fonctions
+
+### today
+
+Retourne la date/heure actuelle.
+
+```tsx
+const now = today(); // new Date()
+```
+
+### parseDate
+
+Analyse une valeur en un objet Date. Retourne `new Date()` si l'entrée est fausse.
+
+```tsx
+parseDate("2026-03-01"); // Date
+parseDate(1709251200000); // Date à partir du timestamp
+parseDate(existingDate); // Cloner
+parseDate(null); // new Date() (valeur par défaut)
+```
+
+**Signature :** `parseDate(date?: Date | string | number | null): Date`
+
+### startOf
+
+Obtient le début d'une unité de temps.
+
+```tsx
+startOf(date, "day"); // 2026-03-01 00:00:00.000
+startOf(date, "month"); // 2026-03-01 00:00:00.000
+startOf(date, "year"); // 2026-01-01 00:00:00.000
+startOf(date, "week"); // Début de semaine (dimanche par défaut)
+startOf(date, "week", 1); // Début de semaine (lundi)
+```
+
+**Signature :** `startOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### endOf
+
+Obtient la fin d'une unité de temps.
+
+```tsx
+endOf(date, "day"); // 2026-03-01 23:59:59.999
+endOf(date, "month"); // 2026-03-31 23:59:59.999
+endOf(date, "year"); // 2026-12-31 23:59:59.999
+```
+
+**Signature :** `endOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### add
+
+Ajoute une durée à une date.
+
+```tsx
+add(date, 1, "day"); // Demain
+add(date, 3, "month"); // 3 mois plus tard
+add(date, -1, "year"); // il y a 1 an
+add(date, 2, "hour"); // 2 heures plus tard
+```
+
+Gère le débordement des mois (par ex. 31 janv. + 1 mois = 28 fév., pas 3 mars).
+
+**Signature :** `add(date: Date, amount: number, unit: DateUnit): Date`
+
+### subtract
+
+Soustrait une durée d'une date. Équivalent à `add(date, -amount, unit)`.
+
+```tsx
+subtract(date, 7, "day"); // il y a 7 jours
+subtract(date, 1, "month"); // il y a 1 mois
+```
+
+**Signature :** `subtract(date: Date, amount: number, unit: DateUnit): Date`
+
+### isSame
+
+Vérifie si deux dates sont identiques à une unité de précision donnée.
+
+```tsx
+isSame(date1, date2, "day"); // Même jour calendaire ?
+isSame(date1, date2, "month"); // Même mois ?
+isSame(date1, date2, "year"); // Même année ?
+isSame(null, date2, "day"); // false (sécurisé pour les nuls)
+```
+
+**Signature :** `isSame(date1: Date | null | undefined, date2: Date | null | undefined, unit?: DateUnit): boolean`
+
+### isBefore
+
+Vérifie si la première date est antérieure à la seconde à une précision donnée.
+
+```tsx
+isBefore(date1, date2, "day"); // Est-ce que date1 est un jour antérieur ?
+isBefore(date1, date2); // Comparaison à la milliseconde
+```
+
+**Signature :** `isBefore(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### isAfter
+
+Vérifie si la première date est postérieure à la seconde à une précision donnée.
+
+```tsx
+isAfter(date1, date2, "day"); // Est-ce que date1 est un jour postérieur ?
+```
+
+**Signature :** `isAfter(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### diff
+
+Obtient la différence entre deux dates dans une unité donnée.
+
+```tsx
+diff(date1, date2, "day"); // Nombre de jours entre
+diff(date1, date2, "month"); // Nombre de mois entre
+diff(date1, date2, "year"); // Nombre d'années entre
+```
+
+**Signature :** `diff(date1: Date, date2: Date, unit: DateUnit): number`
+
+### daysInMonth
+
+Obtient le nombre de jours dans le mois d'une date.
+
+```tsx
+daysInMonth(new Date(2026, 1)); // 28 (Février 2026)
+daysInMonth(new Date(2026, 0)); // 31 (Janvier 2026)
+```
+
+**Signature :** `daysInMonth(date: Date): number`
+
+### setYear / setMonth / setDate / setHour / setMinute / setSecond
+
+Définit une partie spécifique d'une date, en retournant une nouvelle Date.
+
+```tsx
+setYear(date, 2027); // Changer l'année à 2027
+setMonth(date, 5); // Changer pour Juin (indexé à 0)
+setDate(date, 15); // Changer au 15
+setHour(date, 14); // Changer à 14h
+setMinute(date, 30); // Changer à :30
+setSecond(date, 0); // Changer à :00
+```
+
+`setYear` et `setMonth` gèrent le débordement (par ex. 29 fév. d'une année bissextile, défini sur une année non bissextile, se fixe au 28 fév.).
+
+**Signatures :**
+
+- `setYear(date: Date, year: number): Date`
+- `setMonth(date: Date, month: number): Date`
+- `setDate(date: Date, day: number): Date`
+- `setHour(date: Date, hour: number): Date`
+- `setMinute(date: Date, minute: number): Date`
+- `setSecond(date: Date, second: number): Date`
+
+### formatBasic
+
+Formate une date en utilisant une chaîne de modèle.
+
+```tsx
+formatBasic(date, "YYYY-MM-DD"); // "2026-03-01"
+formatBasic(date, "YYYY/MM/DD HH:mm:ss"); // "2026/03/01 14:30:00"
+formatBasic(date, "M/D"); // "3/1"
+formatBasic(date, "hh:mm A"); // Note : le jeton A n'est pas pris en charge, utiliser la période du hook
+```
+
+**Jetons pris en charge :**
+
+| Jeton  | Sortie                        | Exemple |
+| ------ | ----------------------------- | ------- |
+| `YYYY` | Année à 4 chiffres            | `2026`  |
+| `MM`   | Mois à 2 chiffres             | `03`    |
+| `M`    | Mois (sans remplissage)       | `3`     |
+| `DD`   | Jour à 2 chiffres             | `01`    |
+| `D`    | Jour (sans remplissage)       | `1`     |
+| `HH`   | Heure à 2 chiffres (24h)      | `14`    |
+| `H`    | Heure (24h, sans remplissage) | `14`    |
+| `hh`   | Heure à 2 chiffres (12h)      | `02`    |
+| `h`    | Heure (12h, sans remplissage) | `2`     |
+| `mm`   | Minute à 2 chiffres           | `30`    |
+| `m`    | Minute (sans remplissage)     | `30`    |
+| `ss`   | Seconde à 2 chiffres          | `05`    |
+| `s`    | Seconde (sans remplissage)    | `5`     |
+
+**Signature :** `formatBasic(date: Date, format: string): string`

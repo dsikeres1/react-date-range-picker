@@ -1,0 +1,52 @@
+---
+sidebar_position: 2
+title: Formatting
+---
+
+# 格式化工具
+
+用于格式化日期、时间和数字以供显示的函数。
+
+```tsx
+import {
+  formatDate,
+  formatDateTime,
+  formatTimeDisplay,
+  padNumber,
+} from "react-date-range-picker-headless";
+```
+
+## formatDate
+
+使用可自定义的格式字符串格式化日期。
+
+|          |                                                   |
+| -------- | ------------------------------------------------- |
+| 签名     | `formatDate(date: Date, format?: string): string` |
+| 默认格式 | `"YYYY.MM.DD"`                                    |
+
+```tsx
+formatDate(new Date(2026, 2, 1)); // "2026.03.01"
+formatDate(new Date(2026, 2, 1), "YYYY-MM-DD"); // "2026-03-01"
+formatDate(new Date(2026, 2, 1), "M/D"); // "3/1"
+```
+
+## formatDateTime
+
+使用可自定义的格式字符串格式化日期和时间。
+
+|          |                                                       |
+| -------- | ----------------------------------------------------- |
+| 签名     | `formatDateTime(date: Date, format?: string): string` |
+| 默认格式 | `"YYYY.MM.DD HH:mm"`                                  |
+
+```tsx
+formatDateTime(new Date(2026, 2, 1, 14, 30)); // "2026.03.01 14:30"
+formatDateTime(new Date(2026, 2, 1, 14, 30), "YYYY-MM-DD HH:mm:ss"); // "2026-03-01 14:30:00"
+```
+
+## formatTimeDisplay
+
+根据解析的 `TimeConfig` 格式化时间显示字符串。
+
+| |

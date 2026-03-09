@@ -1,0 +1,149 @@
+---
+sidebar_position: 5
+title: useTimePicker
+---
+
+# useTimePicker
+
+Hook ระดับต่ำสำหรับตัวเลือกเวลาแบบ scroll-wheel จัดการการเลือกชั่วโมง/นาที/วินาทีโดยใช้การเลื่อนพร้อมพฤติกรรมการ snap โดยทั่วไปแล้ว Hook นี้จะใช้ภายใน UI ของแผงเวลา แต่สามารถใช้โดยตรงสำหรับการสร้างตัวเลือกเวลาแบบกำหนดเองได้
+
+## การนำเข้า
+
+```tsx
+import { useTimePicker } from "react-date-range-picker-headless";
+```
+
+## การใช้งาน
+
+```tsx
+import { useState } from "react";
+import { useTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [hour, setHour] = useState(12);
+  const [minute, setMinute] = useState(0);
+
+  const picker = useTimePicker({
+    hour,
+    minute,
+    onHourChange: setHour,
+    onMinuteChange: setMinute,
+    precision: "minute",
+    hourFormat: "24",
+    minuteStep: 5,
+  });
+
+  return (
+    <div style={{ display: "flex", gap: 8 }}>
+      {/* Hour column */}
+      <div
+        ref={picker.hourListRef}
+        onScroll={picker.handleHourScroll}
+        style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+      >
+        {picker.hours.map((h) => (
+          <div
+            key={h}
+            onClick={() => picker.handleHourClick(h)}
+            style={{
+              height: picker.itemHeight,
+              fontWeight: h === hour ? "bold" : "normal",
+            }}
+          >
+            {String(h).padStart(2, "0")}
+          </div>
+        ))}
+      </div>
+
+      {/* Minute column */}
+      {picker.showMinutes && (
+        <div
+          ref={picker.minuteListRef}
+          onScroll={picker.handleMinuteScroll}
+          style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+        >
+          {picker.minutes.map((m) => (
+            <div
+              key={m}
+              onClick={() => picker.handleMinuteClick(m)}
+              style={{
+                height: picker.itemHeight,
+                fontWeight: m === minute ? "bold" : "normal",
+              }}
+            >
+              {String(m).padStart(2, "0")}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Period toggle (12-hour mode) */}
+      {picker.is12Hour && <button onClick={picker.handlePeriodToggle}>{picker.period}</button>}
+    </div>
+  );
+}
+```
+
+## ตัวเลือก
+
+| ตัวเลือก         | ประเภท                         | ค่าเริ่มต้น | คำอธิบาย                                                        |
+| ---------------- | ------------------------------ | ----------- | --------------------------------------------------------------- |
+| `hour`           | `number`                       | --          | **จำเป็น** ชั่วโมงปัจจุบัน โหมด 24 ชม.: 0-23, โหมด 12 ชม.: 1-12 |
+| `minute`         | `number`                       | --          | **จำเป็น** นาทีปัจจุบัน                                         |
+| `second`         | `number`                       | --          | วินาทีปัจจุบัน                                                  |
+| `period`         | `TimePeriod`                   | --          | ช่วงเวลา AM/PM ปัจจุบัน (จำเป็นสำหรับโหมด 12 ชม.)               |
+| `onHourChange`   | `(hour: number) => void`       | --          | **จำเป็น** ตัวจัดการการเปลี่ยนแปลงชั่วโมง                       |
+| `onMinuteChange` | `(minute: number) => void`     | --          | **จำเป็น** ตัวจัดการการเปลี่ยนแปลงนาที                          |
+| `onSecondChange` | `(second: number) => void`     | --          | ตัวจัดการการเปลี่ยนแปลงวินาที                                   |
+| `onPeriodChange` | `(period: TimePeriod) => void` | --          | ตัวจัดการการเปลี่ยนแปลง AM/PM                                   |
+| `precision`      | `TimePrecision`                | `"minute"`  | ความแม่นยำของเวลา: `"hour"`, `"minute"`, หรือ `"second"`        |
+| `hourFormat`     | `HourFormat`                   | `"24"`      | รูปแบบชั่วโมง `"12"` หรือ `"24"`                                |
+| `minuteStep`     | `MinuteStep`                   | `5`         | ขั้นการเพิ่มนาที                                                |
+| `secondStep`     | `SecondStep`                   | `1`         | ขั้นการเพิ่มวินาที                                              |
+| `itemHeight`     | `number`                       | `32`        | ความสูง (เป็น px) ของแต่ละรายการเลื่อน                          |
+
+## ค่าที่ส่งคืน
+
+| ชื่อ                 | ประเภท                              | คำอธิบาย                                                                   |
+| -------------------- | ----------------------------------- | -------------------------------------------------------------------------- |
+| `hours`              | `number[]`                          | อาร์เรย์ของค่าชั่วโมง 24 ชม.: `[0..23]`, 12 ชม.: `[1..12]`                 |
+| `minutes`            | `number[]`                          | อาร์เรย์ของค่านาทีตาม `minuteStep` (เช่น `[0, 5, 10, ...]`)                |
+| `seconds`            | `number[]`                          | อาร์เรย์ของค่าวินาทีตาม `secondStep`                                       |
+| `hourIndex`          | `number`                            | ดัชนีของชั่วโมงปัจจุบันในอาร์เรย์ `hours`                                  |
+| `minuteIndex`        | `number`                            | ดัชนีของนาทีปัจจุบันในอาร์เรย์ `minutes`                                   |
+| `secondIndex`        | `number`                            | ดัชนีของวินาทีปัจจุบันในอาร์เรย์ `seconds`                                 |
+| `showMinutes`        | `boolean`                           | คอลัมน์นาทีควรจะแสดงหรือไม่ (ความแม่นยำคือ `"minute"` หรือ `"second"`)     |
+| `showSeconds`        | `boolean`                           | คอลัมน์วินาทีควรจะแสดงหรือไม่ (ความแม่นยำคือ `"second"`)                   |
+| `is12Hour`           | `boolean`                           | กำลังใช้รูปแบบ 12 ชั่วโมงหรือไม่                                           |
+| `period`             | `TimePeriod`                        | ช่วงเวลา AM/PM ปัจจุบัน                                                    |
+| `handlePeriodToggle` | `() => void`                        | สลับระหว่าง AM และ PM                                                      |
+| `hourListRef`        | `RefObject<HTMLDivElement \| null>` | Ref สำหรับคอนเทนเนอร์เลื่อนชั่วโมง                                         |
+| `minuteListRef`      | `RefObject<HTMLDivElement \| null>` | Ref สำหรับคอนเทนเนอร์เลื่อนนาที                                            |
+| `secondListRef`      | `RefObject<HTMLDivElement \| null>` | Ref สำหรับคอนเทนเนอร์เลื่อนวินาที                                          |
+| `handleHourScroll`   | `() => void`                        | ตัวจัดการการเลื่อนสำหรับคอลัมน์ชั่วโมง -- จะ snap ไปยังรายการที่ใกล้ที่สุด |
+| `handleMinuteScroll` | `() => void`                        | ตัวจัดการการเลื่อนสำหรับคอลัมน์นาที                                        |
+| `handleSecondScroll` | `() => void`                        | ตัวจัดการการเลื่อนสำหรับคอลัมน์วินาที                                      |
+| `handleHourClick`    | `(hour: number) => void`            | เลือกค่าชั่วโมงโดยตรง                                                      |
+| `handleMinuteClick`  | `(minute: number) => void`          | เลือกค่านาทีโดยตรง                                                         |
+| `handleSecondClick`  | `(second: number) => void`          | เลือกค่าวินาทีโดยตรง                                                       |
+| `scrollToValues`     | `() => void`                        | เลื่อนคอลัมน์ทั้งหมดไปยังค่าปัจจุบันโดยใช้โปรแกรม                          |
+| `itemHeight`         | `number`                            | ความสูงของรายการที่แก้ไขแล้ว (px)                                          |
+| `centerIndex`        | `number`                            | ดัชนีของรายการที่มองเห็นตรงกลาง (สำหรับการคำนวณ scroll snap)               |
+
+## พฤติกรรมหลัก
+
+### Scroll Snap
+
+คอนเทนเนอร์เลื่อนใช้พฤติกรรมการ snap: เมื่อผู้ใช้เลื่อนและปล่อย hook จะ snap ไปยังค่าที่ถูกต้องที่ใกล้ที่สุดโดยอัตโนมัติและเรียกใช้ callback การเปลี่ยนแปลงที่สอดคล้องกัน
+
+### โหมด 12 ชั่วโมง
+
+เมื่อ `hourFormat` เป็น `"12"` อาร์เรย์ `hours` จะมีค่าเป็น `[1, 2, ..., 12]` แทนที่จะเป็น `[0, 1, ..., 23]` ค่าที่ส่งคืนของ `period` และ `handlePeriodToggle` จะจัดการสถานะ AM/PM
+
+### ค่า Step
+
+นาทีและวินาทีจะถูกกรองตามค่า step ของตนเอง ตัวอย่างเช่น `minuteStep: 15` จะให้ผลลัพธ์เป็น `[0, 15, 30, 45]`
+
+### scrollToValues
+
+เรียกใช้ `scrollToValues()` หลังจาก mount หรือเมื่อเปลี่ยนค่าโดยใช้โปรแกรมเพื่อให้แน่ใจว่าคอนเทนเนอร์เลื่อนอยู่ในตำแหน่งที่ถูกต้อง

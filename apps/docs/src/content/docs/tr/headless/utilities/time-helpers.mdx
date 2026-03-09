@@ -1,0 +1,71 @@
+---
+sidebar_position: 4
+title: Time Helpers
+---
+
+# Zaman Yardımcıları
+
+Zaman değerleri oluşturma, 12/24 saat formatları arasında dönüştürme, adımlara göre hizalama ve zaman yapılandırmasını çözümleme işlevleri.
+
+```tsx
+import {
+  generateHours,
+  generateHours12,
+  generateMinutes,
+  generateSeconds,
+  adjustMinuteToStep,
+  adjustSecondToStep,
+  to12Hour,
+  to24Hour,
+  resolveTimeConfig,
+} from "react-date-range-picker-headless";
+```
+
+## generateHours
+
+24 saatlik değerlerden oluşan bir dizi oluşturun.
+
+|          |                             |
+| -------- | --------------------------- |
+| İmza     | `generateHours(): number[]` |
+| Döndürür | `[0, 1, 2, ..., 23]`        |
+
+## generateHours12
+
+12 saatlik değerlerden oluşan bir dizi oluşturun.
+
+|          |                               |
+| -------- | ----------------------------- |
+| İmza     | `generateHours12(): number[]` |
+| Döndürür | `[1, 2, 3, ..., 12]`          |
+
+## generateMinutes
+
+Adıma göre filtrelenmiş bir dakika dizisi oluşturun.
+
+|            |                                                      |
+| ---------- | ---------------------------------------------------- |
+| İmza       | `generateMinutes(minuteStep?: MinuteStep): number[]` |
+| Varsayılan | `5`                                                  |
+
+```tsx
+generateMinutes(); // [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
+generateMinutes(15); // [0, 15, 30, 45]
+generateMinutes(1); // [0, 1, 2, ..., 59]
+```
+
+## generateSeconds
+
+Adıma göre filtrelenmiş bir saniye dizisi oluşturun.
+
+|            |                                                      |
+| ---------- | ---------------------------------------------------- |
+| İmza       | `generateSeconds(secondStep?: SecondStep): number[]` |
+| Varsayılan | `1`                                                  |
+
+```tsx
+generateSeconds(); // [0, 1, 2, ..., 59]
+generateSeconds(15); // [0, 15, 30, 45]
+```
+
+## adjust

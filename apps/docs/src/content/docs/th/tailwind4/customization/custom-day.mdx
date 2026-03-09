@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: Custom Day Cell
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/tailwind4/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/tailwind4/Customization/CompoundCustomDay.tsx?raw";
+
+# การปรับแต่งเซลล์วัน
+
+ปรับแต่งการแสดงผลของแต่ละวันโดยใช้ render props `Grid` และ `Day` ซึ่งช่วยให้คุณสามารถเพิ่มตัวบ่งชี้เหตุการณ์, สไตล์ที่กำหนดเอง, หรือเนื้อหาพิเศษอื่นๆ ลงในเซลล์วันแต่ละเซลล์ได้
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Props สำหรับการ Render วัน
+
+| Prop             | Type         | คำอธิบาย                                                    |
+| ---------------- | ------------ | ----------------------------------------------------------- |
+| `date`           | `Date`       | อ็อบเจ็กต์ Date                                             |
+| `day`            | `number`     | วันของเดือน (1-31)                                          |
+| `isToday`        | `boolean`    | ระบุว่าเป็นวันปัจจุบันหรือไม่                               |
+| `isSelected`     | `boolean`    | ระบุว่าวันดังกล่าวถูกเลือกหรือไม่                           |
+| `isDisabled`     | `boolean`    | ระบุว่าวันดังกล่าวถูกปิดใช้งานหรือไม่                       |
+| `isInRange`      | `boolean`    | ระบุว่าวันดังกล่าวอยู่ในช่วงที่เลือกหรือไม่                 |
+| `isRangeStart`   | `boolean`    | ระบุว่าเป็นวันเริ่มต้นของช่วงหรือไม่                        |
+| `isRangeEnd`     | `boolean`    | ระบุว่าเป็นวันสิ้นสุดของช่วงหรือไม่                         |
+| `isInHoverRange` | `boolean`    | ระบุว่าวันดังกล่าวอยู่ในช่วงแสดงตัวอย่างเมื่อโฮเวอร์หรือไม่ |
+| `isHoverTarget`  | `boolean`    | ระบุว่าเป็นเป้าหมายปลายทางของการโฮเวอร์หรือไม่              |
+| `isOutsideDay`   | `boolean`    | ระบุว่าวันดังกล่าวเป็นของเดือนที่อยู่ติดกันหรือไม่          |
+| `isHighlighted`  | `boolean`    | ระบุว่าวันดังกล่าวมีจุดไฮไลท์หรือไม่                        |
+| `isFocused`      | `boolean`    | ระบุว่าวันดังกล่าวได้รับการโฟกัสจากคีย์บอร์ดหรือไม่         |
+| `onClick`        | `() => void` | ตัวจัดการการคลิก                                            |
+| `onMouseEnter`   | `() => void` | ตัวจัดการเมื่อเมาส์เข้าสู่พื้นที่                           |
+| `onMouseLeave`   | `() => void` | ตัวจัดการเมื่อเมาส์ออกจากพื้นที่                            |

@@ -1,0 +1,106 @@
+---
+sidebar_position: 1
+title: Overview
+---
+
+import PackageInstall from "@/components/PackageInstall.astro";
+
+# Headless
+
+Headless paket (`react-date-range-picker-headless`) stilsiz hook'lar ve context provider'lar sağlar. Tüm durum yönetimi, takvim mantığı, klavye navigasyonu ve erişilebilirlik özelliklerini içerir -- ancak sıfır CSS, sıfır işaretleme dayatması sunar.
+
+Kendi kullanıcı arayüzünüzü siz getirirsiniz.
+
+## Kurulum
+
+<PackageInstall pkg="react-date-range-picker-headless" />
+
+## Headless Ne Zaman Kullanılır?
+
+- Kendi bileşen kütüphanesine sahip bir tasarım sisteminiz varsa
+- Her öğe üzerinde piksel düzeyinde mükemmel kontrol istiyorsanız
+- Belirli bir kullanım durumu için özel bir tarih seçici oluşturuyorsanız
+- Stilli paketler tarafından kapsanmayan bir CSS çatısı ile entegre olmak istiyorsanız
+
+Kullanıma hazır stilli bileşenler istiyorsanız, bunun yerine [Styled](/docs/styled/getting-started), [Tailwind v4](/docs/tailwind4/getting-started) veya [Tailwind v3](/docs/tailwind3/getting-started) belgelerine bakın.
+
+## Nasıl Çalışır?
+
+1. Kullanım durumunuza göre bir hook seçin
+2. Seçenekleri (`value`, `onChange`, `config`) geçin
+3. Durum (state) ve işleyicileri (handler) geri alın
+4. Geri dönen değerleri kullanarak kendi kullanıcı arayüzünüzü oluşturun
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  const {
+    isOpen,
+    calendar,
+    getDayProps,
+    displayValue,
+    handleToggle,
+    handleDateClick,
+    handleConfirm,
+    handlePrevMonth,
+    handleNextMonth,
+    locale,
+  } = useDatePicker({ value, onChange: setValue });
+
+  return (
+    <div>
+      <button onClick={handleToggle}>{displayValue || locale.placeholder}</button>
+      {isOpen && (
+        <div>
+          <div>
+            <button onClick={handlePrevMonth}>{locale.prevMonth}</button>
+            <span>{locale.formatMonthYear(calendar.month)}</span>
+            <button onClick={handleNextMonth}>{locale.nextMonth}</button>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}>
+            {calendar.weeks.flat().map((day, i) => {
+              if (!day) return <span key={i} />;
+              const props = getDayProps(day);
+              return (
+                <button
+                  key={i}
+                  onClick={() => handleDateClick(day)}
+                  style={{
+                    background: props.isSelected ? "#0ea5e9" : "transparent",
+                    color: props.isDisabled ? "#ccc" : props.isToday ? "#0ea5e9" : "inherit",
+                  }}
+                >
+                  {props.day}
+                </button>
+              );
+            })}
+          </div>
+          <button onClick={handleConfirm}>{locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Mevcut Hook'lar
+
+| Hook                                                                         | Kullanım Alanı                            |
+| ---------------------------------------------------------------------------- | ----------------------------------------- |
+| [`useDatePicker`](/docs/headless/hooks/use-date-picker)                      | Tek tarih seçimi                          |
+| [`useDateRangePicker`](/docs/headless/hooks/use-date-range-picker)           | Çift takvimli tarih aralığı seçimi        |
+| [`useDateTimePicker`](/docs/headless/hooks/use-date-time-picker)             | Tarih + saat seçimi                       |
+| [`useDateRangeTimePicker`](/docs/headless/hooks/use-date-range-time-picker)  | Tarih aralığı + saat seçimi               |
+| [`useTimePicker`](/docs/headless/hooks/use-time-picker)                      | Yalnızca saat için kaydırma tekerleği     |
+| [`useStandaloneTimePicker`](/docs/headless/hooks/use-standalone-time-picker) | Açma/kapama davranışına sahip saat seçici |
+
+## Sonraki Adımlar
+
+- [Building Custom UI](/docs/headless/building-custom-ui) -- Headless deseninin tam anlatımı
+- [Hooks Reference](/docs/headless/hooks/use-date-picker) -- Ayrıntılı hook dokümantasyonu
+- [Contexts](/docs/headless/contexts) -- Bileşik bileşenler için provider deseni
+- [Date Utilities](/docs/headless/date-utilities) -- Headless'ten dışa aktarılan yardımcı fonksiyonlar

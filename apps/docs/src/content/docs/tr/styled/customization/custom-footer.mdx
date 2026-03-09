@@ -1,0 +1,79 @@
+---
+sidebar_position: 4
+sidebar_label: "Custom Footer"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/styled/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/styled/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/styled/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/styled/Customization/CompoundNoFooter.tsx?raw";
+
+# Özel Altbilgi
+
+Kendi düğmeleriniz ve düzeninizle tamamen özel bir altbilgi oluşturun veya minimal bir seçici için bölümleri tamamen kaldırın.
+
+## Yeniden Düzenlenmiş Altbilgi
+
+Altbilgi düğmelerini yeniden düzenleyin veya `TodayButton` gibi yenilerini ekleyin. `DateTimePicker` bileşik bileşeni, zaman seçimi için `TimePanel` içeren bir `TimeSection` içerir ve `Footer`, eylem düğmeleri için bir kapsayıcı görevi görür.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+Ayrıca yerleşik eylem düğmelerini tamamen atlayabilir ve kendi öğelerinizi `Footer` içinde kullanabilirsiniz:
+
+```tsx
+<DatePicker.Footer>
+  <button onClick={() => setValue(new Date())}>Bugünü Ayarla</button>
+  <button onClick={() => setValue(null)}>Temizle</button>
+</DatePicker.Footer>
+```
+
+## Minimal Düzen
+
+İhtiyaç duymadığınız bölümleri atlayın. Örneğin, altbilgisi veya tetikleyicisi olmayan, başlıksız bir satır içi takvim:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+Veya altbilgisiz bir seçici:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Özel Sınıf Adları Ekleme
+
+Her bir bileşen parçası, varsayılan stillendirilmiş CSS sınıflarıyla birleşen bir `className` prop'u kabul eder:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} className="my-picker">
+  <DatePicker.Trigger className="my-trigger" />
+  <DatePicker.Content className="my-content">
+    <DatePicker.Header className="my-header">
+      <DatePicker.PrevButton className="my-nav" />
+      <DatePicker.Title className="my-title" />
+      <DatePicker.NextButton className="my-nav" />
+    </DatePicker.Header>
+    <DatePicker.Grid className="my-grid" />
+  </DatePicker.Content>
+</DatePicker.Root>
+```

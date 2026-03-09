@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/styled/DateRangeTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangeTimePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/styled/DateRangeTimePicker/CustomLocale";
+import CustomLocaleSource from "@examples/styled/DateRangeTimePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/styled/DateRangeTimePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/styled/DateRangeTimePicker/CaptionDropdown.tsx?raw";
+
+# Görünüm
+
+## Birden Fazla Ay
+
+Yan yana 2'den fazla ay görüntüleyin. Aralık seçiciler için varsayılan değer `2`'dir.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Özel Yerel Ayar
+
+Ay/gün adlarını ve kullanıcı arayüzü metinlerini özelleştirmek için headless paketindeki `createLocale` fonksiyonunu kullanın.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Başlık Açılır Menüsü
+
+Ay ve yıl için düğme navigasyonundan açılır menü seçicilere geçin. Mevcut aydan uzak tarihler seçmek için kullanışlıdır.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

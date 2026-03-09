@@ -1,0 +1,90 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import StyledBasic from "@examples/styled/DatePicker/Basic";
+import StyledBasicSource from "@examples/styled/DatePicker/Basic.tsx?raw";
+
+# Styled ile Başlarken
+
+Styled paketi, yerleşik CSS ile önceden stillendirilmiş tarih seçici bileşenleri sunar. Herhangi bir CSS çatısı gerektirmez.
+
+## Kurulum
+
+<PackageInstall pkg="react-date-range-picker-styled" />
+
+Kurulumdan sonra, CSS'i uygulama giriş noktanızda içe aktarın:
+
+```tsx
+import "react-date-range-picker-styled/styles.css";
+```
+
+## Hızlı Başlangıç
+
+<CodeDemo source={StyledBasicSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <StyledBasic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Neler Dahil
+
+| Bileşen               | Açıklama                                              |
+| --------------------- | ----------------------------------------------------- |
+| `DatePicker`          | Açılır takvim ile tek tarih seçimi                    |
+| `DateRangePicker`     | Çift takvim ve hazır ayarlar ile tarih aralığı seçimi |
+| `DateTimePicker`      | Zaman kaydırma paneli ile tarih + saat seçimi         |
+| `DateRangeTimePicker` | Tarih aralığı + saat seçimi                           |
+
+Tüm bileşenler şunları destekler:
+
+- `value` / `onChange` ile kontrollü değer
+- Klavye ile gezinme
+- CSS değişkenleri aracılığıyla karanlık mod
+- 4 boyut: `small`, `medium`, `large`, `x-large`
+- Özelleştirme için Bileşik Bileşen API'si
+
+## TypeScript Tipleri
+
+Tüm yapılandırma ve veri tipleri paketten yeniden dışa aktarılır — headless paketini ayrıca yüklemenize gerek yoktur:
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-styled";
+```
+
+Bu tipler şu durumlar için kullanışlıdır:
+
+- **`Locale`** — Özel yerel ayar geçersiz kılmaları (hafta günü adları, düğme etiketleri, tarih biçimlendirme)
+- **`DatePickerSize`** — `size` prop'unu tiplemek (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — Saat seçicinin hassasiyetini, biçimini ve adımlarını yapılandırma
+- **`DateRangePreset`** — `DateRangePicker` / `DateRangeTimePicker` için hazır ayarları tanımlama
+- **`CalendarMonth`**, **`DayProps`** — Bileşik Bileşenler ile özel render etme
+
+Ayrıntılı tip tanımları için [Headless Tipleri](/docs/headless/types/common-types) bölümüne bakın.
+
+## Sonraki Adımlar
+
+- [DatePicker](/docs/styled/components/date-picker/basic) — Tek tarih seçimi
+- [DateRangePicker](/docs/styled/components/date-range-picker/basic) — Hazır ayarlarla tarih aralığı seçimi
+- [Compound Components](/docs/styled/customization/overview) — Dahili yapıyı özelleştirme
+- [CSS Variables](/docs/styled/customization/css-variables) — CSS değişkenleriyle tema oluşturma
+- [Dark Mode](/docs/styled/customization/dark-mode) — Karanlık tema desteği

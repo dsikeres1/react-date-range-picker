@@ -1,0 +1,37 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Props
+
+| 属性                  | 类型                                          | 默认值      | 描述                                 |
+| --------------------- | --------------------------------------------- | ----------- | ------------------------------------ |
+| `value`               | `Date \| null`                                | --          | 选定的日期值                         |
+| `onChange`            | `(date: Date \| null) => void`                | --          | 值更改时的回调                       |
+| `minDate`             | `Date`                                        | --          | 最小可选日期                         |
+| `maxDate`             | `Date`                                        | --          | 最大可选日期                         |
+| `locale`              | `Partial<Locale>`                             | --          | 自定义区域设置                       |
+| `initialMonth`        | `Date`                                        | --          | 初始显示的月份                       |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | 组件尺寸                             |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | 每周的第一天                         |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | 将日期标记为禁用                     |
+| `displayFormat`       | `string`                                      | --          | 自定义显示格式 (例如 `"YYYY/MM/DD"`) |
+| `open`                | `boolean`                                     | --          | 受控的打开状态                       |
+| `initialOpen`         | `boolean`                                     | --          | 初始打开状态 (不受控)                |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | 打开状态更改时的回调                 |
+| `required`            | `boolean`                                     | `false`     | 禁止清除值                           |
+| `showOutsideDays`     | `boolean`                                     | `false`     | 显示相邻月份的日期                   |
+| `highlightDates`      | `Date[]`                                      | --          | 要高亮的日期                         |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | 点击日期时自动确认                   |
+| `numberOfMonths`      | `number`                                      | `1`         | 要显示的月份数                       |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | 标题导航样式                         |
+| `fromYear`            | `number`                                      | --          | 下拉菜单的起始年份                   |
+| `toYear`              | `number`                                      | --          | 下拉菜单的结束年份                   |
+| `disablePast`         | `boolean`                                     | `false`     | 禁用今天之前的日期                   |
+| `disableFuture`       | `boolean`                                     | `false`     | 禁用今天之后的日期                   |
+| `inline`              | `boolean`                                     | `false`     | 内联显示日历 (无弹出窗口)            |
+| `name`                | `string`                                      | --          | 用于表单提交的隐藏输入框名称         |
+| `placeholder`         | `string`                                      | --          | 触发器占位文本                       |
+| `hideHeader`          | `boolean`                                     | `false`     | 隐藏导航头部                         |
+| `hideFooter`          | `boolean`                                     | `false`     | 隐藏操作页脚                         |

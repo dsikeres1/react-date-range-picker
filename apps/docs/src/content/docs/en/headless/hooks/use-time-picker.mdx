@@ -1,0 +1,149 @@
+---
+sidebar_position: 5
+title: useTimePicker
+---
+
+# useTimePicker
+
+Low-level hook for the scroll-wheel time picker. Manages scroll-based hour/minute/second selection with snap behavior. This hook is typically used internally by the time panel UI, but can be used directly for custom time picker implementations.
+
+## Import
+
+```tsx
+import { useTimePicker } from "react-date-range-picker-headless";
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { useTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [hour, setHour] = useState(12);
+  const [minute, setMinute] = useState(0);
+
+  const picker = useTimePicker({
+    hour,
+    minute,
+    onHourChange: setHour,
+    onMinuteChange: setMinute,
+    precision: "minute",
+    hourFormat: "24",
+    minuteStep: 5,
+  });
+
+  return (
+    <div style={{ display: "flex", gap: 8 }}>
+      {/* Hour column */}
+      <div
+        ref={picker.hourListRef}
+        onScroll={picker.handleHourScroll}
+        style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+      >
+        {picker.hours.map((h) => (
+          <div
+            key={h}
+            onClick={() => picker.handleHourClick(h)}
+            style={{
+              height: picker.itemHeight,
+              fontWeight: h === hour ? "bold" : "normal",
+            }}
+          >
+            {String(h).padStart(2, "0")}
+          </div>
+        ))}
+      </div>
+
+      {/* Minute column */}
+      {picker.showMinutes && (
+        <div
+          ref={picker.minuteListRef}
+          onScroll={picker.handleMinuteScroll}
+          style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+        >
+          {picker.minutes.map((m) => (
+            <div
+              key={m}
+              onClick={() => picker.handleMinuteClick(m)}
+              style={{
+                height: picker.itemHeight,
+                fontWeight: m === minute ? "bold" : "normal",
+              }}
+            >
+              {String(m).padStart(2, "0")}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Period toggle (12-hour mode) */}
+      {picker.is12Hour && <button onClick={picker.handlePeriodToggle}>{picker.period}</button>}
+    </div>
+  );
+}
+```
+
+## Options
+
+| Option           | Type                           | Default    | Description                                                 |
+| ---------------- | ------------------------------ | ---------- | ----------------------------------------------------------- |
+| `hour`           | `number`                       | --         | **Required.** Current hour. 24h mode: 0-23, 12h mode: 1-12. |
+| `minute`         | `number`                       | --         | **Required.** Current minute.                               |
+| `second`         | `number`                       | --         | Current second.                                             |
+| `period`         | `TimePeriod`                   | --         | Current AM/PM period (required for 12h mode).               |
+| `onHourChange`   | `(hour: number) => void`       | --         | **Required.** Hour change handler.                          |
+| `onMinuteChange` | `(minute: number) => void`     | --         | **Required.** Minute change handler.                        |
+| `onSecondChange` | `(second: number) => void`     | --         | Second change handler.                                      |
+| `onPeriodChange` | `(period: TimePeriod) => void` | --         | AM/PM change handler.                                       |
+| `precision`      | `TimePrecision`                | `"minute"` | Time precision: `"hour"`, `"minute"`, or `"second"`.        |
+| `hourFormat`     | `HourFormat`                   | `"24"`     | `"12"` or `"24"` hour format.                               |
+| `minuteStep`     | `MinuteStep`                   | `5`        | Minute increment step.                                      |
+| `secondStep`     | `SecondStep`                   | `1`        | Second increment step.                                      |
+| `itemHeight`     | `number`                       | `32`       | Height (in px) of each scroll item.                         |
+
+## Return Values
+
+| Name                 | Type                                | Description                                                                    |
+| -------------------- | ----------------------------------- | ------------------------------------------------------------------------------ |
+| `hours`              | `number[]`                          | Array of hour values. 24h: `[0..23]`, 12h: `[1..12]`.                          |
+| `minutes`            | `number[]`                          | Array of minute values based on `minuteStep` (e.g. `[0, 5, 10, ...]`).         |
+| `seconds`            | `number[]`                          | Array of second values based on `secondStep`.                                  |
+| `hourIndex`          | `number`                            | Index of current hour in the `hours` array.                                    |
+| `minuteIndex`        | `number`                            | Index of current minute in the `minutes` array.                                |
+| `secondIndex`        | `number`                            | Index of current second in the `seconds` array.                                |
+| `showMinutes`        | `boolean`                           | Whether minute column should be shown (precision is `"minute"` or `"second"`). |
+| `showSeconds`        | `boolean`                           | Whether second column should be shown (precision is `"second"`).               |
+| `is12Hour`           | `boolean`                           | Whether using 12-hour format.                                                  |
+| `period`             | `TimePeriod`                        | Current AM/PM period.                                                          |
+| `handlePeriodToggle` | `() => void`                        | Toggle between AM and PM.                                                      |
+| `hourListRef`        | `RefObject<HTMLDivElement \| null>` | Ref for the hour scroll container.                                             |
+| `minuteListRef`      | `RefObject<HTMLDivElement \| null>` | Ref for the minute scroll container.                                           |
+| `secondListRef`      | `RefObject<HTMLDivElement \| null>` | Ref for the second scroll container.                                           |
+| `handleHourScroll`   | `() => void`                        | Scroll handler for hour column -- snaps to nearest item.                       |
+| `handleMinuteScroll` | `() => void`                        | Scroll handler for minute column.                                              |
+| `handleSecondScroll` | `() => void`                        | Scroll handler for second column.                                              |
+| `handleHourClick`    | `(hour: number) => void`            | Directly select an hour value.                                                 |
+| `handleMinuteClick`  | `(minute: number) => void`          | Directly select a minute value.                                                |
+| `handleSecondClick`  | `(second: number) => void`          | Directly select a second value.                                                |
+| `scrollToValues`     | `() => void`                        | Programmatically scroll all columns to their current values.                   |
+| `itemHeight`         | `number`                            | The resolved item height (px).                                                 |
+| `centerIndex`        | `number`                            | Index of the center visible item (for scroll snap calculations).               |
+
+## Key Behaviors
+
+### Scroll Snap
+
+The scroll containers use snap behavior: when the user scrolls and releases, the hook automatically snaps to the nearest valid value and fires the corresponding change callback.
+
+### 12-Hour Mode
+
+When `hourFormat` is `"12"`, the `hours` array contains `[1, 2, ..., 12]` instead of `[0, 1, ..., 23]`. The `period` and `handlePeriodToggle` return values manage AM/PM state.
+
+### Step Values
+
+Minutes and seconds are filtered by their respective step values. For example, `minuteStep: 15` produces `[0, 15, 30, 45]`.
+
+### scrollToValues
+
+Call `scrollToValues()` after mount or when programmatically changing values to ensure the scroll containers are positioned correctly.

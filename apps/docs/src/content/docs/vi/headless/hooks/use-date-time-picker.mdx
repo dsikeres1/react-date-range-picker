@@ -1,0 +1,198 @@
+---
+sidebar_position: 3
+title: useDateTimePicker
+---
+
+# useDateTimePicker
+
+Hook để chọn ngày và giờ kết hợp. Mở rộng `useDatePicker` với trạng thái thời gian (giờ, phút, giây, buổi) và một bộ chọn thời gian lồng nhau.
+
+## Import
+
+```tsx
+import { useDateTimePicker } from "react-date-range-picker-headless";
+```
+
+## Cách sử dụng
+
+```tsx
+import { useState } from "react";
+import { useDateTimePicker } from "react-date-range-picker-headless";
+
+function MyDateTimePicker() {
+  const [dateTime, setDateTime] = useState<Date | null>(null);
+
+  const picker = useDateTimePicker({
+    value: dateTime,
+    onChange: setDateTime,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 5 },
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.dateTimePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Lịch (giống như useDatePicker) */}
+          <div>
+            <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+            <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+            <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+          </div>
+          {/* ...lưới lịch... */}
+
+          {/* Hiển thị thời gian */}
+          <div>
+            <span>Time: {picker.timeDisplayValue}</span>
+          </div>
+
+          {/* Điều khiển thời gian */}
+          <div>
+            <input
+              type="number"
+              value={picker.tempHour}
+              onChange={(e) => picker.handleHourChange(Number(e.target.value))}
+            />
+            <span>:</span>
+            <input
+              type="number"
+              value={picker.tempMinute}
+              onChange={(e) => picker.handleMinuteChange(Number(e.target.value))}
+            />
+          </div>
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Tùy chọn
+
+| Tùy chọn              | Kiểu                               | Mặc định                                                                  | Mô tả                                                                                                              |
+| --------------------- | ---------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `value`               | `Date \| null`                     | --                                                                        | **Bắt buộc.** Giá trị ngày-giờ hiện tại.                                                                           |
+| `onChange`            | `(dateTime: Date \| null) => void` | --                                                                        | **Bắt buộc.** Được gọi khi ngày-giờ thay đổi.                                                                      |
+| `time`                | `TimeConfig`                       | `{ precision: "minute", hourFormat: "24", minuteStep: 5, secondStep: 1 }` | Cấu hình bộ chọn thời gian.                                                                                        |
+| `minDate`             | `Date`                             | --                                                                        | Ngày có thể chọn sớm nhất.                                                                                         |
+| `maxDate`             | `Date`                             | --                                                                        | Ngày có thể chọn muộn nhất.                                                                                        |
+| `locale`              | `Partial<Locale>`                  | `DEFAULT_LOCALE`                                                          | Ghi đè các chuỗi bản địa hóa.                                                                                      |
+| `initialMonth`        | `Date`                             | --                                                                        | Tháng ban đầu để hiển thị.                                                                                         |
+| `size`                | `DatePickerSize`                   | --                                                                        | Truyền qua cho UI.                                                                                                 |
+| `weekStartsOn`        | `WeekDay`                          | `"sunday"`                                                                | Ngày đầu tiên của tuần.                                                                                            |
+| `isDateUnavailable`   | `(date: Date) => boolean`          | --                                                                        | Hàm tùy chỉnh để vô hiệu hóa các ngày cụ thể.                                                                      |
+| `displayFormat`       | `string`                           | --                                                                        | Chuỗi định dạng tùy chỉnh cho giá trị hiển thị.                                                                    |
+| `open`                | `boolean`                          | --                                                                        | Trạng thái mở được kiểm soát.                                                                                      |
+| `initialOpen`         | `boolean`                          | `false`                                                                   | Trạng thái mở ban đầu.                                                                                             |
+| `onOpenChange`        | `(open: boolean) => void`          | --                                                                        | Callback khi trạng thái mở thay đổi.                                                                               |
+| `required`            | `boolean`                          | `false`                                                                   | Khi là true, `handleClear` không làm gì cả.                                                                        |
+| `today`               | `Date`                             | `new Date()`                                                              | Ghi đè ngày hôm nay.                                                                                               |
+| `onMonthChange`       | `(month: Date) => void`            | --                                                                        | Callback khi tháng thay đổi.                                                                                       |
+| `disablePast`         | `boolean`                          | `false`                                                                   | Vô hiệu hóa các ngày trong quá khứ.                                                                                |
+| `disableFuture`       | `boolean`                          | `false`                                                                   | Vô hiệu hóa các ngày trong tương lai.                                                                              |
+| `showOutsideDays`     | `boolean`                          | `false`                                                                   | Hiển thị các ngày của tháng liền kề.                                                                               |
+| `highlightDates`      | `Date[]`                           | --                                                                        | Các ngày cần làm nổi bật.                                                                                          |
+| `shouldCloseOnSelect` | `boolean`                          | `false`                                                                   | Đối với bộ chọn ngày-giờ, chỉ áp dụng cho các lần nhấp vào cài đặt trước, không áp dụng cho các lần nhấp vào ngày. |
+| `numberOfMonths`      | `number`                           | `1`                                                                       | Số lượng tháng lịch.                                                                                               |
+| `captionLayout`       | `CaptionLayout`                    | `"buttons"`                                                               | Chế độ bố cục tiêu đề.                                                                                             |
+| `fromYear`            | `number`                           | current year - 100                                                        | Năm bắt đầu cho danh sách thả xuống.                                                                               |
+| `toYear`              | `number`                           | current year + 10                                                         | Năm kết thúc cho danh sách thả xuống.                                                                              |
+
+## Giá trị trả về
+
+### Trạng thái Ngày
+
+| Tên            | Kiểu           | Mô tả                                     |
+| -------------- | -------------- | ----------------------------------------- |
+| `isOpen`       | `boolean`      | Popup có đang mở hay không.               |
+| `tempDate`     | `Date \| null` | Ngày được chọn tạm thời.                  |
+| `currentMonth` | `Date`         | Tháng đang được hiển thị.                 |
+| `locale`       | `Locale`       | Đối tượng bản địa hóa đã được giải quyết. |
+
+### Trạng thái Thời gian
+
+| Tên                | Kiểu         | Mô tả                                                |
+| ------------------ | ------------ | ---------------------------------------------------- |
+| `isTimePickerOpen` | `boolean`    | Bảng phụ của bộ chọn thời gian có đang mở hay không. |
+| `tempHour`         | `number`     | Giá trị giờ tạm thời hiện tại.                       |
+| `tempMinute`       | `number`     | Giá trị phút tạm thời hiện tại.                      |
+| `tempSecond`       | `number`     | Giá trị giây tạm thời hiện tại.                      |
+| `tempPeriod`       | `TimePeriod` | Buổi AM/PM hiện tại (`"AM"` hoặc `"PM"`).            |
+
+### Hành động Ngày
+
+| Tên               | Kiểu                   | Mô tả                        |
+| ----------------- | ---------------------- | ---------------------------- |
+| `handleDateClick` | `(date: Date) => void` | Xử lý nhấp vào ô ngày.       |
+| `handlePrevMonth` | `() => void`           | Điều hướng đến tháng trước.  |
+| `handleNextMonth` | `() => void`           | Điều hướng đến tháng sau.    |
+| `handleOpen`      | `() => void`           | Mở popup.                    |
+| `handleClose`     | `() => void`           | Đóng popup.                  |
+| `handleToggle`    | `() => void`           | Chuyển đổi trạng thái popup. |
+| `handleConfirm`   | `() => void`           | Xác nhận ngày + giờ và đóng. |
+| `handleCancel`    | `() => void`           | Hủy và hoàn tác.             |
+| `handleClear`     | `() => void`           | Xóa giá trị.                 |
+| `handleGoToToday` | `() => void`           | Điều hướng đến hôm nay.      |
+
+### Hành động Thời gian
+
+| Tên                       | Kiểu                           | Mô tả                                    |
+| ------------------------- | ------------------------------ | ---------------------------------------- |
+| `handleHourChange`        | `(hour: number) => void`       | Cập nhật giờ.                            |
+| `handleMinuteChange`      | `(minute: number) => void`     | Cập nhật phút.                           |
+| `handleSecondChange`      | `(second: number) => void`     | Cập nhật giây.                           |
+| `handlePeriodChange`      | `(period: TimePeriod) => void` | Chuyển đổi AM/PM.                        |
+| `handleTimePickerOpen`    | `() => void`                   | Mở bảng phụ của bộ chọn thời gian.       |
+| `handleTimePickerClose`   | `() => void`                   | Đóng bảng phụ của bộ chọn thời gian.     |
+| `handleTimePickerConfirm` | `() => void`                   | Xác nhận bảng phụ của bộ chọn thời gian. |
+| `handleTimePickerCancel`  | `() => void`                   | Hủy bảng phụ của bộ chọn thời gian.      |
+
+### Giá trị được tính toán
+
+| Tên                  | Kiểu                                              | Mô tả                                                                         |
+| -------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `calendar`           | `CalendarMonth`                                   | Dữ liệu lịch cho tháng hiện tại.                                              |
+| `calendars`          | `CalendarMonth[]`                                 | Mảng các tháng lịch.                                                          |
+| `getDayProps`        | `(date: Date, referenceMonth?: Date) => DayProps` | Props của ô ngày.                                                             |
+| `displayValue`       | `string`                                          | Chuỗi ngày-giờ đã định dạng.                                                  |
+| `timeDisplayValue`   | `string`                                          | Chuỗi thời gian đã định dạng.                                                 |
+| `hasValue`           | `boolean`                                         | Giá trị đã được xác nhận hay chưa.                                            |
+| `canConfirm`         | `boolean`                                         | Việc xác nhận có hợp lệ hay không.                                            |
+| `containerRef`       | `RefObject<HTMLDivElement \| null>`               | Ref của container.                                                            |
+| `popupRef`           | `RefObject<HTMLDivElement \| null>`               | Ref của popup.                                                                |
+| `timePickerRef`      | `RefObject<HTMLDivElement \| null>`               | Ref của bảng phụ bộ chọn thời gian.                                           |
+| `focusedDate`        | `Date \| null`                                    | Ngày được tập trung bằng bàn phím.                                            |
+| `handleKeyDown`      | `(e: KeyboardEvent<HTMLElement>) => void`         | Trình xử lý bàn phím.                                                         |
+| `resolvedTimeConfig` | `Required<TimeConfig>`                            | Cấu hình thời gian đã được giải quyết với các giá trị mặc định được điền vào. |
+| `years`              | `number[]`                                        | Các năm cho chế độ thả xuống.                                                 |
+| `months`             | `number[]`                                        | Các tháng cho chế độ thả xuống.                                               |
+| `handleYearSelect`   | `(year: number, calendarIndex?: number) => void`  | Đặt năm.                                                                      |
+| `handleMonthSelect`  | `(month: number, calendarIndex?: number) => void` | Đặt tháng.                                                                    |
+
+## Các hành vi chính
+
+### Cấu hình Thời gian
+
+Tùy chọn `time` chấp nhận một đối tượng `TimeConfig`:
+
+```tsx
+interface TimeConfig {
+  precision?: "hour" | "minute" | "second"; // default: "minute"
+  hourFormat?: "12" | "24"; // default: "24"
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30; // default: 5
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30; // default: 1
+  itemHeight?: number; // default: 32
+}
+```
+
+### shouldCloseOnSelect
+
+Đối với bộ chọn ngày-giờ, `shouldCloseOnSelect` chỉ kích hoạt khi **nhấp vào các giá trị đặt trước**, không phải khi nhấp vào ngày. Điều này là do người dùng vẫn cần đặt thời gian sau khi chọn một ngày.
+
+### resolvedTimeConfig
+
+Giá trị trả về `resolvedTimeConfig` chứa cấu hình thời gian đã được giải quyết hoàn chỉnh với tất cả các giá trị mặc định được điền vào. Sử dụng giá trị này khi xây dựng các thành phần UI liên quan đến thời gian để tránh tính toán lại các giá trị mặc định.

@@ -1,0 +1,87 @@
+---
+sidebar_position: 4
+title: Time Helpers
+---
+
+# ตัวช่วยเกี่ยวกับเวลา
+
+ฟังก์ชันสำหรับสร้างค่าเวลา, แปลงระหว่างรูปแบบ 12/24 ชั่วโมง, ปรับค่าตามขั้นตอน และกำหนดค่าเวลา
+
+```tsx
+import {
+  generateHours,
+  generateHours12,
+  generateMinutes,
+  generateSeconds,
+  adjustMinuteToStep,
+  adjustSecondToStep,
+  to12Hour,
+  to24Hour,
+  resolveTimeConfig,
+} from "react-date-range-picker-headless";
+```
+
+## generateHours
+
+สร้างอาร์เรย์ของค่าในรูปแบบ 24 ชั่วโมง
+
+|               |                             |
+| ------------- | --------------------------- |
+| ลายเซ็น       | `generateHours(): number[]` |
+| ค่าที่ส่งกลับ | `[0, 1, 2, ..., 23]`        |
+
+## generateHours12
+
+สร้างอาร์เรย์ของค่าในรูปแบบ 12 ชั่วโมง
+
+|               |                               |
+| ------------- | ----------------------------- |
+| ลายเซ็น       | `generateHours12(): number[]` |
+| ค่าที่ส่งกลับ | `[1, 2, 3, ..., 12]`          |
+
+## generateMinutes
+
+สร้างอาร์เรย์ของนาทีที่กรองตามขั้นตอน
+
+|             |                                                      |
+| ----------- | ---------------------------------------------------- |
+| ลายเซ็น     | `generateMinutes(minuteStep?: MinuteStep): number[]` |
+| ค่าเริ่มต้น | `5`                                                  |
+
+```tsx
+generateMinutes(); // [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
+generateMinutes(15); // [0, 15, 30, 45]
+generateMinutes(1); // [0, 1, 2, ..., 59]
+```
+
+## generateSeconds
+
+สร้างอาร์เรย์ของวินาทีที่กรองตามขั้นตอน
+
+|             |                                                      |
+| ----------- | ---------------------------------------------------- |
+| ลายเซ็น     | `generateSeconds(secondStep?: SecondStep): number[]` |
+| ค่าเริ่มต้น | `1`                                                  |
+
+```tsx
+generateSeconds(); // [0, 1, 2, ..., 59]
+generateSeconds(15); // [0, 15, 30, 45]
+```
+
+## adjustMinuteToStep
+
+ปรับค่านาทีไปยังขั้นตอนที่ถูกต้องที่ใกล้ที่สุด (ปัดลง)
+
+|         |                                                                      |
+| ------- | -------------------------------------------------------------------- |
+| ลายเซ็น | `adjustMinuteToStep(minute: number, minuteStep: MinuteStep): number` |
+
+```tsx
+adjustMinuteToStep(7, 5); // 5
+adjustMinuteToStep(13, 10); // 10
+adjustMinuteToStep(29, 15); // 15
+```
+
+## adjustSecondToStep
+
+ปรับ

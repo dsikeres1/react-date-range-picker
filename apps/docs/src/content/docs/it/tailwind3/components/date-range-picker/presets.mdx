@@ -1,0 +1,20 @@
+---
+sidebar_position: 2
+sidebar_label: With Presets
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import WithPresets from "@examples/tailwind3/DateRangePicker/WithPresets";
+import WithPresetsSource from "@examples/tailwind3/DateRangePicker/WithPresets.tsx?raw";
+
+# 프리셋 사용하기
+
+빠른 선택을 위해 미리 정의된 날짜 범위를 설정합니다. 각 프리셋은 `label`과 `value`를 가지며, `value`는 정적 객체이거나 객체를 반환하는 함수일 수 있습니다.
+
+<CodeDemo source={WithPresetsSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <WithPresets client:load />
+  </ExampleWrapper>
+</CodeDemo>

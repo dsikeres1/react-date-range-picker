@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind3/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind3/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind3/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind3/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind3/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind3/Customization/CompoundWebFonts.tsx?raw";
+
+# タイポグラフィ
+
+Tailwind v3パッケージは、Tailwindのデフォルトの`font-sans`クラス（`ui-sans-serif, system-ui, sans-serif, ...`）を使用します。CSSの`font-family`は継承されるため、ピッカーを`fontFamily`スタイルを持つコンテナでラップすることでフォントを上書きできます。ラッパーのフォントは、すべてのピッカー要素に継承されます。
+
+## フォントファミリー
+
+ピッカーをラップし、ラッパーに`fontFamily`を設定してフォントを切り替えます:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Webフォントの使用 (Noto Sans)
+
+実行時にWebフォントを読み込み、ラッパーを介して適用します。この例では、Google Fontsから[Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans)を読み込みます:
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="本番環境での使用">
+実際のプロジェクトでは、実行時にフォントを注入する代わりに、HTMLの`<head>`内の`<link>`タグを介して、またはCSSバンドラを通じてフォントを読み込みます。ここでの`useEffect`アプローチは、デモンストレーションのみを目的としています。
+</Admonition>
+
+## Webフォントギャラリー
+
+さまざまなWebフォントを比較して、タイポグラフィがピッカーの外観をどれほど劇的に変えるかを確認してください。以下のすべてのフォントは、多言語レンダリング（ラテン、CJK、韓国語）をサポートしています。
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

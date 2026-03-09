@@ -1,0 +1,51 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Props
+
+| Prop                     | Type                                                          | Default     | Beschreibung                                                                   |
+| :----------------------- | :------------------------------------------------------------ | :---------- | :----------------------------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --          | Ausgewählter Datumsbereichswert                                                |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | Callback bei Wertänderung                                                      |
+| `presets`                | `DateRangePreset[]`                                           | --          | Vordefinierte Datumsbereich-Presets                                            |
+| `maxDays`                | `number`                                                      | --          | Maximale Anzahl an Tagen im Bereich (inklusiv)                                 |
+| `minDays`                | `number`                                                      | --          | Minimale Anzahl an Tagen im Bereich (inklusiv)                                 |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`      | Bereich erlauben, in dem Start- und Enddatum gleich sind                       |
+| `minDate`                | `Date`                                                        | --          | Minimal auswählbares Datum                                                     |
+| `maxDate`                | `Date`                                                        | --          | Maximal auswählbares Datum                                                     |
+| `locale`                 | `Partial<Locale>`                                             | --          | Benutzerdefinierte Lokalisierungskonfiguration                                 |
+| `initialMonth`           | `Date`                                                        | --          | Initial angezeigter Monat                                                      |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`  | Komponentengröße                                                               |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`  | Erster Tag der Woche                                                           |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --          | Daten als deaktiviert markieren                                                |
+| `displayFormat`          | `string`                                                      | --          | Benutzerdefiniertes Anzeigeformat (z.B. `"YYYY/MM/DD"`)                        |
+| `open`                   | `boolean`                                                     | --          | Gesteuerter "offen"-Zustand                                                    |
+| `initialOpen`            | `boolean`                                                     | --          | Initialer "offen"-Zustand (ungesteuert)                                        |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --          | Callback bei Änderung des "offen"-Zustands                                     |
+| `required`               | `boolean`                                                     | `false`     | Löschen des Wertes deaktivieren                                                |
+| `showOutsideDays`        | `boolean`                                                     | `false`     | Tage aus angrenzenden Monaten anzeigen                                         |
+| `highlightDates`         | `Date[]`                                                      | --          | Hervorzuhebende Daten                                                          |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`     | Automatisch bestätigen, wenn das Enddatum ausgewählt ist                       |
+| `numberOfMonths`         | `number`                                                      | `2`         | Anzahl der anzuzeigenden Monate                                                |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"` | Navigationsstil der Titelzeile                                                 |
+| `fromYear`               | `number`                                                      | --          | Startjahr für das Dropdown-Menü                                                |
+| `toYear`                 | `number`                                                      | --          | Endjahr für das Dropdown-Menü                                                  |
+| `disablePast`            | `boolean`                                                     | `false`     | Daten vor dem heutigen Tag deaktivieren                                        |
+| `disableFuture`          | `boolean`                                                     | `false`     | Daten nach dem heutigen Tag deaktivieren                                       |
+| `inline`                 | `boolean`                                                     | `false`     | Kalender inline anzeigen (kein Popup)                                          |
+| `name`                   | `string`                                                      | --          | Name des versteckten Eingabefeldes für die Formularübermittlung (Startdatum)   |
+| `endName`                | `string`                                                      | --          | Name des versteckten Eingabefeldes für das Enddatum (standardmäßig `name-end`) |
+| `placeholder`            | `string`                                                      | --          | Platzhaltertext für den Auslöser                                               |
+| `hideHeader`             | `boolean`                                                     | `false`     | Navigationskopfzeile ausblenden                                                |
+| `hideFooter`             | `boolean`                                                     | `false`     | Aktionsfußzeile ausblenden                                                     |
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

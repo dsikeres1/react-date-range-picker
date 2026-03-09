@@ -1,0 +1,34 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomLocale from "@examples/tailwind3/DateTimePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind3/DateTimePicker/CustomLocale.tsx?raw";
+import FormIntegration from "@examples/tailwind3/DateTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind3/DateTimePicker/FormIntegration.tsx?raw";
+
+# 外觀
+
+## 自訂語系
+
+為國際化提供自訂語系。`dateTimePlaceholder` 鍵可自訂觸發文字。
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 表單整合
+
+使用 `name` 屬性以包含一個用於原生表單提交的隱藏輸入欄位。
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

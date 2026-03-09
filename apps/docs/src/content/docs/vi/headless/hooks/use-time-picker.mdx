@@ -1,0 +1,149 @@
+---
+sidebar_position: 5
+title: useTimePicker
+---
+
+# useTimePicker
+
+Hook cấp thấp cho bộ chọn thời gian kiểu bánh xe cuộn. Quản lý việc chọn giờ/phút/giây dựa trên cuộn với hành vi snap. Hook này thường được sử dụng nội bộ bởi giao diện bảng điều khiển thời gian, nhưng có thể được sử dụng trực tiếp cho các triển khai bộ chọn thời gian tùy chỉnh.
+
+## Import
+
+```tsx
+import { useTimePicker } from "react-date-range-picker-headless";
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { useTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [hour, setHour] = useState(12);
+  const [minute, setMinute] = useState(0);
+
+  const picker = useTimePicker({
+    hour,
+    minute,
+    onHourChange: setHour,
+    onMinuteChange: setMinute,
+    precision: "minute",
+    hourFormat: "24",
+    minuteStep: 5,
+  });
+
+  return (
+    <div style={{ display: "flex", gap: 8 }}>
+      {/* Hour column */}
+      <div
+        ref={picker.hourListRef}
+        onScroll={picker.handleHourScroll}
+        style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+      >
+        {picker.hours.map((h) => (
+          <div
+            key={h}
+            onClick={() => picker.handleHourClick(h)}
+            style={{
+              height: picker.itemHeight,
+              fontWeight: h === hour ? "bold" : "normal",
+            }}
+          >
+            {String(h).padStart(2, "0")}
+          </div>
+        ))}
+      </div>
+
+      {/* Minute column */}
+      {picker.showMinutes && (
+        <div
+          ref={picker.minuteListRef}
+          onScroll={picker.handleMinuteScroll}
+          style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+        >
+          {picker.minutes.map((m) => (
+            <div
+              key={m}
+              onClick={() => picker.handleMinuteClick(m)}
+              style={{
+                height: picker.itemHeight,
+                fontWeight: m === minute ? "bold" : "normal",
+              }}
+            >
+              {String(m).padStart(2, "0")}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Period toggle (12-hour mode) */}
+      {picker.is12Hour && <button onClick={picker.handlePeriodToggle}>{picker.period}</button>}
+    </div>
+  );
+}
+```
+
+## Tùy chọn
+
+| Tùy chọn         | Kiểu                           | Mặc định   | Mô tả                                                           |
+| ---------------- | ------------------------------ | ---------- | --------------------------------------------------------------- |
+| `hour`           | `number`                       | --         | **Bắt buộc.** Giờ hiện tại. Chế độ 24h: 0-23, chế độ 12h: 1-12. |
+| `minute`         | `number`                       | --         | **Bắt buộc.** Phút hiện tại.                                    |
+| `second`         | `number`                       | --         | Giây hiện tại.                                                  |
+| `period`         | `TimePeriod`                   | --         | Buổi AM/PM hiện tại (bắt buộc cho chế độ 12h).                  |
+| `onHourChange`   | `(hour: number) => void`       | --         | **Bắt buộc.** Trình xử lý thay đổi giờ.                         |
+| `onMinuteChange` | `(minute: number) => void`     | --         | **Bắt buộc.** Trình xử lý thay đổi phút.                        |
+| `onSecondChange` | `(second: number) => void`     | --         | Trình xử lý thay đổi giây.                                      |
+| `onPeriodChange` | `(period: TimePeriod) => void` | --         | Trình xử lý thay đổi AM/PM.                                     |
+| `precision`      | `TimePrecision`                | `"minute"` | Độ chính xác thời gian: `"hour"`, `"minute"`, hoặc `"second"`.  |
+| `hourFormat`     | `HourFormat`                   | `"24"`     | Định dạng giờ `"12"` hoặc `"24"`.                               |
+| `minuteStep`     | `MinuteStep`                   | `5`        | Bước tăng phút.                                                 |
+| `secondStep`     | `SecondStep`                   | `1`        | Bước tăng giây.                                                 |
+| `itemHeight`     | `number`                       | `32`       | Chiều cao (tính bằng px) của mỗi mục cuộn.                      |
+
+## Giá trị trả về
+
+| Tên                  | Kiểu                                | Mô tả                                                                                  |
+| -------------------- | ----------------------------------- | -------------------------------------------------------------------------------------- |
+| `hours`              | `number[]`                          | Mảng các giá trị giờ. 24h: `[0..23]`, 12h: `[1..12]`.                                  |
+| `minutes`            | `number[]`                          | Mảng các giá trị phút dựa trên `minuteStep` (ví dụ: `[0, 5, 10, ...]`).                |
+| `seconds`            | `number[]`                          | Mảng các giá trị giây dựa trên `secondStep`.                                           |
+| `hourIndex`          | `number`                            | Chỉ số của giờ hiện tại trong mảng `hours`.                                            |
+| `minuteIndex`        | `number`                            | Chỉ số của phút hiện tại trong mảng `minutes`.                                         |
+| `secondIndex`        | `number`                            | Chỉ số của giây hiện tại trong mảng `seconds`.                                         |
+| `showMinutes`        | `boolean`                           | Liệu cột phút có nên được hiển thị không (độ chính xác là `"minute"` hoặc `"second"`). |
+| `showSeconds`        | `boolean`                           | Liệu cột giây có nên được hiển thị không (độ chính xác là `"second"`).                 |
+| `is12Hour`           | `boolean`                           | Liệu có đang sử dụng định dạng 12 giờ hay không.                                       |
+| `period`             | `TimePeriod`                        | Buổi AM/PM hiện tại.                                                                   |
+| `handlePeriodToggle` | `() => void`                        | Chuyển đổi giữa AM và PM.                                                              |
+| `hourListRef`        | `RefObject<HTMLDivElement \| null>` | Ref cho vùng chứa cuộn giờ.                                                            |
+| `minuteListRef`      | `RefObject<HTMLDivElement \| null>` | Ref cho vùng chứa cuộn phút.                                                           |
+| `secondListRef`      | `RefObject<HTMLDivElement \| null>` | Ref cho vùng chứa cuộn giây.                                                           |
+| `handleHourScroll`   | `() => void`                        | Trình xử lý cuộn cho cột giờ -- snap vào mục gần nhất.                                 |
+| `handleMinuteScroll` | `() => void`                        | Trình xử lý cuộn cho cột phút.                                                         |
+| `handleSecondScroll` | `() => void`                        | Trình xử lý cuộn cho cột giây.                                                         |
+| `handleHourClick`    | `(hour: number) => void`            | Chọn trực tiếp một giá trị giờ.                                                        |
+| `handleMinuteClick`  | `(minute: number) => void`          | Chọn trực tiếp một giá trị phút.                                                       |
+| `handleSecondClick`  | `(second: number) => void`          | Chọn trực tiếp một giá trị giây.                                                       |
+| `scrollToValues`     | `() => void`                        | Cuộn tất cả các cột đến giá trị hiện tại của chúng một cách có lập trình.              |
+| `itemHeight`         | `number`                            | Chiều cao mục đã được xác định (px).                                                   |
+| `centerIndex`        | `number`                            | Chỉ số của mục hiển thị ở giữa (dành cho tính toán scroll snap).                       |
+
+## Các hành vi chính
+
+### Scroll Snap
+
+Các vùng chứa cuộn sử dụng hành vi snap: khi người dùng cuộn và thả ra, hook sẽ tự động snap vào giá trị hợp lệ gần nhất và kích hoạt callback thay đổi tương ứng.
+
+### Chế độ 12 giờ
+
+Khi `hourFormat` là `"12"`, mảng `hours` chứa `[1, 2, ..., 12]` thay vì `[0, 1, ..., 23]`. Các giá trị trả về `period` và `handlePeriodToggle` quản lý trạng thái AM/PM.
+
+### Giá trị bước nhảy
+
+Phút và giây được lọc theo các giá trị bước nhảy tương ứng của chúng. Ví dụ, `minuteStep: 15` sẽ tạo ra `[0, 15, 30, 45]`.
+
+### scrollToValues
+
+Gọi `scrollToValues()` sau khi mount hoặc khi thay đổi giá trị theo chương trình để đảm bảo các vùng chứa cuộn được định vị chính xác.

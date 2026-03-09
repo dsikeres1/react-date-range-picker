@@ -1,0 +1,46 @@
+---
+sidebar_position: 7
+sidebar_label: "Colors"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/styled/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/styled/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/styled/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/styled/Customization/CompoundColorThemePopup.tsx?raw";
+import CSSCustomColors from "@examples/styled/Customization/CSSCustomColors";
+import CSSCustomColorsSource from "@examples/styled/Customization/CSSCustomColors.tsx?raw";
+
+# Colores
+
+Cambia el tema de color en tiempo de ejecución sobrescribiendo las propiedades personalizadas de CSS en un elemento contenedor. El paquete styled utiliza `--rdrp-color-primary`, `--rdrp-color-primary-hover`, `--rdrp-color-primary-light` y `--rdrp-color-primary-lighter` para todos los colores de acento primarios.
+
+## Selector de Tema en Línea
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Selector de Tema en Popup
+
+El mismo enfoque funciona con los selectores en formato de popup:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Estilo en Línea con Variables CSS
+
+También puedes sobrescribir los colores directamente a través del atributo `style` en un elemento contenedor:
+
+<CodeDemo source={CSSCustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CSSCustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>

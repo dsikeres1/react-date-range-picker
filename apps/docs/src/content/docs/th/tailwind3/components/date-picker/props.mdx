@@ -1,0 +1,37 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# คุณสมบัติ
+
+| คุณสมบัติ (Prop)      | ประเภท (Type)                                 | ค่าเริ่มต้น (Default) | คำอธิบาย (Description)                           |
+| --------------------- | --------------------------------------------- | --------------------- | ------------------------------------------------ |
+| `value`               | `Date \| null`                                | --                    | ค่าวันที่ที่ถูกเลือก                             |
+| `onChange`            | `(date: Date \| null) => void`                | --                    | Callback เมื่อค่าเปลี่ยนแปลง                     |
+| `minDate`             | `Date`                                        | --                    | วันที่ต่ำสุดที่สามารถเลือกได้                    |
+| `maxDate`             | `Date`                                        | --                    | วันที่สูงสุดที่สามารถเลือกได้                    |
+| `locale`              | `Partial<Locale>`                             | --                    | การกำหนดค่า locale แบบกำหนดเอง                   |
+| `initialMonth`        | `Date`                                        | --                    | เดือนเริ่มต้นที่แสดง                             |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`            | ขนาดของคอมโพเนนต์                                |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`            | วันแรกของสัปดาห์                                 |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --                    | ทำเครื่องหมายวันที่เป็นปิดใช้งาน                 |
+| `displayFormat`       | `string`                                      | --                    | รูปแบบการแสดงผลแบบกำหนดเอง (เช่น `"YYYY/MM/DD"`) |
+| `open`                | `boolean`                                     | --                    | สถานะการเปิดแบบควบคุม                            |
+| `initialOpen`         | `boolean`                                     | --                    | สถานะการเปิดเริ่มต้น (แบบไม่ควบคุม)              |
+| `onOpenChange`        | `(open: boolean) => void`                     | --                    | Callback เมื่อสถานะการเปิดเปลี่ยนแปลง            |
+| `required`            | `boolean`                                     | `false`               | ปิดการใช้งานการล้างค่า                           |
+| `showOutsideDays`     | `boolean`                                     | `false`               | แสดงวันจากเดือนที่อยู่ติดกัน                     |
+| `highlightDates`      | `Date[]`                                      | --                    | วันที่ต้องการไฮไลท์                              |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`               | ยืนยันอัตโนมัติเมื่อคลิกวันที่                   |
+| `numberOfMonths`      | `number`                                      | `1`                   | จำนวนเดือนที่จะแสดง                              |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"`           | รูปแบบการนำทางของ caption                        |
+| `fromYear`            | `number`                                      | --                    | ปีเริ่มต้นสำหรับ dropdown                        |
+| `toYear`              | `number`                                      | --                    | ปีสิ้นสุดสำหรับ dropdown                         |
+| `disablePast`         | `boolean`                                     | `false`               | ปิดการใช้งานวันที่ก่อนวันนี้                     |
+| `disableFuture`       | `boolean`                                     | `false`               | ปิดการใช้งานวันที่หลังวันนี้                     |
+| `inline`              | `boolean`                                     | `false`               | แสดงปฏิทินในบรรทัด (ไม่มี popup)                 |
+| `name`                | `string`                                      | --                    | ชื่อ input ที่ซ่อนไว้สำหรับการส่งฟอร์ม           |
+| `placeholder`         | `string`                                      | --                    | ข้อความ placeholder ของ trigger                  |
+| `hideHeader`          | `boolean`                                     | `false`               | ซ่อนส่วนหัวการนำทาง                              |
+| `hideFooter`          | `boolean`                                     | `false`               | ซ่อนส่วนท้ายของการกระทำ                          |

@@ -1,0 +1,179 @@
+---
+sidebar_position: 3
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDarkMode from "@examples/styled/Customization/CustomDarkMode";
+import CustomDarkModeSource from "@examples/styled/Customization/CustomDarkMode.tsx?raw";
+import DarkModeToggle from "@examples/styled/Customization/CompoundDarkMode";
+import DarkModeToggleSource from "@examples/styled/Customization/CompoundDarkMode.tsx?raw";
+
+# 暗黑模式
+
+`styled` 包包含完整的暗黑模式支持。我们为每个 CSS 变量都定义了暗黑模式下的值，因此整个选择器会自动适应。
+
+## 工作原理
+
+暗黑模式通过两种机制激活：
+
+1. **系统偏好** — `prefers-color-scheme: dark` 媒体查询
+2. **手动切换** — 在 `.rdrp-root` 或父元素上设置 `data-theme="dark"` 属性
+
+系统偏好默认应用。如果你显式设置了 `data-theme="light"` 或 `data-theme="dark"`，它将覆盖系统偏好。
+
+## 自动（系统偏好）
+
+无需设置。选择器会遵循用户的操作系统设置：
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/styles.css";
+
+// 自动遵循系统暗黑/亮色模式
+<DatePicker value={value} onChange={setValue} />;
+```
+
+CSS 使用 `@media (prefers-color-scheme: dark)` 将所有 `--rdrp-*` 变量切换到其暗黑模式下的值。
+
+## 手动切换
+
+在选择器根元素或任何祖先元素上设置 `data-theme`：
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div data-theme={dark ? "dark" : "light"}>
+      <button onClick={() => setDark(!dark)}>切换到{dark ? "亮色" : "暗黑"}</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+或者直接在选择器上应用：
+
+```tsx
+<DatePicker value={value} onChange={setValue} data-theme="dark" />
+```
+
+当使用复合组件 API 时，在 `Root` 上设置它：
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} data-theme="dark">
+  <DatePicker.Trigger />
+  <DatePicker.Content>{/* ... */}</DatePicker.Content>
+</DatePicker.Root>
+```
+
+## 暗黑模式颜色值
+
+所有颜色变量都会自动切换。以下是主要区别：
+
+| 变量                       | 亮色              | 暗色              |
+| -------------------------- | ----------------- | ----------------- |
+| `--rdrp-color-primary`     | `#3b82f6`         | `#60a5fa`         |
+| `--rdrp-color-bg`          | `#ffffff`         | `#1f2937`         |
+| `--rdrp-color-bg-hover`    | `#f3f4f6`         | `#374151`         |
+| `--rdrp-color-text`        | `#374151`         | `#e5e7eb`         |
+| `--rdrp-color-text-strong` | `#111827`         | `#f9fafb`         |
+| `--rdrp-color-text-muted`  | `#6b7280`         | `#9ca3af`         |
+| `--rdrp-color-border`      | `#d1d5db`         | `#4b5563`         |
+| `--rdrp-color-range-bg`    | `#dbeafe`         | `#1e3a5f`         |
+| `--rdrp-color-text-today`  | `#2563eb`         | `#60a5fa`         |
+| `--rdrp-shadow-popup`      | `rgba(0,0,0,0.1)` | `rgba(0,0,0,0.3)` |
+
+在 [CSS 变量](/docs/styled/customization/css-variables) 中查看完整列表。
+
+## 自定义暗黑模式颜色
+
+在 `data-theme="dark"` 选择器或 `prefers-color-scheme` 媒体查询内部覆盖暗黑模式的变量：
+
+```css
+/* 覆盖暗黑模式主色 */
+@media (prefers-color-scheme: dark) {
+  .rdrp-root {
+    --rdrp-color-primary: #a78bfa;
+    --rdrp-color-primary-hover: #8b5cf6;
+    --rdrp-color-primary-light: #2e1065;
+    --rdrp-color-range-bg: #2e1065;
+    --rdrp-color-text-today: #a78bfa;
+  }
+}
+
+/* 当手动切换到暗黑模式时也应用 */
+.rdrp-root[data-theme="dark"] {
+  --rdrp-color-primary: #a78bfa;
+  --rdrp-color-primary-hover: #8b5cf6;
+  --rdrp-color-primary-light: #2e1065;
+  --rdrp-color-range-bg: #2e1065;
+  --rdrp-color-text-today: #a78bfa;
+}
+```
+
+## 强制亮色模式
+
+如果你的应用不支持暗黑模式，可以强制使用亮色模式，以防止选择器根据系统偏好进行切换：
+
+```tsx
+<div data-theme="light">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## 与应用主题集成
+
+如果你的应用已经管理了一个暗黑模式切换开关（例如通过 `<html>` 上的 `dark` 类），可以将其映射到 `data-theme`：
+
+```tsx
+// 与你的应用的暗黑模式状态同步
+function ThemeSyncedPicker({ value, onChange }) {
+  const isDark = useAppTheme(); // 你的主题 hook
+
+  return (
+    <div data-theme={isDark ? "dark" : "light"}>
+      <DatePicker value={value} onChange={onChange} />
+    </div>
+  );
+}
+```
+
+对于使用 `<html class="dark">` 的框架（如带有 `next-themes` 的 Next.js），你可以添加一条 CSS 规则来连接两者：
+
+```css
+html.dark .rdrp-root {
+  /* 在此处复制暗黑模式变量值，或使用 data-theme 方法 */
+}
+```
+
+或者在 html 元素上与 class 一起设置 `data-theme`：
+
+```tsx
+// 在你的主题提供者中
+document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+```
+
+## 实时示例
+
+### 暗黑模式切换
+
+一个交互式示例，展示了一个**DatePicker**（内联）以及一个用于在亮色和暗色模式之间切换的按钮。
+
+<CodeDemo source={DarkModeToggleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DarkModeToggle client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### 强制暗黑模式
+
+一个在深色背景上使用 `data-theme="dark"` 渲染为暗黑模式的 **DateTimePicker**。
+
+<CodeDemo source={CustomDarkModeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomDarkMode client:load />
+  </ExampleWrapper>
+</CodeDemo>

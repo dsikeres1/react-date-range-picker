@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+sidebar_label: Props
+---
+
+# Props
+
+| Prop            | ประเภท                         | ค่าเริ่มต้น | คำอธิบาย                                      |
+| --------------- | ------------------------------ | ----------- | --------------------------------------------- |
+| `value`         | `Date \| null`                 | --          | ค่าเวลาที่เลือก (ใช้เฉพาะส่วนของเวลาเท่านั้น) |
+| `onChange`      | `(date: Date \| null) => void` | --          | Callback เมื่อค่าเปลี่ยนแปลง                  |
+| `time`          | `TimeConfig`                   | --          | การกำหนดค่าแผงเวลา                            |
+| `locale`        | `Partial<Locale>`              | --          | การกำหนดค่า locale แบบกำหนดเอง                |
+| `displayFormat` | `string`                       | --          | รูปแบบการแสดงผลสำหรับ trigger แบบกำหนดเอง     |
+| `placeholder`   | `string`                       | --          | ข้อความ Placeholder สำหรับ trigger            |
+| `open`          | `boolean`                      | --          | สถานะการเปิดแบบควบคุม                         |
+| `initialOpen`   | `boolean`                      | `false`     | สถานะการเปิดเริ่มต้น (แบบไม่ควบคุม)           |
+| `onOpenChange`  | `(open: boolean) => void`      | --          | Callback เมื่อสถานะการเปิดเปลี่ยนแปลง         |
+| `required`      | `boolean`                      | `false`     | ปิดใช้งานการล้างค่า                           |
+| `inline`        | `boolean`                      | `false`     | เรนเดอร์แบบอินไลน์โดยไม่มี trigger/popup      |
+| `hideFooter`    | `boolean`                      | --          | ซ่อนส่วนท้ายของการกระทำ                       |
+| `name`          | `string`                       | --          | ชื่อ input ที่ซ่อนไว้สำหรับการส่งฟอร์ม        |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** ความแม่นยำในการแสดงเวลา ค่าเริ่มต้นคือ "minute" */
+  precision?: "hour" | "minute" | "second";
+  /** รูปแบบ 12 ชั่วโมงหรือ 24 ชั่วโมง ค่าเริ่มต้นคือ "24" */
+  hourFormat?: "12" | "24";
+  /** ขั้นการเพิ่มนาที ค่าเริ่มต้นคือ 5 */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** ขั้นการเพิ่มวินาที ค่าเริ่มต้นคือ 1 */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** ความสูง (หน่วยเป็น px) ของแต่ละรายการในวงล้อเลื่อน ค่าเริ่มต้นคือ 32 */
+  itemHeight?: number;
+}
+```

@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: Range Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/tailwind3/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/tailwind3/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/tailwind3/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/tailwind3/Customization/CompoundRangeInline.tsx?raw";
+
+# レンジピッカー
+
+`DateRangePicker` 複合APIは、デュアルカレンダーとプリセット範囲のための追加パーツを提供します。プリセット、カレンダーグリッド、ヘッダー、フッターアクションのレイアウトを完全に制御できます。
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## プリセット付きインライン
+
+レンジピッカーをプリセットサイドバー付きでインライン表示します:
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

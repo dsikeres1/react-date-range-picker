@@ -1,0 +1,167 @@
+---
+sidebar_position: 10
+---
+
+# Tokeny Semantyczne
+
+Paczka Tailwind v4 używa semantycznych zmiennych CSS (tokenów projektowych) dla wszystkich kolorów. Te tokeny oddzielają style komponentów od konkretnych wartości kolorów, co ułatwia tworzenie motywów. Konwencja nazewnictwa tokenów jest zgodna z tą samą, której używa [shadcn/ui](https://ui.shadcn.com/).
+
+## System Tokenów
+
+Zamiast zakodowanych na stałe kolorów, takich jak `bg-sky-500`, komponenty Tailwind v4 używają semantycznych narzędzi, takich jak `bg-primary`, `text-foreground` i `border-border`. Odwzorowują one zmienne CSS, które definiujesz w swoim projekcie.
+
+```
+bg-primary        → var(--color-primary)
+text-foreground   → var(--color-foreground)
+border-border     → var(--color-border)
+```
+
+## Wymagane Tokeny
+
+Zdefiniuj te tokeny w swoim CSS, używając dyrektywy `@theme` z Tailwind v4:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+## Referencje Tokenów
+
+| Token                        | Używane Do                                                          | Przykładowe Narzędzia        |
+| ---------------------------- | ------------------------------------------------------------------- | ---------------------------- |
+| `--color-background`         | Tło strony/aplikacji                                                | `bg-background`              |
+| `--color-foreground`         | Domyślny kolor tekstu                                               | `text-foreground`            |
+| `--color-popover`            | Tło wyskakującego okienka                                           | `bg-popover`                 |
+| `--color-popover-foreground` | Tekst wyskakującego okienka                                         | `text-popover-foreground`    |
+| `--color-primary`            | Wybrany dzień, przycisk potwierdzenia, punkty końcowe zakresu       | `bg-primary`, `text-primary` |
+| `--color-primary-foreground` | Tekst na tłach podstawowych                                         | `text-primary-foreground`    |
+| `--color-muted-foreground`   | Wyciszony tekst (placeholdery, dni tygodnia, przyciski nawigacyjne) | `text-muted-foreground`      |
+| `--color-accent`             | Tła najechania dla dni i przycisków                                 | `bg-accent`                  |
+| `--color-accent-foreground`  | Tekst na tłach akcentujących                                        | `text-accent-foreground`     |
+| `--color-destructive`        | Tekst przycisku wyczyść/niebezpieczeństwo                           | `text-destructive`           |
+| `--color-border`             | Ogólne obramowania (stopka, presety, wyskakujące okienko)           | `border-border`              |
+| `--color-input`              | Obramowanie pola wprowadzania/wyzwalacza                            | `border-input`               |
+| `--color-ring`               | Kolor pierścienia fokusu                                            | `ring-ring`                  |
+
+## Jak Tokeny Odwzorowują się na Komponenty
+
+Oto jak tokeny są stosowane w całym pickerze:
+
+### Wyzwalacz
+
+- Tło: `bg-background`
+- Obramowanie: `border-input`
+- Tekst: dziedziczony z `text-foreground` w korzeniu
+- Placeholder: `text-muted-foreground`
+- Pierścień fokusu: `ring-ring`
+
+### Wyskakujące okienko
+
+- Tło: `bg-popover`
+- Tekst: `text-popover-foreground`
+- Obramowanie: `border-border`
+
+### Dni Kalendarza
+
+- Domyślne najechanie: `bg-accent` / `text-accent-foreground`
+- Wybrany: `bg-primary` / `text-primary-foreground`
+- Dziś: `text-primary`
+- W zakresie: `bg-primary/10`
+- Początek/koniec zakresu: `bg-primary` / `text-primary-foreground`
+- Wyłączony: `text-muted-foreground` ze zmniejszoną przezroczystością
+
+### Stopka
+
+- Obramowanie: `border-border`
+- Przycisk Anuluj: `border-input`, najechanie `bg-accent`
+- Przycisk Potwierdź: `bg-primary` / `text-primary-foreground`
+- Przycisk Wyczyść: `text-destructive`
+
+## Dostosowywanie Tokenów
+
+### Zmień Kolor Podstawowy
+
+Zmień `--color-primary` i `--color-primary-foreground`, aby zmienić markę pickera:
+
+```css
+@theme {
+  /* Fioletowy podstawowy */
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+}
+```
+
+### Ciepła Paleta Kolorów
+
+```css
+@theme {
+  --color-background: oklch(0.99 0.005 80);
+  --color-foreground: oklch(0.2 0.02 60);
+
+  --color-popover: oklch(0.99 0.005 80);
+  --color-popover-foreground: oklch(0.2 0.02 60);
+
+  --color-primary: oklch(0.6 0.2 40);
+  --color-primary-foreground: oklch(0.98 0.005 80);
+
+  --color-accent: oklch(0.95 0.02 80);
+  --color-accent-foreground: oklch(0.2 0.02 60);
+
+  --color-border: oklch(0.9 0.01 80);
+  --color-input: oklch(0.9 0.01 80);
+  --color-ring: oklch(0.85 0.02 80);
+}
+```
+
+### Tokeny Trybu Ciemnego
+
+Dla trybu ciemnego, nadpisz tokeny pod selektorem `.dark` lub w `@media (prefers-color-scheme: dark)`:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... wartości trybu jasnego */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+Zobacz [Tryb Ciemny](/docs/tailwind4/customization/dark-mode), aby uzyskać więcej szczegółów.
+
+## Istniejące Projekty shadcn/ui
+
+Jeśli twój projekt ma już zdefiniowane tokeny shadcn/ui, picker użyje ich automatycznie bez dodatkowej konfiguracji. Nazwy tokenów są celowo kompatybilne. Zobacz [Rejestr shadcn](/docs/tailwind4/customization/shadcn-registry), aby uzyskać więcej informacji.

@@ -1,0 +1,34 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomLocale from "@examples/tailwind4/DateTimePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind4/DateTimePicker/CustomLocale.tsx?raw";
+import FormIntegration from "@examples/tailwind4/DateTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind4/DateTimePicker/FormIntegration.tsx?raw";
+
+# Apparence
+
+## Locale Personnalisée
+
+Fournissez une locale personnalisée pour l'internationalisation. La clé `dateTimePlaceholder` personnalise le texte du déclencheur.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Intégration de Formulaire
+
+Utilisez la prop `name` pour inclure une entrée cachée pour la soumission de formulaire native.
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

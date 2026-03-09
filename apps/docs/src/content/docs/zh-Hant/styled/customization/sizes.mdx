@@ -1,0 +1,197 @@
+---
+sidebar_position: 5
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/styled/DatePicker/Sizes";
+import SizesSource from "@examples/styled/DatePicker/Sizes.tsx?raw";
+import CustomSizeViaCSS from "@examples/styled/Customization/CustomSizeViaCSS";
+import CustomSizeViaCSSSource from "@examples/styled/Customization/CustomSizeViaCSS.tsx?raw";
+
+# 尺寸
+
+styled 套件包含了 4 種內建的尺寸變體，它們會按比例縮放字體排印、間距、儲存格尺寸和觸發器尺寸。
+
+## 可用尺寸
+
+| 尺寸      | 儲存格尺寸 | 基本字型 | 觸發器最小寬度 |
+| --------- | ---------- | -------- | -------------- |
+| `small`   | 28px       | 11px     | 160px          |
+| `medium`  | 36px       | 13px     | 200px          |
+| `large`   | 44px       | 14px     | 240px          |
+| `x-large` | 52px       | 15px     | 280px          |
+
+`medium` 是預設值。
+
+## 使用方式
+
+將 `size` prop 傳遞給任何選擇器元件：
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 各尺寸的變更內容
+
+每個尺寸變體都會透過一個類別（例如 `rdrp-size-small`）來覆寫一組 CSS 變數。以下是每個尺寸所調整的內容：
+
+### Small
+
+```css
+.rdrp-size-small {
+  --rdrp-cell-size: 28px;
+  --rdrp-nav-btn-size: 24px;
+  --rdrp-weekday-height: 24px;
+  --rdrp-grid-min-height: 168px;
+  --rdrp-panel-min-width: 196px;
+  --rdrp-dual-gap: 16px;
+
+  --rdrp-font-size-xs: 10px;
+  --rdrp-font-size-sm: 11px;
+  --rdrp-font-size-base: 11px;
+  --rdrp-font-size-md: 12px;
+  --rdrp-font-size-lg: 13px;
+
+  --rdrp-trigger-min-width: 160px;
+  --rdrp-trigger-padding-x: 10px;
+  --rdrp-trigger-padding-y: 6px;
+  --rdrp-popup-padding: 12px;
+
+  --rdrp-btn-padding-x: 10px;
+  --rdrp-btn-padding-y: 4px;
+
+  --rdrp-spacing-lg: 8px;
+  --rdrp-spacing-xl: 12px;
+
+  --rdrp-time-item-height: 28px;
+  --rdrp-time-panel-height: 148px;
+  --rdrp-time-column-height: 132px;
+  --rdrp-time-panel-min-width: 100px;
+  --rdrp-time-picker-content-min-width: 210px;
+
+  --rdrp-preset-min-width: 110px;
+}
+```
+
+### Large
+
+```css
+.rdrp-size-large {
+  --rdrp-cell-size: 44px;
+  --rdrp-nav-btn-size: 32px;
+  --rdrp-weekday-height: 32px;
+  --rdrp-grid-min-height: 264px;
+  --rdrp-panel-min-width: 308px;
+  --rdrp-dual-gap: 28px;
+
+  --rdrp-font-size-xs: 12px;
+  --rdrp-font-size-sm: 13px;
+  --rdrp-font-size-base: 14px;
+  --rdrp-font-size-md: 15px;
+  --rdrp-font-size-lg: 16px;
+
+  --rdrp-trigger-min-width: 240px;
+  --rdrp-trigger-padding-x: 16px;
+  --rdrp-trigger-padding-y: 10px;
+  --rdrp-popup-padding: 20px;
+
+  --rdrp-btn-padding-x: 16px;
+  --rdrp-btn-padding-y: 8px;
+
+  --rdrp-spacing-lg: 16px;
+  --rdrp-spacing-xl: 20px;
+
+  --rdrp-time-item-height: 36px;
+  --rdrp-time-panel-height: 196px;
+  --rdrp-time-column-height: 180px;
+  --rdrp-time-panel-min-width: 140px;
+  --rdrp-time-picker-content-min-width: 290px;
+
+  --rdrp-preset-min-width: 160px;
+}
+```
+
+### X-Large
+
+```css
+.rdrp-size-x-large {
+  --rdrp-cell-size: 52px;
+  --rdrp-nav-btn-size: 36px;
+  --rdrp-weekday-height: 36px;
+  --rdrp-grid-min-height: 312px;
+  --rdrp-panel-min-width: 364px;
+  --rdrp-dual-gap: 32px;
+
+  --rdrp-font-size-xs: 13px;
+  --rdrp-font-size-sm: 14px;
+  --rdrp-font-size-base: 15px;
+  --rdrp-font-size-md: 16px;
+  --rdrp-font-size-lg: 18px;
+
+  --rdrp-trigger-min-width: 280px;
+  --rdrp-trigger-padding-x: 20px;
+  --rdrp-trigger-padding-y: 12px;
+  --rdrp-popup-padding: 24px;
+
+  --rdrp-btn-padding-x: 20px;
+  --rdrp-btn-padding-y: 10px;
+
+  --rdrp-spacing-lg: 20px;
+  --rdrp-spacing-xl: 24px;
+
+  --rdrp-time-item-height: 40px;
+  --rdrp-time-panel-height: 216px;
+  --rdrp-time-column-height: 200px;
+  --rdrp-time-panel-min-width: 160px;
+
+  --rdrp-preset-min-width: 180px;
+}
+```
+
+## 自訂尺寸
+
+透過定義一個覆寫尺寸變數的 CSS 類別來建立您自己的尺寸：
+
+```css
+.rdrp-size-custom {
+  --rdrp-cell-size: 40px;
+  --rdrp-nav-btn-size: 30px;
+  --rdrp-font-size-base: 14px;
+  --rdrp-font-size-md: 15px;
+  --rdrp-trigger-min-width: 220px;
+  --rdrp-popup-padding: 18px;
+}
+```
+
+然後透過一個包裝器來套用它：
+
+```tsx
+<div className="rdrp-size-custom">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+或者使用複合元件 API，將類別新增到 Root：
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} className="rdrp-size-custom">
+  {/* ... */}
+</DatePicker.Root>
+```
+
+您也可以透過行內樣式來覆寫尺寸變數：
+
+<CodeDemo source={CustomSizeViaCSSSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSizeViaCSS client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip">
+  `medium` 尺寸是預設值，不會套用任何覆寫。`variables.css` 中的基礎變數就是 medium 的值。
+</Admonition>

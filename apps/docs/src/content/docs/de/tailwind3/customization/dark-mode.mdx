@@ -1,0 +1,171 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Dark Mode
+
+Das Tailwind v3-Paket bietet volle Unterstützung für den Dark Mode unter Verwendung der `dark:`-Variante von Tailwind. Jedes Komponentenelement hat explizite Dark-Mode-Klassen.
+
+## Wie es funktioniert
+
+Das Tailwind v3-Theme verwendet durchgehend konkrete Farbklassen mit `dark:`-Varianten. Zum Beispiel:
+
+```
+bg-white dark:bg-slate-950
+text-slate-900 dark:text-slate-50
+border-slate-200 dark:border-slate-800
+```
+
+Der Dark Mode wird aktiviert, wenn die `dark:`-Variante von Tailwind ausgelöst wird, was von der `darkMode`-Strategie Ihrer Tailwind-Konfiguration abhängt.
+
+## Tailwind-Konfiguration
+
+### Class-Strategie (Empfohlen)
+
+Setzen Sie `darkMode: "class"` in Ihrer Tailwind-Konfiguration. Der Dark Mode wird aktiviert, wenn eine `dark`-Klasse auf `<html>` oder einem übergeordneten Element vorhanden ist:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+};
+```
+
+Dark Mode umschalten:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+Oder wenden Sie die Klasse auf `<html>` an:
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### Selector-Strategie
+
+Tailwind v3.4+ unterstützt `darkMode: "selector"`, was die Verwendung von `[data-theme="dark"]` oder einem beliebigen benutzerdefinierten Selektor ermöglicht:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### Media-Strategie
+
+Setzen Sie `darkMode: "media"` (oder lassen Sie es weg – dies ist die Standardeinstellung), um der Betriebssystempräferenz zu folgen:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: "media",
+  // ...
+};
+```
+
+Keine zusätzliche Einrichtung erforderlich. Der Picker folgt `prefers-color-scheme`.
+
+## Farbpaare
+
+Hier sind die Hell/Dunkel-Farbpaare, die im gesamten Picker verwendet werden:
+
+| Element              | Hell                | Dunkel                       |
+| -------------------- | ------------------- | ---------------------------- |
+| Hintergrund          | `bg-white`          | `dark:bg-slate-950`          |
+| Text                 | `text-slate-900`    | `dark:text-slate-50`         |
+| Gedämpfter Text      | `text-slate-500`    | `dark:text-slate-400`        |
+| Rand                 | `border-slate-200`  | `dark:border-slate-800`      |
+| Hover-Hintergrund    | `bg-slate-100`      | `dark:bg-slate-800`          |
+| Primär               | `bg-sky-500`        | `dark:bg-sky-500`            |
+| Primärtext           | `text-sky-500`      | `dark:text-sky-400`          |
+| Bereichs-Hintergrund | `bg-sky-50`         | `dark:bg-sky-950/50`         |
+| Hover-Bereich        | `bg-sky-50/50`      | `dark:bg-sky-950/30`         |
+| Fokus-Ring           | `ring-sky-500`      | `ring-sky-500`               |
+| Ring-Abstand         | `ring-offset-white` | `dark:ring-offset-slate-950` |
+
+## Integration mit Docusaurus
+
+Wenn Sie Docusaurus verwenden (das `data-theme` auf `<html>` nutzt), konfigurieren Sie die Selektor-Strategie von Tailwind:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  // ...
+};
+```
+
+Docusaurus setzt `<html data-theme="dark">`, wenn der Dark Mode aktiv ist, und die `dark:`-Variante von Tailwind wird auf diesen Selektor reagieren.
+
+## Integration mit next-themes
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes` fügt die `dark`-Klasse auf `<html>` hinzu oder entfernt sie. Mit `darkMode: "class"` in Ihrer Tailwind-Konfiguration schaltet der Picker automatisch um.
+
+## Erzwingen eines bestimmten Modus
+
+Um den Picker zu zwingen, immer den hellen oder dunklen Modus zu verwenden, umschließen Sie ihn mit einem Container mit der entsprechenden Klasse:
+
+```tsx
+{
+  /* Immer hell — kein "dark"-Klassen-Vorfahre */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Immer dunkel */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+Bei Verwendung von `darkMode: "class"` muss die `dark`-Klasse auf einem übergeordneten Element oder auf `<html>` vorhanden sein. Der Picker selbst verwaltet das Umschalten des Dark Mode nicht.
+</Admonition>

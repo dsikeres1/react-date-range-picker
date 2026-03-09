@@ -1,0 +1,111 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind3Basic from "@examples/tailwind3/DatePicker/Basic";
+import Tailwind3BasicSource from "@examples/tailwind3/DatePicker/Basic.tsx?raw";
+
+# Tailwind CSS v3 入門
+
+Tailwind v3 套件提供了使用 Tailwind CSS v3 工具類別設計樣式的日期選擇器元件。
+
+## 安裝
+
+<PackageInstall pkg="react-date-range-picker-tailwind3" />
+
+不需要額外匯入 CSS。元件直接使用 Tailwind 工具類別。
+
+## Tailwind 設定
+
+將套件新增至 `tailwind.config.js` 的 `content` 路徑中，以便 Tailwind 掃描元件類別：
+
+```js
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  // ...
+};
+```
+
+## 快速開始
+
+<CodeDemo source={Tailwind3BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Tailwind3Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 包含內容
+
+| 元件                  | 說明                              |
+| --------------------- | --------------------------------- |
+| `DatePicker`          | 彈出式日曆的單一日期選擇          |
+| `DateRangePicker`     | 雙日曆與預設選項的日期範圍選擇    |
+| `DateTimePicker`      | 帶有時間滾動面板的日期 + 時間選擇 |
+| `DateRangeTimePicker` | 日期範圍 + 時間選擇               |
+
+所有元件都支援：
+
+- 使用 `value` / `onChange` 控制值
+- 鍵盤導覽
+- 透過 `dark:` 變體支援深色模式
+- 4 種尺寸：`small`、`medium`、`large`、`x-large`
+- 用於自訂的複合元件 API
+
+## TypeScript 型別
+
+所有設定和資料型別都從套件中重新匯出 — 無需單獨安裝 headless 套件：
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind3";
+```
+
+這些型別可用於：
+
+- **`Locale`** — 自訂語系覆寫 (星期名稱、按鈕標籤、日期格式)
+- **`DatePickerSize`** — 為 `size` prop 定義型別 (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — 設定時間選擇器的精度、格式和步長
+- **`DateRangePreset`** — 為 `DateRangePicker` / `DateRangeTimePicker` 定義預設選項
+- **`CalendarMonth`**, **`DayProps`** — 使用複合元件進行自訂渲染
+
+有關詳細的型別定義，請參閱 [Headless Types](/docs/headless/types/common-types)。
+
+## 下一步
+
+- [DatePicker](/docs/tailwind3/components/date-picker/basic) — 單一日期選擇
+- [DateRangePicker](/docs/tailwind3/components/date-range-picker/basic) — 帶有預設選項的日期範圍
+- [Compound Components](/docs/tailwind3/customization/overview) — 自訂內部結構
+- [Theme Override](/docs/tailwind3/customization/theme-override) — 自訂主題顏色
+- [Dark Mode](/docs/tailwind3/customization/dark-mode) — 深色主題支援
+
+## Tailwind Preflight 與重設
+
+此套件假設您的專案已啟用 Tailwind CSS Preflight (這是預設值)。
+如果您的環境停用 Preflight (例如 Docusaurus、某些微前端)，按鈕樣式可能會損壞。
+在這種情況下，請匯入提供的 `reset.css` 來手動初始化按鈕樣式：
+
+```tsx
+import "react-date-range-picker-tailwind3/reset.css";
+```

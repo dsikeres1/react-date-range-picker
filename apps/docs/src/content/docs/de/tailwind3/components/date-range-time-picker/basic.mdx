@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/tailwind3/DateRangeTimePicker/Basic";
+import BasicSource from "@examples/tailwind3/DateRangeTimePicker/Basic.tsx?raw";
+import Inline from "@examples/tailwind3/DateRangeTimePicker/Inline";
+import InlineSource from "@examples/tailwind3/DateRangeTimePicker/Inline.tsx?raw";
+
+# DateRangeTimePicker
+
+Eine Komponente zur Auswahl von Datumsbereich und Uhrzeit mit zwei Kalendern und Zeitfenstern für Beginn und Ende.
+
+## Grundlegende Verwendung
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Inline-Modus
+
+Zeigen Sie die Kalender und Zeitfenster inline an, ohne einen Popup-Auslöser.
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

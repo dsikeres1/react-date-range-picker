@@ -1,0 +1,46 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/styled/DateRangePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/styled/DateRangePicker/MinMaxDays.tsx?raw";
+import DisabledDates from "@examples/styled/DateRangePicker/DisabledDates";
+import DisabledDatesSource from "@examples/styled/DateRangePicker/DisabledDates.tsx?raw";
+import AllowSingleDate from "@examples/styled/DateRangePicker/AllowSingleDate";
+import AllowSingleDateSource from "@examples/styled/DateRangePicker/AllowSingleDate.tsx?raw";
+
+# 제약조건
+
+## 최소 및 최대 일수
+
+`minDays` 및 `maxDays`를 사용하여 범위 길이를 제한합니다(포함). 사용자는 `minDays`보다 짧거나 `maxDays`보다 긴 범위를 확정할 수 없습니다.
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 비활성화된 날짜
+
+특정 날짜를 동적으로 비활성화하려면 `isDateUnavailable`을 사용하세요. 비활성화된 날짜는 범위의 시작이나 끝으로 선택할 수 없습니다.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 단일 날짜 허용
+
+기본적으로 시작과 끝이 같은 범위가 허용됩니다. 최소 두 개의 다른 날짜를 요구하려면 `allowSingleDateInRange={false}`로 설정하세요.
+
+<CodeDemo source={AllowSingleDateSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <AllowSingleDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

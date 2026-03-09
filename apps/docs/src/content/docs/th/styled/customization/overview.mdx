@@ -1,0 +1,44 @@
+---
+sidebar_position: 1
+sidebar_label: "Overview"
+---
+
+# คอมโพเนนต์แบบผสม (Compound Components)
+
+แพ็คเกจ styled เปิดเผย Compound Component API ที่ให้คุณควบคุมโครงสร้างภายในและการเรนเดอร์ของตัวเลือกแต่ละตัวได้อย่างเต็มที่ แทนที่จะเป็นคอมโพเนนต์ขนาดใหญ่ชิ้นเดียว คุณสามารถประกอบตัวเลือกจากส่วนต่างๆ ได้
+
+## วิธีการทำงาน
+
+ตัวเลือกทุกตัว (เช่น `DatePicker`) เป็นทั้งคอมโพเนนต์อย่างง่ายและเนมสเปซของส่วนประกอบแบบผสม:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/styles.css";
+
+// การใช้งานอย่างง่าย — เรนเดอร์เลย์เอาต์เริ่มต้น
+<DatePicker value={value} onChange={setValue} />
+
+// การใช้งานแบบผสม — ควบคุมโครงสร้างได้อย่างเต็มที่
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## ส่วนประกอบที่พร้อมใช้งาน
+
+### DatePicker
+
+|

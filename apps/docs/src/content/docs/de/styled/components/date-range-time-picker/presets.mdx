@@ -1,0 +1,20 @@
+---
+sidebar_position: 2
+sidebar_label: With Presets
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import WithPresets from "@examples/styled/DateRangeTimePicker/WithPresets";
+import WithPresetsSource from "@examples/styled/DateRangeTimePicker/WithPresets.tsx?raw";
+
+# Mit Voreinstellungen
+
+Kombinieren Sie die Zeitauswahl mit voreingestellten Datumsbereichen für eine schnelle Auswahl.
+
+<CodeDemo source={WithPresetsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <WithPresets client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,79 @@
+---
+sidebar_position: 4
+sidebar_label: "Custom Footer"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/styled/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/styled/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/styled/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/styled/Customization/CompoundNoFooter.tsx?raw";
+
+# Chân trang tùy chỉnh
+
+Xây dựng một chân trang hoàn toàn tùy chỉnh với các nút và bố cục của riêng bạn, hoặc loại bỏ hoàn toàn các phần để có một bộ chọn tối giản.
+
+## Chân trang được sắp xếp lại
+
+Sắp xếp lại các nút ở chân trang hoặc thêm các nút mới như `TodayButton`. Thành phần phức hợp `DateTimePicker` bao gồm một `TimeSection` với `TimePanel` để chọn thời gian, và `Footer` hoạt động như một vùng chứa cho các nút hành động.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+Bạn cũng có thể bỏ qua hoàn toàn các nút hành động tích hợp và sử dụng các phần tử của riêng bạn bên trong `Footer`:
+
+```tsx
+<DatePicker.Footer>
+  <button onClick={() => setValue(new Date())}>Đặt ngày hôm nay</button>
+  <button onClick={() => setValue(null)}>Xóa</button>
+</DatePicker.Footer>
+```
+
+## Bố cục tối giản
+
+Bỏ qua bất kỳ phần nào bạn không cần. Ví dụ, một lịch nội tuyến không có tiêu đề, không có chân trang hoặc trình kích hoạt:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+Hoặc một bộ chọn không có chân trang:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Thêm tên lớp tùy chỉnh
+
+Mỗi phần của thành phần phức hợp chấp nhận một `className` prop sẽ được hợp nhất với các lớp CSS được định kiểu mặc định:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} className="my-picker">
+  <DatePicker.Trigger className="my-trigger" />
+  <DatePicker.Content className="my-content">
+    <DatePicker.Header className="my-header">
+      <DatePicker.PrevButton className="my-nav" />
+      <DatePicker.Title className="my-title" />
+      <DatePicker.NextButton className="my-nav" />
+    </DatePicker.Header>
+    <DatePicker.Grid className="my-grid" />
+  </DatePicker.Content>
+</DatePicker.Root>
+```

@@ -1,0 +1,131 @@
+---
+sidebar_position: 11
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# ความเข้ากันได้กับ shadcn/ui
+
+แพ็คเกจ Tailwind v4 ถูกออกแบบมาให้เข้ากันได้กับโปรเจกต์ [shadcn/ui](https://ui.shadcn.com/) ตั้งแต่แกะกล่อง โดยใช้ข้อตกลงโทเค็นเชิงความหมาย (semantic token convention) เดียวกัน ดังนั้นหากโปรเจกต์ของคุณมีการตั้งค่า shadcn/ui ไว้อยู่แล้ว ตัวเลือกวันที่จะเข้ากับธีมของคุณโดยอัตโนมัติ
+
+## ทำงานอย่างไร
+
+shadcn/ui กำหนดตัวแปร CSS เชิงความหมาย (semantic CSS variables) เช่น:
+
+```css
+--background
+--foreground
+--primary
+--primary-foreground
+--muted-foreground
+--accent
+--accent-foreground
+--destructive
+--border
+--input
+--ring
+```
+
+คอมโพเนนต์ `react-date-range-picker-tailwind4` ใช้ชื่อโทเค็นเดียวกันผ่านคลาสยูทิลิตี้ของ Tailwind (`bg-primary`, `text-foreground`, `border-border` เป็นต้น) เนื่องจากทั้งสองระบบอ้างอิงถึงตัวแปร CSS เดียวกัน ตัวเลือกวันที่จึงสืบทอดธีมที่มีอยู่ของคุณ
+
+## การตั้งค่าแบบไม่ต้องกำหนดค่า
+
+หากคุณมีโปรเจกต์ shadcn/ui อยู่แล้ว สามารถติดตั้งแพ็คเกจและใช้งานได้โดยตรง:
+
+```bash
+npm install react-date-range-picker-tailwind4
+```
+
+```tsx
+import { useState } from "react";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} />;
+}
+```
+
+ไม่จำเป็นต้องกำหนดโทเค็นเพิ่มเติมหรือเปลี่ยนแปลง CSS ใดๆ ตัวเลือกวันที่จะใช้ `--color-primary`, `--color-background` ที่คุณมีอยู่แล้ว
+
+## การจับคู่โทเค็น
+
+นี่คือการจับคู่ระหว่างโทเค็นของตัวเลือกวันที่กับโทเค็นของ shadcn/ui:
+
+| การใช้งานใน Picker    | Tailwind Class            | shadcn Token           |
+| --------------------- | ------------------------- | ---------------------- |
+| พื้นหลังป๊อปอัป       | `bg-popover`              | `--popover`            |
+| ข้อความป๊อปอัป        | `text-popover-foreground` | `--popover-foreground` |
+| วันที่เลือก           | `bg-primary`              | `--primary`            |
+| ข้อความของวันที่เลือก | `text-primary-foreground` | `--primary-foreground` |
+| โฮเวอร์บนวัน          | `bg-accent`               | `--accent`             |
+| ข้อความโฮเวอร์บนวัน   | `text-accent-foreground`  | `--accent-foreground`  |
+| ข้อความสีจาง          | `text-muted-foreground`   | `--muted-foreground`   |
+| ปุ่มล้าง              | `text-destructive`        | `--destructive`        |
+| เส้นขอบ               | `border-border`           | `--border`             |
+| เส้นขอบของทริกเกอร์   | `border-input`            | `--input`              |
+| วงแหวนโฟกัส           | `ring-ring`               | `--ring`               |
+
+## การใช้งานร่วมกับคอมโพเนนต์ shadcn
+
+ตัวเลือกวันที่สามารถวางไว้ข้างๆ คอมโพเนนต์อื่นของ shadcn/ui และจะเข้ากันได้ทางสายตา:
+
+```tsx
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function DateForm() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  return (
+    <div className="flex flex-col gap-2">
+      <Label>Select a date</Label>
+      <DatePicker value={date} onChange={setDate} />
+      <Button onClick={() => console.log(date)}>Submit</Button>
+    </div>
+  );
+}
+```
+
+## โหมดมืด
+
+หากโปรเจกต์ shadcn/ui ของคุณใช้ `next-themes` ด้วยกลยุทธ์แบบ `class` โหมดมืดจะทำงานโดยอัตโนมัติ ทั้ง shadcn และตัวเลือกวันที่อ่านจากตัวแปร CSS เดียวกัน และตัวเลือก `.dark` ของคุณจะสลับทั้งสองอย่าง
+
+```tsx
+// ทำงานได้ทันทีกับการตั้งค่าโหมดมืดของ shadcn
+<ThemeProvider attribute="class" defaultTheme="system">
+  <DatePicker value={value} onChange={setValue} />
+</ThemeProvider>
+```
+
+## shadcn Registry
+
+<Admonition type="info" title="เร็วๆ นี้">
+มีการวางแผนที่จะผนวกรวมกับ [shadcn/ui registry](https://ui.shadcn.com/docs/registry) อย่างสมบูรณ์ ซึ่งจะทำให้สามารถติดตั้งตัวเลือกวันที่ผ่านทาง:
+
+```bash
+npx shadcn@latest add react-date-range-picker
+```
+
+จนกว่าจะถึงตอนนั้น โปรดติดตั้งแพ็คเกจ npm โดยตรงและใช้ Compound Component API สำหรับการปรับแต่งโครงสร้างใดๆ
+
+</Admonition>
+
+## การปรับแต่งนอกเหนือจากค่าเริ่มต้นของ shadcn
+
+หากคุณต้องการให้ตัวเลือกวันที่ดูแตกต่างจากส่วนที่เหลือของธีม shadcn ของคุณ ให้จำกัดขอบเขตการลบล้างโทเค็น (token overrides) ไว้ใน wrapper:
+
+```css
+.custom-picker {
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+  --color-accent: oklch(0.95 0.05 300);
+}
+```
+
+```tsx
+<div className="custom-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```

@@ -1,0 +1,54 @@
+---
+sidebar_position: 5
+title: Locale Helpers
+---
+
+# Хелперы локализации
+
+Функции для создания и объединения конфигураций локали.
+
+```tsx
+import {
+  DEFAULT_LOCALE,
+  mergeLocale,
+  createLocale,
+  resolveLocale,
+  weekdayToNumber,
+} from "react-date-range-picker-headless";
+```
+
+## DEFAULT_LOCALE
+
+Объект локали по умолчанию (английский). Все поля заполнены английскими строками.
+
+|     |          |
+| --- | -------- |
+| Тип | `Locale` |
+
+```tsx
+DEFAULT_LOCALE.weekdays; // ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+DEFAULT_LOCALE.months; // ["January", "February", ..., "December"]
+DEFAULT_LOCALE.confirm; // "Confirm"
+DEFAULT_LOCALE.placeholder; // "Select date"
+```
+
+## mergeLocale
+
+Объединяет частичную локаль с локалью по умолчанию.
+
+|           |                                                  |
+| --------- | ------------------------------------------------ |
+| Сигнатура | `mergeLocale(partial?: Partial<Locale>): Locale` |
+
+Возвращает `DEFAULT_LOCALE`, если частичная локаль не предоставлена. Когда `rangeSeparator` переопределен, а `formatRange` нет, `formatRange` автоматически регенерируется для использования нового разделителя.
+
+```tsx
+mergeLocale(); // DEFAULT_LOCALE
+
+mergeLocale({
+  confirm: "OK",
+  cancel: "Back",
+  rangeSeparator: " - ",
+});
+// { ...DEFAULT_LOCALE, confirm: "OK", cancel: "Back", rangeSeparator: " - ", formatRange: (s, e) => `${s} - ${e}` }
+```

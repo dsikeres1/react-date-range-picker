@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# カスタムUIの構築
+
+このガイドでは、ヘッドレスフックの上に独自のデートピッカーUIを構築するためのパターンを解説します。
+
+## パターン
+
+すべてのヘッドレスフックは同じパターンに従います：
+
+1.  オプション（`value`、`onChange`、`configuration`）を指定して **フックを呼び出します**
+2.  状態、計算値、ハンドラを取得するために **返り値を分割代入します**
+3.  返された値を使用して **独自のマークアップをレンダリングします**
+4.  提供されたハンドラを呼び出して **インタラクションを接続します**
+
+フックは、カレンダー生成、日付計算、開閉状態、キーボードナビゲーション、範囲ロジックなど、すべての複雑さを管理し、あなたは純粋に表示に集中できます。
+
+## 例：カスタムデートピッカー
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 主要な概念
+
+### getDayProps
+
+`getDayProps` 関数はカレンダーレンダリングの中核です。各日付セルに対して、そのセルの状態を記述する18個の真偽値/数値フラグを持つ `DayProps` オブジェクトを返します：
+
+```tsx
+const dp = getDayProps(day);
+
+// 選択状態
+dp.isSelected; // 現在選択されている日付
+dp.isToday; // 今日の日付
+
+// 範囲の状態（レンジピッカー用）
+dp.isInRange; // 開始日と終了日の間
+dp.isRangeStart; // 範囲の最初の日付
+dp.isRangeEnd; // 範囲の最後の日付
+dp.isInHoverRange; // ホバープレビュー範囲内
+dp.isHoverTarget; // ホバーされている日付自体
+dp.isRangeSingle; // 範囲の開始と終了の両方（単一日範囲）
+
+// 視覚的な接続ヘルパー
+dp.hasLeftConnection; // 前日との接続（範囲の背景用）
+dp.hasRightConnection; // 翌日との接続
+dp.isConsecutiveRange; // 複数日にまたがる範囲の一部
+
+// 状態
+dp.isDisabled; // minDate/maxDate/isDateUnavailableにより無効化
+dp.isFocused; // キーボードフォーカスあり
+dp.isOutsideDay; // 隣接する月に属する（showOutsideDaysが有効な場合）
+dp.isHighlighted; // highlightDates配列内
+
+// データ
+dp.date; // Dateオブジェクト
+dp.day; // 日（月の何日目か）
+dp.dayOfWeek; // 0-6（日曜日-土曜日）
+```
+
+### クリック外部検出のためのRefs
+
+フックは `containerRef` と `popupRef` を返します。これらをラッパー要素とポップアップ要素にアタッチしてください。フックはこれらを使用して外部のクリックを検出し、ポップアップを自動的に閉じます。
+
+### キーボードナビゲーション
+
+`handleKeyDown` ハンドラは、矢印キー、Enter、Escape、Tabをサポートし、完全なキーボードナビゲーションを可能にします。これをポップアップコンテナにアタッチしてください。
+
+### Locale
+
+すべてのユーザー向け文字列は `locale` オブジェクトから提供されます。部分的な `locale` オプションを渡すことで、任意の文字列をカスタマイズできます：
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "OK",
+    cancel: "戻る",
+    placeholder: "日付を選択...",
+  },
+});
+```
+
+## 次のステップ
+
+- [Hook Reference](/docs/headless/hooks/use-date-picker) -- 各フックの完全なオプションと返り値
+- [Contexts](/docs/headless/contexts) -- 複合コンポーネントパターンのためにプロバイダーを使用する
+- [Date Utilities](/docs/headless/date-utilities) -- 日付操作のためのヘルパー関数

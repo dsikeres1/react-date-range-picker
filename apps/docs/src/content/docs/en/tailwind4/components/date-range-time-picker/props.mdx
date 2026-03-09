@@ -1,0 +1,69 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Props
+
+| Prop                     | Type                                                          | Default     | Description                                                  |
+| ------------------------ | ------------------------------------------------------------- | ----------- | ------------------------------------------------------------ |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --          | Selected date-time range value                               |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | Callback when value changes                                  |
+| `time`                   | `TimeConfig`                                                  | --          | Time panel configuration (applied to both start and end)     |
+| `presets`                | `DateRangePreset[]`                                           | --          | Predefined date range presets                                |
+| `maxDays`                | `number`                                                      | --          | Maximum days allowed in range (inclusive)                    |
+| `minDays`                | `number`                                                      | --          | Minimum days required in range (inclusive)                   |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`      | Allow range where start equals end                           |
+| `minDate`                | `Date`                                                        | --          | Minimum selectable date                                      |
+| `maxDate`                | `Date`                                                        | --          | Maximum selectable date                                      |
+| `locale`                 | `Partial<Locale>`                                             | --          | Custom locale configuration                                  |
+| `initialMonth`           | `Date`                                                        | --          | Initial displayed month                                      |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`  | Component size                                               |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`  | First day of the week                                        |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --          | Mark dates as disabled                                       |
+| `displayFormat`          | `string`                                                      | --          | Custom display format                                        |
+| `open`                   | `boolean`                                                     | --          | Controlled open state                                        |
+| `initialOpen`            | `boolean`                                                     | --          | Initial open state (uncontrolled)                            |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --          | Callback when open state changes                             |
+| `required`               | `boolean`                                                     | `false`     | Disable clearing the value                                   |
+| `showOutsideDays`        | `boolean`                                                     | `false`     | Show days from adjacent months                               |
+| `highlightDates`         | `Date[]`                                                      | --          | Dates to highlight                                           |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`     | Auto-confirm on preset click                                 |
+| `numberOfMonths`         | `number`                                                      | `2`         | Number of months to display                                  |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"` | Caption navigation style                                     |
+| `fromYear`               | `number`                                                      | --          | Start year for dropdown                                      |
+| `toYear`                 | `number`                                                      | --          | End year for dropdown                                        |
+| `disablePast`            | `boolean`                                                     | `false`     | Disable dates before today                                   |
+| `disableFuture`          | `boolean`                                                     | `false`     | Disable dates after today                                    |
+| `inline`                 | `boolean`                                                     | `false`     | Show calendar inline (no popup)                              |
+| `name`                   | `string`                                                      | --          | Hidden input name for form submission (start date-time)      |
+| `endName`                | `string`                                                      | --          | Hidden input name for end date-time (defaults to `name-end`) |
+| `placeholder`            | `string`                                                      | --          | Trigger placeholder text                                     |
+| `hideHeader`             | `boolean`                                                     | `false`     | Hide the navigation header                                   |
+| `hideFooter`             | `boolean`                                                     | `false`     | Hide the action footer                                       |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Time display precision. Defaults to "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** 12-hour or 24-hour format. Defaults to "24". */
+  hourFormat?: "12" | "24";
+  /** Minute increment step. Defaults to 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Second increment step. Defaults to 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Height (in px) of each scroll wheel item. Defaults to 32. */
+  itemHeight?: number;
+}
+```
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

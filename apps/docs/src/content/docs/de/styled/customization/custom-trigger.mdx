@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: "Custom Trigger"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/styled/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/styled/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/styled/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/styled/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Benutzerdefinierter Auslöser
+
+Ersetzen Sie den Standardauslöser durch Ihren eigenen Button oder Ihre eigene Eingabe. Die `Trigger`-Komponente akzeptiert eine Render-Prop, die Ihnen die volle Kontrolle über das Aussehen und Verhalten des Auslösers gibt.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Trigger Render-Props
+
+| Prop           | Typ              | Beschreibung                      |
+| -------------- | ---------------- | --------------------------------- |
+| `displayValue` | `string`         | Formatiertes ausgewähltes Datum   |
+| `placeholder`  | `string`         | Platzhaltertext                   |
+| `hasValue`     | `boolean`        | Ob ein Datum ausgewählt ist       |
+| `isOpen`       | `boolean`        | Ob das Popup geöffnet ist         |
+| `onToggle`     | `() => void`     | Popup öffnen/schließen umschalten |
+| `onClear`      | `() => void`     | Die Auswahl löschen               |
+| `locale`       | `Locale`         | Aktuelles Locale-Objekt           |
+| `triggerRef`   | `(node) => void` | Ref-Callback zur Positionierung   |
+
+## Auslöser für Bereichsauswahl
+
+Das gleiche Muster funktioniert mit dem `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,205 @@
+---
+sidebar_position: 2
+title: useDateRangePicker
+---
+
+# useDateRangePicker
+
+Hook pour la sélection de plage de dates avec un calendrier à deux mois, un aperçu au survol et des plages prédéfinies.
+
+## Importation
+
+```tsx
+import { useDateRangePicker } from "react-date-range-picker-headless";
+```
+
+## Utilisation
+
+```tsx
+import { useState } from "react";
+import { useDateRangePicker } from "react-date-range-picker-headless";
+
+function MyDateRangePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangePicker({
+    value: range,
+    onChange: setRange,
+    presets: [
+      {
+        label: "7 derniers jours",
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setDate(start.getDate() - 6);
+          return { start, end };
+        },
+      },
+    ],
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Deux calendriers côte à côte */}
+          {[picker.leftCalendar, picker.rightCalendar].map((cal, calIdx) => (
+            <div key={calIdx}>
+              <span>{picker.locale.formatMonthYear(cal.month)}</span>
+              {cal.weeks.flat().map((day, i) => {
+                if (!day) return <span key={i} />;
+                const dp = picker.getDayProps(day, cal.month);
+                return (
+                  <button
+                    key={i}
+                    onClick={() => picker.handleDateClick(day)}
+                    onMouseEnter={() => picker.handleDateHover(day)}
+                    onMouseLeave={() => picker.handleDateHover(null)}
+                  >
+                    {dp.day}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+
+          {/* Préréglages */}
+          {picker.presets.map((preset, i) => (
+            <button
+              key={i}
+              onClick={() => picker.handlePresetClick(preset)}
+              style={{ fontWeight: i === picker.activePresetIndex ? "bold" : "normal" }}
+            >
+              {preset.label}
+            </button>
+          ))}
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Options
+
+| Option                   | Type                                                          | Défaut             | Description                                                                          |
+| ------------------------ | ------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------ |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --                 | **Requis.** Valeur de la plage actuelle.                                             |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --                 | **Requis.** Appelé lorsque la plage change.                                          |
+| `maxDays`                | `number`                                                      | --                 | Nombre maximum de jours autorisés dans une plage (inclus).                           |
+| `minDays`                | `number`                                                      | --                 | Nombre minimum de jours requis dans une plage (inclus).                              |
+| `presets`                | `DateRangePreset[]`                                           | --                 | Préréglages de plage de dates prédéfinis (par ex. "7 derniers jours", "Ce mois-ci"). |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`             | Lorsque `false`, empêche la sélection d'une plage où le début est égal à la fin.     |
+| `minDate`                | `Date`                                                        | --                 | Date la plus précoce sélectionnable.                                                 |
+| `maxDate`                | `Date`                                                        | --                 | Date la plus tardive sélectionnable.                                                 |
+| `locale`                 | `Partial<Locale>`                                             | `DEFAULT_LOCALE`   | Surcharger les chaînes de la locale.                                                 |
+| `initialMonth`           | `Date`                                                        | --                 | Mois initial à afficher.                                                             |
+| `size`                   | `DatePickerSize`                                              | --                 | Transmission à l'interface utilisateur.                                              |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`         | Premier jour de la semaine.                                                          |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --                 | Fonction personnalisée pour désactiver des dates spécifiques.                        |
+| `displayFormat`          | `string`                                                      | --                 | Chaîne de format personnalisée pour la valeur affichée.                              |
+| `open`                   | `boolean`                                                     | --                 | État d'ouverture contrôlé.                                                           |
+| `initialOpen`            | `boolean`                                                     | `false`            | État d'ouverture initial (non contrôlé).                                             |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --                 | Callback lorsque l'état d'ouverture change.                                          |
+| `required`               | `boolean`                                                     | `false`            | Lorsque true, `handleClear` est une opération sans effet.                            |
+| `today`                  | `Date`                                                        | `new Date()`       | Surcharger la date d'aujourd'hui.                                                    |
+| `onMonthChange`          | `(month: Date) => void`                                       | --                 | Callback lorsque le mois affiché change.                                             |
+| `disablePast`            | `boolean`                                                     | `false`            | Désactiver toutes les dates avant aujourd'hui.                                       |
+| `disableFuture`          | `boolean`                                                     | `false`            | Désactiver toutes les dates après aujourd'hui.                                       |
+| `showOutsideDays`        | `boolean`                                                     | `false`            | Afficher les jours des mois adjacents.                                               |
+| `highlightDates`         | `Date[]`                                                      | --                 | Tableau de dates à surligner.                                                        |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`            | Confirmation automatique lorsque la date de fin est sélectionnée.                    |
+| `numberOfMonths`         | `number`                                                      | `2`                | Nombre de mois de calendrier à afficher.                                             |
+| `captionLayout`          | `CaptionLayout`                                               | `"buttons"`        | Mode de disposition de la légende.                                                   |
+| `fromYear`               | `number`                                                      | current year - 100 | Année de début pour le menu déroulant.                                               |
+| `toYear`                 | `number`                                                      | current year + 10  | Année de fin pour le menu déroulant.                                                 |
+
+## Valeurs de retour
+
+| Nom                 | Type                                              | Description                                                                                                                                                                                  |
+| ------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `isOpen`            | `boolean`                                         | Indique si la popup est ouverte.                                                                                                                                                             |
+| `tempStartDate`     | `Date \| null`                                    | Date de début temporaire (avant confirmation).                                                                                                                                               |
+| `tempEndDate`       | `Date \| null`                                    | Date de fin temporaire (avant confirmation).                                                                                                                                                 |
+| `hoveredDate`       | `Date \| null`                                    | Date actuellement survolée (pour l'aperçu de la plage).                                                                                                                                      |
+| `leftMonth`         | `Date`                                            | Mois affiché du calendrier de gauche.                                                                                                                                                        |
+| `rightMonth`        | `Date`                                            | Mois affiché du calendrier de droite.                                                                                                                                                        |
+| `locale`            | `Locale`                                          | Objet de la locale résolue.                                                                                                                                                                  |
+| `leftCalendar`      | `CalendarMonth`                                   | Données du calendrier pour le panneau de gauche.                                                                                                                                             |
+| `rightCalendar`     | `CalendarMonth`                                   | Données du calendrier pour le panneau de droite.                                                                                                                                             |
+| `calendars`         | `CalendarMonth[]`                                 | Tableau de tous les mois du calendrier.                                                                                                                                                      |
+| `getDayProps`       | `(date: Date, referenceMonth?: Date) => DayProps` | Calcule les indicateurs pour une cellule de jour du calendrier. Passez `referenceMonth` pour que la détection des jours extérieurs fonctionne correctement dans les dispositions multi-mois. |
+| `displayValue`      | `string`                                          | Chaîne formatée de la plage confirmée.                                                                                                                                                       |
+| `hasValue`          | `boolean`                                         | Indique si une plage est actuellement confirmée.                                                                                                                                             |
+| `canConfirm`        | `boolean`                                         | Indique si la sélection actuelle est valide pour la confirmation.                                                                                                                            |
+| `handleDateClick`   | `(date: Date) => void`                            | Gère le clic sur une cellule de jour. Le premier clic définit le début, le second la fin.                                                                                                    |
+| `handleDateHover`   | `(date: Date \| null) => void`                    | Gère le survol de la souris pour l'aperçu de la plage.                                                                                                                                       |
+| `handlePrevMonth`   | `() => void`                                      | Navigue les deux calendriers d'un mois en arrière.                                                                                                                                           |
+| `handleNextMonth`   | `() => void`                                      | Navigue les deux calendriers d'un mois en avant.                                                                                                                                             |
+| `handleOpen`        | `() => void`                                      | Ouvre la popup.                                                                                                                                                                              |
+| `handleClose`       | `() => void`                                      | Ferme la popup.                                                                                                                                                                              |
+| `handleToggle`      | `() => void`                                      | Bascule l'état de la popup.                                                                                                                                                                  |
+| `handleConfirm`     | `() => void`                                      | Confirme la sélection et ferme.                                                                                                                                                              |
+| `handleCancel`      | `() => void`                                      | Annule et revient à la valeur précédente.                                                                                                                                                    |
+| `handleClear`       | `() => void`                                      | Efface la plage (sans effet si `required`).                                                                                                                                                  |
+| `handleGoToToday`   | `() => void`                                      | Navigue vers le mois d'aujourd'hui.                                                                                                                                                          |
+| `containerRef`      | `RefObject<HTMLDivElement \| null>`               | Attacher à l'élément conteneur pour la détection des clics extérieurs.                                                                                                                       |
+| `popupRef`          | `RefObject<HTMLDivElement \| null>`               | Attacher à l'élément de la popup.                                                                                                                                                            |
+| `focusedDate`       | `Date \| null`                                    | Date focalisée au clavier.                                                                                                                                                                   |
+| `handleKeyDown`     | `(e: KeyboardEvent<HTMLElement>) => void`         | Gestionnaire de navigation au clavier.                                                                                                                                                       |
+| `presets`           | `DateRangePreset[]`                               | Le tableau des préréglages (transmis pour le rendu).                                                                                                                                         |
+| `handlePresetClick` | `(preset: DateRangePreset) => void`               | Applique une plage prédéfinie.                                                                                                                                                               |
+| `activePresetIndex` | `number`                                          | Index du préréglage correspondant actuellement (-1 si aucun).                                                                                                                                |
+| `years`             | `number[]`                                        | Tableau des années pour le mode déroulant.                                                                                                                                                   |
+| `months`            | `number[]`                                        | Indices des mois pour le mode déroulant.                                                                                                                                                     |
+| `handleYearSelect`  | `(year: number, calendarIndex?: number) => void`  | Définit l'année affichée.                                                                                                                                                                    |
+| `handleMonthSelect` | `(month: number, calendarIndex?: number) => void` | Définit le mois affiché.                                                                                                                                                                     |
+
+## Comportements clés
+
+### Flux de sélection de plage
+
+1. Le premier clic définit la **date de début** (la date de fin est effacée)
+2. Le deuxième clic définit la **date de fin** (échange automatiquement si avant le début)
+3. Le troisième clic réinitialise et commence une nouvelle plage
+
+### Aperçu au survol
+
+Tant que l'utilisateur a sélectionné une date de début mais pas encore de date de fin, `handleDateHover` met à jour `hoveredDate`. La fonction `getDayProps` utilise cela pour calculer `isInHoverRange` et `isHoverTarget`, vous permettant d'afficher un aperçu de la plage potentielle.
+
+### Préréglages
+
+Les préréglages peuvent être des objets statiques ou des fonctions de fabrique :
+
+```tsx
+const presets = [
+  { label: "Aujourd'hui", value: { start: new Date(), end: new Date() } },
+  {
+    label: "30 derniers jours",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setDate(start.getDate() - 29);
+      return { start, end };
+    },
+  },
+];
+```
+
+`activePresetIndex` renvoie l'index du préréglage qui correspond à la sélection actuelle, ou `-1` si aucun ne correspond.
+
+### maxDays / minDays
+
+Lorsque `maxDays` est défini, les dates au-delà de la plage autorisée à partir de la date de début sont automatiquement désactivées. Lorsque `minDays` est défini, les dates trop proches de la date de début sont désactivées.
+
+### shouldCloseOnSelect
+
+Pour les sélecteurs de plage, `shouldCloseOnSelect` déclenche la confirmation automatique lorsque la **date de fin** est sélectionnée (et non la date de début).

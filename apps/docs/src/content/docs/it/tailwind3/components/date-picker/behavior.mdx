@@ -1,0 +1,52 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/tailwind3/DatePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/tailwind3/DatePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/tailwind3/DatePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind3/DatePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/tailwind3/DatePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind3/DatePicker/FormIntegration.tsx?raw";
+
+# Comportamento
+
+## Chiudi alla Selezione
+
+Quando `shouldCloseOnSelect` è abilitato, il selettore conferma e si chiude automaticamente quando viene cliccata una data.
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Mesi Multipli
+
+Visualizza più mesi uno accanto all'altro.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Integrazione con Form
+
+Usa la prop `name` per includere un input nascosto per l'invio nativo del form.
+
+<Admonition type="tip">
+  Lo stile del pulsante di invio in questo esempio è personalizzato — la libreria fornisce solo il
+  selettore di date.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

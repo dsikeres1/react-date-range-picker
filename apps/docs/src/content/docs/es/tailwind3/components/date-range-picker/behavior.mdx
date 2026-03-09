@@ -1,0 +1,52 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/tailwind3/DateRangePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/tailwind3/DateRangePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/tailwind3/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind3/DateRangePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/tailwind3/DateRangePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind3/DateRangePicker/FormIntegration.tsx?raw";
+
+# Comportamiento
+
+## Cierre al seleccionar
+
+Cuando `shouldCloseOnSelect` está habilitado, el selector confirma y se cierra automáticamente cuando se selecciona la fecha de finalización.
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Múltiples meses
+
+Muestra más de los dos meses predeterminados uno al lado del otro.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Integración con formularios
+
+Usa la prop `name` para incluir campos de entrada ocultos para el envío de formularios nativos.
+
+<Admonition type="tip">
+  El estilo del botón de envío en este ejemplo es personalizado — la biblioteca solo proporciona el
+  selector de fechas.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,46 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# ส่วนประกอบแบบผสม (Compound Components)
+
+แพ็คเกจ Tailwind v4 เปิดเผย Compound Component API ที่ให้คุณควบคุมโครงสร้างภายในและการเรนเดอร์ของตัวเลือกแต่ละตัวได้อย่างเต็มที่ แทนที่จะเป็นคอมโพเนนต์ขนาดใหญ่ชิ้นเดียว คุณสามารถประกอบตัวเลือกจากส่วนประกอบย่อยๆ ได้
+
+## วิธีการทำงาน
+
+ตัวเลือกทุกตัว (เช่น `DatePicker`) เป็นทั้งคอมโพเนนต์แบบง่ายและเป็นเนมสเปซของส่วนประกอบย่อยๆ:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+// การใช้งานแบบง่าย -- เรนเดอร์เลย์เอาต์เริ่มต้น
+<DatePicker value={value} onChange={setValue} />
+
+// การใช้งานแบบผสม -- ควบคุมโครงสร้างได้เต็มที่
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+ด้วยส่วนประกอบแบบผสม คุณสามารถ:
+
+- **แทนที่** ส่วนใดก็ได้ด้วยการเรนเดอร์ของคุณเอง (เช่น trigger ที่กำหนดเอง, cell วันที่กำหนดเอง)
+- **จัดเรียง** เลย์เอาต์ใหม่ (เช่น ย้ายปุ่มในส่วนท้าย, เพิ่มปุ่มวันนี้)
+- **ละเว้น** ส่วนที่คุณไม่ต้องการ (เช่น ตัดส่วนท้ายออกเพื่อปฏิทินที่เรียบง่าย)
+- **เขียนทับคลาส** ในส่วนใดก็ได้ผ่าน `className` prop
+
+หน้าถัดไป

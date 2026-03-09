@@ -1,0 +1,36 @@
+---
+interface Props {
+  url?: string;
+  minHeight?: number;
+}
+
+const { url = "", minHeight } = Astro.props;
+---
+
+<div
+  class="mb-4 overflow-visible rounded-lg border border-border shadow-sm"
+  style={minHeight ? `min-height: ${minHeight}px` : undefined}
+>
+  <!-- Header bar -->
+  <div class="flex items-center border-b border-border bg-accent px-4 py-2">
+    <div class="flex gap-1.5">
+      <span class="inline-block size-3 rounded-full" style="background: #f25f58"></span>
+      <span class="inline-block size-3 rounded-full" style="background: #fbbe3c"></span>
+      <span class="inline-block size-3 rounded-full" style="background: #58cb42"></span>
+    </div>
+    {
+      url && (
+        <div class="mx-4 flex-1 truncate rounded bg-background px-3 py-0.5 text-xs text-muted-foreground">
+          {url}
+        </div>
+      )
+    }
+  </div>
+
+  <!-- Body — no padding here; ExampleWrapper handles padding -->
+  <div class="bg-background overflow-x-auto rounded-b-lg w-full">
+    <div style="min-width: max-content;">
+      <slot />
+    </div>
+  </div>
+</div>

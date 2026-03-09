@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: "Custom Day Cell"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/styled/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/styled/Customization/CompoundCustomDay.tsx?raw";
+
+# Niestandardowa komórka dnia
+
+Użyj render prop komponentu `Day`, aby dostosować wygląd każdej komórki dnia. Jest to przydatne do dodawania wskaźników wydarzeń, podpowiedzi lub całkowicie niestandardowych stylów do poszczególnych dni.
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render Props dla Dnia
+
+| Prop             | Type         | Description                                                     |
+| ---------------- | ------------ | --------------------------------------------------------------- |
+| `date`           | `Date`       | Obiekt daty                                                     |
+| `day`            | `number`     | Dzień miesiąca (1-31)                                           |
+| `isToday`        | `boolean`    | Czy to jest dzisiaj                                             |
+| `isSelected`     | `boolean`    | Czy ten dzień jest wybrany                                      |
+| `isDisabled`     | `boolean`    | Czy ten dzień jest wyłączony                                    |
+| `isInRange`      | `boolean`    | Czy ten dzień znajduje się w wybranym zakresie                  |
+| `isRangeStart`   | `boolean`    | Czy to jest początek zakresu                                    |
+| `isRangeEnd`     | `boolean`    | Czy to jest koniec zakresu                                      |
+| `isInHoverRange` | `boolean`    | Czy ten dzień znajduje się w zakresie podglądu najechania myszą |
+| `isHoverTarget`  | `boolean`    | Czy to jest punkt końcowy najechania myszą                      |
+| `isOutsideDay`   | `boolean`    | Czy ten dzień należy do sąsiedniego miesiąca                    |
+| `isHighlighted`  | `boolean`    | Czy ten dzień ma kropkę podświetlenia                           |
+| `isFocused`      | `boolean`    | Czy ten dzień ma fokus klawiatury                               |
+| `onClick`        | `() => void` | Handler kliknięcia                                              |
+| `onMouseEnter`   | `() => void` | Handler wejścia myszy                                           |
+| `onMouseLeave`   | `() => void` | Handler opuszczenia myszy                                       |

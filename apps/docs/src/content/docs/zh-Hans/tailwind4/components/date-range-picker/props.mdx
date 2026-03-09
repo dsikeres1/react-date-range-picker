@@ -1,0 +1,51 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# 道具
+
+| 支柱                     | 类型                                                          | 默认        | 描述                                                    |
+| ------------------------ | ------------------------------------------------------------- | ----------- | ------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --          | Selected date range value                               |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | Callback when value changes                             |
+| `presets`                | `DateRangePreset[]`                                           | --          | Predefined date range presets                           |
+| `maxDays`                | `number`                                                      | --          | Maximum days allowed in range (inclusive)               |
+| `minDays`                | `number`                                                      | --          | Minimum days required in range (inclusive)              |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`      | 允许开始等于结束的范围                                  |
+| `minDate`                | `Date`                                                        | --          | Minimum selectable date                                 |
+| `maxDate`                | `Date`                                                        | --          | Maximum selectable date                                 |
+| `locale`                 | `Partial<Locale>`                                             | --          | Custom locale configuration                             |
+| `initialMonth`           | `Date`                                                        | --          | Initial displayed month                                 |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`  | Component size                                          |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`  | 一周的第一天                                            |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --          | Mark dates as disabled                                  |
+| `displayFormat`          | `string`                                                      | --          | Custom display format (e.g. `"YYYY/MM/DD"`)             |
+| `open`                   | `boolean`                                                     | --          | Controlled open state                                   |
+| `initialOpen`            | `boolean`                                                     | --          | Initial open state (uncontrolled)                       |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --          | Callback when open state changes                        |
+| `required`               | `boolean`                                                     | `false`     | 禁用清除值                                              |
+| `showOutsideDays`        | `boolean`                                                     | `false`     | 显示相邻月份的天数                                      |
+| `highlightDates`         | `Date[]`                                                      | --          | Dates to highlight                                      |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`     | 选择结束日期时自动确认                                  |
+| `numberOfMonths`         | `number`                                                      | `2`         | 显示月数                                                |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"` | Caption navigation style                                |
+| `fromYear`               | `number`                                                      | --          | Start year for dropdown                                 |
+| `toYear`                 | `number`                                                      | --          | End year for dropdown                                   |
+| `disablePast`            | `boolean`                                                     | `false`     | 禁用今天之前的日期                                      |
+| `disableFuture`          | `boolean`                                                     | `false`     | 禁用今天之后的日期                                      |
+| `inline`                 | `boolean`                                                     | `false`     | 内嵌显示日历（无弹出窗口）                              |
+| `name`                   | `string`                                                      | --          | Hidden input name for form submission (start date)      |
+| `endName`                | `string`                                                      | --          | Hidden input name for end date (defaults to `name-end`) |
+| `placeholder`            | `string`                                                      | --          | Trigger placeholder text                                |
+| `hideHeader`             | `boolean`                                                     | `false`     | 隐藏导航标题                                            |
+| `hideFooter`             | `boolean`                                                     | `false`     | 隐藏操作页脚                                            |
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

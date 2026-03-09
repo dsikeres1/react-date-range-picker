@@ -1,0 +1,111 @@
+---
+sidebar_position: 8
+sidebar_label: "Typography"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/styled/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/styled/Customization/CompoundCustomFont.tsx?raw";
+import CompoundCustomFontPopup from "@examples/styled/Customization/CompoundCustomFontPopup";
+import CompoundCustomFontPopupSource from "@examples/styled/Customization/CompoundCustomFontPopup.tsx?raw";
+import CompoundNotoSans from "@examples/styled/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/styled/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/styled/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/styled/Customization/CompoundWebFonts.tsx?raw";
+import CSSCustomFont from "@examples/styled/Customization/CSSCustomFont";
+import CSSCustomFontSource from "@examples/styled/Customization/CSSCustomFont.tsx?raw";
+
+# Kiểu chữ
+
+Gói styled sử dụng **system font stack** theo mặc định:
+
+```css
+--rdrp-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+```
+
+Điều này sẽ hiển thị bằng phông chữ gốc của hệ điều hành trên mỗi nền tảng (San Francisco trên macOS, Segoe UI trên Windows, Roboto trên Android). Phông chữ hệ thống cung cấp hỗ trợ đa ngôn ngữ tốt vì hệ điều hành tự động xử lý các phông chữ thay thế cho CJK, tiếng Ả Rập và các tập lệnh khác.
+
+Để ghi đè, hãy đặt `--rdrp-font-family` trên bất kỳ phần tử cha nào — nó sẽ được kế thừa vào bộ chọn.
+
+## Kiểu nội tuyến biến CSS
+
+Ghi đè phông chữ thông qua thuộc tính `style` trên một phần tử bao bọc:
+
+<CodeDemo source={CSSCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CSSCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Họ phông chữ
+
+Chuyển đổi giữa các họ phông chữ bằng cách đặt `--rdrp-font-family` trên một trình bao bọc:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Sử dụng Phông chữ Web (Noto Sans)
+
+Để hiển thị nhất quán trên nhiều nền tảng hoặc các dự án i18n, hãy tải một phông chữ web như [Noto Sans](https://fonts.google.com/noto) và ghi đè biến:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/styles.css";
+
+// 1. Tải Noto Sans trong HTML hoặc CSS của bạn:
+//    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+// 2. Ghi đè biến phông chữ:
+<div style={{ "--rdrp-font-family": '"Noto Sans", sans-serif' } as React.CSSProperties}>
+  <DatePicker value={value} onChange={setValue} inline />
+</div>;
+```
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Thư viện phông chữ web
+
+So sánh các phông chữ web khác nhau để xem kiểu chữ thay đổi giao diện của bộ chọn một cách đáng kể như thế nào. Tất cả các phông chữ bên dưới đều hỗ trợ hiển thị đa ngôn ngữ (Latin, CJK, tiếng Hàn).
+
+<Admonition type="warning" title="Chỉ demo">
+  Các phông chữ bên dưới được tải từ Google Fonts CDN cho mục đích trình diễn. Thư viện này
+  **không** đi kèm với bất kỳ phông chữ web nào — bạn cần tự tải chúng trong dự án của mình.
+</Admonition>
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Kích thước & Độ đậm của phông chữ
+
+Tinh chỉnh mật độ kiểu chữ bằng cách ghi đè các biến kích thước và độ đậm:
+
+| Biến                          | Mặc định | Mô tả                    |
+| ----------------------------- | -------- | ------------------------ |
+| `--rdrp-font-size-xs`         | `11px`   | Văn bản nhỏ nhất         |
+| `--rdrp-font-size-sm`         | `12px`   | Nhãn ngày trong tuần     |
+| `--rdrp-font-size-base`       | `13px`   | Ô ngày, các nút          |
+| `--rdrp-font-size-md`         | `14px`   | Kích hoạt, mục thời gian |
+| `--rdrp-font-size-lg`         | `15px`   | Tiêu đề tháng            |
+| `--rdrp-font-weight-normal`   | `400`    | Độ đậm cơ bản            |
+| `--rdrp-font-weight-medium`   | `500`    | Nhấn mạnh trung bình     |
+| `--rdrp-font-weight-semibold` | `600`    | Ngày đã chọn, tiêu đề    |
+| `--rdrp-font-weight-bold`     | `700`    | Chỉ báo hôm nay          |
+
+<CodeDemo source={CompoundCustomFontPopupSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFontPopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

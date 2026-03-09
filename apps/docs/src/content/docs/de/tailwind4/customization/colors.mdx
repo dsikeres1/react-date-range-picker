@@ -1,0 +1,34 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind4/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind4/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind4/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind4/Customization/CompoundColorThemePopup.tsx?raw";
+
+# Farben
+
+Wechseln Sie Farbschemata zur Laufzeit, indem Sie CSS-benutzerdefinierte Eigenschaften auf einem Wrapper-Element überschreiben. Da das Tailwind v4-Paket alle Farben aus semantischen Tokens liest, wird durch Ändern der zugrunde liegenden CSS-Variablen der gesamte Picker sofort neu gebrandet.
+
+Das Tailwind v4-Paket verwendet das **oklch**-Format für semantische Tokens. Überschreiben Sie `--color-primary` und `--color-primary-foreground`, um den Picker neu zu branden:
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Popup-Modus
+
+Die gleiche Technik funktioniert auch mit Popup-Pickern:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

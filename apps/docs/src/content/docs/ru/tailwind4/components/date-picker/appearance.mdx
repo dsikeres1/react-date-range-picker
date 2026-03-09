@@ -1,0 +1,82 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/tailwind4/DatePicker/Sizes";
+import SizesSource from "@examples/tailwind4/DatePicker/Sizes.tsx?raw";
+import CustomFormat from "@examples/tailwind4/DatePicker/CustomFormat";
+import CustomFormatSource from "@examples/tailwind4/DatePicker/CustomFormat.tsx?raw";
+import CustomLocale from "@examples/tailwind4/DatePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind4/DatePicker/CustomLocale.tsx?raw";
+import WeekStartsOn from "@examples/tailwind4/DatePicker/WeekStartsOn";
+import WeekStartsOnSource from "@examples/tailwind4/DatePicker/WeekStartsOn.tsx?raw";
+import ShowOutsideDays from "@examples/tailwind4/DatePicker/ShowOutsideDays";
+import ShowOutsideDaysSource from "@examples/tailwind4/DatePicker/ShowOutsideDays.tsx?raw";
+import CaptionDropdown from "@examples/tailwind4/DatePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind4/DatePicker/CaptionDropdown.tsx?raw";
+
+# Внешний вид
+
+## Размеры
+
+Четыре встроенных размера: `small`, `medium`, `large` и `x-large`.
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Пользовательский формат
+
+Настройте строку формата отображения.
+
+<CodeDemo source={CustomFormatSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomFormat client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Пользовательская локаль
+
+Предоставьте пользовательскую локаль для интернационализации, используя `createLocale` из headless-пакета.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Начало недели
+
+Измените первый день недели. По умолчанию `"sunday"`.
+
+<CodeDemo source={WeekStartsOnSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <WeekStartsOn client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Показать соседние дни
+
+Отображение дней из соседних месяцев для заполнения сетки календаря. По умолчанию `false`.
+
+<CodeDemo source={ShowOutsideDaysSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <ShowOutsideDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Выпадающий заголовок
+
+Переключите навигацию по месяцам/годам со стрелок на выпадающие списки с помощью `captionLayout="dropdown"`. Используйте `fromYear` и `toYear` для установки диапазона лет.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

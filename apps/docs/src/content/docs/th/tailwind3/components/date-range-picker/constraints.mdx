@@ -1,0 +1,46 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/tailwind3/DateRangePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/tailwind3/DateRangePicker/MinMaxDays.tsx?raw";
+import DisabledDates from "@examples/tailwind3/DateRangePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind3/DateRangePicker/DisabledDates.tsx?raw";
+import AllowSingleDate from "@examples/tailwind3/DateRangePicker/AllowSingleDate";
+import AllowSingleDateSource from "@examples/tailwind3/DateRangePicker/AllowSingleDate.tsx?raw";
+
+# ข้อจำกัด
+
+## วันต่ำสุดและสูงสุด
+
+จำกัดความยาวของช่วงด้วย `minDays` และ `maxDays` (รวมด้วย) ผู้ใช้ไม่สามารถยืนยันช่วงที่สั้นกว่า `minDays` หรือยาวกว่า `maxDays` ได้
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## วันที่ถูกปิดใช้งาน
+
+ใช้ `isDateUnavailable` เพื่อปิดการใช้งานวันที่ต้องการแบบไดนามิก วันที่ถูกปิดใช้งานจะไม่สามารถเลือกเป็นวันเริ่มต้นหรือสิ้นสุดของช่วงได้
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## อนุญาตให้เลือกวันเดียว
+
+โดยค่าเริ่มต้น, ช่วงที่วันเริ่มต้นและสิ้นสุดเป็นวันเดียวกันจะได้รับอนุญาต ตั้งค่า `allowSingleDateInRange={false}` เพื่อบังคับให้ต้องมีวันที่แตกต่างกันอย่างน้อยสองวัน
+
+<CodeDemo source={AllowSingleDateSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <AllowSingleDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

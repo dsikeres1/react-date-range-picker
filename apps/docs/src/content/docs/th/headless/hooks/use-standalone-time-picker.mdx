@@ -1,0 +1,150 @@
+---
+sidebar_position: 7
+title: useStandaloneTimePicker
+---
+
+# useStandaloneTimePicker
+
+จัดการสถานะเวลาด้วยพฤติกรรมการเปิด/ปิด และการคลิกภายนอก
+
+## Import
+
+```tsx
+import { useStandaloneTimePicker } from "react-date-range-picker-headless";
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { useStandaloneTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [time, setTime] = useState<Date | null>(null);
+
+  const picker = useStandaloneTimePicker({
+    value: time,
+    onChange: setTime,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 5 },
+    placeholder: "Select time",
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.hasValue ? picker.displayValue : "Select time"}
+      </button>
+
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          <div>
+            <span>{String(picker.tempHour).padStart(2, "0")}</span>
+            <span>:</span>
+            <span>{String(picker.tempMinute).padStart(2, "0")}</span>
+          </div>
+
+          {/* Hook up hour/minute controls */}
+          <input
+            type="range"
+            min={0}
+            max={23}
+            value={picker.tempHour}
+            onChange={(e) => picker.handleHourChange(Number(e.target.value))}
+          />
+          <input
+            type="range"
+            min={0}
+            max={55}
+            step={5}
+            value={picker.tempMinute}
+            onChange={(e) => picker.handleMinuteChange(Number(e.target.value))}
+          />
+
+          <div>
+            <button onClick={picker.handleClear}>Clear</button>
+            <button onClick={picker.handleCancel}>Cancel</button>
+            <button onClick={picker.handleConfirm}>Confirm</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## ตัวเลือก
+
+| ตัวเลือก        | ประเภท                         | ค่าเริ่มต้น                                                               | คำอธิบาย                                                            |
+| --------------- | ------------------------------ | ------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `value`         | `Date \| null`                 | --                                                                        | **จำเป็น** เวลาปัจจุบันในรูปแบบออบเจ็กต์ Date (ใช้เฉพาะส่วนของเวลา) |
+| `onChange`      | `(date: Date \| null) => void` | --                                                                        | **จำเป็น** ถูกเรียกเมื่อเวลายืนยันแล้ว                              |
+| `time`          | `TimeConfig`                   | `{ precision: "minute", hourFormat: "24", minuteStep: 5, secondStep: 1 }` | การกำหนดค่าตัวเลือกเวลา                                             |
+| `locale`        | `Partial<Locale>`              | `DEFAULT_LOCALE`                                                          | เขียนทับสตริงของภาษา                                                |
+| `displayFormat` | `string`                       | --                                                                        | สตริงรูปแบบที่กำหนดเองสำหรับการแสดงผลบนทริกเกอร์                    |
+| `placeholder`   | `string`                       | --                                                                        | ข้อความตัวยึดตำแหน่งเมื่อไม่มีค่าถูกเลือก                           |
+| `open`          | `boolean`                      | --                                                                        | สถานะการเปิดแบบควบคุม                                               |
+| `initialOpen`   | `boolean`                      | `false`                                                                   | สถานะการเปิดเริ่มต้น (แบบไม่ควบคุม)                                 |
+| `onOpenChange`  | `(open: boolean) => void`      | --                                                                        | Callback เมื่อสถานะการเปิดเปลี่ยนแปลง                               |
+| `required`      | `boolean`                      | `false`                                                                   | เมื่อเป็น true, `handleClear` จะไม่ทำงาน                            |
+| `inline`        | `boolean`                      | `false`                                                                   | แสดงแผงควบคุมเสมอโดยไม่มีทริกเกอร์/ป๊อปอัป                          |
+| `name`          | `string`                       | --                                                                        | ชื่ออินพุตที่ซ่อนอยู่สำหรับการส่งฟอร์ม                              |
+
+## ค่าที่ส่งคืน
+
+| ชื่อ                 | ประเภท                              | คำอธิบาย                                                    |
+| -------------------- | ----------------------------------- | ----------------------------------------------------------- |
+| `isOpen`             | `boolean`                           | ระบุว่าป๊อปอัปกำลังเปิดอยู่หรือไม่                          |
+| `handleOpen`         | `() => void`                        | เปิดป๊อปอัป                                                 |
+| `handleClose`        | `() => void`                        | ปิดป๊อปอัป                                                  |
+| `handleToggle`       | `() => void`                        | สลับการเปิด/ปิดป๊อปอัป                                      |
+| `tempHour`           | `number`                            | ค่าชั่วโมงชั่วคราวปัจจุบัน                                  |
+| `tempMinute`         | `number`                            | ค่านาทีชั่วคราวปัจจุบัน                                     |
+| `tempSecond`         | `number`                            | ค่าวินาทีชั่วคราวปัจจุบัน                                   |
+| `tempPeriod`         | `TimePeriod`                        | ช่วงเวลา AM/PM ปัจจุบัน                                     |
+| `handleHourChange`   | `(hour: number) => void`            | อัปเดตชั่วโมงชั่วคราว                                       |
+| `handleMinuteChange` | `(minute: number) => void`          | อัปเดตนาทีชั่วคราว                                          |
+| `handleSecondChange` | `(second: number) => void`          | อัปเดตวินาทีชั่วคราว                                        |
+| `handlePeriodChange` | `(period: TimePeriod) => void`      | อัปเดตช่วงเวลา AM/PM                                        |
+| `handleConfirm`      | `() => void`                        | ยืนยันเวลาชั่วคราว, เรียก `onChange`, และปิดป๊อปอัป         |
+| `handleCancel`       | `() => void`                        | ย้อนกลับไปใช้ค่าเดิมและปิดป๊อปอัป                           |
+| `handleClear`        | `() => void`                        | ล้างค่าและปิด ไม่ทำงานถ้า `required` เป็นจริง               |
+| `displayValue`       | `string`                            | สตริงเวลาที่จัดรูปแบบสำหรับทริกเกอร์ (ค่าที่ยืนยันแล้ว)     |
+| `timeDisplayValue`   | `string`                            | สตริงเวลาที่จัดรูปแบบสำหรับแผงควบคุม (ค่าชั่วคราว)          |
+| `hasValue`           | `boolean`                           | ระบุว่ามีการตั้งค่าเวลาอยู่หรือไม่                          |
+| `canConfirm`         | `boolean`                           | ระบุว่าปุ่มยืนยันควรเปิดใช้งานหรือไม่                       |
+| `locale`             | `Locale`                            | ออบเจ็กต์ภาษาที่แก้ไขแล้ว                                   |
+| `resolvedTimeConfig` | `Required<TimeConfig>`              | การกำหนดค่าเวลาที่แก้ไขอย่างสมบูรณ์                         |
+| `containerRef`       | `RefObject<HTMLDivElement \| null>` | Ref สำหรับคอนเทนเนอร์ภายนอก (ใช้สำหรับตรวจจับการคลิกภายนอก) |
+| `popupRef`           | `RefObject<HTMLDivElement \| null>` | Ref สำหรับองค์ประกอบป๊อปอัป (ใช้สำหรับตรวจจับการคลิกภายนอก) |
+| `handleKeyDown`      | `(e: KeyboardEvent) => void`        | ตัวจัดการคีย์บอร์ด (กด Escape เพื่อยกเลิก)                  |
+
+## พฤติกรรมหลัก
+
+### การเปิด/ปิด
+
+ป๊อปอัปสามารถเป็นแบบควบคุมหรือไม่ควบคุมก็ได้ เมื่อมีการระบุ `open` hook จะใช้ค่านี้เป็นแหล่งข้อมูลจริง มิฉะนั้นจะใช้สถานะภายในโดยมี `initialOpen` เป็นค่าเริ่มต้น
+
+### การคลิกภายนอก
+
+การคลิกภายนอกทั้ง `containerRef` และ `popupRef` จะทริกเกอร์ `handleCancel` ซึ่งจะย้อนกลับไปใช้ค่าเดิมและปิดป๊อปอัป
+
+### คีย์บอร์ด
+
+การกด `Escape` ขณะที่ป๊อปอัปเปิดอยู่จะทริกเกอร์ `handleCancel`
+
+### โหมดอินไลน์
+
+เมื่อ `inline` เป็น `true` แผงควบคุมจะแสดงอยู่เสมอและการเปลี่ยนแปลงจะถูกนำไปใช้ทันที (ซิงค์อัตโนมัติ) ตรรกะการเปิด/ปิดจะถูกข้ามไป
+
+### รูปแบบสถานะชั่วคราว
+
+Hook นี้จะรักษาสถานะชั่วคราวซึ่งจะยืนยันเมื่อมีการเรียก `handleConfirm` เท่านั้น:
+
+- `handleConfirm` -- เขียนสถานะชั่วคราวไปยัง `onChange` และปิดป๊อปอัป
+- `handleCancel` -- ย้อนกลับสถานะชั่วคราวไปเป็น `value` ปัจจุบันและปิด
+- `handleClear` -- เรียก `onChange(null)` และปิด
+
+### ค่าที่แสดงผล
+
+- `displayValue` -- สตริงที่จัดรูปแบบของ `value` ที่ยืนยันแล้ว (สำหรับทริกเกอร์)
+- `timeDisplayValue` -- สตริงที่จัดรูปแบบของค่าชั่วคราว (สำหรับแผงควบคุม)

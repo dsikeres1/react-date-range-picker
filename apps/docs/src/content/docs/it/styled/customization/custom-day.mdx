@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: "Custom Day Cell"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/styled/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/styled/Customization/CompoundCustomDay.tsx?raw";
+
+# 사용자 정의 날짜 셀
+
+`Day` 컴포넌트의 render prop을 사용하여 각 날짜 셀의 모양을 사용자 정의할 수 있습니다. 이는 이벤트 표시기, 툴팁을 추가하거나 개별 날짜에 완전히 맞춤화된 스타일을 적용하는 데 유용합니다.
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Day Render Props
+
+| Prop             | 타입         | 설명                                          |
+| ---------------- | ------------ | --------------------------------------------- |
+| `date`           | `Date`       | 날짜 객체                                     |
+| `day`            | `number`     | 해당 월의 날짜 (1-31)                         |
+| `isToday`        | `boolean`    | 오늘 날짜인지 여부                            |
+| `isSelected`     | `boolean`    | 이 날짜가 선택되었는지 여부                   |
+| `isDisabled`     | `boolean`    | 이 날짜가 비활성화되었는지 여부               |
+| `isInRange`      | `boolean`    | 이 날짜가 선택된 범위 내에 있는지 여부        |
+| `isRangeStart`   | `boolean`    | 범위의 시작 날짜인지 여부                     |
+| `isRangeEnd`     | `boolean`    | 범위의 종료 날짜인지 여부                     |
+| `isInHoverRange` | `boolean`    | 이 날짜가 호버 미리보기 범위 내에 있는지 여부 |
+| `isHoverTarget`  | `boolean`    | 호버의 끝점인지 여부                          |
+| `isOutsideDay`   | `boolean`    | 이 날짜가 인접한 월에 속하는지 여부           |
+| `isHighlighted`  | `boolean`    | 이 날짜에 하이라이트 점이 있는지 여부         |
+| `isFocused`      | `boolean`    | 이 날짜에 키보드 포커스가 있는지 여부         |
+| `onClick`        | `() => void` | 클릭 핸들러                                   |
+| `onMouseEnter`   | `() => void` | 마우스 진입 핸들러                            |
+| `onMouseLeave`   | `() => void` | 마우스 이탈 핸들러                            |

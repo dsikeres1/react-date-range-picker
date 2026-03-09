@@ -1,0 +1,111 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind3Basic from "@examples/tailwind3/DatePicker/Basic";
+import Tailwind3BasicSource from "@examples/tailwind3/DatePicker/Basic.tsx?raw";
+
+# Tailwind CSS v3 入門
+
+Tailwind v3 パッケージは、Tailwind CSS v3 のユーティリティクラスでスタイリングされた日付ピッカーコンポーネントを提供します。
+
+## インストール
+
+<PackageInstall pkg="react-date-range-picker-tailwind3" />
+
+追加のCSSインポートは不要です。コンポーネントは Tailwind のユーティリティクラスを直接使用します。
+
+## Tailwind の設定
+
+`tailwind.config.js` の `content` パスにパッケージを追加して、Tailwind がコンポーネントのクラスをスキャンできるようにします：
+
+```js
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  // ...
+};
+```
+
+## クイックスタート
+
+<CodeDemo source={Tailwind3BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Tailwind3Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## パッケージの内容
+
+| コンポーネント        | 説明                                             |
+| --------------------- | ------------------------------------------------ |
+| `DatePicker`          | ポップアップカレンダー付きの単一の日付選択       |
+| `DateRangePicker`     | デュアルカレンダーとプリセット付きの日付範囲選択 |
+| `DateTimePicker`      | 時間スクロールパネル付きの日付＋時刻選択         |
+| `DateRangeTimePicker` | 日付範囲＋時刻選択                               |
+
+すべてのコンポーネントは以下をサポートしています：
+
+- `value` / `onChange` による制御された値
+- キーボードナビゲーション
+- `dark:` バリアントによるダークモード
+- 4つのサイズ： `small`, `medium`, `large`, `x-large`
+- カスタマイズのための Compound Component API
+
+## TypeScript の型
+
+すべての設定とデータ型はパッケージから再エクスポートされるため、ヘッドレスパッケージを別途インストールする必要はありません：
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind3";
+```
+
+これらの型は、以下のような場合に役立ちます：
+
+- **`Locale`** — カスタムロケールのオーバーライド（曜日の名前、ボタンのラベル、日付の書式設定）
+- **`DatePickerSize`** — `size` prop の型付け（`"small"` | `"medium"` | `"large"` | `"x-large"`）
+- **`TimeConfig`** — タイムピッカーの精度、フォーマット、ステップの設定
+- **`DateRangePreset`** — `DateRangePicker` / `DateRangeTimePicker` のプリセット定義
+- **`CalendarMonth`**, **`DayProps`** — Compound Components を使用したカスタムレンダリング
+
+詳細な型定義については、[Headless Types](/docs/headless/types/common-types) を参照してください。
+
+## 次のステップ
+
+- [DatePicker](/docs/tailwind3/components/date-picker/basic) — 単一の日付選択
+- [DateRangePicker](/docs/tailwind3/components/date-range-picker/basic) — プリセット付きの日付範囲
+- [Compound Components](/docs/tailwind3/customization/overview) — 内部構造のカスタマイズ
+- [Theme Override](/docs/tailwind3/customization/theme-override) — テーマカラーのカスタマイズ
+- [Dark Mode](/docs/tailwind3/customization/dark-mode) — ダークテーマのサポート
+
+## Tailwind Preflight とリセット
+
+このパッケージは、プロジェクトで Tailwind CSS Preflight が有効になっていること（デフォルト）を前提としています。
+お使いの環境で Preflight が無効になっている場合（例：Docusaurus、一部のマイクロフロントエンド）、ボタンのスタイルが崩れる可能性があります。
+その場合は、提供されている `reset.css` をインポートして、ボタンのスタイルを手動で初期化してください：
+
+```tsx
+import "react-date-range-picker-tailwind3/reset.css";
+```

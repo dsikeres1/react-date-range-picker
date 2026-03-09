@@ -1,0 +1,51 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/tailwind4/DateTimePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/tailwind4/DateTimePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/tailwind4/DateTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind4/DateTimePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/tailwind4/DateTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind4/DateTimePicker/FormIntegration.tsx?raw";
+
+# Hành vi
+
+## Đóng khi chọn
+
+Khi `shouldCloseOnSelect` được bật, bộ chọn sẽ tự động xác nhận và đóng lại khi một ngày được nhấp.
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Nhiều tháng
+
+Hiển thị nhiều tháng cạnh nhau.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Tích hợp biểu mẫu
+
+Sử dụng prop `name` để bao gồm một đầu vào ẩn cho việc gửi biểu mẫu gốc.
+
+<Admonition type="tip">
+  Kiểu dáng của nút gửi trong ví dụ này là tùy chỉnh — thư viện chỉ cung cấp bộ chọn ngày.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

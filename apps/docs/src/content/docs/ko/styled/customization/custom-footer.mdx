@@ -1,0 +1,79 @@
+---
+sidebar_position: 4
+sidebar_label: "Custom Footer"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/styled/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/styled/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/styled/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/styled/Customization/CompoundNoFooter.tsx?raw";
+
+# 커스텀 푸터
+
+자체 버튼과 레이아웃으로 완전히 커스텀된 푸터를 구축하거나, 미니멀한 피커를 위해 특정 부분을 완전히 제거할 수 있습니다.
+
+## 재배열된 푸터
+
+푸터 버튼을 재배열하거나 `TodayButton`과 같은 새로운 버튼을 추가하세요. `DateTimePicker` 컴파운드 컴포넌트는 시간 선택을 위해 `TimePanel`이 포함된 `TimeSection`을 포함하며, `Footer`는 액션 버튼을 위한 컨테이너 역할을 합니다.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+기본 제공되는 액션 버튼을 완전히 생략하고 `Footer` 안에 자체 요소를 사용할 수도 있습니다:
+
+```tsx
+<DatePicker.Footer>
+  <button onClick={() => setValue(new Date())}>Set Today</button>
+  <button onClick={() => setValue(null)}>Clear</button>
+</DatePicker.Footer>
+```
+
+## 미니멀 레이아웃
+
+필요하지 않은 부분은 생략하세요. 예를 들어, 푸터나 트리거가 없는 헤더 없는 인라인 캘린더입니다:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+또는 푸터가 없는 피커입니다:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## 커스텀 클래스 이름 추가하기
+
+모든 컴파운드 부분은 기본 스타일 CSS 클래스와 병합되는 `className` prop을 허용합니다:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} className="my-picker">
+  <DatePicker.Trigger className="my-trigger" />
+  <DatePicker.Content className="my-content">
+    <DatePicker.Header className="my-header">
+      <DatePicker.PrevButton className="my-nav" />
+      <DatePicker.Title className="my-title" />
+      <DatePicker.NextButton className="my-nav" />
+    </DatePicker.Header>
+    <DatePicker.Grid className="my-grid" />
+  </DatePicker.Content>
+</DatePicker.Root>
+```

@@ -1,0 +1,105 @@
+---
+sidebar_position: 4
+title: Contexts
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ContextExample from "@examples/headless/ContextExample";
+import ContextExampleSource from "@examples/headless/ContextExample.tsx?raw";
+
+# Context'ler
+
+`headless` paketi, hook'ları saran ve durumlarını React Context aracılığıyla ortaya çıkaran Context sağlayıcıları sunar. Bu, **bileşik bileşen desenini (compound component pattern)** mümkün kılar -- kullanıcı arayüzünüzü, state'i context'ten okuyan ve prop'ları aşağıya geçirmek yerine küçük, odaklanmış alt bileşenlere ayırın.
+
+## Neden Context'ler?
+
+Context olmadan, her bir state parçasını prop'lar aracılığıyla iletmeniz gerekirdi:
+
+```tsx
+// Context olmadan -- prop drilling
+function MyDatePicker() {
+  const picker = useDatePicker({ value, onChange });
+  return (
+    <MyTrigger displayValue={picker.displayValue} onToggle={picker.handleToggle} />
+    <MyCalendar calendar={picker.calendar} getDayProps={picker.getDayProps} ... />
+    <MyFooter onConfirm={picker.handleConfirm} onCancel={picker.handleCancel} ... />
+  );
+}
+```
+
+Context ile alt bileşenler, ihtiyaç duydukları şeyi doğrudan tüketir:
+
+```tsx
+// Context ile -- bileşik bileşenler
+function MyDatePicker() {
+  return (
+    <DatePickerProvider value={value} onChange={onChange}>
+      <ExampleWrapper variant="headless" client:load>
+        <MyTrigger client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyCalendar client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyFooter client:load />
+      </ExampleWrapper>
+    </DatePickerProvider>
+  );
+}
+
+function MyTrigger() {
+  const { displayValue, handleToggle } = useDatePickerContext();
+  return <button onClick={handleToggle}>{displayValue}</button>;
+}
+```
+
+## Mevcut Sağlayıcılar
+
+| Sağlayıcı                     | Dahili Olarak Kullanılan Hook | Tüketici Hook'u                   |
+| ----------------------------- | ----------------------------- | --------------------------------- |
+| `DatePickerProvider`          | `useDatePicker`               | `useDatePickerContext()`          |
+| `DateRangePickerProvider`     | `useDateRangePicker`          | `useDateRangePickerContext()`     |
+| `DateTimePickerProvider`      | `useDateTimePicker`           | `useDateTimePickerContext()`      |
+| `DateRangeTimePickerProvider` | `useDateRangeTimePicker`      | `useDateRangeTimePickerContext()` |
+
+Her sağlayıcı hem **türlenmiş bir context** (o seçici türüne özgü) hem de **birleştirilmiş PickerContext** (tüm türlerde paylaşılan) render eder.
+
+```tsx
+import {
+  DatePickerProvider,
+  DateRangePickerProvider,
+  DateTimePickerProvider,
+  DateRangeTimePickerProvider,
+} from "react-date-range-picker-headless";
+```
+
+### DatePickerProvider
+
+`useDatePicker` hook'unu sarar. `DatePickerContext` + `PickerContext` sağlar.
+
+```tsx
+import type { DatePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop          | Tür                            | Açıklama                                              |
+| ------------- | ------------------------------ | ----------------------------------------------------- |
+| `children`    | `ReactNode`                    | **Gerekli.** Alt bileşenler.                          |
+| `value`       | `Date \| null`                 | **Gerekli.** Mevcut tarih.                            |
+| `onChange`    | `(date: Date \| null) => void` | **Gerekli.** Değişiklik işleyicisi.                   |
+| `inline`      | `boolean`                      | Satır içi render et (açılır pencere yok).             |
+| `size`        | `DatePickerSize`               | Boyut varyantı.                                       |
+| `placeholder` | `string`                       | Tetikleyici yer tutucusu.                             |
+| `name`        | `string`                       | Form alanı adı.                                       |
+| _...rest_     | `BaseDatePickerOptions`        | Tüm temel seçenekler (minDate, maxDate, locale, vb.). |
+
+**Tüketici hook'u:** `useDatePickerContext()` `UseDatePickerReturn` döndürür.
+
+### DateRangePickerProvider
+
+`useDateRangePicker` hook'unu sarar. `DateRangePickerContext` + `PickerContext` sağlar.
+
+```tsx
+import type { DateRangePickerProviderProps } from "react-date-range-picker-headless";
+```

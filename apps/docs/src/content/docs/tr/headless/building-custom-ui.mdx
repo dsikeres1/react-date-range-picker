@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# Özel Arayüz Oluşturma
+
+Bu kılavuz, headless hook'lar üzerine kendi tarih seçici arayüzünüzü oluşturma modelini adım adım açıklamaktadır.
+
+## Model
+
+Her headless hook aynı modeli izler:
+
+1.  **Hook'u çağırın** seçeneklerinizle (`value`, `onChange`, yapılandırma)
+2.  **Dönüş değerini parçalayın** `state`, hesaplanmış değerler ve işleyicileri (`handlers`) almak için
+3.  **Kendi işaretlemenizi oluşturun** dönen değerleri kullanarak
+4.  **Etkileşimleri bağlayın** sağlanan işleyicileri çağırarak
+
+Hook, tüm karmaşıklığı yönetir — takvim oluşturma, tarih matematiği, açma/kapama durumu, klavye ile gezinme, aralık mantığı — ve siz yalnızca sunuma odaklanırsınız.
+
+## Örnek: Özel Tarih Seçici
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Temel Kavramlar
+
+### getDayProps
+
+`getDayProps` fonksiyonu, takvim oluşturmanın merkezindedir. Her tarih hücresi için, hücrenin durumunu tanımlayan 18 boolean/sayı bayrağı içeren bir `DayProps` nesnesi döndürür:
+
+```tsx
+const dp = getDayProps(day);
+
+// Seçim durumu
+dp.isSelected; // Mevcut seçili tarih
+dp.isToday; // Bugünün tarihi
+
+// Aralık durumu (aralık seçiciler için)
+dp.isInRange; // Başlangıç ve bitiş tarihleri arasında
+dp.isRangeStart; // Aralığın ilk tarihi
+dp.isRangeEnd; // Aralığın son tarihi
+dp.isInHoverRange; // Fare ile üzerine gelinen önizleme aralığında
+dp.isHoverTarget; // Üzerine gelinen tarihin kendisi
+dp.isRangeSingle; // Hem aralık başlangıcı hem de bitişi (tek günlük aralık)
+
+// Görsel bağlantı yardımcıları
+dp.hasLeftConnection; // Önceki güne bağlı (aralık arka planları için)
+dp.hasRightConnection; // Sonraki güne bağlı
+dp.isConsecutiveRange; // Çok günlük bir aralığın parçası
+
+// Durum
+dp.isDisabled; // minDate/maxDate/isDateUnavailable tarafından devre dışı bırakıldı
+dp.isFocused; // Klavye odağına sahip
+dp.isOutsideDay; // Bitişik aya ait (showOutsideDays etkinken)
+dp.isHighlighted; // highlightDates dizisinde
+
+// Veri
+dp.date; // Date nesnesi
+dp.day; // Ayın gün numarası
+dp.dayOfWeek; // 0-6 (Pazar-Cumartesi)
+```
+
+### Dışarı Tıklama için Ref'ler
+
+Hook'lar `containerRef` ve `popupRef` döndürür. Bunları sarmalayıcı ve açılır pencere elemanlarınıza ekleyin — hook, bunları dışarıdaki tıklamaları algılamak ve açılır pencereyi otomatik olarak kapatmak için kullanır.
+
+### Klavye ile Gezinme
+
+`handleKeyDown` işleyicisi, tam klavye ile gezinme için ok tuşlarını, Enter, Escape ve Tab tuşlarını destekler. Bunu açılır pencere konteynerine ekleyin.
+
+### Yerelleştirme (Locale)
+
+Kullanıcıya dönük tüm metinler `locale` nesnesinden gelir. Kısmi bir `locale` seçeneği geçirerek herhangi bir metni özelleştirebilirsiniz:
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "Tamam",
+    cancel: "Geri",
+    placeholder: "Bir tarih seçin...",
+  },
+});
+```
+
+## Sonraki Adımlar
+
+- [Hook Referansı](/docs/headless/hooks/use-date-picker) — Her hook için tam seçenekler ve dönüş değerleri
+- [Context'ler](/docs/headless/contexts) — Bileşik bileşen desenleri için provider'ları kullanın
+- [Tarih Yardımcıları](/docs/headless/date-utilities) — Tarih manipülasyonu için yardımcı fonksiyonlar

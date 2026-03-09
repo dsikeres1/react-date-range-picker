@@ -1,0 +1,214 @@
+---
+sidebar_position: 2
+sidebar_label: "CSS Variables"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomColors from "@examples/styled/Customization/CustomColors";
+import CustomColorsSource from "@examples/styled/Customization/CustomColors.tsx?raw";
+import CustomFont from "@examples/styled/Customization/CustomFont";
+import CustomFontSource from "@examples/styled/Customization/CustomFont.tsx?raw";
+import CustomBorderRadius from "@examples/styled/Customization/CustomBorderRadius";
+import CustomBorderRadiusSource from "@examples/styled/Customization/CustomBorderRadius.tsx?raw";
+import CustomSize from "@examples/styled/Customization/CustomSize";
+import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw";
+
+# CSS Değişkenleri
+
+Styled paketi, tüm görsel değerler için CSS özel özelliklerini (değişkenleri) kullanır. Görünümü bileşen koduna dokunmadan özelleştirmek için bunları `.rdrp-root` veya herhangi bir üst öğe üzerinde geçersiz kılın.
+
+## Nasıl Geçersiz Kılınır
+
+Tüm değişkenler `.rdrp-root` altında kapsanmıştır. Bunları kendi CSS'inizde geçersiz kılın:
+
+```css
+/* Özel temanız */
+.rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-border-radius-lg: 12px;
+}
+```
+
+Veya bir sarmalayıcı sınıfı kullanarak geçersiz kılmaları belirli bir örnekle sınırlayın:
+
+```css
+.my-purple-picker .rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-color-primary-light: #ede9fe;
+  --rdrp-color-primary-lighter: #f5f3ff;
+}
+```
+
+```tsx
+<div className="my-purple-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## Değişken Referansı
+
+### Renkler
+
+| Değişken                        | Varsayılan (Açık)          | Açıklama                                        |
+| ------------------------------- | -------------------------- | ----------------------------------------------- |
+| `--rdrp-color-primary`          | `#3b82f6`                  | Ana eylem rengi (seçili gün, onay düğmesi)      |
+| `--rdrp-color-primary-hover`    | `#2563eb`                  | Ana üzerine gelme durumu                        |
+| `--rdrp-color-primary-light`    | `#dbeafe`                  | Aralık arka planı, açık ana vurgu               |
+| `--rdrp-color-primary-lighter`  | `#eff6ff`                  | Aktif ön ayar arka planı                        |
+| `--rdrp-color-primary-disabled` | `#93c5fd`                  | Devre dışı bırakılmış onay düğmesi              |
+| `--rdrp-color-bg`               | `#ffffff`                  | Arka plan rengi                                 |
+| `--rdrp-color-bg-hover`         | `#f3f4f6`                  | Günler, düğmeler için üzerine gelme arka planı  |
+| `--rdrp-color-bg-subtle`        | `#f9fafb`                  | İnce arka plan                                  |
+| `--rdrp-color-text`             | `#374151`                  | Varsayılan metin rengi                          |
+| `--rdrp-color-text-strong`      | `#111827`                  | Güçlü metin (başlıklar, aktif zaman)            |
+| `--rdrp-color-text-muted`       | `#6b7280`                  | Sessiz metin (gezinme düğmeleri, etiketler)     |
+| `--rdrp-color-text-placeholder` | `#6b7280`                  | Yer tutucu metni                                |
+| `--rdrp-color-text-disabled`    | `#d1d5db`                  | Devre dışı bırakılmış gün metni                 |
+| `--rdrp-color-text-outside`     | `#9ca3af`                  | Ay dışındaki günler                             |
+| `--rdrp-color-text-inverse`     | `#ffffff`                  | Ana arka planlar üzerindeki metin               |
+| `--rdrp-color-text-danger`      | `#ef4444`                  | Temizle/tehlike düğmesi metni                   |
+| `--rdrp-color-text-today`       | `#2563eb`                  | Bugün göstergesi rengi                          |
+| `--rdrp-color-border`           | `#d1d5db`                  | Varsayılan kenarlık                             |
+| `--rdrp-color-border-light`     | `#e5e7eb`                  | Açık kenarlık (açılır pencere, seçimler)        |
+| `--rdrp-color-border-subtle`    | `#f3f4f6`                  | İnce kenarlık (altbilgi, ön ayarlar)            |
+| `--rdrp-color-border-hover`     | `#93c5fd`                  | Kenarlık üzerine gelme durumu                   |
+| `--rdrp-color-highlight-dot`    | `#f59e0b`                  | Vurgu noktası rengi                             |
+| `--rdrp-highlight-dot-size`     | `4px`                      | Vurgu noktası çapı                              |
+| `--rdrp-color-range-bg`         | `#dbeafe`                  | Aralık içi gün arka planı                       |
+| `--rdrp-color-hover-range-bg`   | `#eff6ff`                  | Üzerine gelindiğinde aralık önizleme arka planı |
+| `--rdrp-color-hover-target-bg`  | `#bfdbfe`                  | Üzerine gelindiğinde bitiş noktası arka planı   |
+| `--rdrp-color-time-highlight`   | `rgba(59, 130, 246, 0.08)` | Zaman paneli vurgu çubuğu                       |
+
+### Tipografi
+
+| Değişken                      | Varsayılan              | Açıklama                                       |
+| ----------------------------- | ----------------------- | ---------------------------------------------- |
+| `--rdrp-font-family`          | Sistem yazı tipi yığını | Yazı tipi ailesi                               |
+| `--rdrp-font-size-xs`         | `11px`                  | Ekstra küçük (küçük boyutta hafta içi başlığı) |
+| `--rdrp-font-size-sm`         | `12px`                  | Küçük (hafta içi başlıkları, etiketler)        |
+| `--rdrp-font-size-base`       | `13px`                  | Temel (gün hücreleri, düğmeler)                |
+| `--rdrp-font-size-md`         | `14px`                  | Orta (tetikleyici, zaman öğeleri)              |
+| `--rdrp-font-size-lg`         | `15px`                  | Büyük (başlık)                                 |
+| `--rdrp-font-weight-normal`   | `400`                   | Normal kalınlık                                |
+| `--rdrp-font-weight-medium`   | `500`                   | Orta kalınlık                                  |
+| `--rdrp-font-weight-semibold` | `600`                   | Yarı kalın kalınlık                            |
+| `--rdrp-font-weight-bold`     | `700`                   | Kalın (bugün göstergesi)                       |
+
+### Boşluklandırma
+
+| Değişken             | Varsayılan | Açıklama               |
+| -------------------- | ---------- | ---------------------- |
+| `--rdrp-spacing-xs`  | `2px`      | Ekstra küçük boşluk    |
+| `--rdrp-spacing-sm`  | `4px`      | Küçük boşluk           |
+| `--rdrp-spacing-md`  | `8px`      | Orta boşluk            |
+| `--rdrp-spacing-lg`  | `12px`     | Büyük boşluk           |
+| `--rdrp-spacing-xl`  | `16px`     | Ekstra büyük boşluk    |
+| `--rdrp-spacing-2xl` | `24px`     | 2x ekstra büyük boşluk |
+
+### Kenarlıklar
+
+| Değişken                    | Varsayılan | Açıklama                              |
+| --------------------------- | ---------- | ------------------------------------- |
+| `--rdrp-border-radius-sm`   | `4px`      | Küçük yarıçap                         |
+| `--rdrp-border-radius-md`   | `6px`      | Orta yarıçap (düğmeler, seçimler)     |
+| `--rdrp-border-radius-lg`   | `8px`      | Büyük yarıçap (günler, tetikleyici)   |
+| `--rdrp-border-radius-xl`   | `12px`     | Ekstra büyük yarıçap (açılır pencere) |
+| `--rdrp-border-radius-full` | `9999px`   | Tam yarıçap (vurgu noktası)           |
+| `--rdrp-border-width`       | `1px`      | Kenarlık genişliği                    |
+
+### Gölgeler
+
+| Değişken               | Varsayılan                    | Açıklama               |
+| ---------------------- | ----------------------------- | ---------------------- |
+| `--rdrp-shadow-popup`  | `0 10px 25px rgba(0,0,0,0.1)` | Açılır pencere gölgesi |
+| `--rdrp-shadow-inline` | `0 4px 12px rgba(0,0,0,0.06)` | Satır içi mod gölgesi  |
+| `--rdrp-shadow-sm`     | `0 2px 6px rgba(0,0,0,0.04)`  | Küçük gölge            |
+
+### Boyutlandırma
+
+| Değişken                   | Varsayılan | Açıklama                               |
+| -------------------------- | ---------- | -------------------------------------- |
+| `--rdrp-cell-size`         | `36px`     | Gün hücresi genişliği/yüksekliği       |
+| `--rdrp-nav-btn-size`      | `28px`     | Gezinme düğmesi boyutu                 |
+| `--rdrp-weekday-height`    | `28px`     | Hafta içi başlık satırı yüksekliği     |
+| `--rdrp-grid-min-height`   | `216px`    | Takvim ızgarası minimum yüksekliği     |
+| `--rdrp-panel-min-width`   | `252px`    | Tek takvim paneli genişliği            |
+| `--rdrp-dual-gap`          | `24px`     | İkili takvimler arasındaki boşluk      |
+| `--rdrp-trigger-min-width` | `200px`    | Tetikleyici düğme minimum genişliği    |
+| `--rdrp-trigger-padding-x` | `14px`     | Tetikleyici yatay dolgu                |
+| `--rdrp-trigger-padding-y` | `8px`      | Tetikleyici dikey dolgu                |
+| `--rdrp-popup-padding`     | `16px`     | Açılır pencere iç dolgusu              |
+| `--rdrp-popup-gap`         | `6px`      | Açılır pencere içerik boşluğu          |
+| `--rdrp-btn-padding-x`     | `14px`     | Altbilgi düğmesi yatay dolgu           |
+| `--rdrp-btn-padding-y`     | `6px`      | Altbilgi düğmesi dikey dolgu           |
+| `--rdrp-preset-min-width`  | `140px`    | Ön ayar kenar çubuğu minimum genişliği |
+
+### Zaman Seçici
+
+| Değişken                      | Varsayılan | Açıklama                             |
+| ----------------------------- | ---------- | ------------------------------------ |
+| `--rdrp-time-item-height`     | `32px`     | Zaman kaydırma öğesi yüksekliği      |
+| `--rdrp-time-panel-height`    | `176px`    | Zaman paneli toplam yüksekliği       |
+| `--rdrp-time-column-height`   | `160px`    | Kaydırılabilir sütun yüksekliği      |
+| `--rdrp-time-panel-min-width` | `120px`    | Zaman paneli minimum genişliği       |
+| `--rdrp-time-colon-width`     | `12px`     | İki nokta üst üste ayırıcı genişliği |
+
+### Z-endeksi
+
+| Değişken              | Varsayılan | Açıklama                 |
+| --------------------- | ---------- | ------------------------ |
+| `--rdrp-z-popup`      | `50`       | Açılır pencere z-endeksi |
+| `--rdrp-z-day-button` | `20`       | Odaklanmış gün z-endeksi |
+
+### Geçişler
+
+| Değişken                   | Varsayılan | Açıklama                                |
+| -------------------------- | ---------- | --------------------------------------- |
+| `--rdrp-transition-fast`   | `0.1s`     | Hızlı geçişler (gün üzerine gelme)      |
+| `--rdrp-transition-normal` | `0.15s`    | Normal geçişler (tetikleyici, düğmeler) |
+
+## Canlı Örnekler
+
+### Özel Renkler (Mor Tema)
+
+Tamamen farklı bir renk şeması oluşturmak için ana renk değişkenlerini geçersiz kılın. Bu örnek, menekşe/mor tonlarında bir **DatePicker** kullanır.
+
+<CodeDemo source={CustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Özel Yazı Tipi (Serif)
+
+Yazı tipleri CSS üzerinden basamaklanır, bu nedenle seçiciyi özel bir `font-family` içeren bir div içine sarmak tüm metne uygulanır. Bu örnek, Georgia serif içeren bir **DateRangePicker** kullanır.
+
+<CodeDemo source={CustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Keskin Köşeler (Kenarlık Yarıçapı Yok)
+
+Tamamen kare bir görünüm için tüm kenarlık yarıçapı değişkenlerini `0px` olarak ayarlayın.
+
+<CodeDemo source={CustomBorderRadiusSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomBorderRadius client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### CSS Değişkenleri ile Özel Boyut
+
+Yerleşik `size` prop'unu kullanmak yerine, hassas kontrol için bireysel boyutlandırma değişkenlerini geçersiz kılın. Bu örnek, özel hücre boyutu ve yazı tipi boyutlarına sahip bir **DateRangePicker** kullanır.
+
+<CodeDemo source={CustomSizeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSize client:load />
+  </ExampleWrapper>
+</CodeDemo>

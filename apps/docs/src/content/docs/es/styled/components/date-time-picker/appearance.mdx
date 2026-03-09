@@ -1,0 +1,34 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomLocale from "@examples/styled/DateTimePicker/CustomLocale";
+import CustomLocaleSource from "@examples/styled/DateTimePicker/CustomLocale.tsx?raw";
+import FormIntegration from "@examples/styled/DateTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DateTimePicker/FormIntegration.tsx?raw";
+
+# Apariencia
+
+## Localización Personalizada
+
+Proporciona una localización personalizada para la internacionalización. La clave `dateTimePlaceholder` personaliza el texto del activador.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Integración con Formularios
+
+Usa la prop `name` para incluir una entrada oculta para el envío de formularios nativos.
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

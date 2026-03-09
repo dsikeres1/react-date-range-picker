@@ -1,0 +1,60 @@
+---
+sidebar_position: 1
+title: DayProps
+---
+
+# DayProps
+
+Banderas computadas por celda devueltas por `getDayProps()`. Describe el estado visual e interactivo de una única celda de día del calendario.
+
+```tsx
+import type { DayProps } from "react-date-range-picker-headless";
+```
+
+## Campos
+
+| Campo                | Tipo      | Descripción                                                                                                                |
+| -------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `date`               | `Date`    | El objeto `Date` para esta celda.                                                                                          |
+| `day`                | `number`  | Día del mes (1-31).                                                                                                        |
+| `isToday`            | `boolean` | Esta fecha es hoy (o la sobreescritura de `today`).                                                                        |
+| `isSelected`         | `boolean` | Esta fecha está actualmente seleccionada.                                                                                  |
+| `isDisabled`         | `boolean` | Esta fecha está deshabilitada por `minDate`, `maxDate`, o `isDateUnavailable`.                                             |
+| `isInRange`          | `boolean` | Esta fecha está entre el inicio y el final del rango (excluyendo el inicio y el final mismos).                             |
+| `isRangeStart`       | `boolean` | Esta fecha es la primera fecha de un rango seleccionado.                                                                   |
+| `isRangeEnd`         | `boolean` | Esta fecha es la última fecha de un rango seleccionado.                                                                    |
+| `isInHoverRange`     | `boolean` | Esta fecha está en el rango de vista previa flotante (entre la fecha de inicio y la fecha sobre la que se pasa el cursor). |
+| `isHoverTarget`      | `boolean` | Esta fecha es la fecha sobre la que se pasa el cursor actualmente.                                                         |
+| `hasLeftConnection`  | `boolean` | Conectado al día anterior (para una representación continua del fondo del rango).                                          |
+| `hasRightConnection` | `boolean` | Conectado al día siguiente (para una representación continua del fondo del rango).                                         |
+| `isConsecutiveRange` | `boolean` | Parte de un rango seleccionado de varios días.                                                                             |
+| `isFocused`          | `boolean` | Esta fecha tiene el foco del teclado.                                                                                      |
+| `dayOfWeek`          | `number`  | Día de la semana (0 = Domingo, 6 = Sábado).                                                                                |
+| `isOutsideDay`       | `boolean` | Este día pertenece a un mes diferente (anterior/siguiente) cuando `showOutsideDays` está habilitado.                       |
+| `isHighlighted`      | `boolean` | Este día está en el array `highlightDates`.                                                                                |
+| `isRangeSingle`      | `boolean` | Este día es tanto el inicio como el final del rango (rango de un solo día).                                                |
+
+## Definición de TypeScript
+
+```tsx
+interface DayProps {
+  date: Date;
+  day: number;
+  isToday: boolean;
+  isSelected: boolean;
+  isDisabled: boolean;
+  isInRange: boolean;
+  isRangeStart: boolean;
+  isRangeEnd: boolean;
+  isInHoverRange: boolean;
+  isHoverTarget: boolean;
+  hasLeftConnection: boolean;
+  hasRightConnection: boolean;
+  isConsecutiveRange: boolean;
+  isFocused: boolean;
+  dayOfWeek: number;
+  isOutsideDay: boolean;
+  isHighlighted: boolean;
+  isRangeSingle: boolean;
+}
+```

@@ -1,0 +1,150 @@
+---
+sidebar_position: 4
+title: Time Helpers
+---
+
+# Wspomaganie Czasu
+
+Funkcje do generowania wartości czasu, konwersji między formatami 12/24-godzinnymi, przyciągania do kroków i rozwiązywania konfiguracji czasu.
+
+```tsx
+import {
+  generateHours,
+  generateHours12,
+  generateMinutes,
+  generateSeconds,
+  adjustMinuteToStep,
+  adjustSecondToStep,
+  to12Hour,
+  to24Hour,
+  resolveTimeConfig,
+} from "react-date-range-picker-headless";
+```
+
+## generateHours
+
+Generuje tablicę wartości 24-godzinnych.
+
+|           |                             |
+| --------- | --------------------------- |
+| Sygnatura | `generateHours(): number[]` |
+| Zwraca    | `[0, 1, 2, ..., 23]`        |
+
+## generateHours12
+
+Generuje tablicę wartości 12-godzinnych.
+
+|           |                               |
+| --------- | ----------------------------- |
+| Sygnatura | `generateHours12(): number[]` |
+| Zwraca    | `[1, 2, 3, ..., 12]`          |
+
+## generateMinutes
+
+Generuje tablicę minut filtrowaną według kroku.
+
+|           |                                                      |
+| --------- | ---------------------------------------------------- |
+| Sygnatura | `generateMinutes(minuteStep?: MinuteStep): number[]` |
+| Domyślnie | `5`                                                  |
+
+```tsx
+generateMinutes(); // [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
+generateMinutes(15); // [0, 15, 30, 45]
+generateMinutes(1); // [0, 1, 2, ..., 59]
+```
+
+## generateSeconds
+
+Generuje tablicę sekund filtrowaną według kroku.
+
+|           |                                                      |
+| --------- | ---------------------------------------------------- |
+| Sygnatura | `generateSeconds(secondStep?: SecondStep): number[]` |
+| Domyślnie | `1`                                                  |
+
+```tsx
+generateSeconds(); // [0, 1, 2, ..., 59]
+generateSeconds(15); // [0, 15, 30, 45]
+```
+
+## adjustMinuteToStep
+
+Przyciąga wartość minuty do najbliższego prawidłowego kroku (zaokrągla w dół).
+
+|           |                                                                      |
+| --------- | -------------------------------------------------------------------- |
+| Sygnatura | `adjustMinuteToStep(minute: number, minuteStep: MinuteStep): number` |
+
+```tsx
+adjustMinuteToStep(7, 5); // 5
+adjustMinuteToStep(13, 10); // 10
+adjustMinuteToStep(29, 15); // 15
+```
+
+## adjustSecondToStep
+
+Przyciąga wartość sekundy do najbliższego prawidłowego kroku (zaokrągla w dół).
+
+|           |                                                                      |
+| --------- | -------------------------------------------------------------------- |
+| Sygnatura | `adjustSecondToStep(second: number, secondStep: SecondStep): number` |
+
+```tsx
+adjustSecondToStep(7, 5); // 5
+adjustSecondToStep(14, 10); // 10
+```
+
+## to12Hour
+
+Konwertuje wartość 24-godzinną na format 12-godzinny z AM/PM.
+
+|           |                                                                  |
+| --------- | ---------------------------------------------------------------- |
+| Sygnatura | `to12Hour(hour24: number): { hour: number; period: TimePeriod }` |
+
+```tsx
+to12Hour(0); // { hour: 12, period: "AM" }
+to12Hour(12); // { hour: 12, period: "PM" }
+to12Hour(13); // { hour: 1, period: "PM" }
+to12Hour(23); // { hour: 11, period: "PM" }
+```
+
+## to24Hour
+
+Konwertuje wartość 12-godzinną z AM/PM na format 24-godzinny.
+
+|           |                                                        |
+| --------- | ------------------------------------------------------ |
+| Sygnatura | `to24Hour(hour12: number, period: TimePeriod): number` |
+
+```tsx
+to24Hour(12, "AM"); // 0
+to24Hour(12, "PM"); // 12
+to24Hour(1, "PM"); // 13
+to24Hour(11, "PM"); // 23
+```
+
+## resolveTimeConfig
+
+Uzupełnia częściowy `TimeConfig` wartościami domyślnymi.
+
+|           |                                                                |
+| --------- | -------------------------------------------------------------- |
+| Sygnatura | `resolveTimeConfig(config?: TimeConfig): Required<TimeConfig>` |
+
+| Pole         | Domyślnie  |
+| ------------ | ---------- |
+| `precision`  | `"minute"` |
+| `hourFormat` | `"24"`     |
+| `minuteStep` | `5`        |
+| `secondStep` | `1`        |
+| `itemHeight` | `32`       |
+
+```tsx
+resolveTimeConfig();
+// { precision: "minute", hourFormat: "24", minuteStep: 5, secondStep: 1, itemHeight: 32 }
+
+resolveTimeConfig({ precision: "second", hourFormat: "12" });
+// { precision: "second", hourFormat: "12", minuteStep: 5, secondStep: 1, itemHeight: 32 }
+```

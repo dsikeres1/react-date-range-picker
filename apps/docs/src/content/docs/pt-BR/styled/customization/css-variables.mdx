@@ -1,0 +1,214 @@
+---
+sidebar_position: 2
+sidebar_label: "CSS Variables"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomColors from "@examples/styled/Customization/CustomColors";
+import CustomColorsSource from "@examples/styled/Customization/CustomColors.tsx?raw";
+import CustomFont from "@examples/styled/Customization/CustomFont";
+import CustomFontSource from "@examples/styled/Customization/CustomFont.tsx?raw";
+import CustomBorderRadius from "@examples/styled/Customization/CustomBorderRadius";
+import CustomBorderRadiusSource from "@examples/styled/Customization/CustomBorderRadius.tsx?raw";
+import CustomSize from "@examples/styled/Customization/CustomSize";
+import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw";
+
+# Variáveis CSS
+
+O pacote `styled` usa propriedades personalizadas CSS (variáveis) para todos os valores visuais. Sobrescreva-as no `.rdrp-root` ou em qualquer elemento pai para personalizar a aparência sem tocar no código do componente.
+
+## Como Sobrescrever
+
+Todas as variáveis estão no escopo do `.rdrp-root`. Sobrescreva-as no seu próprio CSS:
+
+```css
+/* Seu tema personalizado */
+.rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-border-radius-lg: 12px;
+}
+```
+
+Ou escopo as sobrescritas para uma instância específica usando uma classe wrapper:
+
+```css
+.my-purple-picker .rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-color-primary-light: #ede9fe;
+  --rdrp-color-primary-lighter: #f5f3ff;
+}
+```
+
+```tsx
+<div className="my-purple-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## Referência de Variáveis
+
+### Cores
+
+| Variável                        | Padrão (Claro)             | Descrição                                                    |
+| ------------------------------- | -------------------------- | ------------------------------------------------------------ |
+| `--rdrp-color-primary`          | `#3b82f6`                  | Cor de ação primária (dia selecionado, botão de confirmação) |
+| `--rdrp-color-primary-hover`    | `#2563eb`                  | Estado hover primário                                        |
+| `--rdrp-color-primary-light`    | `#dbeafe`                  | Fundo do intervalo, destaque primário claro                  |
+| `--rdrp-color-primary-lighter`  | `#eff6ff`                  | Fundo de predefinição ativa                                  |
+| `--rdrp-color-primary-disabled` | `#93c5fd`                  | Botão de confirmação desabilitado                            |
+| `--rdrp-color-bg`               | `#ffffff`                  | Cor de fundo                                                 |
+| `--rdrp-color-bg-hover`         | `#f3f4f6`                  | Fundo hover para dias, botões                                |
+| `--rdrp-color-bg-subtle`        | `#f9fafb`                  | Fundo sutil                                                  |
+| `--rdrp-color-text`             | `#374151`                  | Cor de texto padrão                                          |
+| `--rdrp-color-text-strong`      | `#111827`                  | Texto forte (títulos, hora ativa)                            |
+| `--rdrp-color-text-muted`       | `#6b7280`                  | Texto suave (botões de navegação, etiquetas)                 |
+| `--rdrp-color-text-placeholder` | `#6b7280`                  | Texto de placeholder                                         |
+| `--rdrp-color-text-disabled`    | `#d1d5db`                  | Texto de dia desabilitado                                    |
+| `--rdrp-color-text-outside`     | `#9ca3af`                  | Dias fora do mês                                             |
+| `--rdrp-color-text-inverse`     | `#ffffff`                  | Texto em fundos primários                                    |
+| `--rdrp-color-text-danger`      | `#ef4444`                  | Texto do botão de limpar/perigo                              |
+| `--rdrp-color-text-today`       | `#2563eb`                  | Cor do indicador de hoje                                     |
+| `--rdrp-color-border`           | `#d1d5db`                  | Borda padrão                                                 |
+| `--rdrp-color-border-light`     | `#e5e7eb`                  | Borda clara (popup, seletores)                               |
+| `--rdrp-color-border-subtle`    | `#f3f4f6`                  | Borda sutil (rodapé, predefinições)                          |
+| `--rdrp-color-border-hover`     | `#93c5fd`                  | Estado hover da borda                                        |
+| `--rdrp-color-highlight-dot`    | `#f59e0b`                  | Cor do ponto de destaque                                     |
+| `--rdrp-highlight-dot-size`     | `4px`                      | Diâmetro do ponto de destaque                                |
+| `--rdrp-color-range-bg`         | `#dbeafe`                  | Fundo do dia no intervalo                                    |
+| `--rdrp-color-hover-range-bg`   | `#eff6ff`                  | Fundo da pré-visualização do intervalo em hover              |
+| `--rdrp-color-hover-target-bg`  | `#bfdbfe`                  | Fundo do ponto final em hover                                |
+| `--rdrp-color-time-highlight`   | `rgba(59, 130, 246, 0.08)` | Barra de destaque do painel de tempo                         |
+
+### Tipografia
+
+| Variável                      | Padrão            | Descrição                                                     |
+| ----------------------------- | ----------------- | ------------------------------------------------------------- |
+| `--rdrp-font-family`          | System font stack | Família da fonte                                              |
+| `--rdrp-font-size-xs`         | `11px`            | Extra pequeno (cabeçalho do dia da semana em tamanho pequeno) |
+| `--rdrp-font-size-sm`         | `12px`            | Pequeno (cabeçalhos do dia da semana, etiquetas)              |
+| `--rdrp-font-size-base`       | `13px`            | Base (células de dia, botões)                                 |
+| `--rdrp-font-size-md`         | `14px`            | Médio (gatilho, itens de tempo)                               |
+| `--rdrp-font-size-lg`         | `15px`            | Grande (título do cabeçalho)                                  |
+| `--rdrp-font-weight-normal`   | `400`             | Peso normal                                                   |
+| `--rdrp-font-weight-medium`   | `500`             | Peso médio                                                    |
+| `--rdrp-font-weight-semibold` | `600`             | Peso semibold                                                 |
+| `--rdrp-font-weight-bold`     | `700`             | Peso negrito (indicador de hoje)                              |
+
+### Espaçamento
+
+| Variável             | Padrão | Descrição                   |
+| -------------------- | ------ | --------------------------- |
+| `--rdrp-spacing-xs`  | `2px`  | Espaçamento extra pequeno   |
+| `--rdrp-spacing-sm`  | `4px`  | Espaçamento pequeno         |
+| `--rdrp-spacing-md`  | `8px`  | Espaçamento médio           |
+| `--rdrp-spacing-lg`  | `12px` | Espaçamento grande          |
+| `--rdrp-spacing-xl`  | `16px` | Espaçamento extra grande    |
+| `--rdrp-spacing-2xl` | `24px` | Espaçamento 2x extra grande |
+
+### Bordas
+
+| Variável                    | Padrão   | Descrição                         |
+| --------------------------- | -------- | --------------------------------- |
+| `--rdrp-border-radius-sm`   | `4px`    | Raio pequeno                      |
+| `--rdrp-border-radius-md`   | `6px`    | Raio médio (botões, seletores)    |
+| `--rdrp-border-radius-lg`   | `8px`    | Raio grande (dias, gatilho)       |
+| `--rdrp-border-radius-xl`   | `12px`   | Raio extra grande (popup)         |
+| `--rdrp-border-radius-full` | `9999px` | Raio completo (ponto de destaque) |
+| `--rdrp-border-width`       | `1px`    | Largura da borda                  |
+
+### Sombras
+
+| Variável               | Padrão                        | Descrição               |
+| ---------------------- | ----------------------------- | ----------------------- |
+| `--rdrp-shadow-popup`  | `0 10px 25px rgba(0,0,0,0.1)` | Sombra do popup         |
+| `--rdrp-shadow-inline` | `0 4px 12px rgba(0,0,0,0.06)` | Sombra do modo em linha |
+| `--rdrp-shadow-sm`     | `0 2px 6px rgba(0,0,0,0.04)`  | Sombra pequena          |
+
+### Dimensionamento
+
+| Variável                   | Padrão  | Descrição                                        |
+| -------------------------- | ------- | ------------------------------------------------ |
+| `--rdrp-cell-size`         | `36px`  | Largura/altura da célula do dia                  |
+| `--rdrp-nav-btn-size`      | `28px`  | Tamanho do botão de navegação                    |
+| `--rdrp-weekday-height`    | `28px`  | Altura da linha do cabeçalho do dia da semana    |
+| `--rdrp-grid-min-height`   | `216px` | Altura mínima da grade do calendário             |
+| `--rdrp-panel-min-width`   | `252px` | Largura do painel de calendário único            |
+| `--rdrp-dual-gap`          | `24px`  | Espaçamento entre calendários duplos             |
+| `--rdrp-trigger-min-width` | `200px` | Largura mínima do botão de gatilho               |
+| `--rdrp-trigger-padding-x` | `14px`  | Preenchimento horizontal do gatilho              |
+| `--rdrp-trigger-padding-y` | `8px`   | Preenchimento vertical do gatilho                |
+| `--rdrp-popup-padding`     | `16px`  | Preenchimento interno do popup                   |
+| `--rdrp-popup-gap`         | `6px`   | Espaçamento do conteúdo do popup                 |
+| `--rdrp-btn-padding-x`     | `14px`  | Preenchimento horizontal do botão do rodapé      |
+| `--rdrp-btn-padding-y`     | `6px`   | Preenchimento vertical do botão do rodapé        |
+| `--rdrp-preset-min-width`  | `140px` | Largura mínima da barra lateral de predefinições |
+
+### Seletor de Tempo
+
+| Variável                      | Padrão  | Descrição                           |
+| ----------------------------- | ------- | ----------------------------------- |
+| `--rdrp-time-item-height`     | `32px`  | Altura do item de rolagem de tempo  |
+| `--rdrp-time-panel-height`    | `176px` | Altura total do painel de tempo     |
+| `--rdrp-time-column-height`   | `160px` | Altura da coluna rolável            |
+| `--rdrp-time-panel-min-width` | `120px` | Largura mínima do painel de tempo   |
+| `--rdrp-time-colon-width`     | `12px`  | Largura do separador de dois pontos |
+
+### Z-index
+
+| Variável              | Padrão | Descrição             |
+| --------------------- | ------ | --------------------- |
+| `--rdrp-z-popup`      | `50`   | Z-index do popup      |
+| `--rdrp-z-day-button` | `20`   | Z-index do dia focado |
+
+### Transições
+
+| Variável                   | Padrão  | Descrição                            |
+| -------------------------- | ------- | ------------------------------------ |
+| `--rdrp-transition-fast`   | `0.1s`  | Transições rápidas (hover do dia)    |
+| `--rdrp-transition-normal` | `0.15s` | Transições normais (gatilho, botões) |
+
+## Exemplos ao Vivo
+
+### Cores Personalizadas (Tema Roxo)
+
+Sobrescreva as variáveis de cor primária para criar um esquema de cores completamente diferente. Este exemplo usa um **DatePicker** com tons de violeta/roxo.
+
+<CodeDemo source={CustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Fonte Personalizada (Serif)
+
+As fontes funcionam em cascata através do CSS, então envolver o seletor em uma div com uma `font-family` personalizada se aplica a todo o texto. Este exemplo usa um **DateRangePicker** com a fonte serifada Georgia.
+
+<CodeDemo source={CustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Cantos Retos (Sem Border Radius)
+
+Defina todas as variáveis de raio de borda para `0px` para uma aparência completamente quadrada.
+
+<CodeDemo source={CustomBorderRadiusSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomBorderRadius client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Tamanho Personalizado via Variáveis CSS
+
+Em vez de usar a propriedade `size` embutida, sobrescreva as variáveis de dimensionamento individuais para um controle preciso. Este exemplo usa um **DateRangePicker** com tamanho de célula e tamanhos de fonte personalizados.
+
+<CodeDemo source={CustomSizeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSize client:load />
+  </ExampleWrapper>
+</CodeDemo>

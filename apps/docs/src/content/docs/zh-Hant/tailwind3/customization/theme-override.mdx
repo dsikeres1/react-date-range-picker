@@ -1,0 +1,207 @@
+---
+sidebar_position: 10
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 主題覆寫
+
+Tailwind v3 套件使用具體的 Tailwind 功能類別 (例如 `sky-500`, `slate-100`) 進行所有樣式設定。您可以透過覆寫從套件匯出的主題物件來自訂外觀。
+
+## 預設主題
+
+主題被定義為一組匯出的物件，每個物件包含元件部分的類別名稱字串。以下是預設調色盤的概覽：
+
+| 角色     | 淺色類別    | 深色類別     |
+| -------- | ----------- | ------------ |
+| 主要     | `sky-500`   | `sky-500`    |
+| 主要文字 | `sky-500`   | `sky-400`    |
+| 背景     | `white`     | `slate-950`  |
+| 表面懸停 | `slate-100` | `slate-800`  |
+| 文字     | `slate-900` | `slate-50`   |
+| 靜音文字 | `slate-500` | `slate-400`  |
+| 邊框     | `slate-200` | `slate-800`  |
+| 範圍背景 | `sky-50`    | `sky-950/50` |
+| 危險     | `red-500`   | `red-600`    |
+
+## 主題物件結構
+
+主題被分割成多個具名匯出：
+
+```ts
+import {
+  rootClassNames,
+  triggerClassNames,
+  headerClassNames,
+  gridClassNames,
+  dayClassNames,
+  footerClassNames,
+  contentClassNames,
+  rangeClassNames,
+  dateTimeClassNames,
+  timePanelClassNames,
+} from "react-date-range-picker-tailwind3";
+```
+
+每個物件都包含對應到完整 Tailwind 類別字串的鍵。例如：
+
+```ts
+// dayClassNames
+{
+  day: "flex items-center justify-center w-9 h-9 mx-[1px] rounded-md transition-colors cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 ...",
+  today: "font-bold text-sky-500 dark:text-sky-400",
+  selected: "bg-sky-500 dark:bg-sky-500 text-white font-semibold ...",
+  inRange: "bg-sky-50 dark:bg-sky-950/50 text-slate-900 dark:text-slate-50 rounded-none mx-0 ...",
+  rangeStart: "bg-sky-500 dark:bg-sky-500 text-white rounded-r-none mx-0 ...",
+  rangeEnd: "bg-sky-500 dark:bg-sky-500 text-white rounded-l-none mx-0 ...",
+  // ...
+}
+```
+
+## 使用複合元件覆寫
+
+自訂主題最直接的方法是透過複合元件 API。每個部分都接受一個 `className` 屬性，它會使用 `twMerge` 與預設值合併，因此衝突的功能類別會被正確解析。
+
+### 變更主要顏色
+
+將所選日期及相關狀態的 `sky` 替換為 `violet`：
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+function VioletPicker() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  return (
+    <DatePicker.Root value={value} onChange={setValue}>
+      <DatePicker.Trigger className="hover:border-violet-500/50 focus-visible:ring-violet-500 focus-visible:border-violet-500" />
+      <DatePicker.Content>
+        <DatePicker.Header>
+          <DatePicker.PrevButton className="focus-visible:ring-violet-500" />
+          <DatePicker.Title />
+          <DatePicker.NextButton className="focus-visible:ring-violet-500" />
+        </DatePicker.Header>
+        <DatePicker.Grid
+          dayClassName="hover:bg-violet-50 dark:hover:bg-violet-950/50 focus-visible:ring-violet-500"
+          dayTodayClassName="text-violet-500 dark:text-violet-400"
+          daySelectedClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayInRangeClassName="bg-violet-50 dark:bg-violet-950/50 hover:bg-violet-100"
+          dayRangeStartClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayRangeEndClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayFocusedClassName="ring-violet-500"
+        />
+        <DatePicker.Footer>
+          <DatePicker.ClearButton />
+          <DatePicker.CancelButton />
+          <DatePicker.ConfirmButton className="bg-violet-500 hover:bg-violet-500/90 focus-visible:ring-violet-500" />
+        </DatePicker.Footer>
+      </DatePicker.Content>
+    </DatePicker.Root>
+  );
+}
+```
+
+### 自訂背景
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger className="bg-slate-50 dark:bg-slate-900" />
+  <DatePicker.Content className="bg-slate-50 dark:bg-slate-900">{/* ... */}</DatePicker.Content>
+</DatePicker.Root>
+```
+
+## 建立自訂主題物件
+
+若要進行應用程式範圍的品牌重塑，請建立一個包裝元件，將您的自訂類別應用於所有部分：
+
+```tsx
+// components/MyDatePicker.tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+const myTheme = {
+  trigger: "hover:border-emerald-500/50 focus-visible:ring-emerald-500",
+  dayToday: "text-emerald-500 dark:text-emerald-400",
+  daySelected: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  dayInRange: "bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100",
+  dayRangeStart: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  dayRangeEnd: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  confirmButton: "bg-emerald-500 hover:bg-emerald-500/90 focus-visible:ring-emerald-500",
+  focusRing: "focus-visible:ring-emerald-500",
+};
+
+export function MyDatePicker(props) {
+  return (
+    <DatePicker.Root {...props}>
+      <DatePicker.Trigger className={myTheme.trigger} />
+      <DatePicker.Content>
+        <DatePicker.Header>
+          <DatePicker.PrevButton className={myTheme.focusRing} />
+          <DatePicker.Title />
+          <DatePicker.NextButton className={myTheme.focusRing} />
+        </DatePicker.Header>
+        <DatePicker.Grid
+          dayTodayClassName={myTheme.dayToday}
+          daySelectedClassName={myTheme.daySelected}
+          dayInRangeClassName={myTheme.dayInRange}
+          dayRangeStartClassName={myTheme.dayRangeStart}
+          dayRangeEndClassName={myTheme.dayRangeEnd}
+          dayFocusedClassName={myTheme.focusRing}
+        />
+        <DatePicker.Footer>
+          <DatePicker.ClearButton />
+          <DatePicker.CancelButton />
+          <DatePicker.ConfirmButton className={myTheme.confirmButton} />
+        </DatePicker.Footer>
+      </DatePicker.Content>
+    </DatePicker.Root>
+  );
+}
+```
+
+在您的應用程式中各處使用它：
+
+```tsx
+<MyDatePicker value={date} onChange={setDate} />
+```
+
+## Grid Day 類別屬性
+
+`Grid` 元件會將與日期相關的 className 屬性向下傳遞到每個 `Day` 儲存格。以下是可用的覆寫選項：
+
+| 屬性                      | 預設類別模式                | 描述                     |
+| ------------------------- | --------------------------- | ------------------------ |
+| `dayClassName`            | 基礎日期樣式                | 所有日期儲存格的基礎類別 |
+| `dayTodayClassName`       | `text-sky-500`              | 今日指示器               |
+| `daySelectedClassName`    | `bg-sky-500 text-white`     | 所選日期                 |
+| `dayDisabledClassName`    | `opacity-50`                | 禁用日期                 |
+| `dayOutsideClassName`     | `text-slate-500/50`         | 月份外的日期             |
+| `dayHighlightedClassName` | `after:bg-amber-500`        | 高亮點                   |
+| `dayInRangeClassName`     | `bg-sky-50`                 | 範圍內的日期             |
+| `dayRangeStartClassName`  | `bg-sky-500 rounded-r-none` | 範圍開始日期             |
+| `dayRangeEndClassName`    | `bg-sky-500 rounded-l-none` | 範圍結束日期             |
+| `dayRangeSingleClassName` | `bg-sky-500`                | 單日範圍                 |
+| `dayHoverRangeClassName`  | `bg-sky-50/50`              | 懸停預覽範圍             |
+| `dayHoverTargetClassName` | `bg-sky-100`                | 懸停端點                 |
+| `dayFocusedClassName`     | `ring-sky-500`              | 鍵盤焦點環               |
+| `dayEmptyClassName`       | `invisible`                 | 空白儲存格佔位符         |
+
+## Tailwind 內容路徑
+
+當使用自訂顏色類別覆寫時，請確保它們包含在您的 Tailwind 內容路徑中。預設情況下，定義在您元件檔案中的類別會被掃描，但如果您將它們定義在一個獨立的設定檔中，也需要加入該路徑：
+
+```js
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+    // Add your theme config if it's in a separate file
+    "./src/config/date-picker-theme.ts",
+  ],
+};
+```
+
+<Admonition type="tip">
+  如果您想要基於語義權杖的主題設定 (像 shadcn/ui)，而不是具體的顏色類別，請考慮使用 [Tailwind v4
+  套件](/docs/tailwind4/getting-started)，它使用基於 CSS 變數的語義權杖。
+</Admonition>

@@ -1,0 +1,66 @@
+---
+sidebar_position: 3
+title: Browser Compatibility
+description: Navegadores suportados, recursos de CSS e APIs de JavaScript utilizadas.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Compatibilidade com Navegadores
+
+## Matriz de Suporte
+
+| Navegador        | Versão Mínima  |
+| ---------------- | -------------- |
+| Chrome           | 88+            |
+| Edge             | 88+ (Chromium) |
+| Firefox          | 85+            |
+| Safari           | 15.4+          |
+| iOS Safari       | 15.4+          |
+| Samsung Internet | 15+            |
+
+**O IE 11 não é suportado.** A biblioteca depende de propriedades personalizadas de CSS (custom properties), APIs de JavaScript modernas e do React 18+.
+
+A versão mínima do Safari 15.4 é determinada pelo suporte ao `:focus-visible`, usado nos estilos de indicador de foco do pacote Styled.
+
+## Recursos de CSS
+
+| Recurso                  | Usado em                               | Suportado desde                        |
+| ------------------------ | -------------------------------------- | -------------------------------------- |
+| CSS Custom Properties    | Todos os pacotes com estilo (temas)    | Chrome 49, Firefox 31, Safari 9.1      |
+| `:focus-visible`         | Indicadores de foco (Styled)           | Chrome 86, Firefox 85, **Safari 15.4** |
+| `color-scheme`           | Inputs nativos no modo escuro (Styled) | Chrome 81, Firefox 96, Safari 12.1     |
+| `prefers-color-scheme`   | Modo escuro automático (Styled)        | Chrome 76, Firefox 67, Safari 12.1     |
+| `prefers-reduced-motion` | Redução de movimento (Styled)          | Chrome 74, Firefox 63, Safari 10.1     |
+| `scroll-snap-type`       | Rolagem do seletor de tempo (Styled)   | Chrome 69, Firefox 68, Safari 11       |
+| Flexbox                  | Layout                                 | Universal                              |
+| CSS Grid                 | Grade do calendário                    | Chrome 57, Firefox 52, Safari 10.1     |
+
+## APIs de JavaScript
+
+| API                                 | Usado por                                        | Suportado desde                    |
+| ----------------------------------- | ------------------------------------------------ | ---------------------------------- |
+| `Intl.DateTimeFormat`               | Geração de locale com `createLocale()`           | Todos os navegadores modernos      |
+| `Intl.DateTimeFormat.formatToParts` | Extração de rótulo AM/PM                         | Chrome 57, Firefox 51, Safari 11   |
+| `ResizeObserver`                    | Posicionamento do popup com `@floating-ui/react` | Chrome 64, Firefox 69, Safari 13.1 |
+| React 18+ hooks                     | Todos os hooks e componentes                     | React 18.0+                        |
+
+## Notas Específicas dos Pacotes
+
+### Headless
+
+Sem dependências de CSS. Requer apenas React 18+ e APIs de JavaScript padrão. Compatível com qualquer ambiente que suporte React.
+
+### Styled
+
+Usa propriedades personalizadas de CSS (custom properties), `:focus-visible`, `color-scheme` e `scroll-snap-type`. O gargalo de suporte de navegadores é o **Safari 15.4+** (devido ao `:focus-visible`).
+
+O seletor de tempo baseado em rolagem usa `scroll-snap-type: y mandatory` com barras de rolagem ocultas. O comportamento da rolagem pode parecer ligeiramente diferente entre plataformas devido a implementações variadas de inércia/momentum.
+
+### Tailwind v3
+
+Requer Tailwind CSS v3. Mesma compatibilidade de JavaScript que o Headless. O suporte a CSS depende da saída do Tailwind v3 (amplamente compatível).
+
+### Tailwind v4
+
+Requer Tailwind CSS v4, que por sua vez usa recursos modernos de CSS (`@layer`, `@property`, aninhamento de CSS). Consulte o [suporte de navegadores do Tailwind CSS

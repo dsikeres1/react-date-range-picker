@@ -1,0 +1,46 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/tailwind3/DateRangePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/tailwind3/DateRangePicker/MinMaxDays.tsx?raw";
+import DisabledDates from "@examples/tailwind3/DateRangePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind3/DateRangePicker/DisabledDates.tsx?raw";
+import AllowSingleDate from "@examples/tailwind3/DateRangePicker/AllowSingleDate";
+import AllowSingleDateSource from "@examples/tailwind3/DateRangePicker/AllowSingleDate.tsx?raw";
+
+# Restrições
+
+## Dias Mínimos e Máximos
+
+Restrinja a duração do intervalo com `minDays` e `maxDays` (inclusivo). Os usuários não podem confirmar um intervalo mais curto que `minDays` ou mais longo que `maxDays`.
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Datas Desabilitadas
+
+Use `isDateUnavailable` para desabilitar dinamicamente datas específicas. Datas desabilitadas não podem ser selecionadas como início ou fim de um intervalo.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Permitir Data Única
+
+Por padrão, um intervalo onde o início é igual ao fim é permitido. Defina `allowSingleDateInRange={false}` para exigir pelo menos duas datas distintas.
+
+<CodeDemo source={AllowSingleDateSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <AllowSingleDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

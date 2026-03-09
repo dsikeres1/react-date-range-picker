@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+sidebar_label: Props
+---
+
+# Props
+
+| Prop            | Kiểu                           | Mặc định | Mô tả                                                  |
+| --------------- | ------------------------------ | -------- | ------------------------------------------------------ |
+| `value`         | `Date \| null`                 | --       | Giá trị thời gian đã chọn (chỉ sử dụng phần thời gian) |
+| `onChange`      | `(date: Date \| null) => void` | --       | Callback khi giá trị thay đổi                          |
+| `time`          | `TimeConfig`                   | --       | Cấu hình bảng điều khiển thời gian                     |
+| `locale`        | `Partial<Locale>`              | --       | Cấu hình ngôn ngữ tùy chỉnh                            |
+| `displayFormat` | `string`                       | --       | Định dạng hiển thị tùy chỉnh cho trình kích hoạt       |
+| `placeholder`   | `string`                       | --       | Văn bản giữ chỗ cho trình kích hoạt                    |
+| `open`          | `boolean`                      | --       | Trạng thái mở được kiểm soát                           |
+| `initialOpen`   | `boolean`                      | `false`  | Trạng thái mở ban đầu (không kiểm soát)                |
+| `onOpenChange`  | `(open: boolean) => void`      | --       | Callback khi trạng thái mở thay đổi                    |
+| `required`      | `boolean`                      | `false`  | Vô hiệu hóa việc xóa giá trị                           |
+| `inline`        | `boolean`                      | `false`  | Hiển thị nội tuyến không có trình kích hoạt/popup      |
+| `hideFooter`    | `boolean`                      | --       | Ẩn chân trang hành động                                |
+| `name`          | `string`                       | --       | Tên input ẩn để gửi biểu mẫu                           |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Độ chính xác hiển thị thời gian. Mặc định là "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** Định dạng 12 giờ hoặc 24 giờ. Mặc định là "24". */
+  hourFormat?: "12" | "24";
+  /** Bước tăng phút. Mặc định là 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Bước tăng giây. Mặc định là 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Chiều cao (tính bằng px) của mỗi mục trong bánh xe cuộn. Mặc định là 32. */
+  itemHeight?: number;
+}
+```

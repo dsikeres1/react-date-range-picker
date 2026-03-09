@@ -1,0 +1,73 @@
+---
+sidebar_position: 4
+title: Time Helpers
+---
+
+# 시간 헬퍼
+
+시간 값을 생성하고, 12/24시간 형식을 변환하며, 단계에 맞춰 값을 조정하고, 시간 설정을 해석하는 함수들입니다.
+
+```tsx
+import {
+  generateHours,
+  generateHours12,
+  generateMinutes,
+  generateSeconds,
+  adjustMinuteToStep,
+  adjustSecondToStep,
+  to12Hour,
+  to24Hour,
+  resolveTimeConfig,
+} from "react-date-range-picker-headless";
+```
+
+## generateHours
+
+24시간 값으로 이루어진 배열을 생성합니다.
+
+|          |                             |
+| -------- | --------------------------- |
+| 시그니처 | `generateHours(): number[]` |
+| 반환값   | `[0, 1, 2, ..., 23]`        |
+
+## generateHours12
+
+12시간 값으로 이루어진 배열을 생성합니다.
+
+|          |                               |
+| -------- | ----------------------------- |
+| 시그니처 | `generateHours12(): number[]` |
+| 반환값   | `[1, 2, 3, ..., 12]`          |
+
+## generateMinutes
+
+단계(step)에 따라 필터링된 분(minute) 배열을 생성합니다.
+
+|          |                                                      |
+| -------- | ---------------------------------------------------- |
+| 시그니처 | `generateMinutes(minuteStep?: MinuteStep): number[]` |
+| 기본값   | `5`                                                  |
+
+```tsx
+generateMinutes(); // [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
+generateMinutes(15); // [0, 15, 30, 45]
+generateMinutes(1); // [0, 1, 2, ..., 59]
+```
+
+## generateSeconds
+
+단계(step)에 따라 필터링된 초(second) 배열을 생성합니다.
+
+|          |                                                      |
+| -------- | ---------------------------------------------------- |
+| 시그니처 | `generateSeconds(secondStep?: SecondStep): number[]` |
+| 기본값   | `1`                                                  |
+
+```tsx
+generateSeconds(); // [0, 1, 2, ..., 59]
+generateSeconds(15); // [0, 15, 30, 45]
+```
+
+## adjustMinuteToStep
+
+분(minute) 값을 가장 가까

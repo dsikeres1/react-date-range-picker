@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind3/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind3/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind3/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# カスタムトリガー
+
+レンダープロップを使用して、デフォルトのトリガーを独自の要素に置き換えます。`Trigger`コンポーネントは、状態とコールバックを受け取る関数を子として受け入れ、任意のカスタムボタンや入力をレンダリングできます。
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## トリガーのレンダープロップ
+
+| プロップ       | 型               | 説明                             |
+| -------------- | ---------------- | -------------------------------- |
+| `displayValue` | `string`         | フォーマットされた選択日         |
+| `placeholder`  | `string`         | プレースホルダーテキスト         |
+| `hasValue`     | `boolean`        | 日付が選択されているかどうか     |
+| `isOpen`       | `boolean`        | ポップアップが開いているかどうか |
+| `onToggle`     | `() => void`     | ポップアップの開閉をトグルする   |
+| `onClear`      | `() => void`     | 選択をクリアする                 |
+| `locale`       | `Locale`         | 現在のロケールオブジェクト       |
+| `triggerRef`   | `(node) => void` | 配置のためのrefコールバック      |
+
+## レンジピッカーのトリガー
+
+同じパターンが`DateRangePicker`でも機能します:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

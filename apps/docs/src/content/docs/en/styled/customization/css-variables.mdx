@@ -1,0 +1,214 @@
+---
+sidebar_position: 2
+sidebar_label: "CSS Variables"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomColors from "@examples/styled/Customization/CustomColors";
+import CustomColorsSource from "@examples/styled/Customization/CustomColors.tsx?raw";
+import CustomFont from "@examples/styled/Customization/CustomFont";
+import CustomFontSource from "@examples/styled/Customization/CustomFont.tsx?raw";
+import CustomBorderRadius from "@examples/styled/Customization/CustomBorderRadius";
+import CustomBorderRadiusSource from "@examples/styled/Customization/CustomBorderRadius.tsx?raw";
+import CustomSize from "@examples/styled/Customization/CustomSize";
+import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw";
+
+# CSS Variables
+
+The styled package uses CSS custom properties (variables) for all visual values. Override them on `.rdrp-root` or any parent element to customize the appearance without touching component code.
+
+## How to Override
+
+All variables are scoped under `.rdrp-root`. Override them in your own CSS:
+
+```css
+/* Your custom theme */
+.rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-border-radius-lg: 12px;
+}
+```
+
+Or scope overrides to a specific instance using a wrapper class:
+
+```css
+.my-purple-picker .rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-color-primary-light: #ede9fe;
+  --rdrp-color-primary-lighter: #f5f3ff;
+}
+```
+
+```tsx
+<div className="my-purple-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## Variable Reference
+
+### Colors
+
+| Variable                        | Default (Light)            | Description                                         |
+| ------------------------------- | -------------------------- | --------------------------------------------------- |
+| `--rdrp-color-primary`          | `#3b82f6`                  | Primary action color (selected day, confirm button) |
+| `--rdrp-color-primary-hover`    | `#2563eb`                  | Primary hover state                                 |
+| `--rdrp-color-primary-light`    | `#dbeafe`                  | Range background, light primary accent              |
+| `--rdrp-color-primary-lighter`  | `#eff6ff`                  | Active preset background                            |
+| `--rdrp-color-primary-disabled` | `#93c5fd`                  | Disabled confirm button                             |
+| `--rdrp-color-bg`               | `#ffffff`                  | Background color                                    |
+| `--rdrp-color-bg-hover`         | `#f3f4f6`                  | Hover background for days, buttons                  |
+| `--rdrp-color-bg-subtle`        | `#f9fafb`                  | Subtle background                                   |
+| `--rdrp-color-text`             | `#374151`                  | Default text color                                  |
+| `--rdrp-color-text-strong`      | `#111827`                  | Strong text (titles, active time)                   |
+| `--rdrp-color-text-muted`       | `#6b7280`                  | Muted text (nav buttons, labels)                    |
+| `--rdrp-color-text-placeholder` | `#6b7280`                  | Placeholder text                                    |
+| `--rdrp-color-text-disabled`    | `#d1d5db`                  | Disabled day text                                   |
+| `--rdrp-color-text-outside`     | `#9ca3af`                  | Outside month days                                  |
+| `--rdrp-color-text-inverse`     | `#ffffff`                  | Text on primary backgrounds                         |
+| `--rdrp-color-text-danger`      | `#ef4444`                  | Clear/danger button text                            |
+| `--rdrp-color-text-today`       | `#2563eb`                  | Today indicator color                               |
+| `--rdrp-color-border`           | `#d1d5db`                  | Default border                                      |
+| `--rdrp-color-border-light`     | `#e5e7eb`                  | Light border (popup, selects)                       |
+| `--rdrp-color-border-subtle`    | `#f3f4f6`                  | Subtle border (footer, presets)                     |
+| `--rdrp-color-border-hover`     | `#93c5fd`                  | Border hover state                                  |
+| `--rdrp-color-highlight-dot`    | `#f59e0b`                  | Highlight dot color                                 |
+| `--rdrp-highlight-dot-size`     | `4px`                      | Highlight dot diameter                              |
+| `--rdrp-color-range-bg`         | `#dbeafe`                  | In-range day background                             |
+| `--rdrp-color-hover-range-bg`   | `#eff6ff`                  | Hover range preview background                      |
+| `--rdrp-color-hover-target-bg`  | `#bfdbfe`                  | Hover endpoint background                           |
+| `--rdrp-color-time-highlight`   | `rgba(59, 130, 246, 0.08)` | Time panel highlight bar                            |
+
+### Typography
+
+| Variable                      | Default           | Description                                |
+| ----------------------------- | ----------------- | ------------------------------------------ |
+| `--rdrp-font-family`          | System font stack | Font family                                |
+| `--rdrp-font-size-xs`         | `11px`            | Extra small (weekday header in small size) |
+| `--rdrp-font-size-sm`         | `12px`            | Small (weekday headers, labels)            |
+| `--rdrp-font-size-base`       | `13px`            | Base (day cells, buttons)                  |
+| `--rdrp-font-size-md`         | `14px`            | Medium (trigger, time items)               |
+| `--rdrp-font-size-lg`         | `15px`            | Large (header title)                       |
+| `--rdrp-font-weight-normal`   | `400`             | Normal weight                              |
+| `--rdrp-font-weight-medium`   | `500`             | Medium weight                              |
+| `--rdrp-font-weight-semibold` | `600`             | Semibold weight                            |
+| `--rdrp-font-weight-bold`     | `700`             | Bold weight (today indicator)              |
+
+### Spacing
+
+| Variable             | Default | Description            |
+| -------------------- | ------- | ---------------------- |
+| `--rdrp-spacing-xs`  | `2px`   | Extra small spacing    |
+| `--rdrp-spacing-sm`  | `4px`   | Small spacing          |
+| `--rdrp-spacing-md`  | `8px`   | Medium spacing         |
+| `--rdrp-spacing-lg`  | `12px`  | Large spacing          |
+| `--rdrp-spacing-xl`  | `16px`  | Extra large spacing    |
+| `--rdrp-spacing-2xl` | `24px`  | 2x extra large spacing |
+
+### Borders
+
+| Variable                    | Default  | Description                      |
+| --------------------------- | -------- | -------------------------------- |
+| `--rdrp-border-radius-sm`   | `4px`    | Small radius                     |
+| `--rdrp-border-radius-md`   | `6px`    | Medium radius (buttons, selects) |
+| `--rdrp-border-radius-lg`   | `8px`    | Large radius (days, trigger)     |
+| `--rdrp-border-radius-xl`   | `12px`   | Extra large radius (popup)       |
+| `--rdrp-border-radius-full` | `9999px` | Full radius (highlight dot)      |
+| `--rdrp-border-width`       | `1px`    | Border width                     |
+
+### Shadows
+
+| Variable               | Default                       | Description        |
+| ---------------------- | ----------------------------- | ------------------ |
+| `--rdrp-shadow-popup`  | `0 10px 25px rgba(0,0,0,0.1)` | Popup shadow       |
+| `--rdrp-shadow-inline` | `0 4px 12px rgba(0,0,0,0.06)` | Inline mode shadow |
+| `--rdrp-shadow-sm`     | `0 2px 6px rgba(0,0,0,0.04)`  | Small shadow       |
+
+### Sizing
+
+| Variable                   | Default | Description                      |
+| -------------------------- | ------- | -------------------------------- |
+| `--rdrp-cell-size`         | `36px`  | Day cell width/height            |
+| `--rdrp-nav-btn-size`      | `28px`  | Navigation button size           |
+| `--rdrp-weekday-height`    | `28px`  | Weekday header row height        |
+| `--rdrp-grid-min-height`   | `216px` | Calendar grid minimum height     |
+| `--rdrp-panel-min-width`   | `252px` | Single calendar panel width      |
+| `--rdrp-dual-gap`          | `24px`  | Gap between dual calendars       |
+| `--rdrp-trigger-min-width` | `200px` | Trigger button minimum width     |
+| `--rdrp-trigger-padding-x` | `14px`  | Trigger horizontal padding       |
+| `--rdrp-trigger-padding-y` | `8px`   | Trigger vertical padding         |
+| `--rdrp-popup-padding`     | `16px`  | Popup inner padding              |
+| `--rdrp-popup-gap`         | `6px`   | Popup content gap                |
+| `--rdrp-btn-padding-x`     | `14px`  | Footer button horizontal padding |
+| `--rdrp-btn-padding-y`     | `6px`   | Footer button vertical padding   |
+| `--rdrp-preset-min-width`  | `140px` | Preset sidebar minimum width     |
+
+### Time Picker
+
+| Variable                      | Default | Description              |
+| ----------------------------- | ------- | ------------------------ |
+| `--rdrp-time-item-height`     | `32px`  | Time scroll item height  |
+| `--rdrp-time-panel-height`    | `176px` | Time panel total height  |
+| `--rdrp-time-column-height`   | `160px` | Scrollable column height |
+| `--rdrp-time-panel-min-width` | `120px` | Time panel minimum width |
+| `--rdrp-time-colon-width`     | `12px`  | Colon separator width    |
+
+### Z-index
+
+| Variable              | Default | Description         |
+| --------------------- | ------- | ------------------- |
+| `--rdrp-z-popup`      | `50`    | Popup z-index       |
+| `--rdrp-z-day-button` | `20`    | Focused day z-index |
+
+### Transitions
+
+| Variable                   | Default | Description                           |
+| -------------------------- | ------- | ------------------------------------- |
+| `--rdrp-transition-fast`   | `0.1s`  | Fast transitions (day hover)          |
+| `--rdrp-transition-normal` | `0.15s` | Normal transitions (trigger, buttons) |
+
+## Live Examples
+
+### Custom Colors (Purple Theme)
+
+Override primary color variables to create a completely different color scheme. This example uses a **DatePicker** with violet/purple tones.
+
+<CodeDemo source={CustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Custom Font (Serif)
+
+Fonts cascade through CSS, so wrapping the picker in a div with a custom `font-family` applies to all text. This example uses a **DateRangePicker** with Georgia serif.
+
+<CodeDemo source={CustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Sharp Corners (No Border Radius)
+
+Set all border radius variables to `0px` for a completely square look.
+
+<CodeDemo source={CustomBorderRadiusSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomBorderRadius client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Custom Size via CSS Variables
+
+Instead of using the built-in `size` prop, override individual sizing variables for precise control. This example uses a **DateRangePicker** with custom cell size and font sizes.
+
+<CodeDemo source={CustomSizeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSize client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,150 @@
+---
+sidebar_position: 7
+title: useStandaloneTimePicker
+---
+
+# useStandaloneTimePicker
+
+Gère l'état de l'heure avec un comportement d'ouverture/fermeture et de clic à l'extérieur.
+
+## Importer
+
+```tsx
+import { useStandaloneTimePicker } from "react-date-range-picker-headless";
+```
+
+## Utilisation
+
+```tsx
+import { useState } from "react";
+import { useStandaloneTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [time, setTime] = useState<Date | null>(null);
+
+  const picker = useStandaloneTimePicker({
+    value: time,
+    onChange: setTime,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 5 },
+    placeholder: "Sélectionner l'heure",
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.hasValue ? picker.displayValue : "Sélectionner l'heure"}
+      </button>
+
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          <div>
+            <span>{String(picker.tempHour).padStart(2, "0")}</span>
+            <span>:</span>
+            <span>{String(picker.tempMinute).padStart(2, "0")}</span>
+          </div>
+
+          {/* Hook up hour/minute controls */}
+          <input
+            type="range"
+            min={0}
+            max={23}
+            value={picker.tempHour}
+            onChange={(e) => picker.handleHourChange(Number(e.target.value))}
+          />
+          <input
+            type="range"
+            min={0}
+            max={55}
+            step={5}
+            value={picker.tempMinute}
+            onChange={(e) => picker.handleMinuteChange(Number(e.target.value))}
+          />
+
+          <div>
+            <button onClick={picker.handleClear}>Effacer</button>
+            <button onClick={picker.handleCancel}>Annuler</button>
+            <button onClick={picker.handleConfirm}>Confirmer</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Options
+
+| Option          | Type                           | Défaut                                                                    | Description                                                                              |
+| --------------- | ------------------------------ | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `value`         | `Date \| null`                 | --                                                                        | **Requis.** Heure actuelle sous forme d'objet Date (seule la partie heure est utilisée). |
+| `onChange`      | `(date: Date \| null) => void` | --                                                                        | **Requis.** Appelé lorsque l'heure est confirmée.                                        |
+| `time`          | `TimeConfig`                   | `{ precision: "minute", hourFormat: "24", minuteStep: 5, secondStep: 1 }` | Configuration du sélecteur d'heure.                                                      |
+| `locale`        | `Partial<Locale>`              | `DEFAULT_LOCALE`                                                          | Remplacer les chaînes de locale.                                                         |
+| `displayFormat` | `string`                       | --                                                                        | Chaîne de formatage personnalisée pour l'affichage du déclencheur.                       |
+| `placeholder`   | `string`                       | --                                                                        | Texte de substitution lorsqu'aucune valeur n'est sélectionnée.                           |
+| `open`          | `boolean`                      | --                                                                        | État d'ouverture contrôlé.                                                               |
+| `initialOpen`   | `boolean`                      | `false`                                                                   | État d'ouverture initial (non contrôlé).                                                 |
+| `onOpenChange`  | `(open: boolean) => void`      | --                                                                        | Callback lorsque l'état d'ouverture change.                                              |
+| `required`      | `boolean`                      | `false`                                                                   | Si vrai, `handleClear` est une opération sans effet.                                     |
+| `inline`        | `boolean`                      | `false`                                                                   | Toujours afficher le panneau sans déclencheur/popup.                                     |
+| `name`          | `string`                       | --                                                                        | Nom du champ de saisie masqué pour la soumission de formulaire.                          |
+
+## Valeurs de retour
+
+| Nom                  | Type                                | Description                                                                       |
+| -------------------- | ----------------------------------- | --------------------------------------------------------------------------------- |
+| `isOpen`             | `boolean`                           | Indique si la popup est actuellement ouverte.                                     |
+| `handleOpen`         | `() => void`                        | Ouvrir la popup.                                                                  |
+| `handleClose`        | `() => void`                        | Fermer la popup.                                                                  |
+| `handleToggle`       | `() => void`                        | Basculer la popup.                                                                |
+| `tempHour`           | `number`                            | Valeur de l'heure temporaire actuelle.                                            |
+| `tempMinute`         | `number`                            | Valeur de la minute temporaire actuelle.                                          |
+| `tempSecond`         | `number`                            | Valeur de la seconde temporaire actuelle.                                         |
+| `tempPeriod`         | `TimePeriod`                        | Période AM/PM actuelle.                                                           |
+| `handleHourChange`   | `(hour: number) => void`            | Mettre à jour l'heure temporaire.                                                 |
+| `handleMinuteChange` | `(minute: number) => void`          | Mettre à jour la minute temporaire.                                               |
+| `handleSecondChange` | `(second: number) => void`          | Mettre à jour la seconde temporaire.                                              |
+| `handlePeriodChange` | `(period: TimePeriod) => void`      | Mettre à jour la période AM/PM.                                                   |
+| `handleConfirm`      | `() => void`                        | Confirmer l'heure temporaire, appeler `onChange`, et fermer la popup.             |
+| `handleCancel`       | `() => void`                        | Revenir à la valeur d'origine et fermer la popup.                                 |
+| `handleClear`        | `() => void`                        | Effacer la valeur et fermer. Opération sans effet si `required`.                  |
+| `displayValue`       | `string`                            | Chaîne de l'heure formatée pour le déclencheur (valeur validée).                  |
+| `timeDisplayValue`   | `string`                            | Chaîne de l'heure formatée pour le panneau (valeur temporaire).                   |
+| `hasValue`           | `boolean`                           | Indique si une valeur d'heure est actuellement définie.                           |
+| `canConfirm`         | `boolean`                           | Indique si le bouton de confirmation doit être activé.                            |
+| `locale`             | `Locale`                            | Objet de locale résolu.                                                           |
+| `resolvedTimeConfig` | `Required<TimeConfig>`              | Configuration de l'heure entièrement résolue.                                     |
+| `containerRef`       | `RefObject<HTMLDivElement \| null>` | Ref pour le conteneur externe (utilisé pour la détection de clic à l'extérieur).  |
+| `popupRef`           | `RefObject<HTMLDivElement \| null>` | Ref pour l'élément de la popup (utilisé pour la détection de clic à l'extérieur). |
+| `handleKeyDown`      | `(e: KeyboardEvent) => void`        | Gestionnaire de clavier (Échap pour annuler).                                     |
+
+## Comportements clés
+
+### Ouverture/Fermeture
+
+La popup peut être contrôlée ou non contrôlée. Lorsque `open` est fourni, le hook l'utilise comme source de vérité. Sinon, l'état interne est utilisé avec `initialOpen` comme valeur de départ.
+
+### Clic à l'extérieur
+
+Cliquer à l'extérieur de `containerRef` et `popupRef` déclenche `handleCancel`, ce qui rétablit la valeur d'origine et ferme la popup.
+
+### Clavier
+
+Appuyer sur `Échap` pendant que la popup est ouverte déclenche `handleCancel`.
+
+### Mode en ligne
+
+Lorsque `inline` est `true`, le panneau est toujours visible et les modifications sont appliquées immédiatement (synchronisation automatique). La logique d'ouverture/fermeture est contournée.
+
+### Modèle d'état temporaire
+
+Ce hook maintient un état temporaire qui n'est validé que lorsque `handleConfirm` est appelé :
+
+- `handleConfirm` -- écrit l'état temporaire dans `onChange` et ferme la popup
+- `handleCancel` -- rétablit l'état temporaire à la `value` actuelle et ferme
+- `handleClear` -- appelle `onChange(null)` et ferme
+
+### Valeurs d'affichage
+
+- `displayValue` -- chaîne formatée de la `value` validée (pour le déclencheur)
+- `timeDisplayValue` -- chaîne formatée des valeurs temporaires (pour le panneau)

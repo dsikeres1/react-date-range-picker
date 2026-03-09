@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/tailwind3/DatePicker/Basic";
+import BasicSource from "@examples/tailwind3/DatePicker/Basic.tsx?raw";
+import Inline from "@examples/tailwind3/DatePicker/Inline";
+import InlineSource from "@examples/tailwind3/DatePicker/Inline.tsx?raw";
+
+# DatePicker
+
+Một thành phần chọn ngày duy nhất với lịch bật lên.
+
+## Cách dùng cơ bản
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Chế độ nội tuyến
+
+Hiển thị lịch nội tuyến mà không cần trình kích hoạt bật lên.
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

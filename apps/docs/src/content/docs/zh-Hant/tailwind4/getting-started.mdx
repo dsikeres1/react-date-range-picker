@@ -1,0 +1,118 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind4Basic from "@examples/tailwind4/DatePicker/Basic";
+import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
+
+# Tailwind CSS v4 入門指南
+
+Tailwind v4 套件提供了使用 Tailwind CSS v4 功能類別和語意化設計權杖設定樣式的日期選擇器元件。
+
+## 安裝
+
+<PackageInstall pkg="react-date-range-picker-tailwind4" />
+
+不需要額外匯入 CSS。元件直接使用 Tailwind 功能類別。
+
+## Tailwind Preflight 與重設
+
+此套件假設您的專案已啟用 Tailwind CSS Preflight (這是預設值)。
+如果您的環境停用 Preflight (例如 Docusaurus、某些微前端)，按鈕樣式可能會損壞。
+在這種情況下，匯入提供的 `reset.css` 來手動初始化按鈕樣式：
+
+```tsx
+import "react-date-range-picker-tailwind4/reset.css";
+```
+
+## 語意化權杖
+
+元件使用語意化的 CSS 變數來進行主題化。在您的 CSS 中定義它們：
+
+```css
+@theme {
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted: oklch(0.96 0.003 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+這些權杖對應到像是 `bg-popover`、`text-foreground`、`border-border` 等類別。
+
+## 快速入門
+
+<CodeDemo source={Tailwind4BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Tailwind4Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 包含內容
+
+| 元件                  | 說明                               |
+| --------------------- | ---------------------------------- |
+| `DatePicker`          | 具有彈出式日曆的單一日期選擇       |
+| `DateRangePicker`     | 具有雙日曆和預設選項的日期範圍選擇 |
+| `DateTimePicker`      | 具有時間滾動面板的日期 + 時間選擇  |
+| `DateRangeTimePicker` | 日期範圍 + 時間選擇                |
+
+所有元件都支援：
+
+- 透過 `value` / `onChange` 進行受控值
+- 鍵盤導覽
+- 透過 `dark:` 變體支援深色模式
+- 4 種尺寸: `small`, `medium`, `large`, `x-large`
+- 用於自訂的複合元件 API
+
+## TypeScript 類型
+
+所有設定和資料類型都從套件中重新匯出 — 無需單獨安裝 headless 套件：
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind4";
+```
+
+這些類型可用於：
+
+- **`Locale`** — 自訂語系覆寫 (星期名稱、按鈕標籤、日期格式)
+- **`DatePickerSize`** — 為 `size` 屬性設定類型 (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — 設定時間選擇器的精度、格式和步進
+- **`DateRangePreset`** — 為 `DateRangePicker` / `DateRangeTimePicker` 定義預設選項
+- **`CalendarMonth`**, **`DayProps`** — 使用複合元件進行自訂渲染
+
+有關詳細的類型定義，請參閱 [Headless 類型](/docs/headless/types/common-types)。
+
+## 後續步驟
+
+- [DatePicker](/docs/tailwind4/components/date-picker/basic) — 單一日期選擇
+- [DateRangePicker](/docs/tailwind4/components/date-range-picker/basic) — 帶有預設選項的日期範圍
+- [複合元件](/docs/tailwind4/customization/overview) — 自訂內部結構
+- [語意化權杖](/docs/tailwind4/customization/semantic-tokens) — 使用設計權杖進行主題化
+- [深色模式](/docs/tailwind4/customization/dark-mode) — 深色主題支援

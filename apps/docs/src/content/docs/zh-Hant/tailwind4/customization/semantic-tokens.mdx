@@ -1,0 +1,167 @@
+---
+sidebar_position: 10
+---
+
+# 語義化權杖
+
+Tailwind v4 套件對所有顏色使用語義化的 CSS 變數（設計權杖）。這些權杖將組件樣式與特定的顏色值解耦，使主題化變得簡單明瞭。權杖的命名慣例遵循 [shadcn/ui](https://ui.shadcn.com/) 使用的相同模式。
+
+## 權杖系統
+
+Tailwind v4 組件不使用像 `bg-sky-500` 這樣的硬編碼顏色，而是使用像 `bg-primary`、`text-foreground` 和 `border-border` 這樣的語義化工具程式。這些會對應到您在專案中定義的 CSS 變數。
+
+```
+bg-primary        → var(--color-primary)
+text-foreground   → var(--color-foreground)
+border-border     → var(--color-border)
+```
+
+## 必要權杖
+
+在您的 CSS 中使用 Tailwind v4 的 `@theme` 指令定義這些權杖：
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+## 權杖參考
+
+| 權杖                         | 用途                                | 範例工具程式                 |
+| ---------------------------- | ----------------------------------- | ---------------------------- |
+| `--color-background`         | 頁面/應用程式背景                   | `bg-background`              |
+| `--color-foreground`         | 預設文字顏色                        | `text-foreground`            |
+| `--color-popover`            | 彈出視窗背景                        | `bg-popover`                 |
+| `--color-popover-foreground` | 彈出視窗文字                        | `text-popover-foreground`    |
+| `--color-primary`            | 選定日期、確認按鈕、範圍端點        | `bg-primary`, `text-primary` |
+| `--color-primary-foreground` | 主要背景上的文字                    | `text-primary-foreground`    |
+| `--color-muted-foreground`   | 柔和文字 (預留位置、週間、導覽按鈕) | `text-muted-foreground`      |
+| `--color-accent`             | 日期和按鈕的懸停背景                | `bg-accent`                  |
+| `--color-accent-foreground`  | 強調背景上的文字                    | `text-accent-foreground`     |
+| `--color-destructive`        | 清除/危險按鈕文字                   | `text-destructive`           |
+| `--color-border`             | 一般邊框 (頁腳、預設集、彈出視窗)   | `border-border`              |
+| `--color-input`              | 輸入/觸發器邊框                     | `border-input`               |
+| `--color-ring`               | 焦點環顏色                          | `ring-ring`                  |
+
+## 權杖如何對應到組件
+
+以下是權杖在選擇器中的應用方式：
+
+### 觸發器
+
+- 背景：`bg-background`
+- 邊框：`border-input`
+- 文字：繼承自根目錄的 `text-foreground`
+- 預留位置：`text-muted-foreground`
+- 焦點環：`ring-ring`
+
+### 彈出視窗
+
+- 背景：`bg-popover`
+- 文字：`text-popover-foreground`
+- 邊框：`border-border`
+
+### 日曆日期
+
+- 預設懸停：`bg-accent` / `text-accent-foreground`
+- 已選取：`bg-primary` / `text-primary-foreground`
+- 今天：`text-primary`
+- 在範圍內：`bg-primary/10`
+- 範圍開始/結束：`bg-primary` / `text-primary-foreground`
+- 已停用：帶有降低不透明度的 `text-muted-foreground`
+
+### 頁腳
+
+- 邊框：`border-border`
+- 取消按鈕：`border-input`，懸停時 `bg-accent`
+- 確認按鈕：`bg-primary` / `text-primary-foreground`
+- 清除按鈕：`text-destructive`
+
+## 自訂權杖
+
+### 變更主要顏色
+
+變更 `--color-primary` 和 `--color-primary-foreground` 來重塑選擇器的品牌形象：
+
+```css
+@theme {
+  /* 紫色 primary */
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+}
+```
+
+### 暖色配置
+
+```css
+@theme {
+  --color-background: oklch(0.99 0.005 80);
+  --color-foreground: oklch(0.2 0.02 60);
+
+  --color-popover: oklch(0.99 0.005 80);
+  --color-popover-foreground: oklch(0.2 0.02 60);
+
+  --color-primary: oklch(0.6 0.2 40);
+  --color-primary-foreground: oklch(0.98 0.005 80);
+
+  --color-accent: oklch(0.95 0.02 80);
+  --color-accent-foreground: oklch(0.2 0.02 60);
+
+  --color-border: oklch(0.9 0.01 80);
+  --color-input: oklch(0.9 0.01 80);
+  --color-ring: oklch(0.85 0.02 80);
+}
+```
+
+### 深色模式權杖
+
+對於深色模式，在 `.dark` 選擇器或 `@media (prefers-color-scheme: dark)` 下覆寫權杖：
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... 淺色值 */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+更多詳情請參閱 [深色模式](/docs/tailwind4/customization/dark-mode)。
+
+## 現有的 shadcn/ui 專案
+
+如果您的專案已經定義了 shadcn/ui 權杖，選擇器將會自動使用它們，無需額外設定。權杖名稱是刻意設計成相容的。更多資訊請參閱 [shadcn Registry](/docs/tailwind4/customization/shadcn-registry)。

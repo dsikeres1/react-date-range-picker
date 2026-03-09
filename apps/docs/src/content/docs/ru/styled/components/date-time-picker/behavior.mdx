@@ -1,0 +1,52 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/styled/DateTimePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/styled/DateTimePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/styled/DateTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateTimePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/styled/DateTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DateTimePicker/FormIntegration.tsx?raw";
+
+# Поведение
+
+## Закрытие при выборе
+
+Когда `shouldCloseOnSelect` включен, выбор даты автоматически подтверждается, и календарь закрывается.
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Несколько месяцев
+
+Отображение нескольких месяцев рядом.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Интеграция с формой
+
+Используйте проп `name` для добавления скрытого поля ввода для нативной отправки формы.
+
+<Admonition type="tip">
+  Стилизация кнопки отправки в этом примере является пользовательской — библиотека предоставляет
+  только сам выборщик дат.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

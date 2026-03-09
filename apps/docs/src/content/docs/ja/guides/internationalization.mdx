@@ -1,0 +1,162 @@
+---
+sidebar_position: 2
+title: Internationalization
+description: ロケールのカスタマイズ、言語の切り替え、フォーマットの上書き。
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 国際化
+
+このライブラリは、ブラウザの `Intl.DateTimeFormat` APIを使用して、ロケールに対応した月名、曜日ラベル、AM/PMテキストを生成します。外部のi18nライブラリは必要ありません。
+
+## クイックスタート
+
+`createLocale()` を使用してBCP 47言語タグからロケールを生成し、それを `locale` prop経由で渡します:
+
+```tsx
+import { createLocale } from "react-date-range-picker-headless";
+import { DatePicker } from "react-date-range-picker-styled";
+
+const ko = createLocale("ko", {
+  confirm: "확인",
+  cancel: "취소",
+  clear: "초기화",
+  placeholder: "날짜 선택",
+});
+
+function App() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} locale={ko} />;
+}
+```
+
+これは、他のどのバリアント（Tailwind v3、Tailwind v4、Headless）でも機能します。
+
+## `createLocale` が自動生成するもの
+
+`createLocale(localeKey, overrides?)` は `Intl.DateTimeFormat` を使用して以下を自動的に派生させます:
+
+| フィールド        | ソース                                                              | 例 (`"ko"`)               |
+| ----------------- | ------------------------------------------------------------------- | ------------------------- |
+| `weekdays`        | `Intl.DateTimeFormat(localeKey, { weekday: "short" })`              | `["일", "월", "화", ...]` |
+| `months`          | `Intl.DateTimeFormat(localeKey, { month: "long" })`                 | `["1월", "2월", ...]`     |
+| `am` / `pm`       | `Intl.DateTimeFormat(localeKey, { hour: "numeric", hour12: true })` | `"오전"` / `"오후"`       |
+| `formatMonthYear` | Intlから生成                                                        | `"2026년 3월"`            |
+
+その他すべては英語がデフォルトとなり、必要に応じて手動で上書きする必要があります。
+
+## 上書きすべきフィールド
+
+これらのアクションラベルとプレースホルダーは自動生成 **されません**:
+
+| フィールド             | デフォルト                     | 説明                                       |
+| ---------------------- | ------------------------------ | ------------------------------------------ |
+| `confirm`              | `"Confirm"`                    | 確認ボタンのテキスト                       |
+| `cancel`               | `"Cancel"`                     | キャンセルボタンのテキスト                 |
+| `clear`                | `"Clear"`                      | クリアボタンのテキスト                     |
+| `today`                | `"Today"`                      | 「今日へ移動」ボタンのテキスト             |
+| `placeholder`          | `"Select date"`                | 単一の日付ピッカーのプレースホルダー       |
+| `rangePlaceholder`     | `"Select date range"`          | 日付範囲ピッカーのプレースホルダー         |
+| `dateTimePlaceholder`  | `"Select date and time"`       | 日時ピッカーのプレースホルダー             |
+| `rangeTimePlaceholder` | `"Select date range and time"` | 日付範囲付き日時ピッカーのプレースホルダー |
+| `timePlaceholder`      | `"Select time"`                | タイムピッカーのプレースホルダー           |
+| `rangeSeparator`       | `" ~ "`                        | 開始日と終了日の間の区切り文字             |
+| `prevMonthLabel`       | `"Previous month"`             | 前の月ボタンのAriaラベル                   |
+| `nextMonthLabel`       | `"Next month"`                 | 次の月ボタンのAriaラベル                   |
+| `selectYearLabel`      | `"Select year"`                | 年ドロップダウンのAriaラベル               |
+| `selectMonthLabel`     | `"Select month"`               | 月ドロップダウンのAriaラベル               |
+| `hoursLabel`           | `"Hours"`                      | 時間カラムのAriaラベル                     |
+| `minutesLabel`         | `"Minutes"`                    | 分カラムのAriaラベル                       |
+| `secondsLabel`         | `"Seconds"`                    | 秒カラムのAriaラベル                       |
+| `startTimeLabel`       | `"Start time"`                 | 開始時刻セクションのラベル                 |
+| `endTimeLabel`         | `"End time"`                   | 終了時刻セクションのラベル                 |
+
+## 部分的な上書き (`createLocale` を使わずに)
+
+部分的なロケールオブジェクトを直接渡すことができます。不足しているフィールドは `DEFAULT_LOCALE` (英語) にフォールバックします:
+
+```tsx
+<DatePicker
+  value={value}
+  onChange={setValue}
+  locale={{
+    confirm: "OK",
+    cancel: "Back",
+    weekdays: ["D", "L", "M", "X", "J", "V", "S"],
+    months: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+  }}
+/>
+```
+
+これは、完全なロケールを生成せずにいくつかの文字列を変更するだけでよい場合に便利です。
+
+## カスタムフォーマット関数
+
+ロケールには、上書き可能な5つのフォーマット関数が含まれています:
+
+```tsx
+const custom = createLocale("en", {
+  // 月ヘッダーの表示方法 (例: "March 2026")
+  formatMonthYear: (month) => month.toLocaleDateString("en-US", { month: "long", year: "numeric" }),
+
+  // トリガーボタンやaria-labelでの日付の表示方法
+  formatDate: (date) =>
+    date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+
+  // 日時の値の表示方法
+  formatDateTime: (date) =>
+    date.toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+    }),
+
+  // トリガーでの日付範囲の表示方法
+  formatRange: (start, end) =>
+    `${start.toLocaleDateString("en-US")} → ${end.toLocaleDateString("en-US")}`,
+
+  // 時刻の値の表示方法
+  formatTime: (h, m, s, period) =>
+    `${h}:${String(m).padStart(2, "0")}${period ? ` ${period}` : ""}`,
+});
+```
+
+<Admonition type="info" title="デフォルトフォーマット">
+  デフォルトでは、すべてのフォーマット関数はISO 8601スタイル (`2026-03-04`, `14:30`)
+  を使用し、ロケール固有のフォーマットは使用
+  **しません**。これにより、ブラウザ間で一貫した動作が保証されます。ロケール固有の表示が必要な場合は、上記のフォーマット関数を上書きしてください。
+</Admonition>
+
+## 週の開始日
+
+`weekStartsOn` propは、カレンダーでどの曜日を最初に表示するかを制御します。これはロケールとは独立しています:
+
+```tsx
+<DatePicker value={value} onChange={setValue} weekStartsOn="monday" />
+```
+
+受け入れられる値: `"sunday"` (デフォルト), `"monday"`, `"tuesday"`, `"wednesday"`, `"thursday"`, `"friday"`, `"saturday"`.
+
+グリッドヘッダーの曜日ラベルは、それに合わせて自動的に並べ替えられます。
+
+## RTLレイアウト
+
+このライブラリには現在、組み込みのRTLレイアウトサポートは含まれていません。RTL言語（アラビア語、ヘブライ語など）の場合は、ラッパー要素に `dir="rtl"` を適用し、必要に応じてCSSを調整してください:
+
+```tsx
+<div dir="rtl">
+  <DatePicker value={value} onChange={setValue} locale={arLocale} />
+</div>
+```
+
+headlessフック自体はレイアウトに依存しません — カレンダーのデータ構造はテキストの方向に依存しません。
+
+## APIリファレンス
+
+完全なフィールドリストと関数シグネチャについては、以下を参照してください:
+
+- [Locale type](/docs/headless/types/locale) — 全30の文字列フィールドと5つのフォーマット関数
+- [Locale helpers](/docs/headless/utilities/locale-helpers) — `createLocale`, `mergeLocale`, `resolveLocale`, `DEFAULT_LOCALE`

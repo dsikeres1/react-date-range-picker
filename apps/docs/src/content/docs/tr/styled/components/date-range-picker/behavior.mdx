@@ -1,0 +1,51 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/styled/DateRangePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/styled/DateRangePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/styled/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/styled/DateRangePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DateRangePicker/FormIntegration.tsx?raw";
+
+# Davranış
+
+## Seçimde Kapat
+
+`shouldCloseOnSelect` etkinleştirildiğinde, bitiş tarihi seçildiğinde seçici otomatik olarak onaylar ve kapanır.
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Çoklu Ay
+
+Varsayılan iki aydan fazlasını yan yana görüntüleyin.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Form Entegrasyonu
+
+Yerel form gönderimi için gizli girdiler eklemek üzere `name` prop'unu kullanın.
+
+<Admonition type="tip">
+  Bu örnekteki gönder düğmesi stili özeldir — kütüphane yalnızca tarih seçiciyi sağlar.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

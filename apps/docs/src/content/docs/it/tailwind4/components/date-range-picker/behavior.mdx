@@ -1,0 +1,51 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/tailwind4/DateRangePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/tailwind4/DateRangePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/tailwind4/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind4/DateRangePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/tailwind4/DateRangePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind4/DateRangePicker/FormIntegration.tsx?raw";
+
+# 동작
+
+## 선택 시 닫기
+
+`shouldCloseOnSelect` prop을 활성화하면, 종료일을 선택했을 때 피커가 자동으로 값을 확정하고 닫힙니다.
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 여러 달 표시
+
+기본값인 2개월보다 많은 달을 나란히 표시합니다.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 폼 연동
+
+`name` prop을 사용하여 네이티브 폼 제출을 위한 hidden input을 포함할 수 있습니다.
+
+<Admonition type="tip">
+  이 예제의 제출 버튼 스타일은 커스텀 스타일입니다 — 라이브러리는 날짜 피커만 제공합니다.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

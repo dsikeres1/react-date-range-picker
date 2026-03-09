@@ -1,0 +1,55 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Props
+
+| Prop                  | Typ                                           | Standard    | Beschreibung                                                    |
+| --------------------- | --------------------------------------------- | ----------- | --------------------------------------------------------------- |
+| `value`               | `Date \| null`                                | --          | Ausgewählter Datum-Uhrzeit-Wert                                 |
+| `onChange`            | `(dateTime: Date \| null) => void`            | --          | Callback bei Wertänderung                                       |
+| `time`                | `TimeConfig`                                  | --          | Konfiguration des Zeit-Panels                                   |
+| `minDate`             | `Date`                                        | --          | Minimal auswählbares Datum                                      |
+| `maxDate`             | `Date`                                        | --          | Maximal auswählbares Datum                                      |
+| `locale`              | `Partial<Locale>`                             | --          | Benutzerdefinierte Locale-Konfiguration                         |
+| `initialMonth`        | `Date`                                        | --          | Initial angezeigter Monat                                       |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | Komponentengröße                                                |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | Erster Tag der Woche                                            |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | Daten als deaktiviert markieren                                 |
+| `displayFormat`       | `string`                                      | --          | Benutzerdefiniertes Anzeigeformat                               |
+| `open`                | `boolean`                                     | --          | Gesteuerter geöffneter Zustand                                  |
+| `initialOpen`         | `boolean`                                     | --          | Initialer geöffneter Zustand (ungesteuert)                      |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | Callback bei Änderung des geöffneten Zustands                   |
+| `required`            | `boolean`                                     | `false`     | Deaktiviert das Leeren des Wertes                               |
+| `showOutsideDays`     | `boolean`                                     | `false`     | Tage aus angrenzenden Monaten anzeigen                          |
+| `highlightDates`      | `Date[]`                                      | --          | Hervorzuhebende Daten                                           |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | Automatische Bestätigung bei Klick auf eine Voreinstellung      |
+| `numberOfMonths`      | `number`                                      | `1`         | Anzahl der anzuzeigenden Monate                                 |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | Navigationsstil der Titelzeile                                  |
+| `fromYear`            | `number`                                      | --          | Startjahr für das Dropdown-Menü                                 |
+| `toYear`              | `number`                                      | --          | Endjahr für das Dropdown-Menü                                   |
+| `disablePast`         | `boolean`                                     | `false`     | Deaktiviert Daten vor heute                                     |
+| `disableFuture`       | `boolean`                                     | `false`     | Deaktiviert Daten nach heute                                    |
+| `inline`              | `boolean`                                     | `false`     | Kalender inline anzeigen (kein Popup)                           |
+| `name`                | `string`                                      | --          | Name des versteckten Eingabefeldes für die Formularübermittlung |
+| `placeholder`         | `string`                                      | --          | Platzhaltertext des Auslösers                                   |
+| `hideHeader`          | `boolean`                                     | `false`     | Navigationskopfzeile ausblenden                                 |
+| `hideFooter`          | `boolean`                                     | `false`     | Aktionsfußzeile ausblenden                                      |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Zeit-Anzeigegenauigkeit. Standard ist "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** 12-Stunden- oder 24-Stunden-Format. Standard ist "24". */
+  hourFormat?: "12" | "24";
+  /** Schrittweite für Minuten. Standard ist 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Schrittweite für Sekunden. Standard ist 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Höhe (in px) jedes Scrollrad-Elements. Standard ist 32. */
+  itemHeight?: number;
+}
+```

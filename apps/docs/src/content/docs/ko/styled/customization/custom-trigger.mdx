@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: "Custom Trigger"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/styled/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/styled/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/styled/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/styled/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# 커스텀 트리거
+
+기본 트리거를 자체 버튼이나 입력 필드로 교체하세요. `Trigger` 컴포넌트는 트리거의 모양과 동작을 완벽하게 제어할 수 있는 렌더 프롭(render prop)을 받습니다.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 트리거 렌더 프롭
+
+| 속성           | 타입             | 설명                      |
+| -------------- | ---------------- | ------------------------- |
+| `displayValue` | `string`         | 포맷팅된 선택 날짜        |
+| `placeholder`  | `string`         | 플레이스홀더 텍스트       |
+| `hasValue`     | `boolean`        | 날짜 선택 여부            |
+| `isOpen`       | `boolean`        | 팝업 열림 여부            |
+| `onToggle`     | `() => void`     | 팝업 열기/닫기 토글       |
+| `onClear`      | `() => void`     | 선택 초기화               |
+| `locale`       | `Locale`         | 현재 로케일 객체          |
+| `triggerRef`   | `(node) => void` | 위치 지정을 위한 Ref 콜백 |
+
+## 범위 선택기 트리거
+
+`DateRangePicker`에서도 동일한 패턴이 작동합니다:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

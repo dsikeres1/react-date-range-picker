@@ -1,0 +1,37 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Właściwości
+
+| Właściwość            | Typ                                           | Domyślnie   | Opis                                                    |
+| --------------------- | --------------------------------------------- | ----------- | ------------------------------------------------------- |
+| `value`               | `Date \| null`                                | --          | Wybrana wartość daty                                    |
+| `onChange`            | `(date: Date \| null) => void`                | --          | Funkcja zwrotna wywoływana przy zmianie wartości        |
+| `minDate`             | `Date`                                        | --          | Minimalna data do wyboru                                |
+| `maxDate`             | `Date`                                        | --          | Maksymalna data do wyboru                               |
+| `locale`              | `Partial<Locale>`                             | --          | Niestandardowa konfiguracja lokalizacji                 |
+| `initialMonth`        | `Date`                                        | --          | Początkowy wyświetlany miesiąc                          |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | Rozmiar komponentu                                      |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | Pierwszy dzień tygodnia                                 |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | Oznacz daty jako niedostępne                            |
+| `displayFormat`       | `string`                                      | --          | Niestandardowy format wyświetlania (np. `"YYYY/MM/DD"`) |
+| `open`                | `boolean`                                     | --          | Kontrolowany stan otwarcia                              |
+| `initialOpen`         | `boolean`                                     | --          | Początkowy stan otwarcia (niekontrolowany)              |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | Funkcja zwrotna wywoływana przy zmianie stanu otwarcia  |
+| `required`            | `boolean`                                     | `false`     | Wyłącz możliwość czyszczenia wartości                   |
+| `showOutsideDays`     | `boolean`                                     | `false`     | Pokaż dni z sąsiednich miesięcy                         |
+| `highlightDates`      | `Date[]`                                      | --          | Daty do podświetlenia                                   |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | Automatycznie zatwierdź po kliknięciu daty              |
+| `numberOfMonths`      | `number`                                      | `1`         | Liczba miesięcy do wyświetlenia                         |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | Styl nawigacji w nagłówku                               |
+| `fromYear`            | `number`                                      | --          | Rok początkowy dla listy rozwijanej                     |
+| `toYear`              | `number`                                      | --          | Rok końcowy dla listy rozwijanej                        |
+| `disablePast`         | `boolean`                                     | `false`     | Wyłącz daty przed dniem dzisiejszym                     |
+| `disableFuture`       | `boolean`                                     | `false`     | Wyłącz daty po dniu dzisiejszym                         |
+| `inline`              | `boolean`                                     | `false`     | Pokaż kalendarz w linii (bez wyskakującego okienka)     |
+| `name`                | `string`                                      | --          | Nazwa ukrytego pola do przesyłania formularza           |
+| `placeholder`         | `string`                                      | --          | Tekst zastępczy dla wyzwalacza                          |
+| `hideHeader`          | `boolean`                                     | `false`     | Ukryj nagłówek nawigacyjny                              |
+| `hideFooter`          | `boolean`                                     | `false`     | Ukryj stopkę z akcjami                                  |

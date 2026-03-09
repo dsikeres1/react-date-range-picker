@@ -1,0 +1,34 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind4/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind4/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind4/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind4/Customization/CompoundColorThemePopup.tsx?raw";
+
+# 顏色
+
+透過在包裝器元素上覆寫 CSS 自訂屬性，在執行階段切換顏色主題。由於 Tailwind v4 套件從語義化權杖讀取所有顏色，因此變更底層的 CSS 變數會立即為整個選擇器更換品牌。
+
+Tailwind v4 套件使用 **oklch** 格式作為語義化權杖。覆寫 `--color-primary` 和 `--color-primary-foreground` 來為選擇器更換品牌：
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 彈出模式
+
+同樣的技術也適用於彈出式選擇器：
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

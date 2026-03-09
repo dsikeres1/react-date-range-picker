@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind3/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind3/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind3/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Trigger Personalizzato
+
+Sostituisci il trigger predefinito con il tuo elemento personalizzato usando una render prop. Il componente `Trigger` accetta una funzione come figlio che riceve stato e callback, permettendoti di renderizzare qualsiasi pulsante o input personalizzato.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render Props del Trigger
+
+| Prop           | Type             | Descrizione                        |
+| -------------- | ---------------- | ---------------------------------- |
+| `displayValue` | `string`         | Data selezionata formattata        |
+| `placeholder`  | `string`         | Testo segnaposto                   |
+| `hasValue`     | `boolean`        | Indica se una data è selezionata   |
+| `isOpen`       | `boolean`        | Indica se il popup è aperto        |
+| `onToggle`     | `() => void`     | Apre/chiude il popup               |
+| `onClear`      | `() => void`     | Cancella la selezione              |
+| `locale`       | `Locale`         | Oggetto locale corrente            |
+| `triggerRef`   | `(node) => void` | Callback ref per il posizionamento |
+
+## Trigger del Selettore di Intervallo
+
+Lo stesso pattern funziona con `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

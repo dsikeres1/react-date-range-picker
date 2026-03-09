@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind3/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind3/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind3/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Własny Wyzwalacz
+
+Zastąp domyślny wyzwalacz własnym elementem, używając render prop. Komponent `Trigger` akceptuje jako dziecko funkcję, która otrzymuje stan i callbacki, pozwalając na renderowanie dowolnego niestandardowego przycisku lub pola wejściowego.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render Props Wyzwalacza
+
+| Prop           | Typ              | Opis                                 |
+| -------------- | ---------------- | ------------------------------------ |
+| `displayValue` | `string`         | Sformatowana wybrana data            |
+| `placeholder`  | `string`         | Tekst zastępczy                      |
+| `hasValue`     | `boolean`        | Czy data jest wybrana                |
+| `isOpen`       | `boolean`        | Czy okienko jest otwarte             |
+| `onToggle`     | `() => void`     | Przełącz otwarcie/zamknięcie okienka |
+| `onClear`      | `() => void`     | Wyczyść zaznaczenie                  |
+| `locale`       | `Locale`         | Bieżący obiekt locale                |
+| `triggerRef`   | `(node) => void` | Callback ref do pozycjonowania       |
+
+## Wyzwalacz dla Wyboru Zakresu
+
+Ten sam wzorzec działa z `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

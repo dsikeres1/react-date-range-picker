@@ -1,0 +1,39 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind3/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind3/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind3/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind3/Customization/CompoundColorThemePopup.tsx?raw";
+
+# Farben
+
+Das Tailwind v3-Paket verwendet **festcodierte Tailwind-Hilfsklassen** (z. B. `bg-sky-500`) anstelle von CSS-Variablen. Um Farben zu wechseln, verwenden Sie die Compound-API und überschreiben Sie die Tages-Klassennamen dynamisch:
+
+<Admonition type="info">
+  Im Gegensatz zum Styled-Paket (das CSS-Variablen verwendet) erfordert Tailwind v3 die
+  Compound-API, um Farben zur Laufzeit zu überschreiben. Weitere Details finden Sie unter [Theme
+  Override](/docs/tailwind3/customization/theme-override).
+</Admonition>
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Popup-Modus
+
+Die gleiche Technik funktioniert auch mit Popup-Pickern:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

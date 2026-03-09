@@ -1,0 +1,34 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind4/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind4/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind4/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind4/Customization/CompoundColorThemePopup.tsx?raw";
+
+# Kolory
+
+Przełączaj motywy kolorów w czasie rzeczywistym, nadpisując niestandardowe właściwości CSS na elemencie otaczającym. Ponieważ pakiet Tailwind v4 odczytuje wszystkie kolory z semantycznych tokenów, zmiana podstawowych zmiennych CSS natychmiastowo zmienia wygląd całego pickera.
+
+Pakiet Tailwind v4 używa formatu **oklch** dla semantycznych tokenów. Nadpisz `--color-primary` i `--color-primary-foreground`, aby zmienić wygląd pickera:
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Tryb Popup
+
+Ta sama technika działa w przypadku pickerów w trybie popup:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

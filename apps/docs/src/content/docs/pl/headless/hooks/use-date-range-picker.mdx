@@ -1,0 +1,205 @@
+---
+sidebar_position: 2
+title: useDateRangePicker
+---
+
+# useDateRangePicker
+
+Hook do wyboru zakresu dat z podwójnym kalendarzem miesięcznym, podglądem przy najechaniu myszką i predefiniowanymi zakresami.
+
+## Import
+
+```tsx
+import { useDateRangePicker } from "react-date-range-picker-headless";
+```
+
+## Użycie
+
+```tsx
+import { useState } from "react";
+import { useDateRangePicker } from "react-date-range-picker-headless";
+
+function MyDateRangePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangePicker({
+    value: range,
+    onChange: setRange,
+    presets: [
+      {
+        label: "Ostatnie 7 dni",
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setDate(start.getDate() - 6);
+          return { start, end };
+        },
+      },
+    ],
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Dwa kalendarze obok siebie */}
+          {[picker.leftCalendar, picker.rightCalendar].map((cal, calIdx) => (
+            <div key={calIdx}>
+              <span>{picker.locale.formatMonthYear(cal.month)}</span>
+              {cal.weeks.flat().map((day, i) => {
+                if (!day) return <span key={i} />;
+                const dp = picker.getDayProps(day, cal.month);
+                return (
+                  <button
+                    key={i}
+                    onClick={() => picker.handleDateClick(day)}
+                    onMouseEnter={() => picker.handleDateHover(day)}
+                    onMouseLeave={() => picker.handleDateHover(null)}
+                  >
+                    {dp.day}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+
+          {/* Predefiniowane zakresy */}
+          {picker.presets.map((preset, i) => (
+            <button
+              key={i}
+              onClick={() => picker.handlePresetClick(preset)}
+              style={{ fontWeight: i === picker.activePresetIndex ? "bold" : "normal" }}
+            >
+              {preset.label}
+            </button>
+          ))}
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Opcje
+
+| Opcja                    | Typ                                                           | Domyślnie         | Opis                                                                                   |
+| ------------------------ | ------------------------------------------------------------- | ----------------- | -------------------------------------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --                | **Wymagane.** Aktualna wartość zakresu.                                                |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --                | **Wymagane.** Wywoływane, gdy zakres się zmienia.                                      |
+| `maxDays`                | `number`                                                      | --                | Maksymalna dozwolona liczba dni w zakresie (włącznie).                                 |
+| `minDays`                | `number`                                                      | --                | Minimalna wymagana liczba dni w zakresie (włącznie).                                   |
+| `presets`                | `DateRangePreset[]`                                           | --                | Predefiniowane zakresy dat (np. "Ostatnie 7 dni", "Ten miesiąc").                      |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`            | Gdy `false`, uniemożliwia wybór zakresu, w którym data początkowa jest równa końcowej. |
+| `minDate`                | `Date`                                                        | --                | Najwcześniejsza data do wyboru.                                                        |
+| `maxDate`                | `Date`                                                        | --                | Najpóźniejsza data do wyboru.                                                          |
+| `locale`                 | `Partial<Locale>`                                             | `DEFAULT_LOCALE`  | Zastępuje ciągi znaków lokalizacji.                                                    |
+| `initialMonth`           | `Date`                                                        | --                | Początkowy miesiąc do wyświetlenia.                                                    |
+| `size`                   | `DatePickerSize`                                              | --                | Przekazywane do UI.                                                                    |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`        | Pierwszy dzień tygodnia.                                                               |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --                | Niestandardowa funkcja do wyłączania określonych dat.                                  |
+| `displayFormat`          | `string`                                                      | --                | Niestandardowy ciąg formatujący dla wyświetlanej wartości.                             |
+| `open`                   | `boolean`                                                     | --                | Kontrolowany stan otwarcia.                                                            |
+| `initialOpen`            | `boolean`                                                     | `false`           | Początkowy stan otwarcia (niekontrolowany).                                            |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --                | Funkcja zwrotna wywoływana przy zmianie stanu otwarcia.                                |
+| `required`               | `boolean`                                                     | `false`           | Gdy true, `handleClear` nie wykonuje żadnej operacji.                                  |
+| `today`                  | `Date`                                                        | `new Date()`      | Zastępuje dzisiejszą datę.                                                             |
+| `onMonthChange`          | `(month: Date) => void`                                       | --                | Funkcja zwrotna wywoływana przy zmianie wyświetlanego miesiąca.                        |
+| `disablePast`            | `boolean`                                                     | `false`           | Wyłącza wszystkie daty przed dzisiejszym dniem.                                        |
+| `disableFuture`          | `boolean`                                                     | `false`           | Wyłącza wszystkie daty po dzisiejszym dniu.                                            |
+| `showOutsideDays`        | `boolean`                                                     | `false`           | Pokazuje dni z sąsiednich miesięcy.                                                    |
+| `highlightDates`         | `Date[]`                                                      | --                | Tablica dat do podświetlenia.                                                          |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`           | Automatycznie potwierdza wybór po wybraniu daty końcowej.                              |
+| `numberOfMonths`         | `number`                                                      | `2`               | Liczba miesięcy kalendarza do wyświetlenia.                                            |
+| `captionLayout`          | `CaptionLayout`                                               | `"buttons"`       | Tryb układu nagłówka.                                                                  |
+| `fromYear`               | `number`                                                      | bieżący rok - 100 | Rok początkowy dla listy rozwijanej.                                                   |
+| `toYear`                 | `number`                                                      | bieżący rok + 10  | Rok końcowy dla listy rozwijanej.                                                      |
+
+## Zwracane wartości
+
+| Nazwa               | Typ                                               | Opis                                                                                                                                                    |
+| ------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `isOpen`            | `boolean`                                         | Czy wyskakujące okienko jest otwarte.                                                                                                                   |
+| `tempStartDate`     | `Date \| null`                                    | Tymczasowa data początkowa (przed potwierdzeniem).                                                                                                      |
+| `tempEndDate`       | `Date \| null`                                    | Tymczasowa data końcowa (przed potwierdzeniem).                                                                                                         |
+| `hoveredDate`       | `Date \| null`                                    | Aktualnie najechana data (dla podglądu zakresu).                                                                                                        |
+| `leftMonth`         | `Date`                                            | Wyświetlany miesiąc lewego kalendarza.                                                                                                                  |
+| `rightMonth`        | `Date`                                            | Wyświetlany miesiąc prawego kalendarza.                                                                                                                 |
+| `locale`            | `Locale`                                          | Rozwiązany obiekt lokalizacji.                                                                                                                          |
+| `leftCalendar`      | `CalendarMonth`                                   | Dane kalendarza dla lewego panelu.                                                                                                                      |
+| `rightCalendar`     | `CalendarMonth`                                   | Dane kalendarza dla prawego panelu.                                                                                                                     |
+| `calendars`         | `CalendarMonth[]`                                 | Tablica wszystkich miesięcy kalendarza.                                                                                                                 |
+| `getDayProps`       | `(date: Date, referenceMonth?: Date) => DayProps` | Oblicza flagi dla komórki dnia kalendarza. Przekaż `referenceMonth`, aby wykrywanie dni spoza miesiąca działało poprawnie w układach wielomiesięcznych. |
+| `displayValue`      | `string`                                          | Sformatowany ciąg znaków potwierdzonego zakresu.                                                                                                        |
+| `hasValue`          | `boolean`                                         | Czy zakres jest aktualnie potwierdzony.                                                                                                                 |
+| `canConfirm`        | `boolean`                                         | Czy bieżący wybór jest prawidłowy do potwierdzenia.                                                                                                     |
+| `handleDateClick`   | `(date: Date) => void`                            | Obsługuje kliknięcie komórki dnia. Pierwsze kliknięcie ustawia początek, drugie koniec.                                                                 |
+| `handleDateHover`   | `(date: Date \| null) => void`                    | Obsługuje najechanie myszą w celu podglądu zakresu.                                                                                                     |
+| `handlePrevMonth`   | `() => void`                                      | Przewija oba kalendarze o jeden miesiąc do tyłu.                                                                                                        |
+| `handleNextMonth`   | `() => void`                                      | Przewija oba kalendarze o jeden miesiąc do przodu.                                                                                                      |
+| `handleOpen`        | `() => void`                                      | Otwiera wyskakujące okienko.                                                                                                                            |
+| `handleClose`       | `() => void`                                      | Zamyka wyskakujące okienko.                                                                                                                             |
+| `handleToggle`      | `() => void`                                      | Przełącza wyskakujące okienko.                                                                                                                          |
+| `handleConfirm`     | `() => void`                                      | Potwierdza wybór i zamyka.                                                                                                                              |
+| `handleCancel`      | `() => void`                                      | Anuluje i przywraca poprzednią wartość.                                                                                                                 |
+| `handleClear`       | `() => void`                                      | Czyści zakres (nie wykonuje operacji, jeśli `required`).                                                                                                |
+| `handleGoToToday`   | `() => void`                                      | Przechodzi do miesiąca z dzisiejszą datą.                                                                                                               |
+| `containerRef`      | `RefObject<HTMLDivElement \| null>`               | Dołącz do elementu otaczającego w celu wykrywania kliknięć na zewnątrz.                                                                                 |
+| `popupRef`          | `RefObject<HTMLDivElement \| null>`               | Dołącz do elementu wyskakującego okienka.                                                                                                               |
+| `focusedDate`       | `Date \| null`                                    | Data fokusowana za pomocą klawiatury.                                                                                                                   |
+| `handleKeyDown`     | `(e: KeyboardEvent<HTMLElement>) => void`         | Handler nawigacji za pomocą klawiatury.                                                                                                                 |
+| `presets`           | `DateRangePreset[]`                               | Tablica predefiniowanych zakresów (przekazywana do renderowania).                                                                                       |
+| `handlePresetClick` | `(preset: DateRangePreset) => void`               | Zastosuj predefiniowany zakres.                                                                                                                         |
+| `activePresetIndex` | `number`                                          | Indeks aktualnie pasującego predefiniowanego zakresu (-1, jeśli brak).                                                                                  |
+| `years`             | `number[]`                                        | Tablica lat dla trybu z listą rozwijaną.                                                                                                                |
+| `months`            | `number[]`                                        | Indeksy miesięcy dla trybu z listą rozwijaną.                                                                                                           |
+| `handleYearSelect`  | `(year: number, calendarIndex?: number) => void`  | Ustawia wyświetlany rok.                                                                                                                                |
+| `handleMonthSelect` | `(month: number, calendarIndex?: number) => void` | Ustawia wyświetlany miesiąc.                                                                                                                            |
+
+## Kluczowe zachowania
+
+### Proces wyboru zakresu
+
+1. Pierwsze kliknięcie ustawia **datę początkową** (data końcowa jest czyszczona)
+2. Drugie kliknięcie ustawia **datę końcową** (automatycznie zamienia się miejscami, jeśli jest wcześniejsza niż data początkowa)
+3. Trzecie kliknięcie resetuje i rozpoczyna nowy zakres
+
+### Podgląd przy najechaniu
+
+Gdy użytkownik wybrał datę początkową, ale jeszcze nie końcową, `handleDateHover` aktualizuje `hoveredDate`. Funkcja `getDayProps` używa tej informacji do obliczenia `isInHoverRange` i `isHoverTarget`, co pozwala na wyświetlenie podglądu potencjalnego zakresu.
+
+### Predefiniowane zakresy
+
+Predefiniowane zakresy mogą być statycznymi obiektami lub funkcjami fabrykującymi:
+
+```tsx
+const presets = [
+  { label: "Dzisiaj", value: { start: new Date(), end: new Date() } },
+  {
+    label: "Ostatnie 30 dni",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setDate(start.getDate() - 29);
+      return { start, end };
+    },
+  },
+];
+```
+
+`activePresetIndex` zwraca indeks predefiniowanego zakresu, który pasuje do bieżącego wyboru, lub `-1`, jeśli żaden nie pasuje.
+
+### maxDays / minDays
+
+Gdy ustawione jest `maxDays`, daty wykraczające poza dozwolony zakres od daty początkowej są automatycznie wyłączane. Gdy ustawione jest `minDays`, daty zbyt bliskie dacie początkowej są wyłączane.
+
+### shouldCloseOnSelect
+
+W przypadku wyboru zakresu dat, `shouldCloseOnSelect` uruchamia automatyczne potwierdzenie po wybraniu **daty końcowej** (a nie daty początkowej).

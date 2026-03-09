@@ -1,0 +1,55 @@
+---
+sidebar_position: 4
+sidebar_label: Custom Footer
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/tailwind4/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/tailwind4/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/tailwind4/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/tailwind4/Customization/CompoundNoFooter.tsx?raw";
+
+# Chân trang tùy chỉnh
+
+## Sắp xếp lại Chân trang
+
+Sắp xếp lại các nút ở chân trang hoặc thêm các nút mới như `TodayButton`. Vì mỗi nút là một phần phụ độc lập, bạn có thể kiểm soát thứ tự và bố cục.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Bố cục tối giản
+
+Bỏ qua bất kỳ phần nào bạn không cần. Ví dụ, loại bỏ hoàn toàn chân trang để có một lịch bật lên tối giản:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Ghi đè Class
+
+Mỗi phần phụ đều chấp nhận một prop `className`. Gói Tailwind v4 sử dụng `cn()` (một tiện ích kết hợp `clsx` + `twMerge`) để hợp nhất các class của bạn với các class mặc định, do đó các tiện ích xung đột được giải quyết một cách chính xác:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+<DatePicker.Root value={value} onChange={setValue}>
+  {/* Ghi đè chiều rộng và padding của trigger */}
+  <DatePicker.Trigger className="min-w-[300px] px-4 py-3" />
+  <DatePicker.Content className="rounded-2xl shadow-xl">
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title className="text-lg" />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>;
+```

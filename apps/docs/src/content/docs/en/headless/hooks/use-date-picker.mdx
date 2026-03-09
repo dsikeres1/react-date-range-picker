@@ -1,0 +1,157 @@
+---
+sidebar_position: 1
+title: useDatePicker
+---
+
+# useDatePicker
+
+The core hook for single date selection. Manages calendar state, open/close behavior, keyboard navigation, and date formatting.
+
+## Import
+
+```tsx
+import { useDatePicker } from "react-date-range-picker-headless";
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  const picker = useDatePicker({
+    value: date,
+    onChange: setDate,
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.placeholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Calendar header */}
+          <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+          <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+          <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+
+          {/* Calendar grid */}
+          {picker.calendar.weeks.flat().map((day, i) => {
+            if (!day) return <span key={i} />;
+            const dp = picker.getDayProps(day);
+            return (
+              <button key={i} onClick={() => picker.handleDateClick(day)} disabled={dp.isDisabled}>
+                {dp.day}
+              </button>
+            );
+          })}
+
+          {/* Footer */}
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Options
+
+| Option                | Type                           | Default            | Description                                                                           |
+| --------------------- | ------------------------------ | ------------------ | ------------------------------------------------------------------------------------- |
+| `value`               | `Date \| null`                 | --                 | **Required.** The currently selected date.                                            |
+| `onChange`            | `(date: Date \| null) => void` | --                 | **Required.** Called when the date selection changes.                                 |
+| `minDate`             | `Date`                         | --                 | Earliest selectable date.                                                             |
+| `maxDate`             | `Date`                         | --                 | Latest selectable date.                                                               |
+| `locale`              | `Partial<Locale>`              | `DEFAULT_LOCALE`   | Override locale strings.                                                              |
+| `initialMonth`        | `Date`                         | --                 | Month to display initially (defaults to value or today).                              |
+| `size`                | `DatePickerSize`               | --                 | UI pass-through for styled components. Headless hooks ignore this.                    |
+| `weekStartsOn`        | `WeekDay`                      | `"sunday"`         | First day of the week.                                                                |
+| `isDateUnavailable`   | `(date: Date) => boolean`      | --                 | Custom function to disable specific dates.                                            |
+| `displayFormat`       | `string`                       | --                 | Custom format string for the display value (e.g. `"YYYY/MM/DD"`).                     |
+| `open`                | `boolean`                      | --                 | Controlled open state. When provided, the hook does not manage open state internally. |
+| `initialOpen`         | `boolean`                      | `false`            | Initial open state (uncontrolled mode).                                               |
+| `onOpenChange`        | `(open: boolean) => void`      | --                 | Callback when open state changes. Works with both controlled and uncontrolled modes.  |
+| `required`            | `boolean`                      | `false`            | When true, `handleClear` is a no-op.                                                  |
+| `today`               | `Date`                         | `new Date()`       | Override today's date for `isToday` and `disablePast`/`disableFuture` calculations.   |
+| `onMonthChange`       | `(month: Date) => void`        | --                 | Callback when the displayed month changes.                                            |
+| `disablePast`         | `boolean`                      | `false`            | Disable all dates before today.                                                       |
+| `disableFuture`       | `boolean`                      | `false`            | Disable all dates after today.                                                        |
+| `showOutsideDays`     | `boolean`                      | `false`            | Show days from adjacent months to fill the 6-week grid.                               |
+| `highlightDates`      | `Date[]`                       | --                 | Array of dates to highlight in the calendar.                                          |
+| `shouldCloseOnSelect` | `boolean`                      | `false`            | Auto-confirm and close on date click.                                                 |
+| `numberOfMonths`      | `number`                       | `1`                | Number of months to display simultaneously.                                           |
+| `captionLayout`       | `CaptionLayout`                | `"buttons"`        | `"buttons"` for prev/next arrows, `"dropdown"` for year/month selects.                |
+| `fromYear`            | `number`                       | current year - 100 | Start year for dropdown mode.                                                         |
+| `toYear`              | `number`                       | current year + 10  | End year for dropdown mode.                                                           |
+
+## Return Values
+
+| Name                | Type                                              | Description                                                              |
+| ------------------- | ------------------------------------------------- | ------------------------------------------------------------------------ |
+| `isOpen`            | `boolean`                                         | Whether the popup is open.                                               |
+| `tempDate`          | `Date \| null`                                    | Temporary selected date (before confirmation).                           |
+| `currentMonth`      | `Date`                                            | The currently displayed month.                                           |
+| `locale`            | `Locale`                                          | Resolved locale object with all strings.                                 |
+| `calendar`          | `CalendarMonth`                                   | Calendar data for the current month (includes `month`, `days`, `weeks`). |
+| `calendars`         | `CalendarMonth[]`                                 | Array of calendar months (length = `numberOfMonths`).                    |
+| `getDayProps`       | `(date: Date, referenceMonth?: Date) => DayProps` | Compute flags for a calendar day cell.                                   |
+| `displayValue`      | `string`                                          | Formatted string of the confirmed value.                                 |
+| `hasValue`          | `boolean`                                         | Whether a date is currently confirmed.                                   |
+| `canConfirm`        | `boolean`                                         | Whether the current selection is valid for confirmation.                 |
+| `handleDateClick`   | `(date: Date) => void`                            | Handle a day cell click.                                                 |
+| `handlePrevMonth`   | `() => void`                                      | Navigate to previous month.                                              |
+| `handleNextMonth`   | `() => void`                                      | Navigate to next month.                                                  |
+| `handleOpen`        | `() => void`                                      | Open the popup.                                                          |
+| `handleClose`       | `() => void`                                      | Close the popup (discards uncommitted changes).                          |
+| `handleToggle`      | `() => void`                                      | Toggle the popup.                                                        |
+| `handleConfirm`     | `() => void`                                      | Confirm the selection and close.                                         |
+| `handleCancel`      | `() => void`                                      | Cancel and revert to previous value.                                     |
+| `handleClear`       | `() => void`                                      | Clear the value (no-op if `required`).                                   |
+| `handleGoToToday`   | `() => void`                                      | Navigate the calendar to today's month.                                  |
+| `containerRef`      | `RefObject<HTMLDivElement \| null>`               | Attach to the wrapper element for click-outside detection.               |
+| `popupRef`          | `RefObject<HTMLDivElement \| null>`               | Attach to the popup element.                                             |
+| `focusedDate`       | `Date \| null`                                    | Currently keyboard-focused date.                                         |
+| `handleKeyDown`     | `(e: KeyboardEvent<HTMLElement>) => void`         | Keyboard event handler for arrow keys, Enter, Escape, Tab.               |
+| `years`             | `number[]`                                        | Array of years for dropdown caption mode.                                |
+| `months`            | `number[]`                                        | Array of month indices (0-11) for dropdown caption mode.                 |
+| `handleYearSelect`  | `(year: number, calendarIndex?: number) => void`  | Set the displayed year (dropdown mode).                                  |
+| `handleMonthSelect` | `(month: number, calendarIndex?: number) => void` | Set the displayed month (dropdown mode).                                 |
+
+## Key Behaviors
+
+### Controlled vs Uncontrolled Open State
+
+By default, the hook manages open/close internally. To control it externally, pass `open` and `onOpenChange`:
+
+```tsx
+const [isOpen, setIsOpen] = useState(false);
+
+const picker = useDatePicker({
+  value: date,
+  onChange: setDate,
+  open: isOpen,
+  onOpenChange: setIsOpen,
+});
+```
+
+### shouldCloseOnSelect
+
+When `shouldCloseOnSelect` is `true`, clicking a date immediately confirms and closes the popup, skipping the explicit confirm step.
+
+### Keyboard Navigation
+
+| Key                      | Action                      |
+| ------------------------ | --------------------------- |
+| Arrow Up/Down/Left/Right | Move focus between days     |
+| Enter / Space            | Select the focused date     |
+| Escape                   | Cancel and close            |
+| Tab                      | Move focus within the popup |
+
+### Caption Dropdown
+
+When `captionLayout` is `"dropdown"`, the header shows year and month select dropdowns instead of prev/next buttons. Use `years`, `months`, `handleYearSelect`, and `handleMonthSelect` to render the dropdowns.

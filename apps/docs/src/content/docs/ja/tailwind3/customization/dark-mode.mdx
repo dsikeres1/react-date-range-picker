@@ -1,0 +1,171 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# ダークモード
+
+Tailwind v3 パッケージは、Tailwind の `dark:` バリアントを使用して完全なダークモードをサポートしています。すべてのコンポーネント要素には、明示的なダークモードクラスが設定されています。
+
+## 仕組み
+
+Tailwind v3 テーマでは、全体を通して `dark:` バリアントを持つ具体的な色クラスが使用されています。例:
+
+```
+bg-white dark:bg-slate-950
+text-slate-900 dark:text-slate-50
+border-slate-200 dark:border-slate-800
+```
+
+ダークモードは、Tailwind の `dark:` バリアントがトリガーされると有効になります。これは、Tailwind 設定の `darkMode` 戦略に依存します。
+
+## Tailwind の設定
+
+### Class 戦略 (推奨)
+
+Tailwind の設定で `darkMode: "class"` を設定します。ダークモードは、`<html>` または親要素に `dark` クラスが存在する場合に有効になります:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+};
+```
+
+ダークモードの切り替え:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+または、`<html>` にクラスを適用します:
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### Selector 戦略
+
+Tailwind v3.4以降は `darkMode: "selector"` をサポートしており、`[data-theme="dark"]` や任意のカスタムセレクタを使用できます:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### Media 戦略
+
+OS の設定に従うには、`darkMode: "media"` を設定します（または省略します — これがデフォルトです）:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: "media",
+  // ...
+};
+```
+
+追加の設定は不要です。ピッカーは `prefers-color-scheme` に従います。
+
+## カラーペア
+
+ピッカー全体で使用されているライト/ダークのカラーペアは次のとおりです:
+
+| 要素                   | ライト              | ダーク                       |
+| ---------------------- | ------------------- | ---------------------------- |
+| 背景                   | `bg-white`          | `dark:bg-slate-950`          |
+| テキスト               | `text-slate-900`    | `dark:text-slate-50`         |
+| ミュートされたテキスト | `text-slate-500`    | `dark:text-slate-400`        |
+| ボーダー               | `border-slate-200`  | `dark:border-slate-800`      |
+| ホバー背景             | `bg-slate-100`      | `dark:bg-slate-800`          |
+| プライマリ             | `bg-sky-500`        | `dark:bg-sky-500`            |
+| プライマリテキスト     | `text-sky-500`      | `dark:text-sky-400`          |
+| 範囲の背景             | `bg-sky-50`         | `dark:bg-sky-950/50`         |
+| ホバー範囲             | `bg-sky-50/50`      | `dark:bg-sky-950/30`         |
+| フォーカスリング       | `ring-sky-500`      | `ring-sky-500`               |
+| リングオフセット       | `ring-offset-white` | `dark:ring-offset-slate-950` |
+
+## Docusaurus との統合
+
+Docusaurus（`<html>` で `data-theme` を使用）を使用している場合は、Tailwind のセレクタ戦略を設定します:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  // ...
+};
+```
+
+Docusaurus はダークモードが有効なときに `<html data-theme="dark">` を設定し、Tailwind の `dark:` バリアントはこのセレクタでトリガーされます。
+
+## next-themes との統合
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes` は `<html>` に `dark` クラスを追加/削除します。Tailwind の設定で `darkMode: "class"` を使用すると、ピッカーは自動的に切り替わります。
+
+## 特定のモードを強制する
+
+ピッカーに常にライトモードまたはダークモードを使用させるには、適切なクラスを持つコンテナでラップします:
+
+```tsx
+{
+  /* 常にライトモード — "dark" クラスの祖先なし */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* 常にダークモード */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+`darkMode: "class"` を使用する場合、`dark` クラスは親要素または `<html>` に存在する必要があります。ピッカー自体はダークモードの切り替えを管理しません。
+</Admonition>

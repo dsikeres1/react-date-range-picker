@@ -1,0 +1,53 @@
+---
+sidebar_position: 2
+title: Formatting
+---
+
+# フォーマットユーティリティ
+
+日付、時刻、数値を表示用にフォーマットする関数。
+
+```tsx
+import {
+  formatDate,
+  formatDateTime,
+  formatTimeDisplay,
+  padNumber,
+} from "react-date-range-picker-headless";
+```
+
+## formatDate
+
+カスタマイズ可能なフォーマット文字列で日付をフォーマットします。
+
+|                        |                                                   |
+| ---------------------- | ------------------------------------------------- |
+| シグネチャ             | `formatDate(date: Date, format?: string): string` |
+| デフォルトフォーマット | `"YYYY.MM.DD"`                                    |
+
+```tsx
+formatDate(new Date(2026, 2, 1)); // "2026.03.01"
+formatDate(new Date(2026, 2, 1), "YYYY-MM-DD"); // "2026-03-01"
+formatDate(new Date(2026, 2, 1), "M/D"); // "3/1"
+```
+
+## formatDateTime
+
+カスタマイズ可能なフォーマット文字列を使用して、日付と時刻をフォーマットします。
+
+|                        |                                                       |
+| ---------------------- | ----------------------------------------------------- |
+| シグネチャ             | `formatDateTime(date: Date, format?: string): string` |
+| デフォルトフォーマット | `"YYYY.MM.DD HH:mm"`                                  |
+
+```tsx
+formatDateTime(new Date(2026, 2, 1, 14, 30)); // "2026.03.01 14:30"
+formatDateTime(new Date(2026, 2, 1, 14, 30), "YYYY-MM-DD HH:mm:ss"); // "2026-03-01 14:30:00"
+```
+
+## formatTimeDisplay
+
+解決済みの `TimeConfig` に基づいて時刻表示文字列をフォーマットします。
+
+| | |
+| -----------

@@ -1,0 +1,157 @@
+---
+sidebar_position: 1
+title: useDatePicker
+---
+
+# useDatePicker
+
+Hook cốt lõi để chọn một ngày duy nhất. Quản lý trạng thái lịch, hành vi mở/đóng, điều hướng bằng bàn phím và định dạng ngày.
+
+## Import
+
+```tsx
+import { useDatePicker } from "react-date-range-picker-headless";
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  const picker = useDatePicker({
+    value: date,
+    onChange: setDate,
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.placeholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Calendar header */}
+          <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+          <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+          <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+
+          {/* Calendar grid */}
+          {picker.calendar.weeks.flat().map((day, i) => {
+            if (!day) return <span key={i} />;
+            const dp = picker.getDayProps(day);
+            return (
+              <button key={i} onClick={() => picker.handleDateClick(day)} disabled={dp.isDisabled}>
+                {dp.day}
+              </button>
+            );
+          })}
+
+          {/* Footer */}
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Tùy chọn
+
+| Tùy chọn              | Kiểu                           | Mặc định           | Mô tả                                                                                           |
+| --------------------- | ------------------------------ | ------------------ | ----------------------------------------------------------------------------------------------- |
+| `value`               | `Date \| null`                 | --                 | **Bắt buộc.** Ngày hiện tại được chọn.                                                          |
+| `onChange`            | `(date: Date \| null) => void` | --                 | **Bắt buộc.** Được gọi khi lựa chọn ngày thay đổi.                                              |
+| `minDate`             | `Date`                         | --                 | Ngày sớm nhất có thể chọn.                                                                      |
+| `maxDate`             | `Date`                         | --                 | Ngày muộn nhất có thể chọn.                                                                     |
+| `locale`              | `Partial<Locale>`              | `DEFAULT_LOCALE`   | Ghi đè các chuỗi ngôn ngữ.                                                                      |
+| `initialMonth`        | `Date`                         | --                 | Tháng hiển thị ban đầu (mặc định là giá trị hoặc ngày hôm nay).                                 |
+| `size`                | `DatePickerSize`               | --                 | Thông số giao diện cho các component đã được tạo kiểu. Các hook headless sẽ bỏ qua điều này.    |
+| `weekStartsOn`        | `WeekDay`                      | `"sunday"`         | Ngày đầu tiên trong tuần.                                                                       |
+| `isDateUnavailable`   | `(date: Date) => boolean`      | --                 | Hàm tùy chỉnh để vô hiệu hóa các ngày cụ thể.                                                   |
+| `displayFormat`       | `string`                       | --                 | Chuỗi định dạng tùy chỉnh cho giá trị hiển thị (ví dụ: `"YYYY/MM/DD"`).                         |
+| `open`                | `boolean`                      | --                 | Trạng thái mở được kiểm soát. Khi được cung cấp, hook không quản lý trạng thái mở bên trong.    |
+| `initialOpen`         | `boolean`                      | `false`            | Trạng thái mở ban đầu (chế độ không kiểm soát).                                                 |
+| `onOpenChange`        | `(open: boolean) => void`      | --                 | Callback khi trạng thái mở thay đổi. Hoạt động với cả chế độ được kiểm soát và không kiểm soát. |
+| `required`            | `boolean`                      | `false`            | Khi là true, `handleClear` không thực hiện hành động nào.                                       |
+| `today`               | `Date`                         | `new Date()`       | Ghi đè ngày hôm nay cho các tính toán `isToday` và `disablePast`/`disableFuture`.               |
+| `onMonthChange`       | `(month: Date) => void`        | --                 | Callback khi tháng hiển thị thay đổi.                                                           |
+| `disablePast`         | `boolean`                      | `false`            | Vô hiệu hóa tất cả các ngày trước hôm nay.                                                      |
+| `disableFuture`       | `boolean`                      | `false`            | Vô hiệu hóa tất cả các ngày sau hôm nay.                                                        |
+| `showOutsideDays`     | `boolean`                      | `false`            | Hiển thị các ngày từ các tháng liền kề để lấp đầy lưới 6 tuần.                                  |
+| `highlightDates`      | `Date[]`                       | --                 | Mảng các ngày cần làm nổi bật trong lịch.                                                       |
+| `shouldCloseOnSelect` | `boolean`                      | `false`            | Tự động xác nhận và đóng khi nhấp vào ngày.                                                     |
+| `numberOfMonths`      | `number`                       | `1`                | Số tháng hiển thị đồng thời.                                                                    |
+| `captionLayout`       | `CaptionLayout`                | `"buttons"`        | `"buttons"` cho mũi tên trước/sau, `"dropdown"` cho lựa chọn năm/tháng.                         |
+| `fromYear`            | `number`                       | current year - 100 | Năm bắt đầu cho chế độ dropdown.                                                                |
+| `toYear`              | `number`                       | current year + 10  | Năm kết thúc cho chế độ dropdown.                                                               |
+
+## Giá trị trả về
+
+| Tên                 | Kiểu                                              | Mô tả                                                                  |
+| ------------------- | ------------------------------------------------- | ---------------------------------------------------------------------- |
+| `isOpen`            | `boolean`                                         | Cho biết popup có đang mở hay không.                                   |
+| `tempDate`          | `Date \| null`                                    | Ngày được chọn tạm thời (trước khi xác nhận).                          |
+| `currentMonth`      | `Date`                                            | Tháng đang được hiển thị.                                              |
+| `locale`            | `Locale`                                          | Đối tượng locale đã được giải quyết với tất cả các chuỗi.              |
+| `calendar`          | `CalendarMonth`                                   | Dữ liệu lịch cho tháng hiện tại (bao gồm `month`, `days`, `weeks`).    |
+| `calendars`         | `CalendarMonth[]`                                 | Mảng các tháng lịch (độ dài = `numberOfMonths`).                       |
+| `getDayProps`       | `(date: Date, referenceMonth?: Date) => DayProps` | Tính toán các cờ cho một ô ngày trong lịch.                            |
+| `displayValue`      | `string`                                          | Chuỗi đã định dạng của giá trị đã xác nhận.                            |
+| `hasValue`          | `boolean`                                         | Cho biết một ngày có đang được xác nhận hay không.                     |
+| `canConfirm`        | `boolean`                                         | Cho biết lựa chọn hiện tại có hợp lệ để xác nhận hay không.            |
+| `handleDateClick`   | `(date: Date) => void`                            | Xử lý sự kiện nhấp vào một ô ngày.                                     |
+| `handlePrevMonth`   | `() => void`                                      | Điều hướng đến tháng trước.                                            |
+| `handleNextMonth`   | `() => void`                                      | Điều hướng đến tháng sau.                                              |
+| `handleOpen`        | `() => void`                                      | Mở popup.                                                              |
+| `handleClose`       | `() => void`                                      | Đóng popup (hủy các thay đổi chưa được xác nhận).                      |
+| `handleToggle`      | `() => void`                                      | Bật/tắt popup.                                                         |
+| `handleConfirm`     | `() => void`                                      | Xác nhận lựa chọn và đóng.                                             |
+| `handleCancel`      | `() => void`                                      | Hủy và hoàn nguyên về giá trị trước đó.                                |
+| `handleClear`       | `() => void`                                      | Xóa giá trị (không thực hiện hành động nào nếu `required`).            |
+| `handleGoToToday`   | `() => void`                                      | Điều hướng lịch đến tháng của ngày hôm nay.                            |
+| `containerRef`      | `RefObject<HTMLDivElement \| null>`               | Gắn vào phần tử bao bọc để phát hiện nhấp chuột bên ngoài.             |
+| `popupRef`          | `RefObject<HTMLDivElement \| null>`               | Gắn vào phần tử popup.                                                 |
+| `focusedDate`       | `Date \| null`                                    | Ngày đang được tập trung bằng bàn phím.                                |
+| `handleKeyDown`     | `(e: KeyboardEvent<HTMLElement>) => void`         | Trình xử lý sự kiện bàn phím cho các phím mũi tên, Enter, Escape, Tab. |
+| `years`             | `number[]`                                        | Mảng các năm cho chế độ tiêu đề dropdown.                              |
+| `months`            | `number[]`                                        | Mảng các chỉ số tháng (0-11) cho chế độ tiêu đề dropdown.              |
+| `handleYearSelect`  | `(year: number, calendarIndex?: number) => void`  | Đặt năm hiển thị (chế độ dropdown).                                    |
+| `handleMonthSelect` | `(month: number, calendarIndex?: number) => void` | Đặt tháng hiển thị (chế độ dropdown).                                  |
+
+## Các hành vi chính
+
+### Trạng thái mở được kiểm soát và không kiểm soát
+
+Theo mặc định, hook tự quản lý trạng thái mở/đóng. Để kiểm soát từ bên ngoài, hãy truyền vào `open` và `onOpenChange`:
+
+```tsx
+const [isOpen, setIsOpen] = useState(false);
+
+const picker = useDatePicker({
+  value: date,
+  onChange: setDate,
+  open: isOpen,
+  onOpenChange: setIsOpen,
+});
+```
+
+### shouldCloseOnSelect
+
+Khi `shouldCloseOnSelect` là `true`, việc nhấp vào một ngày sẽ ngay lập tức xác nhận và đóng popup, bỏ qua bước xác nhận rõ ràng.
+
+### Điều hướng bằng bàn phím
+
+| Phím                        | Hành động                         |
+| --------------------------- | --------------------------------- |
+| Mũi tên Lên/Xuống/Trái/Phải | Di chuyển tiêu điểm giữa các ngày |
+| Enter / Phím cách           | Chọn ngày đang được tập trung     |
+| Escape                      | Hủy và đóng                       |
+| Tab                         | Di chuyển tiêu điểm trong popup   |
+
+### Tiêu đề Dropdown
+
+Khi `captionLayout` là `"dropdown"`, phần đầu sẽ hiển thị các dropdown chọn năm và tháng thay vì các nút trước/sau. Sử dụng `years`, `months`, `handleYearSelect`, và `handleMonthSelect` để hiển thị các dropdown.

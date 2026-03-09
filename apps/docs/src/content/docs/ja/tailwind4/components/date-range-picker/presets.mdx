@@ -1,0 +1,20 @@
+---
+sidebar_position: 2
+sidebar_label: With Presets
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import WithPresets from "@examples/tailwind4/DateRangePicker/WithPresets";
+import WithPresetsSource from "@examples/tailwind4/DateRangePicker/WithPresets.tsx?raw";
+
+# プリセット
+
+素早く選択できるよう、事前に定義された日付範囲を定義します。各プリセットには `label` と、静的オブジェクトまたはそれを返す関数である `value` があります。
+
+<CodeDemo source={WithPresetsSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <WithPresets client:load />
+  </ExampleWrapper>
+</CodeDemo>

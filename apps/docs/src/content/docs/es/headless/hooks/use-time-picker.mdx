@@ -1,0 +1,102 @@
+---
+sidebar_position: 5
+title: useTimePicker
+---
+
+# useTimePicker
+
+Hook de bajo nivel para el selector de tiempo con rueda de desplazamiento. Gestiona la selección de hora/minuto/segundo basada en el desplazamiento con comportamiento de anclaje. Este hook se usa típicamente internamente por la interfaz de usuario del panel de tiempo, but se puede usar directamente para implementaciones personalizadas de selector de tiempo.
+
+## Importar
+
+```tsx
+import { useTimePicker } from "react-date-range-picker-headless";
+```
+
+## Uso
+
+```tsx
+import { useState } from "react";
+import { useTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [hour, setHour] = useState(12);
+  const [minute, setMinute] = useState(0);
+
+  const picker = useTimePicker({
+    hour,
+    minute,
+    onHourChange: setHour,
+    onMinuteChange: setMinute,
+    precision: "minute",
+    hourFormat: "24",
+    minuteStep: 5,
+  });
+
+  return (
+    <div style={{ display: "flex", gap: 8 }}>
+      {/* Columna de hora */}
+      <div
+        ref={picker.hourListRef}
+        onScroll={picker.handleHourScroll}
+        style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+      >
+        {picker.hours.map((h) => (
+          <div
+            key={h}
+            onClick={() => picker.handleHourClick(h)}
+            style={{
+              height: picker.itemHeight,
+              fontWeight: h === hour ? "bold" : "normal",
+            }}
+          >
+            {String(h).padStart(2, "0")}
+          </div>
+        ))}
+      </div>
+
+      {/* Columna de minuto */}
+      {picker.showMinutes && (
+        <div
+          ref={picker.minuteListRef}
+          onScroll={picker.handleMinuteScroll}
+          style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+        >
+          {picker.minutes.map((m) => (
+            <div
+              key={m}
+              onClick={() => picker.handleMinuteClick(m)}
+              style={{
+                height: picker.itemHeight,
+                fontWeight: m === minute ? "bold" : "normal",
+              }}
+            >
+              {String(m).padStart(2, "0")}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Conmutador de período (modo 12 horas) */}
+      {picker.is12Hour && <button onClick={picker.handlePeriodToggle}>{picker.period}</button>}
+    </div>
+  );
+}
+```
+
+## Opciones
+
+| Opción           | Tipo                           | Predeterminado | Descripción                                                 |
+| ---------------- | ------------------------------ | -------------- | ----------------------------------------------------------- |
+| `hour`           | `number`                       | --             | **Requerido.** Hora actual. Modo 24h: 0-23, modo 12h: 1-12. |
+| `minute`         | `number`                       | --             | **Requerido.** Minuto actual.                               |
+| `second`         | `number`                       | --             | Segundo actual.                                             |
+| `period`         | `TimePeriod`                   | --             | Período AM/PM actual (requerido para el modo 12h).          |
+| `onHourChange`   | `(hour: number) => void`       | --             | **Requerido.** Manejador de cambio de hora.                 |
+| `onMinuteChange` | `(minute: number) => void`     | --             | **Requerido.** Manejador de cambio de minuto.               |
+| `onSecondChange` | `(second: number) => void`     | --             | Manejador de cambio de segundo.                             |
+| `onPeriodChange` | `(period: TimePeriod) => void` | --             | Manejador de cambio de AM/PM.                               |
+| `precision`      | `TimePrecision`                | `"minute"`     | Precisión de tiempo: `"hour"`, `"minute"`, o `"second"`.    |
+| `hourFormat`     | `HourFormat`                   | `"24"`         | Formato de hora `"12"` o `"24"`.                            |
+| `minuteStep`     | `MinuteStep`                   | `5`            | Incremento de minutos.                                      |
+| `secondStep`     | `SecondStep`                   | `1`            | Incremento de segundos.                                     |

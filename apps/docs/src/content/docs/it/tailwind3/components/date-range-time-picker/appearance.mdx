@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/tailwind3/DateRangeTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind3/DateRangeTimePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/tailwind3/DateRangeTimePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind3/DateRangeTimePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/tailwind3/DateRangeTimePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind3/DateRangeTimePicker/CaptionDropdown.tsx?raw";
+
+# Aspetto
+
+## Mesi Multipli
+
+Visualizza più di 2 mesi affiancati. Il valore predefinito è `2` per i selettori di intervallo.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Locale Personalizzato
+
+Usa `createLocale` dal pacchetto headless per personalizzare i nomi dei mesi/giorni e le stringhe dell'interfaccia utente.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Didascalia a Discesa
+
+Passa dalla navigazione con pulsanti ai selettori a discesa per mese e anno. Utile per selezionare date lontane dal mese corrente.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

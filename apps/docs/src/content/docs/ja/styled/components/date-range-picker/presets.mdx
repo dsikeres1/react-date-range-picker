@@ -1,0 +1,20 @@
+---
+sidebar_position: 2
+sidebar_label: With Presets
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import WithPresets from "@examples/styled/DateRangePicker/WithPresets";
+import WithPresetsSource from "@examples/styled/DateRangePicker/WithPresets.tsx?raw";
+
+# プリセット
+
+定義済みの期間をプリセットとして設定し、素早く選択できるようにします。各プリセットは`label`と`value`を持ち、`value`には静的なオブジェクトまたはそれを返す関数を指定できます。
+
+<CodeDemo source={WithPresetsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <WithPresets client:load />
+  </ExampleWrapper>
+</CodeDemo>

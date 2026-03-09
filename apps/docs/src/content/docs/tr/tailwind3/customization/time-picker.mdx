@@ -1,0 +1,32 @@
+---
+sidebar_position: 6
+sidebar_label: Time Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundTimePicker from "@examples/tailwind3/Customization/CompoundTimePicker";
+import CompoundTimePickerSource from "@examples/tailwind3/Customization/CompoundTimePicker.tsx?raw";
+import CompoundTimePickerTwelveHour from "@examples/tailwind3/Customization/CompoundTimePickerTwelveHour";
+import CompoundTimePickerTwelveHourSource from "@examples/tailwind3/Customization/CompoundTimePickerTwelveHour.tsx?raw";
+
+# Zaman Seçici
+
+`TimePicker` bileşik API'si, bir tetikleyici, zaman paneli ve altbilgi eylemleriyle özel bir zaman seçimi kullanıcı arayüzü oluşturmanıza olanak tanır.
+
+<CodeDemo source={CompoundTimePickerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundTimePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 12-Saat Formatı
+
+`time` ile 12 saatlik formatı yapılandırın:
+
+<CodeDemo source={CompoundTimePickerTwelveHourSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundTimePickerTwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

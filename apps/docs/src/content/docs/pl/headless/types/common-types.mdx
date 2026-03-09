@@ -1,0 +1,124 @@
+---
+sidebar_position: 5
+title: Common Types
+---
+
+# Typowe typy
+
+Współdzielone aliasy typów używane w pakiecie headless.
+
+```tsx
+import type {
+  DatePickerSize,
+  WeekDay,
+  CaptionLayout,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  MinuteStep,
+  SecondStep,
+  CalendarMonth,
+  DateUnit,
+} from "react-date-range-picker-headless";
+```
+
+## DatePickerSize
+
+Wariant rozmiaru interfejsu użytkownika. Hooki headless przekazują go dalej, nie używając go. Stylowane komponenty używają go do wizualnego doboru rozmiaru.
+
+```tsx
+type DatePickerSize = "x-large" | "large" | "medium" | "small";
+```
+
+## WeekDay
+
+Dzień tygodnia jako ciąg znaków. Używane w opcji `weekStartsOn`.
+
+```tsx
+type WeekDay = "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday";
+```
+
+## CaptionLayout
+
+Tryb układu nagłówka kalendarza.
+
+```tsx
+type CaptionLayout = "buttons" | "dropdown";
+```
+
+| Wartość      | Opis                                                                 |
+| ------------ | -------------------------------------------------------------------- |
+| `"buttons"`  | Przyciski nawigacji do poprzedniego/następnego miesiąca (domyślnie). |
+| `"dropdown"` | Rozwijane listy wyboru roku i miesiąca.                              |
+
+## TimePrecision
+
+Określa, które kolumny czasu są wyświetlane.
+
+```tsx
+type TimePrecision = "hour" | "minute" | "second";
+```
+
+| Wartość    | Wyświetlane kolumny         |
+| ---------- | --------------------------- |
+| `"hour"`   | Tylko godzina.              |
+| `"minute"` | Godzina + minuta.           |
+| `"second"` | Godzina + minuta + sekunda. |
+
+## HourFormat
+
+Wyświetlanie czasu w formacie 12-godzinnym lub 24-godzinnym.
+
+```tsx
+type HourFormat = "12" | "24";
+```
+
+## TimePeriod
+
+Wskaźnik AM/PM dla formatu 12-godzinnego.
+
+```tsx
+type TimePeriod = "AM" | "PM";
+```
+
+## MinuteStep
+
+Prawidłowe wartości przyrostu minut dla wyboru minut opartego na krokach.
+
+```tsx
+type MinuteStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## SecondStep
+
+Prawidłowe wartości przyrostu sekund для wyboru sekund opartego na krokach.
+
+```tsx
+type SecondStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## CalendarMonth
+
+Wygenerowane dane kalendarza dla pojedynczego miesiąca.
+
+```tsx
+interface CalendarMonth {
+  month: Date;
+  days: (Date | null)[];
+  weeks: (Date | null)[][];
+}
+```
+
+| Pole    | Typ                  | Opis                                                                       |
+| ------- | -------------------- | -------------------------------------------------------------------------- |
+| `month` | `Date`               | Miesiąc, który reprezentuje ten kalendarz.                                 |
+| `days`  | `(Date \| null)[]`   | Płaska tablica 42 komórek (6 tygodni x 7 dni). `null` dla pustych komórek. |
+| `weeks` | `(Date \| null)[][]` | Dwuwymiarowa tablica 6 tygodni, z których każdy zawiera 7 komórek dni.     |
+
+## DateUnit
+
+Jednostka czasu dla funkcji narzędziowych daty (`startOf`, `endOf`, `add`, `subtract`, `isSame`, `isBefore`, `isAfter`, `diff`).
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```

@@ -1,0 +1,34 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind4/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind4/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind4/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind4/Customization/CompoundColorThemePopup.tsx?raw";
+
+# Couleurs
+
+Changez les thèmes de couleur à l'exécution en surchargeant les propriétés personnalisées CSS sur un élément conteneur. Étant donné que le package Tailwind v4 lit toutes les couleurs à partir de jetons sémantiques, la modification des variables CSS sous-jacentes change instantanément l'apparence de tout le sélecteur.
+
+Le package Tailwind v4 utilise le format **oklch** pour les jetons sémantiques. Surchargez `--color-primary` et `--color-primary-foreground` pour changer l'apparence du sélecteur :
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Mode Popup
+
+La même technique fonctionne avec les sélecteurs en mode popup :
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

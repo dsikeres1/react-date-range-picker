@@ -1,0 +1,62 @@
+---
+sidebar_position: 5
+title: Locale Helpers
+---
+
+# 本地化輔助函式
+
+用於建立和合併本地化設定的函式。
+
+```tsx
+import {
+  DEFAULT_LOCALE,
+  mergeLocale,
+  createLocale,
+  resolveLocale,
+  weekdayToNumber,
+} from "react-date-range-picker-headless";
+```
+
+## DEFAULT_LOCALE
+
+預設的英文本地化物件。所有欄位都已填入英文字串。
+
+|      |          |
+| ---- | -------- |
+| 類型 | `Locale` |
+
+```tsx
+DEFAULT_LOCALE.weekdays; // ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+DEFAULT_LOCALE.months; // ["January", "February", ..., "December"]
+DEFAULT_LOCALE.confirm; // "Confirm"
+DEFAULT_LOCALE.placeholder; // "Select date"
+```
+
+## mergeLocale
+
+將部分本地化設定合併到預設本地化設定中。
+
+|      |                                                  |
+| ---- | ------------------------------------------------ |
+| 簽名 | `mergeLocale(partial?: Partial<Locale>): Locale` |
+
+如果未提供部分設定，則返回 `DEFAULT_LOCALE`。當 `rangeSeparator` 被覆寫但 `formatRange` 未被覆寫時，`formatRange` 會自動重新產生以使用新的分隔符。
+
+```tsx
+mergeLocale(); // DEFAULT_LOCALE
+
+mergeLocale({
+  confirm: "OK",
+  cancel: "Back",
+  rangeSeparator: " - ",
+});
+// { ...DEFAULT_LOCALE, confirm: "OK", cancel: "Back", rangeSeparator: " - ", formatRange: (s, e) => `${s} - ${e}` }
+```
+
+## createLocale
+
+使用 `Intl.DateTimeFormat` 從 BCP 47 本地化鍵建立本地化設定。
+
+|      |                |
+| ---- | -------------- |
+| 簽名 | `createLocale( |

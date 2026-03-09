@@ -1,0 +1,57 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/styled/DateRangeTimePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/styled/DateRangeTimePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/styled/DateRangeTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangeTimePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/styled/DateRangeTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DateRangeTimePicker/FormIntegration.tsx?raw";
+
+# Comportamiento
+
+## Cerrar al Seleccionar
+
+Cuando `shouldCloseOnSelect` está habilitado, el selector confirma y se cierra automáticamente cuando se hace clic en un preajuste.
+
+<Admonition type="info">
+  Para selectores con hora habilitada, `shouldCloseOnSelect` solo se aplica a los clics en
+  preajustes, no a los clics en fechas, ya que el usuario todavía necesita establecer la hora.
+</Admonition>
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Múltiples Meses
+
+Muestra más de los dos meses predeterminados uno al lado del otro.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Integración con Formularios
+
+Usa la prop `name` para incluir inputs ocultos para el envío de formularios nativos.
+
+<Admonition type="tip">
+  El estilo del botón de envío en este ejemplo es personalizado; la biblioteca solo proporciona el
+  selector de fechas.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

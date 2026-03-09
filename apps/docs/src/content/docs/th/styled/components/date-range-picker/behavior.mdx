@@ -1,0 +1,51 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/styled/DateRangePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/styled/DateRangePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/styled/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/styled/DateRangePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DateRangePicker/FormIntegration.tsx?raw";
+
+# พฤติกรรม
+
+## ปิดเมื่อเลือก
+
+เมื่อ `shouldCloseOnSelect` ถูกเปิดใช้งาน ตัวเลือกวันที่ (picker) จะทำการยืนยันและปิดโดยอัตโนมัติเมื่อวันที่สิ้นสุดถูกเลือก
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## หลายเดือน
+
+แสดงผลมากกว่าสองเดือนข้างกันซึ่งเป็นค่าเริ่มต้น
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## การทำงานร่วมกับฟอร์ม
+
+ใช้ `name` prop เพื่อรวม input ที่ซ่อนไว้สำหรับการส่งฟอร์มแบบดั้งเดิม
+
+<Admonition type="tip">
+  สไตล์ของปุ่ม submit ในตัวอย่างนี้เป็นสไตล์ที่กำหนดเอง — ไลบรารีมีให้เพียงตัวเลือกวันที่เท่านั้น
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

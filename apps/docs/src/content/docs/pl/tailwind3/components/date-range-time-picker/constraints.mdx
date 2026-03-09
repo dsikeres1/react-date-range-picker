@@ -1,0 +1,22 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/tailwind3/DateRangeTimePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/tailwind3/DateRangeTimePicker/MinMaxDays.tsx?raw";
+
+# Ograniczenia
+
+## Minimalna i maksymalna liczba dni
+
+Ogranicz zakres dat do minimalnej lub maksymalnej liczby dni.
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>

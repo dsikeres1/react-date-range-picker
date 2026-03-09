@@ -1,0 +1,82 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Required from "@examples/tailwind4/DatePicker/Required";
+import RequiredSource from "@examples/tailwind4/DatePicker/Required.tsx?raw";
+import MinMaxDate from "@examples/tailwind4/DatePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/tailwind4/DatePicker/MinMaxDate.tsx?raw";
+import DisabledDates from "@examples/tailwind4/DatePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind4/DatePicker/DisabledDates.tsx?raw";
+import DisablePastFuture from "@examples/tailwind4/DatePicker/DisablePastFuture";
+import DisablePastFutureSource from "@examples/tailwind4/DatePicker/DisablePastFuture.tsx?raw";
+import HighlightDates from "@examples/tailwind4/DatePicker/HighlightDates";
+import HighlightDatesSource from "@examples/tailwind4/DatePicker/HighlightDates.tsx?raw";
+import InitialMonth from "@examples/tailwind4/DatePicker/InitialMonth";
+import InitialMonthSource from "@examples/tailwind4/DatePicker/InitialMonth.tsx?raw";
+
+# 制約
+
+## 必須
+
+`required` が設定されている場合、クリアボタンは無効になり、値を空にすることはできません。
+
+<CodeDemo source={RequiredSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Required client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 最小日と最大日
+
+`minDate` と `maxDate` を使用して、選択可能な日付を特定の日付範囲に制限します。
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 無効な日付
+
+`isDateUnavailable` を使用して、特定の日付を動的に無効にします。
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 過去/未来の無効化
+
+`disablePast` または `disableFuture` を使用して、今日より前の日付または今日より後の日付をすばやく無効にします。
+
+<CodeDemo source={DisablePastFutureSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisablePastFuture client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 日付のハイライト
+
+`highlightDates` propを使用して、特定の日付（例：休日、イベント）を視覚的にハイライトします。
+
+<CodeDemo source={HighlightDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <HighlightDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 初期月
+
+ピッカーを初めて開いたときに表示される最初の月を設定します。
+
+<CodeDemo source={InitialMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <InitialMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>

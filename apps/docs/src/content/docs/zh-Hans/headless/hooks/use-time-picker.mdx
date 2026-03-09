@@ -1,0 +1,104 @@
+---
+sidebar_position: 5
+title: useTimePicker
+---
+
+# useTimePicker
+
+用于滚轮式时间选择器的底层钩子。管理基于滚动的时/分/秒选择，并带有吸附行为。此钩子通常在时间面板 UI 内部使用，但也可以直接用于自定义时间选择器的实现。
+
+## 导入
+
+```tsx
+import { useTimePicker } from "react-date-range-picker-headless";
+```
+
+## 用法
+
+```tsx
+import { useState } from "react";
+import { useTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [hour, setHour] = useState(12);
+  const [minute, setMinute] = useState(0);
+
+  const picker = useTimePicker({
+    hour,
+    minute,
+    onHourChange: setHour,
+    onMinuteChange: setMinute,
+    precision: "minute",
+    hourFormat: "24",
+    minuteStep: 5,
+  });
+
+  return (
+    <div style={{ display: "flex", gap: 8 }}>
+      {/* 小时列 */}
+      <div
+        ref={picker.hourListRef}
+        onScroll={picker.handleHourScroll}
+        style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+      >
+        {picker.hours.map((h) => (
+          <div
+            key={h}
+            onClick={() => picker.handleHourClick(h)}
+            style={{
+              height: picker.itemHeight,
+              fontWeight: h === hour ? "bold" : "normal",
+            }}
+          >
+            {String(h).padStart(2, "0")}
+          </div>
+        ))}
+      </div>
+
+      {/* 分钟列 */}
+      {picker.showMinutes && (
+        <div
+          ref={picker.minuteListRef}
+          onScroll={picker.handleMinuteScroll}
+          style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+        >
+          {picker.minutes.map((m) => (
+            <div
+              key={m}
+              onClick={() => picker.handleMinuteClick(m)}
+              style={{
+                height: picker.itemHeight,
+                fontWeight: m === minute ? "bold" : "normal",
+              }}
+            >
+              {String(m).padStart(2, "0")}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* 上下午切换 (12小时制) */}
+      {picker.is12Hour && <button onClick={picker.handlePeriodToggle}>{picker.period}</button>}
+    </div>
+  );
+}
+```
+
+## 选项
+
+| 选项             | 类型                           | 默认值     | 描述                                                  |
+| ---------------- | ------------------------------ | ---------- | ----------------------------------------------------- |
+| `hour`           | `number`                       | --         | **必需。** 当前小时。24小时制：0-23，12小时制：1-12。 |
+| `minute`         | `number`                       | --         | **必需。** 当前分钟。                                 |
+| `second`         | `number`                       | --         | 当前秒。                                              |
+| `period`         | `TimePeriod`                   | --         | 当前的 AM/PM 时段 (12小时制必需)。                    |
+| `onHourChange`   | `(hour: number) => void`       | --         | **必需。** 小时变化处理器。                           |
+| `onMinuteChange` | `(minute: number) => void`     | --         | **必需。** 分钟变化处理器。                           |
+| `onSecondChange` | `(second: number) => void`     | --         | 秒变化处理器。                                        |
+| `onPeriodChange` | `(period: TimePeriod) => void` | --         | AM/PM 变化处理器。                                    |
+| `precision`      | `TimePrecision`                | `"minute"` | 时间精度：`"hour"`、`"minute"` 或 `"second"`。        |
+| `hourFormat`     | `HourFormat`                   | `"24"`     | `"12"` 或 `"24"` 小时格式。                           |
+| `minuteStep`     | `MinuteStep`                   | `5`        | 分钟递增步长。                                        |
+| `secondStep`     | `SecondStep`                   | `1`        | 秒递增步长。                                          |
+
+|

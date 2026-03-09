@@ -1,0 +1,90 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import StyledBasic from "@examples/styled/DatePicker/Basic";
+import StyledBasicSource from "@examples/styled/DatePicker/Basic.tsx?raw";
+
+# Styled 入門指南
+
+`styled` 套件提供了內建 CSS 的預設樣式日期選擇器元件。無需 CSS 框架。
+
+## 安裝
+
+<PackageInstall pkg="react-date-range-picker-styled" />
+
+安裝後，在您的應用程式進入點匯入 CSS：
+
+```tsx
+import "react-date-range-picker-styled/styles.css";
+```
+
+## 快速開始
+
+<CodeDemo source={StyledBasicSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <StyledBasic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 包含內容
+
+| 元件                  | 描述                               |
+| --------------------- | ---------------------------------- |
+| `DatePicker`          | 彈出式日曆的單一日期選擇           |
+| `DateRangePicker`     | 帶有雙日曆和預設選項的日期範圍選擇 |
+| `DateTimePicker`      | 帶有時間滾動面板的日期 + 時間選擇  |
+| `DateRangeTimePicker` | 日期範圍 + 時間選擇                |
+
+所有元件都支援：
+
+- 使用 `value` / `onChange` 的受控值
+- 鍵盤導航
+- 透過 CSS 變數實現的深色模式
+- 4 種尺寸：`small`、`medium`、`large`、`x-large`
+- 用於自訂的複合元件 API
+
+## TypeScript 類型
+
+所有配置和資料類型都從套件中重新匯出 — 無需單獨安裝 `headless` 套件：
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-styled";
+```
+
+這些類型可用於：
+
+- **`Locale`** — 自訂語系覆寫 (星期幾名稱、按鈕標籤、日期格式化)
+- **`DatePickerSize`** — 為 `size` prop 指定類型 (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — 配置時間選擇器的精度、格式和步進
+- **`DateRangePreset`** — 為 `DateRangePicker` / `DateRangeTimePicker` 定義預設選項
+- **`CalendarMonth`**, **`DayProps`** — 使用複合元件進行自訂渲染
+
+參見 [Headless 類型](/docs/headless/types/common-types) 以獲取詳細的類型定義。
+
+## 下一步
+
+- [DatePicker](/docs/styled/components/date-picker/basic) — 單一日期選擇
+- [DateRangePicker](/docs/styled/components/date-range-picker/basic) — 帶有預設選項的日期範圍
+- [複合元件](/docs/styled/customization/overview) — 自訂內部結構
+- [CSS 變數](/docs/styled/customization/css-variables) — 使用 CSS 變數設定主題
+- [深色模式](/docs/styled/customization/dark-mode) — 深色主題支援

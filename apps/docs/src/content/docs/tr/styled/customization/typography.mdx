@@ -1,0 +1,111 @@
+---
+sidebar_position: 8
+sidebar_label: "Typography"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/styled/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/styled/Customization/CompoundCustomFont.tsx?raw";
+import CompoundCustomFontPopup from "@examples/styled/Customization/CompoundCustomFontPopup";
+import CompoundCustomFontPopupSource from "@examples/styled/Customization/CompoundCustomFontPopup.tsx?raw";
+import CompoundNotoSans from "@examples/styled/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/styled/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/styled/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/styled/Customization/CompoundWebFonts.tsx?raw";
+import CSSCustomFont from "@examples/styled/Customization/CSSCustomFont";
+import CSSCustomFontSource from "@examples/styled/Customization/CSSCustomFont.tsx?raw";
+
+# Tipografi
+
+`styled` paketi varsayılan olarak bir **sistem yazı tipi yığını** kullanır:
+
+```css
+--rdrp-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+```
+
+Bu, her platformda işletim sisteminin yerel yazı tipiyle oluşturulur (macOS'te San Francisco, Windows'ta Segoe UI, Android'de Roboto). İşletim sistemi CJK, Arapça ve diğer alfabe fallbacks'lerini otomatik olarak yönettiği için sistem yazı tipleri iyi çoklu dil desteği sağlar.
+
+Geçersiz kılmak için, herhangi bir üst öğede `--rdrp-font-family` değişkenini ayarlayın — bu, seçiciye basamaklanır.
+
+## CSS Değişkeni Satır İçi Stil
+
+Bir sarmalayıcı öğe üzerindeki `style` özelliği aracılığıyla yazı tipini geçersiz kılın:
+
+<CodeDemo source={CSSCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CSSCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Yazı Tipi Ailesi
+
+Bir sarmalayıcıda `--rdrp-font-family` değişkenini ayarlayarak yazı tipi aileleri arasında geçiş yapın:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Web Yazı Tiplerini Kullanma (Noto Sans)
+
+Tutarlı platformlar arası oluşturma veya i18n projeleri için, [Noto Sans](https://fonts.google.com/noto) gibi bir web yazı tipi yükleyin ve değişkeni geçersiz kılın:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/styles.css";
+
+// 1. Noto Sans'ı HTML veya CSS'inize yükleyin:
+//    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+// 2. Yazı tipi değişkenini geçersiz kılın:
+<div style={{ "--rdrp-font-family": '"Noto Sans", sans-serif' } as React.CSSProperties}>
+  <DatePicker value={value} onChange={setValue} inline />
+</div>;
+```
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Web Yazı Tipi Galerisi
+
+Farklı web yazı tiplerini karşılaştırarak tipografinin seçicinin görünümünü ne kadar dramatik bir şekilde değiştirdiğini görün. Aşağıdaki tüm yazı tipleri çoklu dil oluşturmayı destekler (Latin, CJK, Korece).
+
+<Admonition type="warning" title="Sadece demo">
+  Aşağıdaki yazı tipleri gösterim amacıyla Google Fonts CDN'den yüklenmiştir. Bu kütüphane herhangi
+  bir web yazı tipi **içermez** — bunları kendi projenizde yüklemeniz gerekir.
+</Admonition>
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Yazı Tipi Boyutu ve Kalınlığı
+
+Boyut ve kalınlık değişkenlerini geçersiz kılarak tipografi yoğunluğunu hassas bir şekilde ayarlayın:
+
+| Değişken                      | Varsayılan | Açıklama                   |
+| ----------------------------- | ---------- | -------------------------- |
+| `--rdrp-font-size-xs`         | `11px`     | En küçük metin             |
+| `--rdrp-font-size-sm`         | `12px`     | Hafta günü etiketleri      |
+| `--rdrp-font-size-base`       | `13px`     | Gün hücreleri, düğmeler    |
+| `--rdrp-font-size-md`         | `14px`     | Tetikleyici, zaman öğeleri |
+| `--rdrp-font-size-lg`         | `15px`     | Ay başlığı                 |
+| `--rdrp-font-weight-normal`   | `400`      | Temel kalınlık             |
+| `--rdrp-font-weight-medium`   | `500`      | Orta vurgu                 |
+| `--rdrp-font-weight-semibold` | `600`      | Seçili günler, başlıklar   |
+| `--rdrp-font-weight-bold`     | `700`      | Bugün göstergesi           |
+
+<CodeDemo source={CompoundCustomFontPopupSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFontPopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

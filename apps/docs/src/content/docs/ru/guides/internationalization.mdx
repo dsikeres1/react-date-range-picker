@@ -1,0 +1,38 @@
+---
+sidebar_position: 2
+title: Internationalization
+description: Настройка локали, переключение языка и переопределение форматирования.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Интернационализация
+
+Библиотека использует API браузера `Intl.DateTimeFormat` для генерации названий месяцев, дней недели и текста AM/PM с учетом локали. Внешняя библиотека i18n не требуется.
+
+## Быстрый старт
+
+Используйте `createLocale()` для создания локали из языкового тега BCP 47, а затем передайте ее через свойство `locale`:
+
+```tsx
+import { createLocale } from "react-date-range-picker-headless";
+import { DatePicker } from "react-date-range-picker-styled";
+
+const ru = createLocale("ru", {
+  confirm: "Подтвердить",
+  cancel: "Отмена",
+  clear: "Очистить",
+  placeholder: "Выберите дату",
+});
+
+function App() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} locale={ru} />;
+}
+```
+
+Это также работает с любым другим вариантом (Tailwind v3, Tailwind v4, Headless).
+
+## Что `createLocale` генерирует автоматически
+
+`createLocale(localeKey, overrides?)` использует `Intl.DateTime

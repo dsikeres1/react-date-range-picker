@@ -1,0 +1,124 @@
+---
+sidebar_position: 5
+title: Common Types
+---
+
+# 공용 타입
+
+headless 패키지 전반에서 사용되는 공용 타입 별칭입니다.
+
+```tsx
+import type {
+  DatePickerSize,
+  WeekDay,
+  CaptionLayout,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  MinuteStep,
+  SecondStep,
+  CalendarMonth,
+  DateUnit,
+} from "react-date-range-picker-headless";
+```
+
+## DatePickerSize
+
+UI 크기 변형입니다. Headless hook은 이 값을 사용하지 않고 그대로 전달합니다. Styled 컴포넌트는 시각적 크기 조절에 이 값을 사용합니다.
+
+```tsx
+type DatePickerSize = "x-large" | "large" | "medium" | "small";
+```
+
+## WeekDay
+
+요일을 나타내는 문자열입니다. `weekStartsOn` 옵션에서 사용됩니다.
+
+```tsx
+type WeekDay = "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday";
+```
+
+## CaptionLayout
+
+캘린더 헤더 레이아웃 모드입니다.
+
+```tsx
+type CaptionLayout = "buttons" | "dropdown";
+```
+
+| 값           | 설명                             |
+| ------------ | -------------------------------- |
+| `"buttons"`  | 이전/다음 달 탐색 버튼 (기본값). |
+| `"dropdown"` | 연도 및 월 선택 드롭다운.        |
+
+## TimePrecision
+
+어떤 시간 열을 표시할지 제어합니다.
+
+```tsx
+type TimePrecision = "hour" | "minute" | "second";
+```
+
+| 값         | 표시되는 열     |
+| ---------- | --------------- |
+| `"hour"`   | 시간만 표시.    |
+| `"minute"` | 시간 + 분.      |
+| `"second"` | 시간 + 분 + 초. |
+
+## HourFormat
+
+12시간 또는 24시간 형식의 시간 표시입니다.
+
+```tsx
+type HourFormat = "12" | "24";
+```
+
+## TimePeriod
+
+12시간 형식에서 AM/PM을 나타냅니다.
+
+```tsx
+type TimePeriod = "AM" | "PM";
+```
+
+## MinuteStep
+
+단계별 분 선택에 사용할 수 있는 유효한 분 증가 값입니다.
+
+```tsx
+type MinuteStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## SecondStep
+
+단계별 초 선택에 사용할 수 있는 유효한 초 증가 값입니다.
+
+```tsx
+type SecondStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## CalendarMonth
+
+한 달에 대한 생성된 캘린더 데이터입니다.
+
+```tsx
+interface CalendarMonth {
+  month: Date;
+  days: (Date | null)[];
+  weeks: (Date | null)[][];
+}
+```
+
+| 필드    | 타입                 | 설명                                                         |
+| ------- | -------------------- | ------------------------------------------------------------ |
+| `month` | `Date`               | 이 캘린더가 나타내는 월입니다.                               |
+| `days`  | `(Date \| null)[]`   | 42개 셀(6주 x 7일)의 1차원 배열입니다. 빈 셀은 `null`입니다. |
+| `weeks` | `(Date \| null)[][]` | 각각 7개의 날짜 셀을 포함하는 6주로 구성된 2차원 배열입니다. |
+
+## DateUnit
+
+날짜 유틸리티 함수(`startOf`, `endOf`, `add`, `subtract`, `isSame`, `isBefore`, `isAfter`, `diff`)에서 사용되는 시간 단위입니다.
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```

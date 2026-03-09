@@ -1,0 +1,65 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind4Basic from "@examples/tailwind4/DatePicker/Basic";
+import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
+
+# Erste Schritte mit Tailwind CSS v4
+
+Das Tailwind v4-Paket bietet Datumsauswahl-Komponenten, die mit Tailwind CSS v4 Utility-Klassen und semantischen Design-Tokens gestaltet sind.
+
+## Installation
+
+<PackageInstall pkg="react-date-range-picker-tailwind4" />
+
+Es ist kein zusätzlicher CSS-Import erforderlich. Die Komponenten verwenden Tailwind Utility-Klassen direkt.
+
+## Tailwind Preflight & Reset
+
+Dieses Paket setzt voraus, dass in Ihrem Projekt Tailwind CSS Preflight aktiviert ist (was die Standardeinstellung ist).
+Wenn Ihre Umgebung Preflight deaktiviert (z. B. Docusaurus, einige Micro-Frontends), können die Button-Stile fehlerhaft dargestellt werden.
+In diesem Fall importieren Sie die bereitgestellte `reset.css`, um die Button-Stile manuell zu initialisieren:
+
+```tsx
+import "react-date-range-picker-tailwind4/reset.css";
+```
+
+## Semantische Tokens
+
+Die Komponenten verwenden semantische CSS-Variablen für das Theming. Definieren Sie diese in Ihrem CSS:
+
+```css
+@theme {
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted: oklch(0.96 0.003 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+Diese Tokens werden auf Klassen wie `bg-popover`, `text-foreground`, `border-border` usw. abgebildet.
+
+## Schnellstart
+
+<CodeDemo source={Tailwind4BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Tailwind4Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Was ist enthalten
+
+| Komponente

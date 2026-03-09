@@ -1,0 +1,88 @@
+---
+sidebar_position: 2
+title: Formatting
+---
+
+# 格式化工具函式
+
+用於格式化日期、時間和數字以供顯示的函式。
+
+```tsx
+import {
+  formatDate,
+  formatDateTime,
+  formatTimeDisplay,
+  padNumber,
+} from "react-date-range-picker-headless";
+```
+
+## formatDate
+
+使用可自訂的格式字串來格式化日期。
+
+|          |                                                   |
+| -------- | ------------------------------------------------- |
+| 簽名     | `formatDate(date: Date, format?: string): string` |
+| 預設格式 | `"YYYY.MM.DD"`                                    |
+
+```tsx
+formatDate(new Date(2026, 2, 1)); // "2026.03.01"
+formatDate(new Date(2026, 2, 1), "YYYY-MM-DD"); // "2026-03-01"
+formatDate(new Date(2026, 2, 1), "M/D"); // "3/1"
+```
+
+## formatDateTime
+
+使用可自訂的格式字串來格式化日期與時間。
+
+|          |                                                       |
+| -------- | ----------------------------------------------------- |
+| 簽名     | `formatDateTime(date: Date, format?: string): string` |
+| 預設格式 | `"YYYY.MM.DD HH:mm"`                                  |
+
+```tsx
+formatDateTime(new Date(2026, 2, 1, 14, 30)); // "2026.03.01 14:30"
+formatDateTime(new Date(2026, 2, 1, 14, 30), "YYYY-MM-DD HH:mm:ss"); // "2026-03-01 14:30:00"
+```
+
+## formatTimeDisplay
+
+根據一個解析後的 `TimeConfig` 來格式化時間顯示字串。
+
+|      |                                                                                                                                                                 |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 簽名 | `formatTimeDisplay(hour: number, minute: number, second: number, period: TimePeriod, config: Required<TimeConfig>, amLabel?: string, pmLabel?: string): string` |
+
+| 參數      | 類型                   | 預設值 | 描述                              |
+| --------- | ---------------------- | ------ | --------------------------------- |
+| `hour`    | `number`               | --     | 小時值（內部使用 24 小時格式）。  |
+| `minute`  | `number`               | --     | 分鐘值。                          |
+| `second`  | `number`               | --     | 秒鐘值。                          |
+| `period`  | `TimePeriod`           | --     | 上午/下午（用於 12 小時制顯示）。 |
+| `config`  | `Required<TimeConfig>` | --     | 解析後的時間設定。                |
+| `amLabel` | `string`               | `"AM"` | AM 顯示標籤。                     |
+| `pmLabel` | `string`               | `"PM"` | PM 顯示標籤。                     |
+
+```tsx
+import { resolveTimeConfig, formatTimeDisplay } from "react-date-range-picker-headless";
+
+const config = resolveTimeConfig({ precision: "minute", hourFormat: "24" });
+formatTimeDisplay(14, 30, 0, "PM", config); // "14:30"
+
+const config12 = resolveTimeConfig({ precision: "second", hourFormat: "12" });
+formatTimeDisplay(14, 30, 15, "PM", config12); // "02:30:15 PM"
+```
+
+## padNumber
+
+將數字填充為 2 位數的字串。
+
+|      |                                  |
+| ---- | -------------------------------- |
+| 簽名 | `padNumber(num: number): string` |
+
+```tsx
+padNumber(1); // "01"
+padNumber(12); // "12"
+padNumber(0); // "00"
+```

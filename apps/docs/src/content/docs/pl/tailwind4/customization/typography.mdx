@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind4/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind4/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind4/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind4/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind4/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind4/Customization/CompoundWebFonts.tsx?raw";
+
+# Typografia
+
+Pakiet dla Tailwind v4 używa domyślnej klasy `font-sans` Tailwind (`ui-sans-serif, system-ui, sans-serif, ...`). Ponieważ `font-family` w CSS jest dziedziczone, możesz nadpisać czcionkę pickera, opakowując go w kontener ze stylem `fontFamily`. Czcionka kontenera zostanie kaskadowo zastosowana do wszystkich elementów pickera.
+
+## Rodzina czcionek
+
+Owiń picker i ustaw `fontFamily` na kontenerze, aby zmienić czcionki:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Używanie czcionek internetowych (Noto Sans)
+
+Załaduj czcionkę internetową w czasie działania i zastosuj ją za pomocą kontenera. Ten przykład ładuje [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) z Google Fonts:
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="Zastosowanie produkcyjne">
+W prawdziwym projekcie załaduj czcionkę za pomocą tagu `<link>` w sekcji `<head>` twojego HTML lub poprzez bundler CSS, zamiast wstrzykiwać ją w czasie działania. Podejście z `useEffect` jest tu użyte tylko w celach demonstracyjnych.
+</Admonition>
+
+## Galeria czcionek internetowych
+
+Porównaj różne czcionki internetowe, aby zobaczyć, jak radykalnie typografia zmienia wygląd pickera. Wszystkie poniższe czcionki obsługują renderowanie wielojęzyczne (łacina, CJK, koreański).
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

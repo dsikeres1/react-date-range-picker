@@ -1,0 +1,38 @@
+---
+sidebar_position: 2
+title: Internationalization
+description: Yerelleştirme özelleştirmesi, dil değiştirme ve biçimlendirme geçersiz kılmaları.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Uluslararasılaştırma
+
+Kütüphane, yerelleştirmeye duyarlı ay adları, hafta içi etiketleri ve AM/PM metni oluşturmak için tarayıcının `Intl.DateTimeFormat` API'sini kullanır. Harici bir i18n kütüphanesi gerekmez.
+
+## Hızlı Başlangıç
+
+Bir BCP 47 dil etiketinden bir yerel ayar oluşturmak için `createLocale()` kullanın, ardından bunu `locale` prop'u aracılığıyla iletin:
+
+```tsx
+import { createLocale } from "react-date-range-picker-headless";
+import { DatePicker } from "react-date-range-picker-styled";
+
+const ko = createLocale("ko", {
+  confirm: "확인",
+  cancel: "취소",
+  clear: "초기화",
+  placeholder: "날짜 선택",
+});
+
+function App() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} locale={ko} />;
+}
+```
+
+Bu aynı zamanda diğer tüm varyantlarla (Tailwind v3, Tailwind v4, Headless) çalışır.
+
+## createLocale Otomatik Olarak Ne Oluşturur
+
+`createLocale(localeKey, overrides?)` aşağıdakileri otomatik olarak türetmek için `Intl.DateTimeFormat` kullanır

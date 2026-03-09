@@ -1,0 +1,48 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinuteStep from "@examples/styled/DateTimePicker/MinuteStep";
+import MinuteStepSource from "@examples/styled/DateTimePicker/MinuteStep.tsx?raw";
+import SecondPrecision from "@examples/styled/DateTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/styled/DateTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/styled/DateTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/styled/DateTimePicker/TwelveHour.tsx?raw";
+
+# ตัวเลือกเวลา
+
+กำหนดค่าการทำงานของแผงเวลาผ่าน prop `time`
+
+## ขั้นตอนนาที
+
+ตั้งค่าขั้นตอนการเพิ่มนาที มีประโยชน์สำหรับการจัดตารางเวลาในช่วงเวลาที่กำหนด
+
+<CodeDemo source={MinuteStepSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinuteStep client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## ความแม่นยำวินาที
+
+แสดงคอลัมน์วินาทีโดยการตั้งค่า `precision` เป็น `"second"`
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## รูปแบบ 12 ชั่วโมง
+
+เปลี่ยนเป็นรูปแบบ 12 ชั่วโมงพร้อมตัวสลับ AM/PM
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

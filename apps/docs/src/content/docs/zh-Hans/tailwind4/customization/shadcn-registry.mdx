@@ -1,0 +1,131 @@
+---
+sidebar_position: 11
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# shadcn/ui 兼容性
+
+Tailwind v4 包设计为可与 [shadcn/ui](https://ui.shadcn.com/) 项目开箱即用。它使用相同的语义化令牌约定，因此如果您的项目已经设置了 shadcn/ui，日期选择器将自动匹配您的主题。
+
+## 为何能实现兼容
+
+shadcn/ui 定义了如下所示的语义化 CSS 变量：
+
+```css
+--background
+--foreground
+--primary
+--primary-foreground
+--muted-foreground
+--accent
+--accent-foreground
+--destructive
+--border
+--input
+--ring
+```
+
+`react-date-range-picker-tailwind4` 组件通过 Tailwind 功能类（`bg-primary`、`text-foreground`、`border-border` 等）使用相同的令牌名称。由于两个系统都引用相同的 CSS 变量，选择器会继承您现有的主题。
+
+## 零配置设置
+
+如果您有一个 shadcn/ui 项目，请直接安装并使用该包：
+
+```bash
+npm install react-date-range-picker-tailwind4
+```
+
+```tsx
+import { useState } from "react";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} />;
+}
+```
+
+无需额外的令牌定义或 CSS 更改。选择器将使用您现有的 `--color-primary`、`--color-background` 等。
+
+## 令牌映射
+
+以下是选择器令牌如何对应 shadcn/ui 令牌：
+
+| 选择器用途   | Tailwind 类               | shadcn 令牌            |
+| ------------ | ------------------------- | ---------------------- |
+| 弹出层背景   | `bg-popover`              | `--popover`            |
+| 弹出层文本   | `text-popover-foreground` | `--popover-foreground` |
+| 选定日期     | `bg-primary`              | `--primary`            |
+| 选定日期文本 | `text-primary-foreground` | `--primary-foreground` |
+| 日期悬停     | `bg-accent`               | `--accent`             |
+| 日期悬停文本 | `text-accent-foreground`  | `--accent-foreground`  |
+| 柔和色文本   | `text-muted-foreground`   | `--muted-foreground`   |
+| 清除按钮     | `text-destructive`        | `--destructive`        |
+| 边框         | `border-border`           | `--border`             |
+| 触发器边框   | `border-input`            | `--input`              |
+| 聚焦环       | `ring-ring`               | `--ring`               |
+
+## 与 shadcn 组件并用
+
+日期选择器可以与其他 shadcn/ui 组件并排放置，并且在视觉上会保持一致：
+
+```tsx
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function DateForm() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  return (
+    <div className="flex flex-col gap-2">
+      <Label>Select a date</Label>
+      <DatePicker value={date} onChange={setDate} />
+      <Button onClick={() => console.log(date)}>Submit</Button>
+    </div>
+  );
+}
+```
+
+## 暗黑模式
+
+如果您的 shadcn/ui 项目使用 `next-themes` 并采用 `class` 策略，暗黑模式会自动生效。shadcn 和日期选择器都从相同的 CSS 变量中读取，您的 `.dark` 选择器会同时切换它们。
+
+```tsx
+// Works out of the box with shadcn's dark mode setup
+<ThemeProvider attribute="class" defaultTheme="system">
+  <DatePicker value={value} onChange={setValue} />
+</ThemeProvider>
+```
+
+## shadcn 注册表
+
+<Admonition type="info" title="Coming Soon">
+完整的 [shadcn/ui 注册表](https://ui.shadcn.com/docs/registry) 集成已在计划中。这将允许通过以下方式安装日期选择器：
+
+```bash
+npx shadcn@latest add react-date-range-picker
+```
+
+在此之前，请直接安装 npm 包，并使用复合组件 API 进行任何结构上的自定义。
+
+</Admonition>
+
+## 超出 shadcn 默认设置的自定义
+
+如果您希望选择器看起来与 shadcn 主题的其余部分不同，请将令牌覆盖范围限定在一个包装器内：
+
+```css
+.custom-picker {
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+  --color-accent: oklch(0.95 0.05 300);
+}
+```
+
+```tsx
+<div className="custom-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```

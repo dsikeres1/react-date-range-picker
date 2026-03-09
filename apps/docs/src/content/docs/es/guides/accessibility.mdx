@@ -1,0 +1,47 @@
+---
+sidebar_position: 1
+title: Accessibility
+description: Navegación por teclado, atributos ARIA, gestión del foco y cumplimiento de las WCAG.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Accesibilidad
+
+Todos los componentes del selector vienen con soporte de accesibilidad incorporado. La navegación por teclado, los atributos ARIA y la gestión del foco funcionan de serie en todas las variantes: Styled, Tailwind v3/v4 y Headless.
+
+No se necesita configuración adicional para el uso estándar. Esta página documenta lo que se incluye para que puedas auditar, extender o replicar los patrones en interfaces de usuario personalizadas.
+
+## Navegación por Teclado
+
+### Selectores de Calendario
+
+| Tecla             | Acción                                                               |
+| ----------------- | -------------------------------------------------------------------- |
+| `ArrowLeft`       | Mover el foco al día anterior                                        |
+| `ArrowRight`      | Mover el foco al día siguiente                                       |
+| `ArrowUp`         | Mover el foco a la semana anterior (mismo día de la semana)          |
+| `ArrowDown`       | Mover el foco a la semana siguiente (mismo día de la semana)         |
+| `Enter` / `Space` | Seleccionar el día enfocado                                          |
+| `Escape`          | Cancelar cambios y cerrar el popup                                   |
+| `Tab`             | Mover al siguiente elemento enfocable (predeterminado del navegador) |
+
+**Salto de fechas deshabilitadas:** Al navegar con las teclas de flecha, las fechas deshabilitadas se omiten automáticamente. El selector busca hasta 365 días en la dirección del movimiento para encontrar la siguiente fecha habilitada.
+
+**Desplazamiento automático de mes:** Cuando el foco del teclado se mueve a un día en un mes diferente, la vista del calendario se actualiza para mostrar ese mes.
+
+### Selector de Hora
+
+| Tecla    | Acción                             |
+| -------- | ---------------------------------- |
+| `Escape` | Cancelar cambios y cerrar el popup |
+
+La selección de la hora utiliza una interfaz de rueda de desplazamiento con interacción de clic/táctil. Las columnas de desplazamiento usan `scroll-snap` para una selección precisa del valor.
+
+## Atributos ARIA
+
+Cada elemento interactivo tiene los roles y atributos ARIA apropiados:
+
+### Popup y Contenedor
+
+| Elemento

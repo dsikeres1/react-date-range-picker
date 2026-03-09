@@ -1,0 +1,34 @@
+---
+sidebar_position: 2
+title: Internationalization
+description: Personalização de localidade, troca de idioma e substituições de formatação.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Internacionalização
+
+A biblioteca usa a API `Intl.DateTimeFormat` do navegador para gerar nomes de meses, rótulos de dias da semana e texto AM/PM com base na localidade. Nenhuma biblioteca de i18n externa é necessária.
+
+## Início Rápido
+
+Use `createLocale()` para gerar uma localidade a partir de uma tag de idioma BCP 47 e, em seguida, passe-a através da prop `locale`:
+
+```tsx
+import { createLocale } from "react-date-range-picker-headless";
+import { DatePicker } from "react-date-range-picker-styled";
+
+const ptBR = createLocale("pt-BR", {
+  confirm: "Confirmar",
+  cancel: "Cancelar",
+  clear: "Limpar",
+  placeholder: "Selecionar data",
+});
+
+function App() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} locale={ptBR} />;
+}
+```
+
+Isso também funciona com qualquer outra variante (Tailwind

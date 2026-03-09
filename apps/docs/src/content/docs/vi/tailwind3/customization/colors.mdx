@@ -1,0 +1,39 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind3/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind3/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind3/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind3/Customization/CompoundColorThemePopup.tsx?raw";
+
+# Màu sắc
+
+Gói Tailwind v3 sử dụng **các lớp tiện ích Tailwind được mã hóa cứng** (ví dụ: `bg-sky-500`) thay vì các biến CSS. Để chuyển đổi màu sắc, hãy sử dụng API Compound và ghi đè tên lớp của ngày một cách linh động:
+
+<Admonition type="info">
+  Không giống như gói `styled` (sử dụng các biến CSS), Tailwind v3 yêu cầu API Compound để ghi đè
+  màu sắc trong lúc chạy. Xem [Ghi đè Giao diện](/docs/tailwind3/customization/theme-override) để
+  biết thêm chi tiết.
+</Admonition>
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Chế độ Popup
+
+Kỹ thuật tương tự cũng hoạt động với bộ chọn dạng popup:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

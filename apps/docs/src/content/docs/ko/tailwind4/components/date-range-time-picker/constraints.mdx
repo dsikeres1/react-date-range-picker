@@ -1,0 +1,22 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/tailwind4/DateRangeTimePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/tailwind4/DateRangeTimePicker/MinMaxDays.tsx?raw";
+
+# 제약 조건
+
+## 최소 및 최대 일수
+
+날짜 범위의 최소 또는 최대 일수를 제한합니다.
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>

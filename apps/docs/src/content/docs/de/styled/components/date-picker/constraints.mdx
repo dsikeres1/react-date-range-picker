@@ -1,0 +1,82 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Required from "@examples/styled/DatePicker/Required";
+import RequiredSource from "@examples/styled/DatePicker/Required.tsx?raw";
+import MinMaxDate from "@examples/styled/DatePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/styled/DatePicker/MinMaxDate.tsx?raw";
+import DisabledDates from "@examples/styled/DatePicker/DisabledDates";
+import DisabledDatesSource from "@examples/styled/DatePicker/DisabledDates.tsx?raw";
+import DisablePastFuture from "@examples/styled/DatePicker/DisablePastFuture";
+import DisablePastFutureSource from "@examples/styled/DatePicker/DisablePastFuture.tsx?raw";
+import HighlightDates from "@examples/styled/DatePicker/HighlightDates";
+import HighlightDatesSource from "@examples/styled/DatePicker/HighlightDates.tsx?raw";
+import InitialMonth from "@examples/styled/DatePicker/InitialMonth";
+import InitialMonthSource from "@examples/styled/DatePicker/InitialMonth.tsx?raw";
+
+# Einschränkungen
+
+## Erforderlich
+
+Wenn `required` gesetzt ist, ist die Löschen-Schaltfläche deaktiviert und der Wert kann nicht geleert werden.
+
+<CodeDemo source={RequiredSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Required client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Mindest- & Höchstdaten
+
+Beschränken Sie auswählbare Daten auf einen bestimmten Bereich mit `minDate` und `maxDate`.
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Deaktivierte Daten
+
+Verwenden Sie `isDateUnavailable`, um bestimmte Daten dynamisch zu deaktivieren.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Vergangenheit / Zukunft deaktivieren
+
+Verwenden Sie `disablePast` oder `disableFuture`, um Daten vor/nach heute schnell zu deaktivieren.
+
+<CodeDemo source={DisablePastFutureSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DisablePastFuture client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Daten hervorheben
+
+Heben Sie bestimmte Daten (z. B. Feiertage, Veranstaltungen) mit der `highlightDates`-Prop visuell hervor.
+
+<CodeDemo source={HighlightDatesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <HighlightDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Anfänglicher Monat
+
+Stellen Sie den anfänglich angezeigten Monat ein, wenn der Picker zum ersten Mal geöffnet wird.
+
+<CodeDemo source={InitialMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <InitialMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>

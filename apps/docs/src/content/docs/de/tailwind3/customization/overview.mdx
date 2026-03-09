@@ -1,0 +1,39 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Compound-Komponenten
+
+Das Tailwind v3-Paket stellt eine Compound-Component-API zur Verfügung, die Ihnen die volle Kontrolle über die interne Struktur und das Rendering jedes Pickers gibt. Anstatt einer einzigen monolithischen Komponente setzen Sie den Picker aus einzelnen Teilen zusammen.
+
+## Funktionsweise
+
+Jeder Picker (z.B. `DatePicker`) ist sowohl eine einfache Komponente als auch ein Namespace von Compound-Teilen:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+// Einfache Verwendung — rendert das Standardlayout
+<DatePicker value={value} onChange={setValue} />
+
+// Compound-Verwendung — volle Kontrolle über die Struktur
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Verfügbare Teile

@@ -1,0 +1,34 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomLocale from "@examples/tailwind4/DateTimePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind4/DateTimePicker/CustomLocale.tsx?raw";
+import FormIntegration from "@examples/tailwind4/DateTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind4/DateTimePicker/FormIntegration.tsx?raw";
+
+# 외형
+
+## 사용자 지정 로케일
+
+다국어 지원을 위해 사용자 지정 로케일을 제공하세요. `dateTimePlaceholder` 키는 트리거 텍스트를 사용자화합니다.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 폼 연동
+
+네이티브 폼 제출을 위한 숨은 입력을 포함하려면 `name` prop을 사용하세요.
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

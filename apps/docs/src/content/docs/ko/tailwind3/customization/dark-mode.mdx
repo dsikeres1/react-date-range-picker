@@ -1,0 +1,171 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 다크 모드
+
+Tailwind v3 패키지는 Tailwind의 `dark:` 변형을 사용하여 완벽한 다크 모드 지원을 포함합니다. 모든 컴포넌트 요소에는 명시적인 다크 모드 클래스가 있습니다.
+
+## 작동 방식
+
+Tailwind v3 테마는 전체적으로 `dark:` 변형과 함께 구체적인 색상 클래스를 사용합니다. 예를 들면 다음과 같습니다:
+
+```
+bg-white dark:bg-slate-950
+text-slate-900 dark:text-slate-50
+border-slate-200 dark:border-slate-800
+```
+
+다크 모드는 Tailwind 설정의 `darkMode` 전략에 따라 Tailwind의 `dark:` 변형이 트리거될 때 활성화됩니다.
+
+## Tailwind 설정
+
+### Class 전략 (권장)
+
+Tailwind 설정에서 `darkMode: "class"`로 설정합니다. 다크 모드는 `<html>` 또는 부모 요소에 `dark` 클래스가 있을 때 활성화됩니다:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+};
+```
+
+다크 모드 토글:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+또는 `<html>`에 클래스를 적용합니다:
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### Selector 전략
+
+Tailwind v3.4+는 `[data-theme="dark"]` 또는 사용자 정의 선택자를 사용할 수 있는 `darkMode: "selector"`를 지원합니다:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### Media 전략
+
+OS 기본 설정을 따르려면 `darkMode: "media"`로 설정(또는 생략 — 이것이 기본값)합니다:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: "media",
+  // ...
+};
+```
+
+추가 설정이 필요하지 않습니다. picker는 `prefers-color-scheme`을 따릅니다.
+
+## 색상 쌍
+
+picker 전체에서 사용되는 라이트/다크 색상 쌍은 다음과 같습니다:
+
+| 요소              | 라이트              | 다크                         |
+| ----------------- | ------------------- | ---------------------------- |
+| 배경              | `bg-white`          | `dark:bg-slate-950`          |
+| 텍스트            | `text-slate-900`    | `dark:text-slate-50`         |
+| 음소거된 텍스트   | `text-slate-500`    | `dark:text-slate-400`        |
+| 테두리            | `border-slate-200`  | `dark:border-slate-800`      |
+| 호버 배경         | `bg-slate-100`      | `dark:bg-slate-800`          |
+| 프라이머리        | `bg-sky-500`        | `dark:bg-sky-500`            |
+| 프라이머리 텍스트 | `text-sky-500`      | `dark:text-sky-400`          |
+| 범위 배경         | `bg-sky-50`         | `dark:bg-sky-950/50`         |
+| 호버 범위         | `bg-sky-50/50`      | `dark:bg-sky-950/30`         |
+| 포커스 링         | `ring-sky-500`      | `ring-sky-500`               |
+| 링 오프셋         | `ring-offset-white` | `dark:ring-offset-slate-950` |
+
+## Docusaurus 연동
+
+(`<html>`에 `data-theme`을 사용하는) Docusaurus를 사용하는 경우, Tailwind의 선택자 전략을 설정하세요:
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  // ...
+};
+```
+
+Docusaurus는 다크 모드가 활성화될 때 `<html data-theme="dark">`를 설정하며, 이 선택자에서 Tailwind의 `dark:` 변형이 트리거됩니다.
+
+## next-themes 연동
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes`는 `<html>`에 `dark` 클래스를 추가/제거합니다. Tailwind 설정에 `darkMode: "class"`가 있으면 picker가 자동으로 전환됩니다.
+
+## 특정 모드 강제 적용
+
+picker가 항상 라이트 모드나 다크 모드를 사용하도록 강제하려면, 적절한 클래스가 있는 컨테이너로 감싸세요:
+
+```tsx
+{
+  /* Always light — no "dark" class ancestor */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Always dark */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+`darkMode: "class"`를 사용할 때, `dark` 클래스는 부모 요소나 `<html>`에 있어야 합니다. picker 자체는 다크 모드 토글을 관리하지 않습니다.
+</Admonition>

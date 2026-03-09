@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: "Custom Trigger"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/styled/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/styled/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/styled/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/styled/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# カスタムトリガー
+
+デフォルトのトリガーを独自のボタンや入力に置き換えます。`Trigger`コンポーネントは、トリガーの外観と動作を完全に制御できるレンダープロップを受け入れます。
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## トリガーのレンダープロップ
+
+| プロップ       | 型               | 説明                             |
+| -------------- | ---------------- | -------------------------------- |
+| `displayValue` | `string`         | フォーマットされた選択日         |
+| `placeholder`  | `string`         | プレースホルダーテキスト         |
+| `hasValue`     | `boolean`        | 日付が選択されているかどうか     |
+| `isOpen`       | `boolean`        | ポップアップが開いているかどうか |
+| `onToggle`     | `() => void`     | ポップアップの開閉を切り替える   |
+| `onClear`      | `() => void`     | 選択をクリアする                 |
+| `locale`       | `Locale`         | 現在のロケールオブジェクト       |
+| `triggerRef`   | `(node) => void` | 位置決めのためのrefコールバック  |
+
+## レンジピッカーのトリガー
+
+同じパターンが`DateRangePicker`でも機能します:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

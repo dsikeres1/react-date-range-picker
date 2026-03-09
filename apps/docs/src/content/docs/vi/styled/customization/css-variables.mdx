@@ -1,0 +1,214 @@
+---
+sidebar_position: 2
+sidebar_label: "CSS Variables"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomColors from "@examples/styled/Customization/CustomColors";
+import CustomColorsSource from "@examples/styled/Customization/CustomColors.tsx?raw";
+import CustomFont from "@examples/styled/Customization/CustomFont";
+import CustomFontSource from "@examples/styled/Customization/CustomFont.tsx?raw";
+import CustomBorderRadius from "@examples/styled/Customization/CustomBorderRadius";
+import CustomBorderRadiusSource from "@examples/styled/Customization/CustomBorderRadius.tsx?raw";
+import CustomSize from "@examples/styled/Customization/CustomSize";
+import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw";
+
+# Biến CSS
+
+Gói `styled` sử dụng các thuộc tính tùy chỉnh CSS (biến) cho tất cả các giá trị hình ảnh. Ghi đè chúng trên `.rdrp-root` hoặc bất kỳ phần tử cha nào để tùy chỉnh giao diện mà không cần chạm vào mã nguồn của component.
+
+## Cách Ghi Đè
+
+Tất cả các biến đều được giới hạn trong phạm vi `.rdrp-root`. Ghi đè chúng trong file CSS của riêng bạn:
+
+```css
+/* Chủ đề tùy chỉnh của bạn */
+.rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-border-radius-lg: 12px;
+}
+```
+
+Hoặc giới hạn phạm vi ghi đè cho một phiên bản cụ thể bằng cách sử dụng một lớp bao bọc:
+
+```css
+.my-purple-picker .rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-color-primary-light: #ede9fe;
+  --rdrp-color-primary-lighter: #f5f3ff;
+}
+```
+
+```tsx
+<div className="my-purple-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## Tham Chiếu Biến
+
+### Màu Sắc
+
+| Biến                            | Mặc định (Sáng)            | Mô tả                                              |
+| ------------------------------- | -------------------------- | -------------------------------------------------- |
+| `--rdrp-color-primary`          | `#3b82f6`                  | Màu hành động chính (ngày được chọn, nút xác nhận) |
+| `--rdrp-color-primary-hover`    | `#2563eb`                  | Trạng thái hover chính                             |
+| `--rdrp-color-primary-light`    | `#dbeafe`                  | Nền khoảng thời gian, điểm nhấn chính nhạt         |
+| `--rdrp-color-primary-lighter`  | `#eff6ff`                  | Nền của cài đặt trước đang hoạt động               |
+| `--rdrp-color-primary-disabled` | `#93c5fd`                  | Nút xác nhận bị vô hiệu hóa                        |
+| `--rdrp-color-bg`               | `#ffffff`                  | Màu nền                                            |
+| `--rdrp-color-bg-hover`         | `#f3f4f6`                  | Nền hover cho ngày, nút                            |
+| `--rdrp-color-bg-subtle`        | `#f9fafb`                  | Nền tinh tế                                        |
+| `--rdrp-color-text`             | `#374151`                  | Màu văn bản mặc định                               |
+| `--rdrp-color-text-strong`      | `#111827`                  | Văn bản đậm (tiêu đề, thời gian hoạt động)         |
+| `--rdrp-color-text-muted`       | `#6b7280`                  | Văn bản mờ (nút điều hướng, nhãn)                  |
+| `--rdrp-color-text-placeholder` | `#6b7280`                  | Văn bản giữ chỗ                                    |
+| `--rdrp-color-text-disabled`    | `#d1d5db`                  | Văn bản ngày bị vô hiệu hóa                        |
+| `--rdrp-color-text-outside`     | `#9ca3af`                  | Ngày của tháng khác                                |
+| `--rdrp-color-text-inverse`     | `#ffffff`                  | Văn bản trên nền chính                             |
+| `--rdrp-color-text-danger`      | `#ef4444`                  | Văn bản nút xóa/nguy hiểm                          |
+| `--rdrp-color-text-today`       | `#2563eb`                  | Màu chỉ báo ngày hôm nay                           |
+| `--rdrp-color-border`           | `#d1d5db`                  | Đường viền mặc định                                |
+| `--rdrp-color-border-light`     | `#e5e7eb`                  | Đường viền nhạt (popup, select)                    |
+| `--rdrp-color-border-subtle`    | `#f3f4f6`                  | Đường viền tinh tế (chân trang, cài đặt trước)     |
+| `--rdrp-color-border-hover`     | `#93c5fd`                  | Trạng thái hover của đường viền                    |
+| `--rdrp-color-highlight-dot`    | `#f59e0b`                  | Màu chấm nổi bật                                   |
+| `--rdrp-highlight-dot-size`     | `4px`                      | Đường kính chấm nổi bật                            |
+| `--rdrp-color-range-bg`         | `#dbeafe`                  | Nền ngày trong khoảng thời gian                    |
+| `--rdrp-color-hover-range-bg`   | `#eff6ff`                  | Nền xem trước khoảng thời gian khi hover           |
+| `--rdrp-color-hover-target-bg`  | `#bfdbfe`                  | Nền điểm cuối khi hover                            |
+| `--rdrp-color-time-highlight`   | `rgba(59, 130, 246, 0.08)` | Thanh nổi bật của bảng thời gian                   |
+
+### Kiểu Chữ
+
+| Biến                          | Mặc định          | Mô tả                                              |
+| ----------------------------- | ----------------- | -------------------------------------------------- |
+| `--rdrp-font-family`          | System font stack | Họ phông chữ                                       |
+| `--rdrp-font-size-xs`         | `11px`            | Cực nhỏ (tiêu đề ngày trong tuần ở kích thước nhỏ) |
+| `--rdrp-font-size-sm`         | `12px`            | Nhỏ (tiêu đề ngày trong tuần, nhãn)                |
+| `--rdrp-font-size-base`       | `13px`            | Cơ bản (ô ngày, nút)                               |
+| `--rdrp-font-size-md`         | `14px`            | Trung bình (trigger, mục thời gian)                |
+| `--rdrp-font-size-lg`         | `15px`            | Lớn (tiêu đề đầu trang)                            |
+| `--rdrp-font-weight-normal`   | `400`             | Độ đậm thường                                      |
+| `--rdrp-font-weight-medium`   | `500`             | Độ đậm trung bình                                  |
+| `--rdrp-font-weight-semibold` | `600`             | Độ đậm bán đậm                                     |
+| `--rdrp-font-weight-bold`     | `700`             | Độ đậm đậm (chỉ báo hôm nay)                       |
+
+### Khoảng Cách
+
+| Biến                 | Mặc định | Mô tả                     |
+| -------------------- | -------- | ------------------------- |
+| `--rdrp-spacing-xs`  | `2px`    | Khoảng cách cực nhỏ       |
+| `--rdrp-spacing-sm`  | `4px`    | Khoảng cách nhỏ           |
+| `--rdrp-spacing-md`  | `8px`    | Khoảng cách trung bình    |
+| `--rdrp-spacing-lg`  | `12px`   | Khoảng cách lớn           |
+| `--rdrp-spacing-xl`  | `16px`   | Khoảng cách cực lớn       |
+| `--rdrp-spacing-2xl` | `24px`   | Khoảng cách lớn gấp 2 lần |
+
+### Đường Viền
+
+| Biến                        | Mặc định | Mô tả                             |
+| --------------------------- | -------- | --------------------------------- |
+| `--rdrp-border-radius-sm`   | `4px`    | Bán kính nhỏ                      |
+| `--rdrp-border-radius-md`   | `6px`    | Bán kính trung bình (nút, select) |
+| `--rdrp-border-radius-lg`   | `8px`    | Bán kính lớn (ngày, trigger)      |
+| `--rdrp-border-radius-xl`   | `12px`   | Bán kính cực lớn (popup)          |
+| `--rdrp-border-radius-full` | `9999px` | Bán kính đầy đủ (chấm nổi bật)    |
+| `--rdrp-border-width`       | `1px`    | Độ rộng đường viền                |
+
+### Đổ Bóng
+
+| Biến                   | Mặc định                      | Mô tả                 |
+| ---------------------- | ----------------------------- | --------------------- |
+| `--rdrp-shadow-popup`  | `0 10px 25px rgba(0,0,0,0.1)` | Đổ bóng cho popup     |
+| `--rdrp-shadow-inline` | `0 4px 12px rgba(0,0,0,0.06)` | Đổ bóng chế độ inline |
+| `--rdrp-shadow-sm`     | `0 2px 6px rgba(0,0,0,0.04)`  | Đổ bóng nhỏ           |
+
+### Kích Thước
+
+| Biến                       | Mặc định | Mô tả                                            |
+| -------------------------- | -------- | ------------------------------------------------ |
+| `--rdrp-cell-size`         | `36px`   | Chiều rộng/cao của ô ngày                        |
+| `--rdrp-nav-btn-size`      | `28px`   | Kích thước nút điều hướng                        |
+| `--rdrp-weekday-height`    | `28px`   | Chiều cao hàng tiêu đề ngày trong tuần           |
+| `--rdrp-grid-min-height`   | `216px`  | Chiều cao tối thiểu của lưới lịch                |
+| `--rdrp-panel-min-width`   | `252px`  | Chiều rộng của một bảng lịch đơn                 |
+| `--rdrp-dual-gap`          | `24px`   | Khoảng cách giữa hai lịch                        |
+| `--rdrp-trigger-min-width` | `200px`  | Chiều rộng tối thiểu của nút trigger             |
+| `--rdrp-trigger-padding-x` | `14px`   | Padding ngang của trigger                        |
+| `--rdrp-trigger-padding-y` | `8px`    | Padding dọc của trigger                          |
+| `--rdrp-popup-padding`     | `16px`   | Padding bên trong của popup                      |
+| `--rdrp-popup-gap`         | `6px`    | Khoảng cách nội dung của popup                   |
+| `--rdrp-btn-padding-x`     | `14px`   | Padding ngang của nút chân trang                 |
+| `--rdrp-btn-padding-y`     | `6px`    | Padding dọc của nút chân trang                   |
+| `--rdrp-preset-min-width`  | `140px`  | Chiều rộng tối thiểu của thanh bên cài đặt trước |
+
+### Bộ Chọn Thời Gian
+
+| Biến                          | Mặc định | Mô tả                                   |
+| ----------------------------- | -------- | --------------------------------------- |
+| `--rdrp-time-item-height`     | `32px`   | Chiều cao mục cuộn thời gian            |
+| `--rdrp-time-panel-height`    | `176px`  | Tổng chiều cao của bảng thời gian       |
+| `--rdrp-time-column-height`   | `160px`  | Chiều cao cột có thể cuộn               |
+| `--rdrp-time-panel-min-width` | `120px`  | Chiều rộng tối thiểu của bảng thời gian |
+| `--rdrp-time-colon-width`     | `12px`   | Chiều rộng dấu hai chấm phân cách       |
+
+### Z-index
+
+| Biến                  | Mặc định | Mô tả                           |
+| --------------------- | -------- | ------------------------------- |
+| `--rdrp-z-popup`      | `50`     | Z-index của popup               |
+| `--rdrp-z-day-button` | `20`     | Z-index của ngày được tập trung |
+
+### Hiệu Ứng Chuyển Động
+
+| Biến                       | Mặc định | Mô tả                                  |
+| -------------------------- | -------- | -------------------------------------- |
+| `--rdrp-transition-fast`   | `0.1s`   | Chuyển động nhanh (hover ngày)         |
+| `--rdrp-transition-normal` | `0.15s`  | Chuyển động bình thường (trigger, nút) |
+
+## Ví dụ Thực tế
+
+### Màu Tùy Chỉnh (Chủ đề Tím)
+
+Ghi đè các biến màu chính để tạo ra một bảng màu hoàn toàn khác. Ví dụ này sử dụng một **DatePicker** với tông màu tím/violet.
+
+<CodeDemo source={CustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Phông Chữ Tùy Chỉnh (Serif)
+
+Phông chữ được kế thừa qua CSS, vì vậy việc bao bọc bộ chọn trong một thẻ div với `font-family` tùy chỉnh sẽ áp dụng cho tất cả văn bản. Ví dụ này sử dụng một **DateRangePicker** với phông chữ Georgia serif.
+
+<CodeDemo source={CustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Góc Sắc (Không có Bán kính Viền)
+
+Đặt tất cả các biến bán kính viền thành `0px` để có giao diện hoàn toàn vuông vức.
+
+<CodeDemo source={CustomBorderRadiusSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomBorderRadius client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Kích Thước Tùy Chỉnh qua Biến CSS
+
+Thay vì sử dụng prop `size` có sẵn, hãy ghi đè các biến kích thước riêng lẻ để kiểm soát chính xác. Ví dụ này sử dụng một **DateRangePicker** với kích thước ô và kích thước phông chữ tùy chỉnh.
+
+<CodeDemo source={CustomSizeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSize client:load />
+  </ExampleWrapper>
+</CodeDemo>

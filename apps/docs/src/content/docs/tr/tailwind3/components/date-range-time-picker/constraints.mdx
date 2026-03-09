@@ -1,0 +1,22 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/tailwind3/DateRangeTimePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/tailwind3/DateRangeTimePicker/MinMaxDays.tsx?raw";
+
+# Kısıtlamalar
+
+## Min ve Maks Günler
+
+Tarih aralığını minimum veya maksimum gün sayısıyla sınırlayın.
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>

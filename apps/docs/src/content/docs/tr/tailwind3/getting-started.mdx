@@ -1,0 +1,111 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind3Basic from "@examples/tailwind3/DatePicker/Basic";
+import Tailwind3BasicSource from "@examples/tailwind3/DatePicker/Basic.tsx?raw";
+
+# Tailwind CSS v3 ile Başlarken
+
+Tailwind v3 paketi, Tailwind CSS v3 yardımcı sınıflarıyla stillendirilmiş tarih seçici bileşenleri sağlar.
+
+## Kurulum
+
+<PackageInstall pkg="react-date-range-picker-tailwind3" />
+
+Ek bir CSS içe aktarımı gerekmez. Bileşenler doğrudan Tailwind yardımcı sınıflarını kullanır.
+
+## Tailwind Yapılandırması
+
+Paketi `tailwind.config.js` dosyanızdaki `content` yollarınıza ekleyin, böylece Tailwind bileşen sınıflarını tarayabilir:
+
+```js
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  // ...
+};
+```
+
+## Hızlı Başlangıç
+
+<CodeDemo source={Tailwind3BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Tailwind3Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Neler Dahil
+
+| Bileşen               | Açıklama                                              |
+| --------------------- | ----------------------------------------------------- |
+| `DatePicker`          | Açılır takvim ile tek tarih seçimi                    |
+| `DateRangePicker`     | Çift takvim ve hazır ayarlar ile tarih aralığı seçimi |
+| `DateTimePicker`      | Zaman kaydırma paneli ile tarih + saat seçimi         |
+| `DateRangeTimePicker` | Tarih aralığı + saat seçimi                           |
+
+Tüm bileşenler şunları destekler:
+
+- `value` / `onChange` ile kontrollü değer
+- Klavye ile gezinme
+- `dark:` varyantı ile karanlık mod
+- 4 boyut: `small`, `medium`, `large`, `x-large`
+- Özelleştirme için Bileşik Bileşen API'si
+
+## TypeScript Tipleri
+
+Tüm yapılandırma ve veri tipleri paketten yeniden dışa aktarılır — headless paketini ayrıca yüklemenize gerek yoktur:
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind3";
+```
+
+Bu tipler şunlar için kullanışlıdır:
+
+- **`Locale`** — Özel yerel ayar geçersiz kılmaları (hafta günü adları, düğme etiketleri, tarih biçimlendirme)
+- **`DatePickerSize`** — `size` prop'unu tipleme (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — Zaman seçici hassasiyetini, biçimini ve adımlarını yapılandırma
+- **`DateRangePreset`** — `DateRangePicker` / `DateRangeTimePicker` için hazır ayarları tanımlama
+- **`CalendarMonth`**, **`DayProps`** — Bileşik Bileşenler ile özel render etme
+
+Ayrıntılı tip tanımları için bkz. [Headless Tipleri](/docs/headless/types/common-types).
+
+## Sonraki Adımlar
+
+- [DatePicker](/docs/tailwind3/components/date-picker/basic) — Tek tarih seçimi
+- [DateRangePicker](/docs/tailwind3/components/date-range-picker/basic) — Hazır ayarlarla tarih aralığı
+- [Bileşik Bileşenler](/docs/tailwind3/customization/overview) — İç yapıyı özelleştirin
+- [Tema Geçersiz Kılma](/docs/tailwind3/customization/theme-override) — Tema renklerini özelleştirin
+- [Karanlık Mod](/docs/tailwind3/customization/dark-mode) — Koyu tema desteği
+
+## Tailwind Preflight & Sıfırlama
+
+Bu paket, projenizde Tailwind CSS Preflight'ın etkinleştirildiğini varsayar (bu varsayılandır).
+Eğer ortamınız Preflight'ı devre dışı bırakırsa (örn. Docusaurus, bazı Mikro Ön Uçlar), düğme stilleri bozulabilir.
+Bu durumda, düğme stillerini manuel olarak başlatmak için sağlanan `reset.css` dosyasını içe aktarın:
+
+```tsx
+import "react-date-range-picker-tailwind3/reset.css";
+```

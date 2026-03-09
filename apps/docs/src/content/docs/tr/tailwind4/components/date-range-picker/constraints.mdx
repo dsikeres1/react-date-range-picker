@@ -1,0 +1,46 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/tailwind4/DateRangePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/tailwind4/DateRangePicker/MinMaxDays.tsx?raw";
+import DisabledDates from "@examples/tailwind4/DateRangePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind4/DateRangePicker/DisabledDates.tsx?raw";
+import AllowSingleDate from "@examples/tailwind4/DateRangePicker/AllowSingleDate";
+import AllowSingleDateSource from "@examples/tailwind4/DateRangePicker/AllowSingleDate.tsx?raw";
+
+# Kısıtlamalar
+
+## Min ve Maksimum Günler
+
+Aralık uzunluğunu `minDays` ve `maxDays` (dahil) ile kısıtlayın. Kullanıcılar `minDays`'ten daha kısa veya `maxDays`'ten daha uzun bir aralığı onaylayamaz.
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Devre Dışı Bırakılmış Tarihler
+
+Belirli tarihleri dinamik olarak devre dışı bırakmak için `isDateUnavailable` kullanın. Devre dışı bırakılmış tarihler bir aralığın başlangıcı veya sonu olarak seçilemez.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Tek Tarihe İzin Ver
+
+Varsayılan olarak, başlangıcın sona eşit olduğu bir aralığa izin verilir. En az iki farklı tarih gerektirmek için `allowSingleDateInRange={false}` olarak ayarlayın.
+
+<CodeDemo source={AllowSingleDateSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <AllowSingleDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

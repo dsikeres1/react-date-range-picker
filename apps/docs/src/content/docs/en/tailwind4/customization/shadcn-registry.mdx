@@ -1,0 +1,131 @@
+---
+sidebar_position: 11
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# shadcn/ui Compatibility
+
+The Tailwind v4 package is designed to be compatible with [shadcn/ui](https://ui.shadcn.com/) projects out of the box. It uses the same semantic token convention, so if your project already has shadcn/ui set up, the date picker will match your theme automatically.
+
+## Why It Works
+
+shadcn/ui defines semantic CSS variables like:
+
+```css
+--background
+--foreground
+--primary
+--primary-foreground
+--muted-foreground
+--accent
+--accent-foreground
+--destructive
+--border
+--input
+--ring
+```
+
+The `react-date-range-picker-tailwind4` components use the same token names through Tailwind utility classes (`bg-primary`, `text-foreground`, `border-border`, etc.). Since both systems reference the same CSS variables, the picker inherits your existing theme.
+
+## Zero-Config Setup
+
+If you have a shadcn/ui project, install the package and use it directly:
+
+```bash
+npm install react-date-range-picker-tailwind4
+```
+
+```tsx
+import { useState } from "react";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} />;
+}
+```
+
+No additional token definitions or CSS changes needed. The picker will use your existing `--color-primary`, `--color-background`, etc.
+
+## Token Mapping
+
+Here's how the picker tokens correspond to shadcn/ui tokens:
+
+| Picker Usage      | Tailwind Class            | shadcn Token           |
+| ----------------- | ------------------------- | ---------------------- |
+| Popup background  | `bg-popover`              | `--popover`            |
+| Popup text        | `text-popover-foreground` | `--popover-foreground` |
+| Selected day      | `bg-primary`              | `--primary`            |
+| Selected day text | `text-primary-foreground` | `--primary-foreground` |
+| Day hover         | `bg-accent`               | `--accent`             |
+| Day hover text    | `text-accent-foreground`  | `--accent-foreground`  |
+| Muted text        | `text-muted-foreground`   | `--muted-foreground`   |
+| Clear button      | `text-destructive`        | `--destructive`        |
+| Borders           | `border-border`           | `--border`             |
+| Trigger border    | `border-input`            | `--input`              |
+| Focus ring        | `ring-ring`               | `--ring`               |
+
+## Using Alongside shadcn Components
+
+The date picker can be placed alongside other shadcn/ui components and will visually match:
+
+```tsx
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function DateForm() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  return (
+    <div className="flex flex-col gap-2">
+      <Label>Select a date</Label>
+      <DatePicker value={date} onChange={setDate} />
+      <Button onClick={() => console.log(date)}>Submit</Button>
+    </div>
+  );
+}
+```
+
+## Dark Mode
+
+If your shadcn/ui project uses `next-themes` with the `class` strategy, dark mode works automatically. Both shadcn and the date picker read from the same CSS variables, and your `.dark` selector switches them both.
+
+```tsx
+// Works out of the box with shadcn's dark mode setup
+<ThemeProvider attribute="class" defaultTheme="system">
+  <DatePicker value={value} onChange={setValue} />
+</ThemeProvider>
+```
+
+## shadcn Registry
+
+<Admonition type="info" title="Coming Soon">
+Full [shadcn/ui registry](https://ui.shadcn.com/docs/registry) integration is planned. This will allow installing the date picker via:
+
+```bash
+npx shadcn@latest add react-date-range-picker
+```
+
+Until then, install the npm package directly and use the Compound Component API for any structural customization.
+
+</Admonition>
+
+## Customizing Beyond shadcn Defaults
+
+If you want the picker to look different from the rest of your shadcn theme, scope the token overrides to a wrapper:
+
+```css
+.custom-picker {
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+  --color-accent: oklch(0.95 0.05 300);
+}
+```
+
+```tsx
+<div className="custom-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```

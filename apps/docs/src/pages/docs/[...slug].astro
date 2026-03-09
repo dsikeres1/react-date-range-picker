@@ -1,0 +1,39 @@
+---
+import { getCollection, render } from "astro:content";
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import { buildSidebar } from "@/lib/sidebar";
+import { defaultLocale, extractLang, toUrlLocale, type SupportedLocale } from "@/lib/i18n";
+
+export async function getStaticPaths() {
+  const docs = await getCollection("docs");
+  return docs.map((doc) => {
+    const { lang, path } = extractLang(doc.id);
+    // en (default): no lang prefix in URL → slug = "tailwind4/getting-started"
+    // other langs: lowercase prefix → slug = "zh-hans/tailwind4/getting-started"
+    const slug = lang === defaultLocale ? path : `${toUrlLocale(lang)}/${path}`;
+    return {
+      params: { slug },
+      props: { doc, lang },
+    };
+  });
+}
+
+const { doc, lang } = Astro.props as { doc: any; lang: SupportedLocale };
+const { Content, headings } = await render(doc);
+
+const { path } = extractLang(doc.id);
+const section = path.split("/")[0];
+const base = import.meta.env.BASE_URL;
+const sidebarItems = await buildSidebar(section, base, lang);
+---
+
+<DocsLayout
+  title={doc.data.title ?? doc.data.sidebar_label ?? doc.id}
+  description={doc.data.description}
+  section={section}
+  sidebarItems={sidebarItems}
+  headings={headings}
+  lang={lang}
+>
+  <Content />
+</DocsLayout>

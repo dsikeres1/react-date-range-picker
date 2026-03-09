@@ -1,0 +1,196 @@
+---
+sidebar_position: 1
+title: Accessibility
+description: Tastaturnavigation, ARIA-Attribute, Fokusverwaltung und WCAG-Konformität.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Barrierefreiheit
+
+Alle Picker-Komponenten werden mit integrierter Unterstützung für Barrierefreiheit ausgeliefert. Tastaturnavigation, ARIA-Attribute und Fokusverwaltung funktionieren standardmäßig in jeder Variante – Styled, Tailwind v3/v4 und Headless.
+
+Für die Standardnutzung ist keine zusätzliche Konfiguration erforderlich. Diese Seite dokumentiert, was enthalten ist, damit Sie die Muster in benutzerdefinierten UIs prüfen, erweitern oder replizieren können.
+
+## Tastaturnavigation
+
+### Kalender-Picker
+
+| Taste             | Aktion                                                          |
+| ----------------- | --------------------------------------------------------------- |
+| `ArrowLeft`       | Fokus auf den vorherigen Tag verschieben                        |
+| `ArrowRight`      | Fokus auf den nächsten Tag verschieben                          |
+| `ArrowUp`         | Fokus auf die vorherige Woche verschieben (gleicher Wochentag)  |
+| `ArrowDown`       | Fokus auf die nächste Woche verschieben (gleicher Wochentag)    |
+| `Enter` / `Space` | Fokussierten Tag auswählen                                      |
+| `Escape`          | Änderungen abbrechen und Popup schließen                        |
+| `Tab`             | Zum nächsten fokussierbaren Element wechseln (Browser-Standard) |
+
+**Überspringen deaktivierter Daten:** Bei der Navigation mit den Pfeiltasten werden deaktivierte Daten automatisch übersprungen. Der Picker sucht bis zu 365 Tage in Bewegungsrichtung, um das nächste aktivierte Datum zu finden.
+
+**Automatisches Monats-Scrollen:** Wenn der Tastaturfokus auf einen Tag in einem anderen Monat wechselt, wird die Kalenderansicht aktualisiert, um diesen Monat anzuzeigen.
+
+### Zeitauswahl
+
+| Taste    | Aktion                                   |
+| -------- | ---------------------------------------- |
+| `Escape` | Änderungen abbrechen und Popup schließen |
+
+Die Zeitauswahl verwendet eine Scrollrad-Benutzeroberfläche mit Klick-/Touch-Interaktion. Die Scroll-Spalten verwenden `scroll-snap` für eine präzise Wertauswahl.
+
+## ARIA-Attribute
+
+Jedes interaktive Element verfügt über entsprechende ARIA-Rollen und -Attribute:
+
+### Popup & Container
+
+| Element          | Attribut                | Wert                                   |
+| ---------------- | ----------------------- | -------------------------------------- |
+| Popup-Container  | `role`                  | `"dialog"`                             |
+| Inline-Container | `role`                  | `"group"`                              |
+| Container        | `aria-label`            | Platzhaltertext aus der Locale         |
+| Container        | `aria-activedescendant` | ID der aktuell fokussierten Tageszelle |
+
+### Auslöser-Schaltfläche
+
+| Attribut        | Wert                                |
+| --------------- | ----------------------------------- |
+| `aria-expanded` | `true`, wenn das Popup geöffnet ist |
+| `aria-haspopup` | `"dialog"`                          |
+
+### Kalenderraster
+
+| Element             | Attribut        | Wert                                                    |
+| ------------------- | --------------- | ------------------------------------------------------- |
+| Raster-Wrapper      | `role`          | `"grid"`                                                |
+| Wochenzeile         | `role`          | `"row"`                                                 |
+| Wochentag-Kopfzeile | `role`          | `"columnheader"`                                        |
+| Tageszelle          | `role`          | `"gridcell"`                                            |
+| Tageszelle          | `aria-selected` | `true`, wenn ausgewählt                                 |
+| Tageszelle          | `aria-current`  | `"date"`, wenn die Zelle heute ist                      |
+| Tageszelle          | `aria-label`    | Formatierter Datumsstring (z.B. `"2026-03-04"`)         |
+| Tageszelle          | `disabled`      | Bei deaktivierten Daten gesetzt (natives HTML-Attribut) |
+
+### Navigation & Dropdowns
+
+| Element                           | Attribut     | Wert                                                |
+| --------------------------------- | ------------ | --------------------------------------------------- |
+| Schaltfläche für vorherigen Monat | `aria-label` | `"Vorheriger Monat"` (aus `locale.prevMonthLabel`)  |
+| Schaltfläche für nächsten Monat   | `aria-label` | `"Nächster Monat"` (aus `locale.nextMonthLabel`)    |
+| Monats-Dropdown                   | `aria-label` | `"Monat auswählen"` (aus `locale.selectMonthLabel`) |
+| Jahres-Dropdown                   | `aria-label` | `"Jahr auswählen"` (aus `locale.selectYearLabel`)   |
+
+### Zeitspalten
+
+| Element              | Attribut           | Wert                                            |
+| -------------------- | ------------------ | ----------------------------------------------- |
+| Stundenspalte        | `role`             | `"listbox"`                                     |
+| Stundenspalte        | `aria-orientation` | `"vertical"`                                    |
+| Stundenspalte        | `aria-label`       | `"Stunden"` (aus `locale.hourLabel`)            |
+| Minutenspalte        | `role`             | `"listbox"`                                     |
+| Minutenspalte        | `aria-orientation` | `"vertical"`                                    |
+| Minutenspalte        | `aria-label`       | `"Minuten"` (aus `locale.minuteLabel`)          |
+| Sekundenspalte       | `role`             | `"listbox"`                                     |
+| Sekundenspalte       | `aria-orientation` | `"vertical"`                                    |
+| Sekundenspalte       | `aria-label`       | `"Sekunden"` (aus `locale.secondLabel`)         |
+| Zeitelement          | `role`             | `"option"` (Padding-Elemente: `"presentation"`) |
+| Zeitelement          | `aria-selected`    | `true`, wenn das Element der aktuelle Wert ist  |
+| Periodenumschalter   | `aria-label`       | Aktuelle Periode + ", AM/PM umschalten"         |
+| Löschen-Schaltfläche | `aria-label`       | `"Löschen"` (aus `locale.clear`)                |
+
+Alle Beschriftungsstrings sind über das [Locale-System](/docs/guides/internationalization) anpassbar.
+
+## Fokusverwaltung
+
+### Roving Tabindex
+
+Das Kalenderraster verwendet das **Roving-Tabindex**-Muster:
+
+- Nur die aktuell fokussierte Tageszelle hat `tabIndex={0}` (per Tab erreichbar).
+- Alle anderen Tageszellen haben `tabIndex={-1}` (nicht per Tab erreichbar, aber über Pfeiltasten fokussierbar).
+- Das bedeutet, `Tab` verschiebt den Fokus aus dem Kalenderraster (zum nächsten Steuerelement), und die Pfeiltasten verschieben den Fokus innerhalb des Rasters.
+
+### Popup-Fokus-Falle
+
+Der Popup-Modus verwendet `FloatingFocusManager` von `@floating-ui/react`, um:
+
+- Den Fokus innerhalb des Popups zu halten, während es geöffnet ist.
+- Den Fokus auf die Auslöser-Schaltfläche zurückzugeben, wenn das Popup schließt.
+- Das Tabben aus dem Popup zu Hintergrundinhalten zu verhindern.
+
+### Native Elemente
+
+Die Monats- und Jahresauswahl verwenden native `<select>`-Elemente, die von Natur aus per Tastatur zugänglich sind. Tageszellen verwenden native `<button>`-Elemente mit entsprechenden deaktivierten Zuständen.
+
+## WCAG 2.1-Konformität
+
+Die folgenden WCAG 2.1-Erfolgskriterien werden erfüllt:
+
+| Kriterium                      | Level | Wie es erfüllt wird                                                                  |
+| ------------------------------ | ----- | ------------------------------------------------------------------------------------ |
+| **1.3.1** Info und Beziehungen | A     | Semantisches HTML – `<button>`, `<select>`, grid/gridcell-Rollen                     |
+| **2.1.1** Tastatur             | A     | Alle Funktionen per Tastatur erreichbar (Pfeiltasten, Enter, Escape)                 |
+| **2.4.3** Fokus-Reihenfolge    | A     | Logische Tab-Reihenfolge; Popup verwendet Fokus-Manager                              |
+| **2.4.7** Fokus sichtbar       | AA    | `:focus-visible`-Outline (2px solid primary) bei allen interaktiven Elementen        |
+| **4.1.2** Name, Rolle, Wert    | A     | Alle interaktiven Elemente haben zugängliche Namen über `aria-label` oder Textinhalt |
+
+<Admonition type="note">
+  Styling-Pakete (Styled, Tailwind v3/v4) enthalten standardmäßig sichtbare Fokusindikatoren. Wenn
+  Sie eine benutzerdefinierte Benutzeroberfläche mit dem Headless-Paket erstellen, müssen Sie Ihre
+  eigenen Fokus-Stile bereitstellen.
+</Admonition>
+
+## Headless: Erstellen barrierefreier benutzerdefinierter UIs
+
+Wenn Sie das Headless-Paket direkt verwenden, stellen Sie sicher, dass Ihre benutzerdefinierte UI Folgendes enthält:
+
+### 1. Tastatur-Handler anwenden
+
+Übergeben Sie `handleKeyDown` an Ihren Popup-Container, damit die Navigation mit den Pfeiltasten funktioniert:
+
+```tsx
+const { handleKeyDown, ... } = useDatePicker({ value, onChange });
+
+<div onKeyDown={handleKeyDown}>
+  {/* Kalenderraster */}
+</div>
+```
+
+### 2. Korrekten tabIndex für Tageszellen festlegen
+
+Verwenden Sie das `isFocused`-Flag von `getDayProps()`:
+
+```tsx
+const dayProps = getDayProps(date);
+
+<button
+  role="gridcell"
+  tabIndex={dayProps.isFocused ? 0 : -1}
+  aria-selected={dayProps.isSelected}
+  aria-current={dayProps.isToday ? "date" : undefined}
+  aria-label={locale.formatDate(date)}
+>
+  {dayProps.day}
+</button>;
+```
+
+### 3. ARIA-Rollen zum Raster hinzufügen
+
+```tsx
+<div role="grid" aria-label={locale.placeholder}>
+  <div role="row">
+    {locale.weekdays.map((wd) => (
+      <div key={wd} role="columnheader">
+        {wd}
+      </div>
+    ))}
+  </div>
+  {calendar.weeks.map((week, i) => (
+    <div key={i} role="row">
+      {/* Tageszellen mit role="gridcell" */}
+    </div>
+  ))}
+</div>
+```
+
+Eine vollständige Anleitung finden Sie unter [Benutzerdefinierte UI erstellen](/docs/headless/building-custom-ui).

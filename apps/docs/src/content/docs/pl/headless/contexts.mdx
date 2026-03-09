@@ -1,0 +1,101 @@
+---
+sidebar_position: 4
+title: Contexts
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ContextExample from "@examples/headless/ContextExample";
+import ContextExampleSource from "@examples/headless/ContextExample.tsx?raw";
+
+# Konteksty
+
+Pakiet headless dostarcza dostawców kontekstu (Context providers), które opakowują hooki i udostępniają ich stan za pomocą React Context. Umożliwia to **wzorzec komponentów złożonych** (compound component pattern) -- podział interfejsu użytkownika na małe, wyspecjalizowane podkomponenty, które odczytują stan z kontekstu, zamiast przekazywać go w dół przez propsy.
+
+## Dlaczego Konteksty?
+
+Bez kontekstu musiałbyś przekazywać każdy fragment stanu przez propsy:
+
+```tsx
+// Without context -- prop drilling
+function MyDatePicker() {
+  const picker = useDatePicker({ value, onChange });
+  return (
+    <MyTrigger displayValue={picker.displayValue} onToggle={picker.handleToggle} />
+    <MyCalendar calendar={picker.calendar} getDayProps={picker.getDayProps} ... />
+    <MyFooter onConfirm={picker.handleConfirm} onCancel={picker.handleCancel} ... />
+  );
+}
+```
+
+Z kontekstem, podkomponenty pobierają to, czego potrzebują bezpośrednio:
+
+```tsx
+// With context -- compound components
+function MyDatePicker() {
+  return (
+    <DatePickerProvider value={value} onChange={onChange}>
+      <ExampleWrapper variant="headless" client:load>
+        <MyTrigger client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyCalendar client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyFooter client:load />
+      </ExampleWrapper>
+    </DatePickerProvider>
+  );
+}
+
+function MyTrigger() {
+  const { displayValue, handleToggle } = useDatePickerContext();
+  return <button onClick={handleToggle}>{displayValue}</button>;
+}
+```
+
+## Dostępni Dostawcy (Providers)
+
+| Dostawca (Provider)           | Używany Hook (wewnętrznie) | Hook Konsumujący                  |
+| ----------------------------- | -------------------------- | --------------------------------- |
+| `DatePickerProvider`          | `useDatePicker`            | `useDatePickerContext()`          |
+| `DateRangePickerProvider`     | `useDateRangePicker`       | `useDateRangePickerContext()`     |
+| `DateTimePickerProvider`      | `useDateTimePicker`        | `useDateTimePickerContext()`      |
+| `DateRangeTimePickerProvider` | `useDateRangeTimePicker`   | `useDateRangeTimePickerContext()` |
+
+Każdy dostawca renderuje zarówno **kontekst typowany** (specyficzny dla danego typu pickera), jak i **zjednoczony PickerContext** (wspólny dla wszystkich typów).
+
+```tsx
+import {
+  DatePickerProvider,
+  DateRangePickerProvider,
+  DateTimePickerProvider,
+  DateRangeTimePickerProvider,
+} from "react-date-range-picker-headless";
+```
+
+### DatePickerProvider
+
+Opakowuje `useDatePicker`. Dostarcza `DatePickerContext` + `PickerContext`.
+
+```tsx
+import type { DatePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop          | Typ                            | Opis                                                     |
+| ------------- | ------------------------------ | -------------------------------------------------------- |
+| `children`    | `ReactNode`                    | **Wymagane.** Komponenty potomne.                        |
+| `value`       | `Date \| null`                 | **Wymagane.** Bieżąca data.                              |
+| `onChange`    | `(date: Date \| null) => void` | **Wymagane.** Handler zmiany.                            |
+| `inline`      | `boolean`                      | Renderuj w linii (bez wyskakującego okienka).            |
+| `size`        | `DatePickerSize`               | Wariant rozmiaru.                                        |
+| `placeholder` | `string`                       | Placeholder dla wyzwalacza.                              |
+| `name`        | `string`                       | Nazwa pola formularza.                                   |
+| _...rest_     | `BaseDatePickerOptions`        | Wszystkie opcje bazowe (minDate, maxDate, locale, itp.). |
+
+**Hook konsumujący:** `useDatePickerContext()` zwraca `UseDatePickerReturn`.
+
+### DateRangePickerProvider
+
+Opakowuje `useDateRangePicker`. Dostarcza

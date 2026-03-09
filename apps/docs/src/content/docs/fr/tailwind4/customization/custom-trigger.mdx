@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind4/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind4/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind4/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind4/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Déclencheur Personnalisé
+
+Remplacez le bouton de déclenchement par défaut par votre propre élément en utilisant le render prop `Trigger`. Lorsque vous passez une fonction en tant qu'enfant à `DatePicker.Trigger`, vous recevez l'état et des callbacks pour construire n'importe quelle interface utilisateur de déclenchement que vous souhaitez.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render Props du Déclencheur
+
+| Prop           | Type             | Description                                |
+| -------------- | ---------------- | ------------------------------------------ |
+| `displayValue` | `string`         | Date sélectionnée formatée                 |
+| `placeholder`  | `string`         | Texte du placeholder                       |
+| `hasValue`     | `boolean`        | Si une date est sélectionnée               |
+| `isOpen`       | `boolean`        | Si la popup est ouverte                    |
+| `onToggle`     | `() => void`     | Basculer l'ouverture/fermeture de la popup |
+| `onClear`      | `() => void`     | Effacer la sélection                       |
+| `locale`       | `Locale`         | Objet de la locale actuelle                |
+| `triggerRef`   | `(node) => void` | Callback de ref pour le positionnement     |
+
+## Déclencheur du Sélecteur de Plage
+
+Le même modèle fonctionne avec `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

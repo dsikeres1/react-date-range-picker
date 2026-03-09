@@ -1,0 +1,90 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import StyledBasic from "@examples/styled/DatePicker/Basic";
+import StyledBasicSource from "@examples/styled/DatePicker/Basic.tsx?raw";
+
+# Bắt đầu với Styled
+
+Gói styled cung cấp các component bộ chọn ngày đã được tạo kiểu sẵn với CSS tích hợp. Không yêu cầu framework CSS.
+
+## Cài đặt
+
+<PackageInstall pkg="react-date-range-picker-styled" />
+
+Sau khi cài đặt, hãy nhập CSS vào điểm khởi đầu ứng dụng của bạn:
+
+```tsx
+import "react-date-range-picker-styled/styles.css";
+```
+
+## Bắt đầu nhanh
+
+<CodeDemo source={StyledBasicSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <StyledBasic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Bao gồm những gì
+
+| Component             | Mô tả                                                   |
+| --------------------- | ------------------------------------------------------- |
+| `DatePicker`          | Chọn một ngày với lịch bật lên                          |
+| `DateRangePicker`     | Chọn khoảng ngày với lịch kép và các tùy chọn đặt trước |
+| `DateTimePicker`      | Chọn ngày + giờ với bảng cuộn thời gian                 |
+| `DateRangeTimePicker` | Chọn khoảng ngày + giờ                                  |
+
+Tất cả các component đều hỗ trợ:
+
+- Giá trị được kiểm soát với `value` / `onChange`
+- Điều hướng bằng bàn phím
+- Chế độ tối qua các biến CSS
+- 4 kích thước: `small`, `medium`, `large`, `x-large`
+- API Component Hợp chất để tùy chỉnh
+
+## Các loại TypeScript
+
+Tất cả các loại cấu hình và dữ liệu đều được tái xuất từ gói — không cần cài đặt riêng gói headless:
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-styled";
+```
+
+Các loại này hữu ích cho:
+
+- **`Locale`** — Ghi đè bản địa hóa tùy chỉnh (tên ngày trong tuần, nhãn nút, định dạng ngày)
+- **`DatePickerSize`** — Định kiểu cho prop `size` (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — Cấu hình độ chính xác, định dạng và các bước của bộ chọn thời gian
+- **`DateRangePreset`** — Xác định các tùy chọn đặt trước cho `DateRangePicker` / `DateRangeTimePicker`
+- **`CalendarMonth`**, **`DayProps`** — Kết xuất tùy chỉnh với các Component Hợp chất
+
+Xem [Các loại Headless](/docs/headless/types/common-types) để biết định nghĩa chi tiết về các loại.
+
+## Các bước tiếp theo
+
+- [DatePicker](/docs/styled/components/date-picker/basic) — Chọn một ngày
+- [DateRangePicker](/docs/styled/components/date-range-picker/basic) — Khoảng ngày với các tùy chọn đặt trước
+- [Component Hợp chất](/docs/styled/customization/overview) — Tùy chỉnh cấu trúc bên trong
+- [Biến CSS](/docs/styled/customization/css-variables) — Giao diện với các biến CSS
+- [Chế độ tối](/docs/styled/customization/dark-mode) — Hỗ trợ giao diện tối

@@ -1,0 +1,45 @@
+---
+sidebar_position: 1
+sidebar_label: "Overview"
+---
+
+# Thành phần Hợp chất (Compound Components)
+
+Gói styled cung cấp một API Thành phần Hợp chất (Compound Component) cho phép bạn kiểm soát hoàn toàn cấu trúc bên trong và cách hiển thị của mỗi bộ chọn. Thay vì một thành phần nguyên khối duy nhất, bạn có thể tự lắp ráp bộ chọn từ các phần riêng lẻ.
+
+## Cách Hoạt động
+
+Mỗi bộ chọn (ví dụ: `DatePicker`) vừa là một thành phần đơn giản, vừa là một không gian tên (namespace) chứa các phần hợp chất của nó:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/styles.css";
+
+// Sử dụng đơn giản — hiển thị giao diện mặc định
+<DatePicker value={value} onChange={setValue} />
+
+// Sử dụng hợp chất — toàn quyền kiểm soát cấu trúc
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Các Phần Có sẵn
+
+### DatePicker
+
+| Phần | Mô tả |
+| ---- | ----- |

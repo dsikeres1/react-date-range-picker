@@ -1,0 +1,230 @@
+---
+sidebar_position: 1
+title: Date Helpers
+---
+
+# Tiện ích Ngày
+
+Gói headless xuất một bộ các hàm trợ giúp `Date` gốc. Chúng thay thế nhu cầu về các thư viện như dayjs hoặc date-fns -- thư viện không có phụ thuộc ngày tháng bên ngoài.
+
+Tất cả các hàm đều là hàm thuần túy (chúng trả về đối tượng Date mới thay vì thay đổi đầu vào).
+
+## Nhập
+
+```tsx
+import {
+  today,
+  parseDate,
+  startOf,
+  endOf,
+  add,
+  subtract,
+  isSame,
+  isBefore,
+  isAfter,
+  diff,
+  daysInMonth,
+  setYear,
+  setMonth,
+  setDate,
+  setHour,
+  setMinute,
+  setSecond,
+  formatBasic,
+} from "react-date-range-picker-headless";
+```
+
+## Loại DateUnit
+
+Hầu hết các hàm chấp nhận một tham số `DateUnit`:
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```
+
+## Các hàm
+
+### today
+
+Trả về ngày/giờ hiện tại.
+
+```tsx
+const now = today(); // new Date()
+```
+
+### parseDate
+
+Phân tích cú pháp một giá trị thành một đối tượng Date. Trả về `new Date()` nếu đầu vào là falsy.
+
+```tsx
+parseDate("2026-03-01"); // Date
+parseDate(1709251200000); // Ngày từ dấu thời gian
+parseDate(existingDate); // Nhân bản
+parseDate(null); // new Date() (phương án dự phòng)
+```
+
+**Chữ ký:** `parseDate(date?: Date | string | number | null): Date`
+
+### startOf
+
+Lấy thời điểm bắt đầu của một đơn vị thời gian.
+
+```tsx
+startOf(date, "day"); // 2026-03-01 00:00:00.000
+startOf(date, "month"); // 2026-03-01 00:00:00.000
+startOf(date, "year"); // 2026-01-01 00:00:00.000
+startOf(date, "week"); // Bắt đầu tuần (mặc định Chủ nhật)
+startOf(date, "week", 1); // Bắt đầu tuần (Thứ hai)
+```
+
+**Chữ ký:** `startOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### endOf
+
+Lấy thời điểm kết thúc của một đơn vị thời gian.
+
+```tsx
+endOf(date, "day"); // 2026-03-01 23:59:59.999
+endOf(date, "month"); // 2026-03-31 23:59:59.999
+endOf(date, "year"); // 2026-12-31 23:59:59.999
+```
+
+**Chữ ký:** `endOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### add
+
+Thêm một khoảng thời gian vào một ngày.
+
+```tsx
+add(date, 1, "day"); // Ngày mai
+add(date, 3, "month"); // 3 tháng sau
+add(date, -1, "year"); // 1 năm trước
+add(date, 2, "hour"); // 2 giờ sau
+```
+
+Xử lý tràn tháng (ví dụ: 31 tháng 1 + 1 tháng = 28 tháng 2, không phải 3 tháng 3).
+
+**Chữ ký:** `add(date: Date, amount: number, unit: DateUnit): Date`
+
+### subtract
+
+Trừ một khoảng thời gian khỏi một ngày. Tương đương với `add(date, -amount, unit)`.
+
+```tsx
+subtract(date, 7, "day"); // 7 ngày trước
+subtract(date, 1, "month"); // 1 tháng trước
+```
+
+**Chữ ký:** `subtract(date: Date, amount: number, unit: DateUnit): Date`
+
+### isSame
+
+Kiểm tra xem hai ngày có giống nhau ở một đơn vị độ chính xác nhất định hay không.
+
+```tsx
+isSame(date1, date2, "day"); // Cùng ngày trong lịch?
+isSame(date1, date2, "month"); // Cùng tháng?
+isSame(date1, date2, "year"); // Cùng năm?
+isSame(null, date2, "day"); // false (an toàn với null)
+```
+
+**Chữ ký:** `isSame(date1: Date | null | undefined, date2: Date | null | undefined, unit?: DateUnit): boolean`
+
+### isBefore
+
+Kiểm tra xem ngày đầu tiên có trước ngày thứ hai ở một độ chính xác nhất định hay không.
+
+```tsx
+isBefore(date1, date2, "day"); // date1 có phải là một ngày sớm hơn không?
+isBefore(date1, date2); // So sánh mili giây
+```
+
+**Chữ ký:** `isBefore(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### isAfter
+
+Kiểm tra xem ngày đầu tiên có sau ngày thứ hai ở một độ chính xác nhất định hay không.
+
+```tsx
+isAfter(date1, date2, "day"); // date1 có phải là một ngày muộn hơn không?
+```
+
+**Chữ ký:** `isAfter(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### diff
+
+Lấy chênh lệch giữa hai ngày trong một đơn vị nhất định.
+
+```tsx
+diff(date1, date2, "day"); // Số ngày giữa
+diff(date1, date2, "month"); // Số tháng giữa
+diff(date1, date2, "year"); // Số năm giữa
+```
+
+**Chữ ký:** `diff(date1: Date, date2: Date, unit: DateUnit): number`
+
+### daysInMonth
+
+Lấy số ngày trong tháng của một ngày.
+
+```tsx
+daysInMonth(new Date(2026, 1)); // 28 (Tháng 2 năm 2026)
+daysInMonth(new Date(2026, 0)); // 31 (Tháng 1 năm 2026)
+```
+
+**Chữ ký:** `daysInMonth(date: Date): number`
+
+### setYear / setMonth / setDate / setHour / setMinute / setSecond
+
+Đặt một phần cụ thể của ngày, trả về một Date mới.
+
+```tsx
+setYear(date, 2027); // Đổi năm thành 2027
+setMonth(date, 5); // Đổi thành tháng Sáu (chỉ số từ 0)
+setDate(date, 15); // Đổi thành ngày 15
+setHour(date, 14); // Đổi thành 2 giờ chiều
+setMinute(date, 30); // Đổi thành :30
+setSecond(date, 0); // Đổi thành :00
+```
+
+`setYear` và `setMonth` xử lý tràn (ví dụ: ngày 29 tháng 2 trong năm nhuận, đặt thành năm không nhuận, sẽ kẹp về ngày 28 tháng 2).
+
+**Các chữ ký:**
+
+- `setYear(date: Date, year: number): Date`
+- `setMonth(date: Date, month: number): Date`
+- `setDate(date: Date, day: number): Date`
+- `setHour(date: Date, hour: number): Date`
+- `setMinute(date: Date, minute: number): Date`
+- `setSecond(date: Date, second: number): Date`
+
+### formatBasic
+
+Định dạng ngày bằng một chuỗi mẫu.
+
+```tsx
+formatBasic(date, "YYYY-MM-DD"); // "2026-03-01"
+formatBasic(date, "YYYY/MM/DD HH:mm:ss"); // "2026/03/01 14:30:00"
+formatBasic(date, "M/D"); // "3/1"
+formatBasic(date, "hh:mm A"); // Lưu ý: token A không được hỗ trợ, hãy sử dụng period từ hook
+```
+
+**Các token được hỗ trợ:**
+
+| Token  | Đầu ra                  | Ví dụ  |
+| ------ | ----------------------- | ------ |
+| `YYYY` | Năm 4 chữ số            | `2026` |
+| `MM`   | Tháng 2 chữ số          | `03`   |
+| `M`    | Tháng (không có đệm)    | `3`    |
+| `DD`   | Ngày 2 chữ số           | `01`   |
+| `D`    | Ngày (không có đệm)     | `1`    |
+| `HH`   | Giờ 2 chữ số (24h)      | `14`   |
+| `H`    | Giờ (24h, không có đệm) | `14`   |
+| `hh`   | Giờ 2 chữ số (12h)      | `02`   |
+| `h`    | Giờ (12h, không có đệm) | `2`    |
+| `mm`   | Phút 2 chữ số           | `30`   |
+| `m`    | Phút (không có đệm)     | `30`   |
+| `ss`   | Giây 2 chữ số           | `05`   |
+| `s`    | Giây (không có đệm)     | `5`    |
+
+**Chữ ký:** `formatBasic(date: Date, format: string): string`

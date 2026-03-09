@@ -1,0 +1,171 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 深色模式
+
+Tailwind v3 包使用 Tailwind 的 `dark:` 变体提供完整的深色模式支持。每个组件元素都有明确的深色模式类。
+
+## 工作原理
+
+Tailwind v3 主题在各处使用带有 `dark:` 变体的具体颜色类。例如：
+
+```
+bg-white dark:bg-slate-950
+text-slate-900 dark:text-slate-50
+border-slate-200 dark:border-slate-800
+```
+
+当 Tailwind 的 `dark:` 变体被触发时，深色模式会激活，这取决于你的 Tailwind 配置的 `darkMode` 策略。
+
+## Tailwind 配置
+
+### 类策略 (推荐)
+
+在你的 Tailwind 配置中设置 `darkMode: "class"`。当 `<html>` 或父元素上存在 `dark` 类时，深色模式会激活：
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+};
+```
+
+切换深色模式：
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+或在 `<html>` 上应用该类：
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### 选择器策略
+
+Tailwind v3.4+ 支持 `darkMode: "selector"`，它允许使用 `[data-theme="dark"]` 或任何自定义选择器：
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### 媒体查询策略
+
+设置 `darkMode: "media"` (或省略——这是默认设置) 以跟随操作系统的偏好：
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: "media",
+  // ...
+};
+```
+
+无需额外设置。选择器将遵循 `prefers-color-scheme`。
+
+## 颜色配对
+
+以下是选择器中使用的浅色/深色颜色配对：
+
+| 元素     | 浅色                | 深色                         |
+| -------- | ------------------- | ---------------------------- |
+| 背景     | `bg-white`          | `dark:bg-slate-950`          |
+| 文本     | `text-slate-900`    | `dark:text-slate-50`         |
+| 柔和文本 | `text-slate-500`    | `dark:text-slate-400`        |
+| 边框     | `border-slate-200`  | `dark:border-slate-800`      |
+| 悬停背景 | `bg-slate-100`      | `dark:bg-slate-800`          |
+| 主色     | `bg-sky-500`        | `dark:bg-sky-500`            |
+| 主色文本 | `text-sky-500`      | `dark:text-sky-400`          |
+| 范围背景 | `bg-sky-50`         | `dark:bg-sky-950/50`         |
+| 悬停范围 | `bg-sky-50/50`      | `dark:bg-sky-950/30`         |
+| 聚焦环   | `ring-sky-500`      | `ring-sky-500`               |
+| 环偏移   | `ring-offset-white` | `dark:ring-offset-slate-950` |
+
+## 与 Docusaurus 集成
+
+如果你正在使用 Docusaurus (它在 `<html>` 上使用 `data-theme`)，请配置 Tailwind 的选择器策略：
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  // ...
+};
+```
+
+当深色模式激活时，Docusaurus 会设置 `<html data-theme="dark">`，Tailwind 的 `dark:` 变体将在此选择器上触发。
+
+## 与 next-themes 集成
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes` 会在 `<html>` 上添加/移除 `dark` 类。在你的 Tailwind 配置中设置 `darkMode: "class"` 后，选择器会自动切换。
+
+## 强制特定模式
+
+要强制选择器始终使用浅色或深色模式，请将其包装在具有相应类的容器中：
+
+```tsx
+{
+  /* 始终为浅色 — 没有 "dark" 类祖先 */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* 始终为深色 */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+使用 `darkMode: "class"` 时, `dark` 类必须位于父元素或 `<html>` 上。选择器本身不管理深色模式的切换。
+</Admonition>

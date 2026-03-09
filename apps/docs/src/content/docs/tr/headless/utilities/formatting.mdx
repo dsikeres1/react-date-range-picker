@@ -1,0 +1,88 @@
+---
+sidebar_position: 2
+title: Formatting
+---
+
+# Biçimlendirme Yardımcıları
+
+Tarihleri, saatleri ve sayıları görüntülemek için biçimlendirme fonksiyonları.
+
+```tsx
+import {
+  formatDate,
+  formatDateTime,
+  formatTimeDisplay,
+  padNumber,
+} from "react-date-range-picker-headless";
+```
+
+## formatDate
+
+Özelleştirilebilir bir biçim dizesiyle bir tarihi biçimlendirin.
+
+|                  |                                                   |
+| ---------------- | ------------------------------------------------- |
+| İmza             | `formatDate(date: Date, format?: string): string` |
+| Varsayılan biçim | `"YYYY.MM.DD"`                                    |
+
+```tsx
+formatDate(new Date(2026, 2, 1)); // "2026.03.01"
+formatDate(new Date(2026, 2, 1), "YYYY-MM-DD"); // "2026-03-01"
+formatDate(new Date(2026, 2, 1), "M/D"); // "3/1"
+```
+
+## formatDateTime
+
+Özelleştirilebilir bir biçim dizesi kullanarak bir tarihi saatle birlikte biçimlendirin.
+
+|                  |                                                       |
+| ---------------- | ----------------------------------------------------- |
+| İmza             | `formatDateTime(date: Date, format?: string): string` |
+| Varsayılan biçim | `"YYYY.MM.DD HH:mm"`                                  |
+
+```tsx
+formatDateTime(new Date(2026, 2, 1, 14, 30)); // "2026.03.01 14:30"
+formatDateTime(new Date(2026, 2, 1, 14, 30), "YYYY-MM-DD HH:mm:ss"); // "2026-03-01 14:30:00"
+```
+
+## formatTimeDisplay
+
+Çözümlenmiş bir `TimeConfig`'e dayalı olarak bir zaman görüntüleme dizesini biçimlendirin.
+
+|      |                                                                                                                                                                 |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| İmza | `formatTimeDisplay(hour: number, minute: number, second: number, period: TimePeriod, config: Required<TimeConfig>, amLabel?: string, pmLabel?: string): string` |
+
+| Parametre | Tür                    | Varsayılan | Açıklama                                             |
+| --------- | ---------------------- | ---------- | ---------------------------------------------------- |
+| `hour`    | `number`               | --         | Saat değeri (dahili olarak 24 saat formatı).         |
+| `minute`  | `number`               | --         | Dakika değeri.                                       |
+| `second`  | `number`               | --         | Saniye değeri.                                       |
+| `period`  | `TimePeriod`           | --         | AM/PM (12 saat modunda görüntüleme için kullanılır). |
+| `config`  | `Required<TimeConfig>` | --         | Çözümlenmiş zaman yapılandırması.                    |
+| `amLabel` | `string`               | `"AM"`     | AM görüntüleme etiketi.                              |
+| `pmLabel` | `string`               | `"PM"`     | PM görüntüleme etiketi.                              |
+
+```tsx
+import { resolveTimeConfig, formatTimeDisplay } from "react-date-range-picker-headless";
+
+const config = resolveTimeConfig({ precision: "minute", hourFormat: "24" });
+formatTimeDisplay(14, 30, 0, "PM", config); // "14:30"
+
+const config12 = resolveTimeConfig({ precision: "second", hourFormat: "12" });
+formatTimeDisplay(14, 30, 15, "PM", config12); // "02:30:15 PM"
+```
+
+## padNumber
+
+Bir sayıyı 2 basamaklı bir dizeye tamamlayın.
+
+|      |                                  |
+| ---- | -------------------------------- |
+| İmza | `padNumber(num: number): string` |
+
+```tsx
+padNumber(1); // "01"
+padNumber(12); // "12"
+padNumber(0); // "00"
+```

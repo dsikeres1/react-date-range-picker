@@ -1,0 +1,230 @@
+---
+sidebar_position: 1
+title: Date Helpers
+---
+
+# 날짜 유틸리티
+
+headless 패키지는 네이티브 `Date` 헬퍼 함수 세트를 내보냅니다. 이 함수들은 dayjs나 date-fns 같은 라이브러리를 대체하며, 이 라이브러리는 외부 날짜 의존성이 전혀 없습니다.
+
+모든 함수는 순수 함수입니다 (입력을 변경하는 대신 새로운 Date 객체를 반환합니다).
+
+## Import
+
+```tsx
+import {
+  today,
+  parseDate,
+  startOf,
+  endOf,
+  add,
+  subtract,
+  isSame,
+  isBefore,
+  isAfter,
+  diff,
+  daysInMonth,
+  setYear,
+  setMonth,
+  setDate,
+  setHour,
+  setMinute,
+  setSecond,
+  formatBasic,
+} from "react-date-range-picker-headless";
+```
+
+## DateUnit 타입
+
+대부분의 함수는 `DateUnit` 매개변수를 받습니다:
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```
+
+## 함수
+
+### today
+
+현재 날짜/시간을 반환합니다.
+
+```tsx
+const now = today(); // new Date()
+```
+
+### parseDate
+
+값을 Date 객체로 파싱합니다. 입력값이 falsy이면 `new Date()`를 반환합니다.
+
+```tsx
+parseDate("2026-03-01"); // Date
+parseDate(1709251200000); // 타임스탬프로부터 Date 생성
+parseDate(existingDate); // 복제
+parseDate(null); // new Date() (폴백)
+```
+
+**시그니처:** `parseDate(date?: Date | string | number | null): Date`
+
+### startOf
+
+특정 시간 단위의 시작을 가져옵니다.
+
+```tsx
+startOf(date, "day"); // 2026-03-01 00:00:00.000
+startOf(date, "month"); // 2026-03-01 00:00:00.000
+startOf(date, "year"); // 2026-01-01 00:00:00.000
+startOf(date, "week"); // 주의 시작 (기본값 일요일)
+startOf(date, "week", 1); // 주의 시작 (월요일)
+```
+
+**시그니처:** `startOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### endOf
+
+특정 시간 단위의 끝을 가져옵니다.
+
+```tsx
+endOf(date, "day"); // 2026-03-01 23:59:59.999
+endOf(date, "month"); // 2026-03-31 23:59:59.999
+endOf(date, "year"); // 2026-12-31 23:59:59.999
+```
+
+**시그니처:** `endOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### add
+
+날짜에 특정 시간을 더합니다.
+
+```tsx
+add(date, 1, "day"); // 내일
+add(date, 3, "month"); // 3개월 후
+add(date, -1, "year"); // 1년 전
+add(date, 2, "hour"); // 2시간 후
+```
+
+월 오버플로를 처리합니다 (예: 1월 31일 + 1개월 = 2월 28일, 3월 3일이 아님).
+
+**시그니처:** `add(date: Date, amount: number, unit: DateUnit): Date`
+
+### subtract
+
+날짜에서 특정 시간을 뺍니다. `add(date, -amount, unit)`와 동일합니다.
+
+```tsx
+subtract(date, 7, "day"); // 7일 전
+subtract(date, 1, "month"); // 1개월 전
+```
+
+**시그니처:** `subtract(date: Date, amount: number, unit: DateUnit): Date`
+
+### isSame
+
+주어진 정밀도 단위에서 두 날짜가 같은지 확인합니다.
+
+```tsx
+isSame(date1, date2, "day"); // 같은 날짜인가?
+isSame(date1, date2, "month"); // 같은 월인가?
+isSame(date1, date2, "year"); // 같은 연도인가?
+isSame(null, date2, "day"); // false (null-safe)
+```
+
+**시그니처:** `isSame(date1: Date | null | undefined, date2: Date | null | undefined, unit?: DateUnit): boolean`
+
+### isBefore
+
+주어진 정밀도에서 첫 번째 날짜가 두 번째 날짜보다 이전인지 확인합니다.
+
+```tsx
+isBefore(date1, date2, "day"); // date1이 더 이른 날짜인가?
+isBefore(date1, date2); // 밀리초 비교
+```
+
+**시그니처:** `isBefore(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### isAfter
+
+주어진 정밀도에서 첫 번째 날짜가 두 번째 날짜보다 이후인지 확인합니다.
+
+```tsx
+isAfter(date1, date2, "day"); // date1이 더 늦은 날짜인가?
+```
+
+**시그니처:** `isAfter(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### diff
+
+주어진 단위로 두 날짜의 차이를 구합니다.
+
+```tsx
+diff(date1, date2, "day"); // 두 날짜 사이의 일 수
+diff(date1, date2, "month"); // 두 날짜 사이의 월 수
+diff(date1, date2, "year"); // 두 날짜 사이의 연도 수
+```
+
+**시그니처:** `diff(date1: Date, date2: Date, unit: DateUnit): number`
+
+### daysInMonth
+
+날짜의 해당 월에 있는 일 수를 가져옵니다.
+
+```tsx
+daysInMonth(new Date(2026, 1)); // 28 (2026년 2월)
+daysInMonth(new Date(2026, 0)); // 31 (2026년 1월)
+```
+
+**시그니처:** `daysInMonth(date: Date): number`
+
+### setYear / setMonth / setDate / setHour / setMinute / setSecond
+
+날짜의 특정 부분을 설정하고 새로운 Date를 반환합니다.
+
+```tsx
+setYear(date, 2027); // 연도를 2027로 변경
+setMonth(date, 5); // 6월로 변경 (0-indexed)
+setDate(date, 15); // 15일로 변경
+setHour(date, 14); // 오후 2시로 변경
+setMinute(date, 30); // 30분으로 변경
+setSecond(date, 0); // 0초로 변경
+```
+
+`setYear`와 `setMonth`는 오버플로를 처리합니다 (예: 윤년의 2월 29일을 평년으로 설정하면 2월 28일로 고정됨).
+
+**시그니처:**
+
+- `setYear(date: Date, year: number): Date`
+- `setMonth(date: Date, month: number): Date`
+- `setDate(date: Date, day: number): Date`
+- `setHour(date: Date, hour: number): Date`
+- `setMinute(date: Date, minute: number): Date`
+- `setSecond(date: Date, second: number): Date`
+
+### formatBasic
+
+템플릿 문자열을 사용하여 날짜의 형식을 지정합니다.
+
+```tsx
+formatBasic(date, "YYYY-MM-DD"); // "2026-03-01"
+formatBasic(date, "YYYY/MM/DD HH:mm:ss"); // "2026/03/01 14:30:00"
+formatBasic(date, "M/D"); // "3/1"
+formatBasic(date, "hh:mm A"); // 참고: A 토큰은 지원되지 않음, hook의 period를 사용하세요
+```
+
+**지원되는 토큰:**
+
+| 토큰   | 출력                       | 예시   |
+| ------ | -------------------------- | ------ |
+| `YYYY` | 4자리 연도                 | `2026` |
+| `MM`   | 2자리 월                   | `03`   |
+| `M`    | 월 (패딩 없음)             | `3`    |
+| `DD`   | 2자리 일                   | `01`   |
+| `D`    | 일 (패딩 없음)             | `1`    |
+| `HH`   | 2자리 시간 (24시간제)      | `14`   |
+| `H`    | 시간 (24시간제, 패딩 없음) | `14`   |
+| `hh`   | 2자리 시간 (12시간제)      | `02`   |
+| `h`    | 시간 (12시간제, 패딩 없음) | `2`    |
+| `mm`   | 2자리 분                   | `30`   |
+| `m`    | 분 (패딩 없음)             | `30`   |
+| `ss`   | 2자리 초                   | `05`   |
+| `s`    | 초 (패딩 없음)             | `5`    |
+
+**시그니처:** `formatBasic(date: Date, format: string): string`

@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+sidebar_label: Props
+---
+
+# Props
+
+| Propriedade     | Tipo                           | Padrão  | Descrição                                                     |
+| --------------- | ------------------------------ | ------- | ------------------------------------------------------------- |
+| `value`         | `Date \| null`                 | --      | Valor de tempo selecionado (apenas a porção de tempo é usada) |
+| `onChange`      | `(date: Date \| null) => void` | --      | Callback quando o valor muda                                  |
+| `time`          | `TimeConfig`                   | --      | Configuração do painel de tempo                               |
+| `locale`        | `Partial<Locale>`              | --      | Configuração de localidade personalizada                      |
+| `displayFormat` | `string`                       | --      | Formato de exibição personalizado para o gatilho              |
+| `placeholder`   | `string`                       | --      | Texto de placeholder para o gatilho                           |
+| `open`          | `boolean`                      | --      | Estado de abertura controlado                                 |
+| `initialOpen`   | `boolean`                      | `false` | Estado de abertura inicial (não controlado)                   |
+| `onOpenChange`  | `(open: boolean) => void`      | --      | Callback quando o estado de abertura muda                     |
+| `required`      | `boolean`                      | `false` | Desativa a limpeza do valor                                   |
+| `inline`        | `boolean`                      | `false` | Renderiza em linha sem gatilho/popup                          |
+| `hideFooter`    | `boolean`                      | --      | Oculta o rodapé de ações                                      |
+| `name`          | `string`                       | --      | Nome do input oculto para submissão de formulário             |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Precisão de exibição da hora. Padrão é "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** Formato de 12 ou 24 horas. Padrão é "24". */
+  hourFormat?: "12" | "24";
+  /** Passo de incremento dos minutos. Padrão é 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Passo de incremento dos segundos. Padrão é 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Altura (em px) de cada item da roda de rolagem. Padrão é 32. */
+  itemHeight?: number;
+}
+```

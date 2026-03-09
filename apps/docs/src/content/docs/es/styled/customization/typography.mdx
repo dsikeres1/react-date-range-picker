@@ -1,0 +1,111 @@
+---
+sidebar_position: 8
+sidebar_label: "Typography"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/styled/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/styled/Customization/CompoundCustomFont.tsx?raw";
+import CompoundCustomFontPopup from "@examples/styled/Customization/CompoundCustomFontPopup";
+import CompoundCustomFontPopupSource from "@examples/styled/Customization/CompoundCustomFontPopup.tsx?raw";
+import CompoundNotoSans from "@examples/styled/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/styled/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/styled/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/styled/Customization/CompoundWebFonts.tsx?raw";
+import CSSCustomFont from "@examples/styled/Customization/CSSCustomFont";
+import CSSCustomFontSource from "@examples/styled/Customization/CSSCustomFont.tsx?raw";
+
+# Tipografía
+
+El paquete `styled` usa una **pila de fuentes del sistema** por defecto:
+
+```css
+--rdrp-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+```
+
+Esto se renderiza con la fuente nativa del sistema operativo en cada plataforma (San Francisco en macOS, Segoe UI en Windows, Roboto en Android). Las fuentes del sistema proporcionan un buen soporte multilingüe ya que el sistema operativo maneja automáticamente las alternativas para CJK, árabe y otros scripts.
+
+Para sobrescribir, establece `--rdrp-font-family` en cualquier elemento ancestro — se propaga en cascada al selector.
+
+## Estilo en Línea con Variable CSS
+
+Sobrescribe la fuente a través del atributo `style` en un elemento contenedor:
+
+<CodeDemo source={CSSCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CSSCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Familia de Fuentes
+
+Cambia entre familias de fuentes estableciendo `--rdrp-font-family` en un contenedor:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Usando Web Fonts (Noto Sans)
+
+Para un renderizado consistente entre plataformas o proyectos de i18n, carga una web font como [Noto Sans](https://fonts.google.com/noto) y sobrescribe la variable:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/styles.css";
+
+// 1. Carga Noto Sans en tu HTML o CSS:
+//    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+// 2. Sobrescribe la variable de la fuente:
+<div style={{ "--rdrp-font-family": '"Noto Sans", sans-serif' } as React.CSSProperties}>
+  <DatePicker value={value} onChange={setValue} inline />
+</div>;
+```
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Galería de Web Fonts
+
+Compara diferentes web fonts para ver cómo la tipografía cambia drásticamente la apariencia del selector. Todas las fuentes a continuación soportan renderizado multilingüe (Latino, CJK, Coreano).
+
+<Admonition type="warning" title="Solo para demostración">
+  Las fuentes a continuación se cargan desde el CDN de Google Fonts para fines de demostración. Esta
+  librería **no** incluye ninguna web font — necesitas cargarlas en tu propio proyecto.
+</Admonition>
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Tamaño y Grosor de Fuente
+
+Ajusta la densidad de la tipografía sobrescribiendo las variables de tamaño y grosor:
+
+| Variable                      | Predeterminado | Descripción                    |
+| ----------------------------- | -------------- | ------------------------------ |
+| `--rdrp-font-size-xs`         | `11px`         | Texto más pequeño              |
+| `--rdrp-font-size-sm`         | `12px`         | Etiquetas de días de la semana |
+| `--rdrp-font-size-base`       | `13px`         | Celdas de día, botones         |
+| `--rdrp-font-size-md`         | `14px`         | Activador, elementos de hora   |
+| `--rdrp-font-size-lg`         | `15px`         | Título del mes                 |
+| `--rdrp-font-weight-normal`   | `400`          | Grosor base                    |
+| `--rdrp-font-weight-medium`   | `500`          | Énfasis medio                  |
+| `--rdrp-font-weight-semibold` | `600`          | Días seleccionados, títulos    |
+| `--rdrp-font-weight-bold`     | `700`          | Indicador de hoy               |
+
+<CodeDemo source={CompoundCustomFontPopupSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFontPopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

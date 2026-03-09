@@ -1,0 +1,37 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# 複合元件
+
+Tailwind v3 套件提供了一個複合元件 API，讓您能夠完全控制每個選擇器的內部結構和渲染。您不再使用單一的巨型元件，而是由各個獨立的部分來組成選擇器。
+
+## 運作方式
+
+每個選擇器（例如 `DatePicker`）既是一個簡單的元件，也是一個複合部分的命名空間：
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+// 簡單用法 — 渲染預設佈局
+<DatePicker value={value} onChange={setValue} />
+
+// 複合用法 — 完全控制結構
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```

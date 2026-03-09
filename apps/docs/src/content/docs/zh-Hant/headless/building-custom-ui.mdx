@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# 建立自訂 UI
+
+本指南將引導您了解在無頭 (headless) 掛鉤之上建立您自己的日期選擇器 UI 的模式。
+
+## 模式
+
+每個無頭 (headless) 掛鉤都遵循相同的模式：
+
+1.  **呼叫掛鉤**並帶入您的選項 (值、onChange、設定)
+2.  **解構傳回值**以獲取狀態、計算值和處理程式
+3.  使用傳回的值**渲染您自己的標記**
+4.  透過呼叫提供的處理程式**連接互動**
+
+掛鉤管理所有複雜性——日曆生成、日期計算、開/關狀態、鍵盤導覽、範圍邏輯——而您只需專注於呈現。
+
+## 範例：自訂日期選擇器
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 核心概念
+
+### getDayProps
+
+`getDayProps` 函式是日曆渲染的核心。對於每個日期單元格，它會傳回一個 `DayProps` 物件，其中包含 18 個布林值/數字標記，用於描述該單元格的狀態：
+
+```tsx
+const dp = getDayProps(day);
+
+// 選擇狀態
+dp.isSelected; // 目前選擇的日期
+dp.isToday; // 今天的日期
+
+// 範圍狀態 (適用於範圍選擇器)
+dp.isInRange; // 介於開始和結束日期之間
+dp.isRangeStart; // 範圍的第一天
+dp.isRangeEnd; // 範圍的最後一天
+dp.isInHoverRange; // 在懸停預覽範圍內
+dp.isHoverTarget; // 懸停的日期本身
+dp.isRangeSingle; // 同時是範圍的開始和結束 (單日範圍)
+
+// 視覺連接輔助工具
+dp.hasLeftConnection; // 連接到前一天 (用於範圍背景)
+dp.hasRightConnection; // 連接到後一天
+dp.isConsecutiveRange; // 多日範圍的一部分
+
+// 狀態
+dp.isDisabled; // 被 minDate/maxDate/isDateUnavailable 禁用
+dp.isFocused; // 具有鍵盤焦點
+dp.isOutsideDay; // 屬於相鄰月份 (當 showOutsideDays 啟用時)
+dp.isHighlighted; // 在 highlightDates 陣列中
+
+// 資料
+dp.date; // Date 物件
+dp.day; // 月份中的日期數字
+dp.dayOfWeek; // 0-6 (星期日-星期六)
+```
+
+### 用於外部點擊的 Refs
+
+這些掛鉤會傳回 `containerRef` 和 `popupRef`。將它們附加到您的包裝器和彈出元素上——掛鉤會使用它們來偵測外部點擊並自動關閉彈出視窗。
+
+### 鍵盤導覽
+
+`handleKeyDown` 處理程式支援方向鍵、Enter、Escape 和 Tab 鍵以實現完整的鍵盤導覽。將它附加到彈出視窗的容器上。
+
+### 語系
+
+所有面向使用者的字串都來自 `locale` 物件。您可以通過傳入一個部分的 `locale` 選項來自訂任何字串：
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "確定",
+    cancel: "返回",
+    placeholder: "選擇一個日期...",
+  },
+});
+```
+
+## 後續步驟
+
+- [掛鉤參考](/docs/headless/hooks/use-date-picker) -- 每個掛鉤的完整選項和傳回值
+- [情境 (Contexts)](/docs/headless/contexts) -- 使用提供者 (provider) 實現複合元件模式
+- [日期工具](/docs/headless/date-utilities) -- 用於日期操作的輔助函式

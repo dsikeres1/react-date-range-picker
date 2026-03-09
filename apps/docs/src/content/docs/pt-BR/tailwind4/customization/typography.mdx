@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind4/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind4/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind4/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind4/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind4/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind4/Customization/CompoundWebFonts.tsx?raw";
+
+# Tipografia
+
+O pacote Tailwind v4 usa a classe padrão `font-sans` do Tailwind (`ui-sans-serif, system-ui, sans-serif, ...`). Como `font-family` do CSS é herdado, você pode substituir a fonte do seletor envolvendo-o em um contêiner com um estilo `fontFamily`. A fonte do contêiner é aplicada em cascata a todos os elementos do seletor.
+
+## Família de Fontes
+
+Envolva o seletor e defina `fontFamily` no contêiner para trocar de fontes:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Usando Web Fonts (Noto Sans)
+
+Carregue uma web font em tempo de execução e aplique-a através de um contêiner. Este exemplo carrega a [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) do Google Fonts:
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="Uso em produção">
+Em um projeto real, carregue a fonte através de uma tag `<link>` no seu `<head>` HTML ou através do seu empacotador de CSS, em vez de injetá-la em tempo de execução. A abordagem com `useEffect` aqui é apenas para fins de demonstração.
+</Admonition>
+
+## Galeria de Web Fonts
+
+Compare diferentes web fonts para ver como a tipografia muda drasticamente a aparência do seletor. Todas as fontes abaixo suportam renderização em vários idiomas (Latim, CJK, Coreano).
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,62 @@
+---
+sidebar_position: 5
+title: Locale Helpers
+---
+
+# 로케일 헬퍼
+
+로케일 설정을 생성하고 병합하기 위한 함수들입니다.
+
+```tsx
+import {
+  DEFAULT_LOCALE,
+  mergeLocale,
+  createLocale,
+  resolveLocale,
+  weekdayToNumber,
+} from "react-date-range-picker-headless";
+```
+
+## DEFAULT_LOCALE
+
+기본 영어 로케일 객체입니다. 모든 필드는 영어 문자열로 채워져 있습니다.
+
+|      |          |
+| ---- | -------- |
+| 타입 | `Locale` |
+
+```tsx
+DEFAULT_LOCALE.weekdays; // ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+DEFAULT_LOCALE.months; // ["January", "February", ..., "December"]
+DEFAULT_LOCALE.confirm; // "Confirm"
+DEFAULT_LOCALE.placeholder; // "Select date"
+```
+
+## mergeLocale
+
+부분적인 로케일을 기본 로케일과 병합합니다.
+
+|          |                                                  |
+| -------- | ------------------------------------------------ |
+| 시그니처 | `mergeLocale(partial?: Partial<Locale>): Locale` |
+
+부분적인 로케일이 제공되지 않으면 `DEFAULT_LOCALE`을 반환합니다. `rangeSeparator`가 재정의되었지만 `formatRange`는 그렇지 않은 경우, `formatRange`는 새 구분 기호를 사용하도록 자동으로 다시 생성됩니다.
+
+```tsx
+mergeLocale(); // DEFAULT_LOCALE
+
+mergeLocale({
+  confirm: "OK",
+  cancel: "Back",
+  rangeSeparator: " - ",
+});
+// { ...DEFAULT_LOCALE, confirm: "OK", cancel: "Back", rangeSeparator: " - ", formatRange: (s, e) => `${s} - ${e}` }
+```
+
+## createLocale
+
+`Intl.DateTimeFormat`을 사용하여 BCP 47 로케일 키로부터 로케일을 생성합니다.
+
+|          |     |
+| -------- | --- |
+| 시그니처 |

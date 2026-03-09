@@ -1,0 +1,157 @@
+---
+sidebar_position: 1
+title: useDatePicker
+---
+
+# useDatePicker
+
+단일 날짜 선택을 위한 핵심 훅입니다. 캘린더 상태, 열기/닫기 동작, 키보드 탐색, 날짜 포맷팅을 관리합니다.
+
+## 임포트
+
+```tsx
+import { useDatePicker } from "react-date-range-picker-headless";
+```
+
+## 사용법
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  const picker = useDatePicker({
+    value: date,
+    onChange: setDate,
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.placeholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* 캘린더 헤더 */}
+          <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+          <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+          <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+
+          {/* 캘린더 그리드 */}
+          {picker.calendar.weeks.flat().map((day, i) => {
+            if (!day) return <span key={i} />;
+            const dp = picker.getDayProps(day);
+            return (
+              <button key={i} onClick={() => picker.handleDateClick(day)} disabled={dp.isDisabled}>
+                {dp.day}
+              </button>
+            );
+          })}
+
+          {/* 푸터 */}
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## 옵션
+
+| 옵션                  | 타입                           | 기본값           | 설명                                                                                    |
+| --------------------- | ------------------------------ | ---------------- | --------------------------------------------------------------------------------------- |
+| `value`               | `Date \| null`                 | --               | **필수.** 현재 선택된 날짜입니다.                                                       |
+| `onChange`            | `(date: Date \| null) => void` | --               | **필수.** 날짜 선택이 변경될 때 호출됩니다.                                             |
+| `minDate`             | `Date`                         | --               | 선택 가능한 가장 이른 날짜입니다.                                                       |
+| `maxDate`             | `Date`                         | --               | 선택 가능한 가장 늦은 날짜입니다.                                                       |
+| `locale`              | `Partial<Locale>`              | `DEFAULT_LOCALE` | 로케일 문자열을 재정의합니다.                                                           |
+| `initialMonth`        | `Date`                         | --               | 초기에 표시할 월입니다 (기본값은 value 또는 오늘).                                      |
+| `size`                | `DatePickerSize`               | --               | 스타일 컴포넌트를 위한 UI 패스스루입니다. Headless 훅은 이를 무시합니다.                |
+| `weekStartsOn`        | `WeekDay`                      | `"sunday"`       | 한 주의 시작 요일입니다.                                                                |
+| `isDateUnavailable`   | `(date: Date) => boolean`      | --               | 특정 날짜를 비활성화하는 커스텀 함수입니다.                                             |
+| `displayFormat`       | `string`                       | --               | 표시 값에 대한 커스텀 포맷 문자열입니다 (예: `"YYYY/MM/DD"`).                           |
+| `open`                | `boolean`                      | --               | 제어된 열림 상태입니다. 이 값이 제공되면 훅은 내부적으로 열림 상태를 관리하지 않습니다. |
+| `initialOpen`         | `boolean`                      | `false`          | 초기 열림 상태입니다 (비제어 모드).                                                     |
+| `onOpenChange`        | `(open: boolean) => void`      | --               | 열림 상태가 변경될 때의 콜백입니다. 제어 및 비제어 모드 모두에서 작동합니다.            |
+| `required`            | `boolean`                      | `false`          | `true`일 경우, `handleClear`는 아무 작업도 수행하지 않습니다.                           |
+| `today`               | `Date`                         | `new Date()`     | `isToday` 및 `disablePast`/`disableFuture` 계산을 위해 오늘 날짜를 재정의합니다.        |
+| `onMonthChange`       | `(month: Date) => void`        | --               | 표시된 월이 변경될 때의 콜백입니다.                                                     |
+| `disablePast`         | `boolean`                      | `false`          | 오늘 이전의 모든 날짜를 비활성화합니다.                                                 |
+| `disableFuture`       | `boolean`                      | `false`          | 오늘 이후의 모든 날짜를 비활성화합니다.                                                 |
+| `showOutsideDays`     | `boolean`                      | `false`          | 인접한 달의 날짜를 표시하여 6주 그리드를 채웁니다.                                      |
+| `highlightDates`      | `Date[]`                       | --               | 캘린더에서 강조할 날짜 배열입니다.                                                      |
+| `shouldCloseOnSelect` | `boolean`                      | `false`          | 날짜를 클릭하면 자동으로 확정하고 닫습니다.                                             |
+| `numberOfMonths`      | `number`                       | `1`              | 동시에 표시할 월의 수입니다.                                                            |
+| `captionLayout`       | `CaptionLayout`                | `"buttons"`      | `prev/next` 화살표의 경우 `"buttons"`, 연/월 선택의 경우 `"dropdown"`입니다.            |
+| `fromYear`            | `number`                       | 현재 연도 - 100  | 드롭다운 모드의 시작 연도입니다.                                                        |
+| `toYear`              | `number`                       | 현재 연도 + 10   | 드롭다운 모드의 종료 연도입니다.                                                        |
+
+## 반환 값
+
+| 이름                | 타입                                              | 설명                                                             |
+| ------------------- | ------------------------------------------------- | ---------------------------------------------------------------- |
+| `isOpen`            | `boolean`                                         | 팝업이 열려 있는지 여부입니다.                                   |
+| `tempDate`          | `Date \| null`                                    | 임시로 선택된 날짜입니다 (확정 전).                              |
+| `currentMonth`      | `Date`                                            | 현재 표시된 월입니다.                                            |
+| `locale`            | `Locale`                                          | 모든 문자열이 포함된 확정된 로케일 객체입니다.                   |
+| `calendar`          | `CalendarMonth`                                   | 현재 월의 캘린더 데이터입니다 (`month`, `days`, `weeks` 포함).   |
+| `calendars`         | `CalendarMonth[]`                                 | 캘린더 월 배열입니다 (길이 = `numberOfMonths`).                  |
+| `getDayProps`       | `(date: Date, referenceMonth?: Date) => DayProps` | 캘린더의 날짜 셀에 대한 플래그를 계산합니다.                     |
+| `displayValue`      | `string`                                          | 확정된 값의 포맷된 문자열입니다.                                 |
+| `hasValue`          | `boolean`                                         | 날짜가 현재 확정되었는지 여부입니다.                             |
+| `canConfirm`        | `boolean`                                         | 현재 선택이 확정 가능한지 여부입니다.                            |
+| `handleDateClick`   | `(date: Date) => void`                            | 날짜 셀 클릭을 처리합니다.                                       |
+| `handlePrevMonth`   | `() => void`                                      | 이전 달로 이동합니다.                                            |
+| `handleNextMonth`   | `() => void`                                      | 다음 달로 이동합니다.                                            |
+| `handleOpen`        | `() => void`                                      | 팝업을 엽니다.                                                   |
+| `handleClose`       | `() => void`                                      | 팝업을 닫습니다 (커밋되지 않은 변경 사항은 버려집니다).          |
+| `handleToggle`      | `() => void`                                      | 팝업을 토글합니다.                                               |
+| `handleConfirm`     | `() => void`                                      | 선택을 확정하고 닫습니다.                                        |
+| `handleCancel`      | `() => void`                                      | 취소하고 이전 값으로 되돌립니다.                                 |
+| `handleClear`       | `() => void`                                      | 값을 지웁니다 (`required`인 경우 아무 작업도 하지 않음).         |
+| `handleGoToToday`   | `() => void`                                      | 캘린더를 오늘이 속한 월로 이동합니다.                            |
+| `containerRef`      | `RefObject<HTMLDivElement \| null>`               | 외부 클릭 감지를 위해 래퍼 엘리먼트에 연결합니다.                |
+| `popupRef`          | `RefObject<HTMLDivElement \| null>`               | 팝업 엘리먼트에 연결합니다.                                      |
+| `focusedDate`       | `Date \| null`                                    | 현재 키보드 포커스를 받은 날짜입니다.                            |
+| `handleKeyDown`     | `(e: KeyboardEvent<HTMLElement>) => void`         | 화살표 키, Enter, Escape, Tab에 대한 키보드 이벤트 핸들러입니다. |
+| `years`             | `number[]`                                        | 드롭다운 캡션 모드를 위한 연도 배열입니다.                       |
+| `months`            | `number[]`                                        | 드롭다운 캡션 모드를 위한 월 인덱스 배열입니다 (0-11).           |
+| `handleYearSelect`  | `(year: number, calendarIndex?: number) => void`  | 표시할 연도를 설정합니다 (드롭다운 모드).                        |
+| `handleMonthSelect` | `(month: number, calendarIndex?: number) => void` | 표시할 월을 설정합니다 (드롭다운 모드).                          |
+
+## 주요 동작
+
+### 제어된 열림 상태 vs 비제어된 열림 상태
+
+기본적으로 훅은 내부적으로 열기/닫기 상태를 관리합니다. 외부에서 제어하려면 `open`과 `onOpenChange`를 전달하세요:
+
+```tsx
+const [isOpen, setIsOpen] = useState(false);
+
+const picker = useDatePicker({
+  value: date,
+  onChange: setDate,
+  open: isOpen,
+  onOpenChange: setIsOpen,
+});
+```
+
+### shouldCloseOnSelect
+
+`shouldCloseOnSelect`가 `true`이면, 날짜를 클릭하는 즉시 선택이 확정되고 팝업이 닫히며, 명시적인 확인 단계를 건너뜁니다.
+
+### 키보드 탐색
+
+| 키                       | 동작                    |
+| ------------------------ | ----------------------- |
+| Arrow Up/Down/Left/Right | 날짜 간 포커스 이동     |
+| Enter / Space            | 포커스된 날짜 선택      |
+| Escape                   | 취소하고 닫기           |
+| Tab                      | 팝업 내에서 포커스 이동 |
+
+### 캡션 드롭다운
+
+`captionLayout`이 `"dropdown"`일 때, 헤더는 이전/다음 버튼 대신 연도와 월 선택 드롭다운을 표시합니다. `years`, `months`, `handleYearSelect`, `handleMonthSelect`를 사용하여 드롭다운을 렌더링하세요.

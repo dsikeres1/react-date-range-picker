@@ -1,0 +1,112 @@
+---
+sidebar_position: 5
+title: Common Types
+---
+
+# Các loại phổ biến
+
+Các bí danh kiểu dữ liệu được chia sẻ và sử dụng trong toàn bộ gói headless.
+
+```tsx
+import type {
+  DatePickerSize,
+  WeekDay,
+  CaptionLayout,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  MinuteStep,
+  SecondStep,
+  CalendarMonth,
+  DateUnit,
+} from "react-date-range-picker-headless";
+```
+
+## DatePickerSize
+
+Biến thể kích thước giao diện người dùng. Các hook headless chỉ truyền qua mà không sử dụng nó. Các thành phần được tạo kiểu (Styled components) sử dụng nó để định kích thước trực quan.
+
+```tsx
+type DatePickerSize = "x-large" | "large" | "medium" | "small";
+```
+
+## WeekDay
+
+Ngày trong tuần dưới dạng chuỗi. Được sử dụng trong tùy chọn `weekStartsOn`.
+
+```tsx
+type WeekDay = "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday";
+```
+
+## CaptionLayout
+
+Chế độ bố cục cho tiêu đề lịch.
+
+```tsx
+type CaptionLayout = "buttons" | "dropdown";
+```
+
+| Giá trị      | Mô tả                                          |
+| ------------ | ---------------------------------------------- |
+| `"buttons"`  | Các nút điều hướng tháng trước/sau (mặc định). |
+| `"dropdown"` | Các menu thả xuống để chọn năm và tháng.       |
+
+## TimePrecision
+
+Kiểm soát các cột thời gian nào được hiển thị.
+
+```tsx
+type TimePrecision = "hour" | "minute" | "second";
+```
+
+| Giá trị    | Các cột được hiển thị |
+| ---------- | --------------------- |
+| `"hour"`   | Chỉ giờ.              |
+| `"minute"` | Giờ + phút.           |
+| `"second"` | Giờ + phút + giây.    |
+
+## HourFormat
+
+Hiển thị thời gian theo định dạng 12 giờ hoặc 24 giờ.
+
+```tsx
+type HourFormat = "12" | "24";
+```
+
+## TimePeriod
+
+Chỉ báo SA/CH cho định dạng 12 giờ.
+
+```tsx
+type TimePeriod = "AM" | "PM";
+```
+
+## MinuteStep
+
+Các giá trị tăng hợp lệ của phút để lựa chọn phút theo bước.
+
+```tsx
+type MinuteStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## SecondStep
+
+Các giá trị tăng hợp lệ của giây để lựa chọn giây theo bước.
+
+```tsx
+type SecondStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## CalendarMonth
+
+Dữ liệu lịch được tạo cho một tháng.
+
+```tsx
+interface CalendarMonth {
+  month: Date;
+  days: (Date | null)[];
+  weeks: (Date | null)[][];
+}
+```
+
+| Trường | Kiểu | Mô tả

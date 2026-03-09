@@ -1,0 +1,66 @@
+---
+sidebar_position: 3
+title: Browser Compatibility
+description: เบราว์เซอร์ที่รองรับ, ฟีเจอร์ CSS, และ JavaScript APIs ที่ใช้
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# ความเข้ากันได้ของเบราว์เซอร์
+
+## ตารางการรองรับ
+
+| เบราว์เซอร์      | เวอร์ชันขั้นต่ำ |
+| ---------------- | --------------- |
+| Chrome           | 88+             |
+| Edge             | 88+ (Chromium)  |
+| Firefox          | 85+             |
+| Safari           | 15.4+           |
+| iOS Safari       | 15.4+           |
+| Samsung Internet | 15+             |
+
+**ไม่รองรับ IE 11** ไลบรารีนี้ใช้คุณสมบัติ CSS custom properties, JavaScript APIs สมัยใหม่, และ React 18+
+
+เวอร์ชันขั้นต่ำของ Safari 15.4 กำหนดโดยการรองรับ `:focus-visible` ที่ใช้ในสไตล์ตัวบ่งชี้โฟกัสของแพ็คเกจ Styled
+
+## ฟีเจอร์ CSS
+
+| ฟีเจอร์                  | ใช้ใน                            | รองรับครั้งแรก                         |
+| ------------------------ | -------------------------------- | -------------------------------------- |
+| CSS Custom Properties    | ทุกแพ็คเกจที่จัดสไตล์ (theming)  | Chrome 49, Firefox 31, Safari 9.1      |
+| `:focus-visible`         | ตัวบ่งชี้โฟกัส (Styled)          | Chrome 86, Firefox 85, **Safari 15.4** |
+| `color-scheme`           | อินพุตดั้งเดิมในโหมดมืด (Styled) | Chrome 81, Firefox 96, Safari 12.1     |
+| `prefers-color-scheme`   | โหมดมืดอัตโนมัติ (Styled)        | Chrome 76, Firefox 67, Safari 12.1     |
+| `prefers-reduced-motion` | การลดการเคลื่อนไหว (Styled)      | Chrome 74, Firefox 63, Safari 10.1     |
+| `scroll-snap-type`       | การเลื่อนตัวเลือกเวลา (Styled)   | Chrome 69, Firefox 68, Safari 11       |
+| Flexbox                  | เลย์เอาต์                        | รองรับทั้งหมด                          |
+| CSS Grid                 | ตารางปฏิทิน                      | Chrome 57, Firefox 52, Safari 10.1     |
+
+## JavaScript APIs
+
+| API                                 | ใช้โดย                                       | รองรับครั้งแรก                     |
+| ----------------------------------- | -------------------------------------------- | ---------------------------------- |
+| `Intl.DateTimeFormat`               | การสร้าง locale ของ `createLocale()`         | เบราว์เซอร์สมัยใหม่ทั้งหมด         |
+| `Intl.DateTimeFormat.formatToParts` | การดึงป้ายกำกับ AM/PM                        | Chrome 57, Firefox 51, Safari 11   |
+| `ResizeObserver`                    | การจัดตำแหน่งป๊อปอัปของ `@floating-ui/react` | Chrome 64, Firefox 69, Safari 13.1 |
+| React 18+ hooks                     | Hooks และคอมโพเนนต์ทั้งหมด                   | React 18.0+                        |
+
+## หมายเหตุเฉพาะแพ็คเกจ
+
+### Headless
+
+ไม่มีการพึ่งพา CSS ต้องการเพียง React 18+ และ JavaScript APIs มาตรฐาน เข้ากันได้กับทุกสภาพแวดล้อมที่รองรับ React
+
+### Styled
+
+ใช้ CSS custom properties, `:focus-visible`, `color-scheme`, และ `scroll-snap-type` คอขวดของการรองรับเบราว์เซอร์คือ **Safari 15.4+** (สำหรับ `:focus-visible`)
+
+ตัวเลือกเวลาแบบเลื่อนใช้ `scroll-snap-type: y mandatory` พร้อมกับแถบเลื่อนที่ซ่อนอยู่ พฤติกรรมการเลื่อนอาจรู้สึกแตกต่างกันเล็กน้อยในแต่ละแพลตฟอร์มเนื่องจากการใช้งาน inertia/momentum ที่แตกต่างกัน
+
+### Tailwind v3
+
+ต้องการ Tailwind CSS v3. ความเข้ากันได้ของ JavaScript เหมือนกับ Headless การรองรับ CSS ขึ้นอยู่กับผลลัพธ์ของ Tailwind v3 (เข้ากันได้ในวงกว้าง)
+
+### Tailwind v4
+
+ต้องการ Tailwind CSS v4 ซึ่งใช้ฟีเจอร์ CSS สมัยใหม่ (`@layer`, `@property`, CSS nesting) ดูรายละเอียดได้ที่ [การรอง

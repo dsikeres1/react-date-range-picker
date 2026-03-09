@@ -1,0 +1,34 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomLocale from "@examples/styled/DateTimePicker/CustomLocale";
+import CustomLocaleSource from "@examples/styled/DateTimePicker/CustomLocale.tsx?raw";
+import FormIntegration from "@examples/styled/DateTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DateTimePicker/FormIntegration.tsx?raw";
+
+# Görünüm
+
+## Özel Yerel Ayar
+
+Uluslararasılaştırma için özel bir yerel ayar sağlayın. `dateTimePlaceholder` anahtarı, tetikleyici metnini özelleştirir.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Form Entegrasyonu
+
+Doğal form gönderimi için gizli bir girdi eklemek amacıyla `name` prop'unu kullanın.
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

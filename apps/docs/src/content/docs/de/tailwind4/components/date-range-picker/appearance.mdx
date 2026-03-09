@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/tailwind4/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind4/DateRangePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/tailwind4/DateRangePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind4/DateRangePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/tailwind4/DateRangePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind4/DateRangePicker/CaptionDropdown.tsx?raw";
+
+# Erscheinungsbild
+
+## Mehrere Monate
+
+Zeigen Sie mehr als 2 Monate nebeneinander an. Standard ist `2` für Bereichsauswahlen.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Benutzerdefiniertes Gebietsschema
+
+Verwenden Sie `createLocale` aus dem Headless-Paket, um Monats-/Tagesnamen und UI-Zeichenfolgen anzupassen.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Titel-Dropdown
+
+Wechseln Sie von der Button-Navigation zu Dropdown-Auswahlen für Monat und Jahr. Nützlich für die Auswahl von Daten, die weit vom aktuellen Monat entfernt sind.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

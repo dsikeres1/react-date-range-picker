@@ -1,0 +1,118 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind4Basic from "@examples/tailwind4/DatePicker/Basic";
+import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
+
+# Bắt đầu với Tailwind CSS v4
+
+Gói Tailwind v4 cung cấp các thành phần chọn ngày được tạo kiểu bằng các lớp tiện ích của Tailwind CSS v4 và các token thiết kế ngữ nghĩa.
+
+## Cài đặt
+
+<PackageInstall pkg="react-date-range-picker-tailwind4" />
+
+Không cần nhập thêm CSS. Các thành phần sử dụng trực tiếp các lớp tiện ích của Tailwind.
+
+## Tailwind Preflight & Reset
+
+Gói này giả định dự án của bạn đã bật Tailwind CSS Preflight (đây là mặc định).
+Nếu môi trường của bạn tắt Preflight (ví dụ: Docusaurus, một số Micro Frontends), kiểu dáng của nút có thể bị hỏng.
+Trong trường hợp đó, hãy nhập `reset.css` được cung cấp để khởi tạo kiểu dáng nút theo cách thủ công:
+
+```tsx
+import "react-date-range-picker-tailwind4/reset.css";
+```
+
+## Token ngữ nghĩa
+
+Các thành phần sử dụng các biến CSS ngữ nghĩa để tạo giao diện. Hãy định nghĩa chúng trong CSS của bạn:
+
+```css
+@theme {
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted: oklch(0.96 0.003 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+Các token này ánh xạ tới các lớp như `bg-popover`, `text-foreground`, `border-border`, v.v.
+
+## Bắt đầu nhanh
+
+<CodeDemo source={Tailwind4BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Tailwind4Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Bao gồm những gì
+
+| Thành phần            | Mô tả                                              |
+| --------------------- | -------------------------------------------------- |
+| `DatePicker`          | Chọn một ngày với lịch bật lên                     |
+| `DateRangePicker`     | Chọn khoảng ngày với lịch kép và các cài đặt trước |
+| `DateTimePicker`      | Chọn ngày + giờ với bảng cuộn thời gian            |
+| `DateRangeTimePicker` | Chọn khoảng ngày + giờ                             |
+
+Tất cả các thành phần đều hỗ trợ:
+
+- Giá trị được kiểm soát với `value` / `onChange`
+- Điều hướng bằng bàn phím
+- Chế độ tối qua biến thể `dark:`
+- 4 kích thước: `small`, `medium`, `large`, `x-large`
+- API Thành phần Hợp chất để tùy chỉnh
+
+## Các loại TypeScript
+
+Tất cả các loại cấu hình và dữ liệu đều được xuất lại từ gói — không cần cài đặt riêng gói headless:
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind4";
+```
+
+Các loại này hữu ích cho:
+
+- **`Locale`** — Ghi đè bản địa hóa tùy chỉnh (tên các ngày trong tuần, nhãn nút, định dạng ngày)
+- **`DatePickerSize`** — Xác định kiểu cho prop `size` (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — Cấu hình độ chính xác, định dạng và các bước của bộ chọn thời gian
+- **`DateRangePreset`** — Xác định các cài đặt trước cho `DateRangePicker` / `DateRangeTimePicker`
+- **`CalendarMonth`**, **`DayProps`** — Kết xuất tùy chỉnh với các Thành phần Hợp chất
+
+Xem [Các loại Headless](/docs/headless/types/common-types) để biết định nghĩa chi tiết về các loại.
+
+## Các bước tiếp theo
+
+- [DatePicker](/docs/tailwind4/components/date-picker/basic) — Chọn một ngày
+- [DateRangePicker](/docs/tailwind4/components/date-range-picker/basic) — Khoảng ngày với các cài đặt trước
+- [Thành phần Hợp chất](/docs/tailwind4/customization/overview) — Tùy chỉnh cấu trúc bên trong
+- [Token ngữ nghĩa](/docs/tailwind4/customization/semantic-tokens) — Giao diện với các token thiết kế
+- [Chế độ tối](/docs/tailwind4/customization/dark-mode) — Hỗ trợ giao diện tối

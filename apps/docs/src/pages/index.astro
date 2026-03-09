@@ -1,0 +1,271 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GNB from "@/components/GNB.astro";
+import Footer from "@/components/Footer.astro";
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Home">
+  <GNB />
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <header class="hero-gradient px-4 pb-16 pt-20 text-center">
+      <div class="mx-auto max-w-2xl">
+        <img
+          src={`${base}/logo.svg`}
+          alt="React Date Range Picker"
+          width="160"
+          height="160"
+          class="mx-auto mb-6"
+        />
+        <h1
+          class="text-foreground"
+          style="font-size: 2.8rem; font-weight: 700; margin-bottom: 0.5rem;"
+        >
+          React Date Range Picker
+        </h1>
+        <p
+          class="mx-auto max-w-xl text-muted-foreground"
+          style="font-size: 1.25rem; margin-bottom: 2rem;"
+        >
+          A headless, composable date & range picker for React. Single date, date range, date+time —
+          with full keyboard navigation and accessibility.
+        </p>
+        <a
+          href={`${base}/docs/tailwind4/getting-started`}
+          class="inline-block rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+        >
+          Get Started
+        </a>
+      </div>
+    </header>
+
+    <!-- Features -->
+    <section class="px-4 py-12">
+      <div class="mx-auto max-w-5xl">
+        <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <h3
+              class="font-semibold text-foreground"
+              style="font-size: 1.1rem; margin-bottom: 0.4rem;"
+            >
+              Headless Core
+            </h3>
+            <p
+              class="text-muted-foreground"
+              style="font-size: 0.93rem; line-height: 1.6; margin: 0;"
+            >
+              All logic lives in framework-agnostic hooks. Bring your own UI or use a pre-styled
+              package.
+            </p>
+          </div>
+          <div>
+            <h3
+              class="font-semibold text-foreground"
+              style="font-size: 1.1rem; margin-bottom: 0.4rem;"
+            >
+              Compound Components
+            </h3>
+            <p
+              class="text-muted-foreground"
+              style="font-size: 0.93rem; line-height: 1.6; margin: 0;"
+            >
+              Compose pickers from individual parts. Override any piece without forking.
+            </p>
+          </div>
+          <div>
+            <h3
+              class="font-semibold text-foreground"
+              style="font-size: 1.1rem; margin-bottom: 0.4rem;"
+            >
+              Tailwind v4 + shadcn
+            </h3>
+            <p
+              class="text-muted-foreground"
+              style="font-size: 0.93rem; line-height: 1.6; margin: 0;"
+            >
+              First-class Tailwind v4 support with semantic tokens. Available as a shadcn registry
+              component.
+            </p>
+          </div>
+          <div>
+            <h3
+              class="font-semibold text-foreground"
+              style="font-size: 1.1rem; margin-bottom: 0.4rem;"
+            >
+              TypeScript
+            </h3>
+            <p
+              class="text-muted-foreground"
+              style="font-size: 0.93rem; line-height: 1.6; margin: 0;"
+            >
+              Written in TypeScript with full type inference. Every prop, hook, and callback is
+              typed.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Packages -->
+    <section class="bg-accent px-4 py-12">
+      <div class="mx-auto max-w-5xl">
+        <h2
+          class="text-center font-bold text-foreground"
+          style="font-size: 1.6rem; margin-bottom: 1.5rem;"
+        >
+          Choose Your Style
+        </h2>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <a
+            href={`${base}/docs/tailwind4/getting-started`}
+            class="group rounded-lg border border-border bg-background shadow-sm transition-shadow hover:shadow-md"
+            style="padding: 1.25rem 1.5rem; text-decoration: none; color: inherit;"
+          >
+            <h3 class="font-semibold text-foreground" style="font-size: 1.15rem; margin: 0;">
+              Tailwind v4
+            </h3>
+            <p class="text-muted-foreground" style="font-size: 0.9rem; margin: 0.4rem 0 0;">
+              Semantic tokens. shadcn registry support.
+            </p>
+          </a>
+          <a
+            href={`${base}/docs/tailwind3/getting-started`}
+            class="group rounded-lg border border-border bg-background shadow-sm transition-shadow hover:shadow-md"
+            style="padding: 1.25rem 1.5rem; text-decoration: none; color: inherit;"
+          >
+            <h3 class="font-semibold text-foreground" style="font-size: 1.15rem; margin: 0;">
+              Tailwind v3
+            </h3>
+            <p class="text-muted-foreground" style="font-size: 0.9rem; margin: 0.4rem 0 0;">
+              Utility classes for Tailwind CSS v3 projects.
+            </p>
+          </a>
+          <a
+            href={`${base}/docs/styled/getting-started`}
+            class="group rounded-lg border border-border bg-background shadow-sm transition-shadow hover:shadow-md"
+            style="padding: 1.25rem 1.5rem; text-decoration: none; color: inherit;"
+          >
+            <h3 class="font-semibold text-foreground" style="font-size: 1.15rem; margin: 0;">
+              Styled
+            </h3>
+            <p class="text-muted-foreground" style="font-size: 0.9rem; margin: 0.4rem 0 0;">
+              Built-in CSS. No framework required.
+            </p>
+          </a>
+          <a
+            href={`${base}/docs/headless/getting-started`}
+            class="group rounded-lg border border-border bg-background shadow-sm transition-shadow hover:shadow-md"
+            style="padding: 1.25rem 1.5rem; text-decoration: none; color: inherit;"
+          >
+            <h3 class="font-semibold text-foreground" style="font-size: 1.15rem; margin: 0;">
+              Headless
+            </h3>
+            <p class="text-muted-foreground" style="font-size: 0.9rem; margin: 0.4rem 0 0;">
+              Unstyled hooks. Full rendering control.
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Installation -->
+    <section class="px-4 pb-16 pt-12">
+      <div class="mx-auto" style="max-width: 600px;">
+        <h2
+          class="text-center font-bold text-foreground"
+          style="font-size: 1.6rem; margin-bottom: 1.5rem;"
+        >
+          Installation
+        </h2>
+        <div class="mt-8">
+          <div class="flex gap-1 border-b border-border" id="install-tabs">
+            <button
+              class="install-tab rounded-t-md border-b-2 border-primary px-3 py-1.5 text-sm font-medium text-primary"
+              data-pkg="react-date-range-picker-tailwind4">Tailwind v4</button
+            >
+            <button
+              class="install-tab rounded-t-md px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground"
+              data-pkg="react-date-range-picker-tailwind3">Tailwind v3</button
+            >
+            <button
+              class="install-tab rounded-t-md px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground"
+              data-pkg="react-date-range-picker-styled">Styled</button
+            >
+            <button
+              class="install-tab rounded-t-md px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground"
+              data-pkg="react-date-range-picker-headless">Headless</button
+            >
+          </div>
+          <div class="relative rounded-b-lg bg-code-bg p-4 font-mono text-sm" id="install-cmd">
+            <span class="install-text"
+              ><span class="text-muted-foreground">$</span> npm install react-date-range-picker-tailwind4</span
+            >
+            <button
+              class="copy-install-btn absolute right-2 top-1/2 -translate-y-1/2 rounded p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              aria-label="Copy to clipboard"
+            >
+              <svg
+                class="copy-icon size-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg
+              >
+              <svg
+                class="check-icon hidden size-4 text-green-500"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script is:inline>
+  document.querySelectorAll(".install-tab").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const pkg = btn.getAttribute("data-pkg");
+      document.querySelectorAll(".install-tab").forEach((b) => {
+        const isActive = b === btn;
+        b.classList.toggle("border-primary", isActive);
+        b.classList.toggle("text-primary", isActive);
+        b.classList.toggle("border-b-2", isActive);
+        b.classList.toggle("text-muted-foreground", !isActive);
+      });
+      const text = document.querySelector("#install-cmd .install-text");
+      if (text) text.innerHTML = `<span class="text-muted-foreground">$</span> npm install ${pkg}`;
+    });
+  });
+
+  document.querySelector(".copy-install-btn")?.addEventListener("click", function () {
+    const text = document.querySelector("#install-cmd .install-text");
+    if (!text) return;
+    navigator.clipboard.writeText(text.textContent.replace(/^\$\s*/, "").trim());
+    const copyIcon = this.querySelector(".copy-icon");
+    const checkIcon = this.querySelector(".check-icon");
+    copyIcon.classList.add("hidden");
+    checkIcon.classList.remove("hidden");
+    setTimeout(() => {
+      copyIcon.classList.remove("hidden");
+      checkIcon.classList.add("hidden");
+    }, 2000);
+  });
+</script>

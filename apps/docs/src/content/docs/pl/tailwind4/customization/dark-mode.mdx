@@ -1,0 +1,185 @@
+---
+sidebar_position: 9
+---
+
+# Tryb Ciemny
+
+Pakiet Tailwind v4 obsługuje tryb ciemny poprzez system semantycznych tokenów. Ponieważ wszystkie kolory odwołują się do zmiennych CSS, przełączenie na tryb ciemny polega po prostu na ponownym zdefiniowaniu tych zmiennych.
+
+## Jak to działa
+
+Komponenty używają semantycznych klas narzędziowych, takich jak `bg-primary`, `text-foreground` i `border-border`. Rozwiązują się one do zmiennych CSS (`--color-primary`, `--color-foreground` itp.), które definiujesz w CSS swojego projektu. Tryb ciemny działa poprzez dostarczanie alternatywnych wartości dla tych zmiennych w ramach selektora trybu ciemnego.
+
+## Konfiguracja
+
+### Używanie atrybutu `data-theme`
+
+Zdefiniuj wartości tokenów dla trybu jasnego i ciemnego, używając selektorów `data-theme`:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+
+[data-theme="dark"] {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+Przełącz tryb ciemny, ustawiając atrybut:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div data-theme={dark ? "dark" : "light"}>
+      <button onClick={() => setDark(!dark)}>Przełącz motyw</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+### Używanie klasy `.dark`
+
+Jeśli twój framework używa klasy `.dark` (np. Next.js z `next-themes`), zdefiniuj tokeny w ramach tej klasy:
+
+```css
+@theme {
+  /* Tokeny trybu jasnego */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  /* ... */
+}
+```
+
+### Używanie preferencji systemowych
+
+Użyj `@media (prefers-color-scheme: dark)`, aby podążać za ustawieniami systemu operacyjnego:
+
+```css
+@theme {
+  /* Tokeny trybu jasnego */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: oklch(0.145 0.004 285.823);
+    --color-foreground: oklch(0.985 0.001 285.823);
+    /* ... */
+  }
+}
+```
+
+## Integracja z next-themes
+
+Powszechny wzorzec z Next.js i `next-themes`:
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+```css
+/* globals.css */
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  /* ... wszystkie tokeny trybu jasnego */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  /* ... wszystkie tokeny trybu ciemnego */
+}
+```
+
+Picker automatycznie pobierze poprawne wartości tokenów, gdy motyw się zmieni.
+
+## Kropka podświetlenia w trybie ciemnym
+
+Kropka podświetlenia używa `after:bg-amber-500 dark:after:bg-amber-400` (konkretny kolor Tailwind, a nie token), aby zapewnić dobrą widoczność w obu trybach. Jest to jedyny niesemantyczny kolor w komponencie. Jeśli chcesz go zmienić, użyj API Compound Component z niestandardowym renderowaniem `Day`:
+
+```tsx
+<DatePicker.Day date={date}>
+  {(props) => (
+    <button /* ... */>
+      {props.day}
+      {props.isHighlighted && (
+        <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+      )}
+    </button>
+  )}
+</DatePicker.Day>
+```
+
+## Wymuszanie określonego trybu
+
+Aby wymusić tryb jasny lub ciemny niezależnie od preferencji systemowych, jawnie ustaw motyw:
+
+```tsx
+{
+  /* Zawsze jasny */
+}
+<div data-theme="light">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Zawsze ciemny */
+}
+<div data-theme="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```

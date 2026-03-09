@@ -1,0 +1,81 @@
+---
+sidebar_position: 3
+title: Browser Compatibility
+description: サポートされているブラウザ、CSS機能、および使用されているJavaScript API。
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# ブラウザ互換性
+
+## サポートマトリックス
+
+| ブラウザ         | 最小バージョン |
+| ---------------- | -------------- |
+| Chrome           | 88+            |
+| Edge             | 88+ (Chromium) |
+| Firefox          | 85+            |
+| Safari           | 15.4+          |
+| iOS Safari       | 15.4+          |
+| Samsung Internet | 15+            |
+
+**IE 11はサポートされていません。** このライブラリは、CSSカスタムプロパティ、最新のJavaScript API、およびReact 18+に依存しています。
+
+Safari 15.4の最小要件は、Styledパッケージのフォーカスインジケータースタイルで使用されている `:focus-visible` のサポートによって決まります。
+
+## CSS機能
+
+| 機能                     | 使用箇所                              | 最初のサポート                         |
+| ------------------------ | ------------------------------------- | -------------------------------------- |
+| CSS Custom Properties    | すべてのstyledパッケージ (テーマ設定) | Chrome 49, Firefox 31, Safari 9.1      |
+| `:focus-visible`         | フォーカスインジケーター (Styled)     | Chrome 86, Firefox 85, **Safari 15.4** |
+| `color-scheme`           | ダークモードのネイティブ入力 (Styled) | Chrome 81, Firefox 96, Safari 12.1     |
+| `prefers-color-scheme`   | 自動ダークモード (Styled)             | Chrome 76, Firefox 67, Safari 12.1     |
+| `prefers-reduced-motion` | モーション削減 (Styled)               | Chrome 74, Firefox 63, Safari 10.1     |
+| `scroll-snap-type`       | タイムピッカーのスクロール (Styled)   | Chrome 69, Firefox 68, Safari 11       |
+| Flexbox                  | レイアウト                            | Universal                              |
+| CSS Grid                 | カレンダーグリッド                    | Chrome 57, Firefox 52, Safari 10.1     |
+
+## JavaScript API
+
+| API                                 | 使用箇所                              | 最初のサポート                     |
+| ----------------------------------- | ------------------------------------- | ---------------------------------- |
+| `Intl.DateTimeFormat`               | `createLocale()` ロケール生成         | すべてのモダンブラウザ             |
+| `Intl.DateTimeFormat.formatToParts` | AM/PMラベルの抽出                     | Chrome 57, Firefox 51, Safari 11   |
+| `ResizeObserver`                    | `@floating-ui/react` ポップアップ配置 | Chrome 64, Firefox 69, Safari 13.1 |
+| React 18+ hooks                     | すべてのフックとコンポーネント        | React 18.0+                        |
+
+## パッケージ別の注意点
+
+### Headless
+
+CSSの依存関係はありません。React 18+と標準のJavaScript APIのみが必要です。Reactをサポートするすべての環境と互換性があります。
+
+### Styled
+
+CSSカスタムプロパティ、`:focus-visible`、`color-scheme`、および `scroll-snap-type` を使用します。ブラウザサポートのボトルネックは **Safari 15.4+** (`:focus-visible`のため) です。
+
+スクロールベースのタイムピッカーは、非表示のスクロールバーで `scroll-snap-type: y mandatory` を使用します。慣性/運動量の実装がプラットフォームごとに異なるため、スクロールの挙動が若干異なる場合があります。
+
+### Tailwind v3
+
+Tailwind CSS v3が必要です。JavaScriptの互換性はHeadlessと同じです。CSSのサポートはTailwind v3の出力に依存します (広く互換性があります)。
+
+### Tailwind v4
+
+Tailwind CSS v4が必要です。v4自体がモダンなCSS機能 (`@layer`, `@property`, CSSネスティング) を使用しています。詳細については、[Tailwind CSS v4のブラウザサポート](https://tailwindcss.com/docs/compatibility)を参照してください。
+
+## ポリフィル
+
+最小バージョンをわずかに下回るブラウザをサポートする必要があるプロジェクト向け:
+
+| 機能                  | ポリフィル                                                                                                           |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `:focus-visible`      | [`focus-visible`](https://github.com/WICG/focus-visible)                                                             |
+| `ResizeObserver`      | [`resize-observer-polyfill`](https://github.com/que-etc/resize-observer-polyfill)                                    |
+| `Intl.DateTimeFormat` | [`@formatjs/intl-datetimeformat`](https://formatjs.github.io/docs/polyfills/intl-datetimeformat/) (エッジケースのみ) |
+
+<Admonition type="tip">
+  モダンブラウザ (2022年以降にリリース)
+  を対象とするほとんどのプロジェクトでは、ポリフィルは不要です。
+</Admonition>

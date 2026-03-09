@@ -1,0 +1,88 @@
+---
+sidebar_position: 2
+title: Formatting
+---
+
+# Formatting Utilities
+
+Functions for formatting dates, times, and numbers for display.
+
+```tsx
+import {
+  formatDate,
+  formatDateTime,
+  formatTimeDisplay,
+  padNumber,
+} from "react-date-range-picker-headless";
+```
+
+## formatDate
+
+Format a date with a customizable format string.
+
+|                |                                                   |
+| -------------- | ------------------------------------------------- |
+| Signature      | `formatDate(date: Date, format?: string): string` |
+| Default format | `"YYYY.MM.DD"`                                    |
+
+```tsx
+formatDate(new Date(2026, 2, 1)); // "2026.03.01"
+formatDate(new Date(2026, 2, 1), "YYYY-MM-DD"); // "2026-03-01"
+formatDate(new Date(2026, 2, 1), "M/D"); // "3/1"
+```
+
+## formatDateTime
+
+Format a date with time using a customizable format string.
+
+|                |                                                       |
+| -------------- | ----------------------------------------------------- |
+| Signature      | `formatDateTime(date: Date, format?: string): string` |
+| Default format | `"YYYY.MM.DD HH:mm"`                                  |
+
+```tsx
+formatDateTime(new Date(2026, 2, 1, 14, 30)); // "2026.03.01 14:30"
+formatDateTime(new Date(2026, 2, 1, 14, 30), "YYYY-MM-DD HH:mm:ss"); // "2026-03-01 14:30:00"
+```
+
+## formatTimeDisplay
+
+Format a time display string based on a resolved `TimeConfig`.
+
+|           |                                                                                                                                                                 |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Signature | `formatTimeDisplay(hour: number, minute: number, second: number, period: TimePeriod, config: Required<TimeConfig>, amLabel?: string, pmLabel?: string): string` |
+
+| Parameter | Type                   | Default | Description                           |
+| --------- | ---------------------- | ------- | ------------------------------------- |
+| `hour`    | `number`               | --      | Hour value (24h format internally).   |
+| `minute`  | `number`               | --      | Minute value.                         |
+| `second`  | `number`               | --      | Second value.                         |
+| `period`  | `TimePeriod`           | --      | AM/PM (used for display in 12h mode). |
+| `config`  | `Required<TimeConfig>` | --      | Resolved time configuration.          |
+| `amLabel` | `string`               | `"AM"`  | AM display label.                     |
+| `pmLabel` | `string`               | `"PM"`  | PM display label.                     |
+
+```tsx
+import { resolveTimeConfig, formatTimeDisplay } from "react-date-range-picker-headless";
+
+const config = resolveTimeConfig({ precision: "minute", hourFormat: "24" });
+formatTimeDisplay(14, 30, 0, "PM", config); // "14:30"
+
+const config12 = resolveTimeConfig({ precision: "second", hourFormat: "12" });
+formatTimeDisplay(14, 30, 15, "PM", config12); // "02:30:15 PM"
+```
+
+## padNumber
+
+Pad a number to a 2-digit string.
+
+|           |                                  |
+| --------- | -------------------------------- |
+| Signature | `padNumber(num: number): string` |
+
+```tsx
+padNumber(1); // "01"
+padNumber(12); // "12"
+padNumber(0); // "00"
+```

@@ -1,0 +1,111 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind3Basic from "@examples/tailwind3/DatePicker/Basic";
+import Tailwind3BasicSource from "@examples/tailwind3/DatePicker/Basic.tsx?raw";
+
+# Tailwind CSS v3로 시작하기
+
+Tailwind v3 패키지는 Tailwind CSS v3 유틸리티 클래스로 스타일링된 날짜 선택기(date picker) 컴포넌트를 제공합니다.
+
+## 설치
+
+<PackageInstall pkg="react-date-range-picker-tailwind3" />
+
+별도의 CSS를 임포트할 필요가 없습니다. 이 컴포넌트는 Tailwind 유틸리티 클래스를 직접 사용합니다.
+
+## Tailwind 설정
+
+Tailwind가 컴포넌트 클래스를 스캔할 수 있도록 `tailwind.config.js`의 `content` 경로에 패키지를 추가하세요:
+
+```js
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  // ...
+};
+```
+
+## 빠른 시작
+
+<CodeDemo source={Tailwind3BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Tailwind3Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 포함된 컴포넌트
+
+| Component             | 설명                                        |
+| --------------------- | ------------------------------------------- |
+| `DatePicker`          | 팝업 캘린더를 통한 단일 날짜 선택           |
+| `DateRangePicker`     | 듀얼 캘린더 및 프리셋을 통한 날짜 범위 선택 |
+| `DateTimePicker`      | 시간 스크롤 패널을 통한 날짜 + 시간 선택    |
+| `DateRangeTimePicker` | 날짜 범위 + 시간 선택                       |
+
+모든 컴포넌트는 다음을 지원합니다:
+
+- `value` / `onChange`를 통한 제어 컴포넌트(Controlled) 방식
+- 키보드 내비게이션
+- `dark:` 변형(variant)을 통한 다크 모드
+- 4가지 크기: `small`, `medium`, `large`, `x-large`
+- 커스터마이징을 위한 Compound Component API
+
+## TypeScript 타입
+
+모든 설정 및 데이터 타입은 패키지에서 다시 내보내기(re-export)되므로, headless 패키지를 별도로 설치할 필요가 없습니다:
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind3";
+```
+
+이 타입들은 다음과 같은 경우에 유용합니다:
+
+- **`Locale`** — 커스텀 로캘 재정의 (요일 이름, 버튼 레이블, 날짜 포맷)
+- **`DatePickerSize`** — `size` prop 타이핑 (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — 시간 선택기의 정밀도, 포맷, 단계(steps) 설정
+- **`DateRangePreset`** — `DateRangePicker` / `DateRangeTimePicker`를 위한 프리셋 정의
+- **`CalendarMonth`**, **`DayProps`** — Compound Component를 사용한 커스텀 렌더링
+
+자세한 타입 정의는 [Headless Types](/docs/headless/types/common-types)를 참조하세요.
+
+## 다음 단계
+
+- [DatePicker](/docs/tailwind3/components/date-picker/basic) — 단일 날짜 선택
+- [DateRangePicker](/docs/tailwind3/components/date-range-picker/basic) — 프리셋이 있는 날짜 범위 선택
+- [Compound Components](/docs/tailwind3/customization/overview) — 내부 구조 커스터마이징
+- [Theme Override](/docs/tailwind3/customization/theme-override) — 테마 색상 커스터마이징
+- [Dark Mode](/docs/tailwind3/customization/dark-mode) — 다크 테마 지원
+
+## Tailwind Preflight 및 초기화(Reset)
+
+이 패키지는 프로젝트에 Tailwind CSS Preflight가 활성화되어 있다고 가정합니다(기본값).
+환경에서 Preflight를 비활성화한 경우(예: Docusaurus, 일부 마이크로 프론트엔드), 버튼 스타일이 깨질 수 있습니다.
+그런 경우, 제공된 `reset.css`를 임포트하여 버튼 스타일을 수동으로 초기화하세요:
+
+```tsx
+import "react-date-range-picker-tailwind3/reset.css";
+```

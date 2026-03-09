@@ -1,0 +1,48 @@
+---
+sidebar_position: 2
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import TwelveHour from "@examples/tailwind3/TimePicker/TwelveHour";
+import TwelveHourSource from "@examples/tailwind3/TimePicker/TwelveHour.tsx?raw";
+import MinuteStep from "@examples/tailwind3/TimePicker/MinuteStep";
+import MinuteStepSource from "@examples/tailwind3/TimePicker/MinuteStep.tsx?raw";
+import SecondPrecision from "@examples/tailwind3/TimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/tailwind3/TimePicker/SecondPrecision.tsx?raw";
+
+# 時間オプション
+
+`time` prop を使用して、時間パネルの動作を設定します。
+
+## 12時間形式
+
+AM/PMトグル付きの12時間形式に切り替えます。
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 分単位のステップ
+
+分の増分ステップを設定します。固定間隔でのスケジューリングに便利です。
+
+<CodeDemo source={MinuteStepSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinuteStep client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 秒単位の精度
+
+`precision` を `"second"` に設定すると、秒の列が表示されます。
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>

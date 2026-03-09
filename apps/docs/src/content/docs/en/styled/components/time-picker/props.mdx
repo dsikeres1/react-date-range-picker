@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+sidebar_label: Props
+---
+
+# Props
+
+| Prop            | Type                           | Default | Description                                     |
+| --------------- | ------------------------------ | ------- | ----------------------------------------------- |
+| `value`         | `Date \| null`                 | --      | Selected time value (only time portion is used) |
+| `onChange`      | `(date: Date \| null) => void` | --      | Callback when value changes                     |
+| `time`          | `TimeConfig`                   | --      | Time panel configuration                        |
+| `locale`        | `Partial<Locale>`              | --      | Custom locale configuration                     |
+| `displayFormat` | `string`                       | --      | Custom display format for the trigger           |
+| `placeholder`   | `string`                       | --      | Placeholder text for the trigger                |
+| `open`          | `boolean`                      | --      | Controlled open state                           |
+| `initialOpen`   | `boolean`                      | `false` | Initial open state (uncontrolled)               |
+| `onOpenChange`  | `(open: boolean) => void`      | --      | Callback when open state changes                |
+| `required`      | `boolean`                      | `false` | Disable clearing the value                      |
+| `inline`        | `boolean`                      | `false` | Render inline without trigger/popup             |
+| `hideFooter`    | `boolean`                      | --      | Hide the action footer                          |
+| `name`          | `string`                       | --      | Hidden input name for form submission           |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Time display precision. Defaults to "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** 12-hour or 24-hour format. Defaults to "24". */
+  hourFormat?: "12" | "24";
+  /** Minute increment step. Defaults to 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Second increment step. Defaults to 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Height (in px) of each scroll wheel item. Defaults to 32. */
+  itemHeight?: number;
+}
+```

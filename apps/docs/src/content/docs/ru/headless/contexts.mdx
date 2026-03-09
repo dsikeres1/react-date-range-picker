@@ -1,0 +1,114 @@
+---
+sidebar_position: 4
+title: Contexts
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ContextExample from "@examples/headless/ContextExample";
+import ContextExampleSource from "@examples/headless/ContextExample.tsx?raw";
+
+# Контексты
+
+Пакет headless предоставляет провайдеры контекста, которые оборачивают хуки и предоставляют их состояние через React Context. Это позволяет использовать **паттерн составных компонентов** — разделять ваш UI на небольшие, сфокусированные подкомпоненты, которые читают состояние из контекста вместо передачи пропсов.
+
+## Зачем нужны контексты?
+
+Без контекста вам пришлось бы передавать каждое состояние через пропсы:
+
+```tsx
+// Без контекста -- проброс пропсов (prop drilling)
+function MyDatePicker() {
+  const picker = useDatePicker({ value, onChange });
+  return (
+    <MyTrigger displayValue={picker.displayValue} onToggle={picker.handleToggle} />
+    <MyCalendar calendar={picker.calendar} getDayProps={picker.getDayProps} ... />
+    <MyFooter onConfirm={picker.handleConfirm} onCancel={picker.handleCancel} ... />
+  );
+}
+```
+
+С контекстом подкомпоненты получают то, что им нужно, напрямую:
+
+```tsx
+// С контекстом -- составные компоненты
+function MyDatePicker() {
+  return (
+    <DatePickerProvider value={value} onChange={onChange}>
+      <ExampleWrapper variant="headless" client:load>
+        <MyTrigger client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyCalendar client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyFooter client:load />
+      </ExampleWrapper>
+    </DatePickerProvider>
+  );
+}
+
+function MyTrigger() {
+  const { displayValue, handleToggle } = useDatePickerContext();
+  return <button onClick={handleToggle}>{displayValue}</button>;
+}
+```
+
+## Доступные провайдеры
+
+| Провайдер                     | Используемый хук (внутренне) | Хук-потребитель                   |
+| ----------------------------- | ---------------------------- | --------------------------------- |
+| `DatePickerProvider`          | `useDatePicker`              | `useDatePickerContext()`          |
+| `DateRangePickerProvider`     | `useDateRangePicker`         | `useDateRangePickerContext()`     |
+| `DateTimePickerProvider`      | `useDateTimePicker`          | `useDateTimePickerContext()`      |
+| `DateRangeTimePickerProvider` | `useDateRangeTimePicker`     | `useDateRangeTimePickerContext()` |
+
+Каждый провайдер рендерит как **типизированный контекст** (специфичный для данного типа выбора), так и **унифицированный PickerContext** (общий для всех типов).
+
+```tsx
+import {
+  DatePickerProvider,
+  DateRangePickerProvider,
+  DateTimePickerProvider,
+  DateRangeTimePickerProvider,
+} from "react-date-range-picker-headless";
+```
+
+### DatePickerProvider
+
+Оборачивает `useDatePicker`. Предоставляет `DatePickerContext` + `PickerContext`.
+
+```tsx
+import type { DatePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Проп          | Тип                            | Описание                                             |
+| ------------- | ------------------------------ | ---------------------------------------------------- |
+| `children`    | `ReactNode`                    | **Обязательный.** Дочерние компоненты.               |
+| `value`       | `Date \| null`                 | **Обязательный.** Текущая дата.                      |
+| `onChange`    | `(date: Date \| null) => void` | **Обязательный.** Обработчик изменений.              |
+| `inline`      | `boolean`                      | Отображать встроенно (без всплывающего окна).        |
+| `size`        | `DatePickerSize`               | Вариант размера.                                     |
+| `placeholder` | `string`                       | Плейсхолдер триггера.                                |
+| `name`        | `string`                       | Имя поля формы.                                      |
+| _...rest_     | `BaseDatePickerOptions`        | Все базовые опции (minDate, maxDate, locale и т.д.). |
+
+**Хук-потребитель:** `useDatePickerContext()` возвращает `UseDatePickerReturn`.
+
+### DateRangePickerProvider
+
+Оборачивает `useDateRangePicker`. Предоставляет `DateRangePickerContext` + `PickerContext`.
+
+```tsx
+import type { DateRangePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Проп          | Тип                                                           | Описание                                |
+| ------------- | ------------------------------------------------------------- | --------------------------------------- |
+| `children`    | `ReactNode`                                                   | **Обязательный.** Дочерние компоненты.  |
+| `value`       | `{ start: Date \| null; end: Date \| null }`                  | **Обязательный.** Текущий диапазон.     |
+| `onChange`    | `(value: { start: Date \| null; end: Date \| null }) => void` | **Обязательный.** Обработчик изменений. |
+| `inline`      | `boolean`                                                     | Отображать встроенно.                   |
+| `size`        | `DatePickerSize`                                              | Вариант размера.                        |
+| `placeholder` | `string`                                                      | Плейсхолдер                             |

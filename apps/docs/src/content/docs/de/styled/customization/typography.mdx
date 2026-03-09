@@ -1,0 +1,112 @@
+---
+sidebar_position: 8
+sidebar_label: "Typography"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/styled/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/styled/Customization/CompoundCustomFont.tsx?raw";
+import CompoundCustomFontPopup from "@examples/styled/Customization/CompoundCustomFontPopup";
+import CompoundCustomFontPopupSource from "@examples/styled/Customization/CompoundCustomFontPopup.tsx?raw";
+import CompoundNotoSans from "@examples/styled/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/styled/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/styled/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/styled/Customization/CompoundWebFonts.tsx?raw";
+import CSSCustomFont from "@examples/styled/Customization/CSSCustomFont";
+import CSSCustomFontSource from "@examples/styled/Customization/CSSCustomFont.tsx?raw";
+
+# Typografie
+
+Das Styled-Paket verwendet standardmäßig einen **System-Schriftarten-Stack**:
+
+```css
+--rdrp-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+```
+
+Dies rendert mit der nativen Schriftart des Betriebssystems auf jeder Plattform (San Francisco unter macOS, Segoe UI unter Windows, Roboto unter Android). System-Schriftarten bieten eine gute mehrsprachige Unterstützung, da das Betriebssystem CJK-, Arabisch- und andere Skript-Fallbacks automatisch handhabt.
+
+Zum Überschreiben setzen Sie `--rdrp-font-family` auf einem beliebigen übergeordneten Element – es wird in den Picker kaskadiert.
+
+## CSS-Variable Inline-Stil
+
+Überschreiben Sie die Schriftart über das `style`-Attribut auf einem Wrapper-Element:
+
+<CodeDemo source={CSSCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CSSCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Schriftfamilie
+
+Wechseln Sie zwischen Schriftfamilien, indem Sie `--rdrp-font-family` auf einem Wrapper setzen:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Verwendung von Web-Schriftarten (Noto Sans)
+
+Für eine konsistente plattformübergreifende Darstellung oder i18n-Projekte laden Sie eine Web-Schriftart wie [Noto Sans](https://fonts.google.com/noto) und überschreiben Sie die Variable:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/styles.css";
+
+// 1. Laden Sie Noto Sans in Ihrem HTML oder CSS:
+//    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+// 2. Überschreiben Sie die Schriftart-Variable:
+<div style={{ "--rdrp-font-family": '"Noto Sans", sans-serif' } as React.CSSProperties}>
+  <DatePicker value={value} onChange={setValue} inline />
+</div>;
+```
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Web-Schriftarten-Galerie
+
+Vergleichen Sie verschiedene Web-Schriftarten, um zu sehen, wie dramatisch die Typografie das Aussehen des Pickers verändert. Alle unten aufgeführten Schriftarten unterstützen die mehrsprachige Darstellung (Latein, CJK, Koreanisch).
+
+<Admonition type="warning" title="Nur Demo">
+  Die unten stehenden Schriftarten werden zu Demonstrationszwecken vom Google Fonts CDN geladen.
+  Diese Bibliothek bündelt **keine** Web-Schriftarten – Sie müssen sie in Ihrem eigenen Projekt
+  laden.
+</Admonition>
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Schriftgröße & -gewicht
+
+Passen Sie die Typografiedichte durch Überschreiben der Größen- und Gewichtsvariablen an:
+
+| Variable                      | Standard | Beschreibung               |
+| ----------------------------- | -------- | -------------------------- |
+| `--rdrp-font-size-xs`         | `11px`   | Kleinster Text             |
+| `--rdrp-font-size-sm`         | `12px`   | Wochentagsbeschriftungen   |
+| `--rdrp-font-size-base`       | `13px`   | Tageszellen, Schaltflächen |
+| `--rdrp-font-size-md`         | `14px`   | Auslöser, Zeitelemente     |
+| `--rdrp-font-size-lg`         | `15px`   | Monatstitel                |
+| `--rdrp-font-weight-normal`   | `400`    | Grundgewicht               |
+| `--rdrp-font-weight-medium`   | `500`    | Mittlere Betonung          |
+| `--rdrp-font-weight-semibold` | `600`    | Ausgewählte Tage, Titel    |
+| `--rdrp-font-weight-bold`     | `700`    | Heute-Indikator            |
+
+<CodeDemo source={CompoundCustomFontPopupSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFontPopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

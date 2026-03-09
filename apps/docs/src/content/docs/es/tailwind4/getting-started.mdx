@@ -1,0 +1,118 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind4Basic from "@examples/tailwind4/DatePicker/Basic";
+import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
+
+# Primeros Pasos con Tailwind CSS v4
+
+El paquete Tailwind v4 proporciona componentes de selector de fecha estilizados con clases de utilidad de Tailwind CSS v4 y tokens de diseño semánticos.
+
+## Instalación
+
+<PackageInstall pkg="react-date-range-picker-tailwind4" />
+
+No se necesita ninguna importación de CSS adicional. Los componentes utilizan clases de utilidad de Tailwind directamente.
+
+## Tailwind Preflight & Reset
+
+Este paquete asume que tu proyecto tiene Tailwind CSS Preflight habilitado (que es el predeterminado).
+Si tu entorno deshabilita Preflight (por ejemplo, Docusaurus, algunos Micro Frontends), los estilos de los botones pueden romperse.
+En ese caso, importa el `reset.css` proporcionado para inicializar manualmente los estilos de los botones:
+
+```tsx
+import "react-date-range-picker-tailwind4/reset.css";
+```
+
+## Tokens Semánticos
+
+Los componentes utilizan variables CSS semánticas para la tematización. Defínelas en tu CSS:
+
+```css
+@theme {
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted: oklch(0.96 0.003 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+Estos tokens se mapean a clases como `bg-popover`, `text-foreground`, `border-border`, etc.
+
+## Inicio Rápido
+
+<CodeDemo source={Tailwind4BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Tailwind4Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Qué está Incluido
+
+| Componente            | Descripción                                                     |
+| --------------------- | --------------------------------------------------------------- |
+| `DatePicker`          | Selección de fecha única con calendario emergente               |
+| `DateRangePicker`     | Selección de rango de fechas con calendario dual y preajustes   |
+| `DateTimePicker`      | Selección de fecha + hora con panel de desplazamiento de tiempo |
+| `DateRangeTimePicker` | Selección de rango de fechas + hora                             |
+
+Todos los componentes soportan:
+
+- Valor controlado con `value` / `onChange`
+- Navegación por teclado
+- Modo oscuro a través de la variante `dark:`
+- 4 tamaños: `small`, `medium`, `large`, `x-large`
+- API de Componentes Compuestos para personalización
+
+## Tipos de TypeScript
+
+Todos los tipos de configuración y datos se reexportan desde el paquete — no es necesario instalar el paquete headless por separado:
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind4";
+```
+
+Estos tipos son útiles para:
+
+- **`Locale`** — Sobrescribir la configuración regional personalizada (nombres de los días de la semana, etiquetas de los botones, formato de fecha)
+- **`DatePickerSize`** — Tipar la prop `size` (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — Configurar la precisión, el formato y los pasos del selector de tiempo
+- **`DateRangePreset`** — Definir preajustes para `DateRangePicker` / `DateRangeTimePicker`
+- **`CalendarMonth`**, **`DayProps`** — Renderizado personalizado con Componentes Compuestos
+
+Consulta [Headless Types](/docs/headless/types/common-types) para definiciones de tipo detalladas.
+
+## Próximos Pasos
+
+- [DatePicker](/docs/tailwind4/components/date-picker/basic) — Selección de fecha única
+- [DateRangePicker](/docs/tailwind4/components/date-range-picker/basic) — Rango de fechas con preajustes
+- [Compound Components](/docs/tailwind4/customization/overview) — Personalizar la estructura interna
+- [Semantic Tokens](/docs/tailwind4/customization/semantic-tokens) — Tematizar con tokens de diseño
+- [Dark Mode](/docs/tailwind4/customization/dark-mode) — Soporte para tema oscuro

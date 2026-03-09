@@ -1,0 +1,167 @@
+---
+sidebar_position: 10
+---
+
+# 语义化令牌
+
+Tailwind v4 包对所有颜色使用语义化 CSS 变量（设计令牌）。这些令牌将组件样式与特定的颜色值解耦，使主题化变得简单直接。令牌命名约定遵循与 [shadcn/ui](https://ui.shadcn.com/) 相同的模式。
+
+## 令牌系统
+
+Tailwind v4 组件不使用像 `bg-sky-500` 这样的硬编码颜色，而是使用像 `bg-primary`、`text-foreground` 和 `border-border` 这样的语义化工具类。这些工具类会映射到您在项目中定义的 CSS 变量。
+
+```
+bg-primary        → var(--color-primary)
+text-foreground   → var(--color-foreground)
+border-border     → var(--color-border)
+```
+
+## 必需的令牌
+
+使用 Tailwind v4 的 `@theme` 指令在您的 CSS 中定义这些令牌：
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+## 令牌参考
+
+| 令牌                         | 用途                                   | 示例工具类                   |
+| ---------------------------- | -------------------------------------- | ---------------------------- |
+| `--color-background`         | 页面/应用背景                          | `bg-background`              |
+| `--color-foreground`         | 默认文本颜色                           | `text-foreground`            |
+| `--color-popover`            | 弹出层背景                             | `bg-popover`                 |
+| `--color-popover-foreground` | 弹出层文本                             | `text-popover-foreground`    |
+| `--color-primary`            | 选定日期、确认按钮、范围端点           | `bg-primary`, `text-primary` |
+| `--color-primary-foreground` | 主背景上的文本                         | `text-primary-foreground`    |
+| `--color-muted-foreground`   | 柔和的文本（占位符、工作日、导航按钮） | `text-muted-foreground`      |
+| `--color-accent`             | 日期和按钮的悬停背景                   | `bg-accent`                  |
+| `--color-accent-foreground`  | 强调背景上的文本                       | `text-accent-foreground`     |
+| `--color-destructive`        | 清除/危险按钮文本                      | `text-destructive`           |
+| `--color-border`             | 通用边框（页脚、预设、弹出层）         | `border-border`              |
+| `--color-input`              | 输入框/触发器边框                      | `border-input`               |
+| `--color-ring`               | 聚焦环颜色                             | `ring-ring`                  |
+
+## 令牌如何映射到组件
+
+以下是令牌在选择器中的应用方式：
+
+### 触发器
+
+- 背景：`bg-background`
+- 边框：`border-input`
+- 文本：继承自根元素的 `text-foreground`
+- 占位符：`text-muted-foreground`
+- 聚焦环：`ring-ring`
+
+### 弹出层
+
+- 背景：`bg-popover`
+- 文本：`text-popover-foreground`
+- 边框：`border-border`
+
+### 日历日期
+
+- 默认悬停：`bg-accent` / `text-accent-foreground`
+- 选中：`bg-primary` / `text-primary-foreground`
+- 今天：`text-primary`
+- 在范围内：`bg-primary/10`
+- 范围开始/结束：`bg-primary` / `text-primary-foreground`
+- 禁用：`text-muted-foreground` 并降低不透明度
+
+### 页脚
+
+- 边框：`border-border`
+- 取消按钮：`border-input`，悬停 `bg-accent`
+- 确认按钮：`bg-primary` / `text-primary-foreground`
+- 清除按钮：`text-destructive`
+
+## 自定义令牌
+
+### 更改主颜色
+
+更改 `--color-primary` 和 `--color-primary-foreground` 来重塑选择器的品牌风格：
+
+```css
+@theme {
+  /* 紫色主调 */
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+}
+```
+
+### 暖色方案
+
+```css
+@theme {
+  --color-background: oklch(0.99 0.005 80);
+  --color-foreground: oklch(0.2 0.02 60);
+
+  --color-popover: oklch(0.99 0.005 80);
+  --color-popover-foreground: oklch(0.2 0.02 60);
+
+  --color-primary: oklch(0.6 0.2 40);
+  --color-primary-foreground: oklch(0.98 0.005 80);
+
+  --color-accent: oklch(0.95 0.02 80);
+  --color-accent-foreground: oklch(0.2 0.02 60);
+
+  --color-border: oklch(0.9 0.01 80);
+  --color-input: oklch(0.9 0.01 80);
+  --color-ring: oklch(0.85 0.02 80);
+}
+```
+
+### 暗黑模式令牌
+
+对于暗黑模式，在 `.dark` 选择器或 `@media (prefers-color-scheme: dark)` 下覆盖令牌：
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... 亮色值 */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+更多详情请参阅 [暗黑模式](/docs/tailwind4/customization/dark-mode)。
+
+## 已有的 shadcn/ui 项目
+
+如果您的项目已经定义了 shadcn/ui 令牌，选择器将自动使用它们，无需额外配置。令牌名称被特意设计为兼容的。更多信息请参阅 [shadcn 注册表](/docs/tailwind4/customization/shadcn-registry)。

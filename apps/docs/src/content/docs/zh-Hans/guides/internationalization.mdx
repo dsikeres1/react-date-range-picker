@@ -1,0 +1,38 @@
+---
+sidebar_position: 2
+title: Internationalization
+description: 区域设置自定义、语言切换和格式化覆盖。
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 国际化
+
+该库使用浏览器的 `Intl.DateTimeFormat` API 来生成符合区域设置的月份名称、星期标签和 AM/PM 文本。无需外部 i18n 库。
+
+## 快速入门
+
+使用 `createLocale()` 从一个 BCP 47 语言标签生成一个区域设置，然后通过 `locale` prop 传递它：
+
+```tsx
+import { createLocale } from "react-date-range-picker-headless";
+import { DatePicker } from "react-date-range-picker-styled";
+
+const ko = createLocale("ko", {
+  confirm: "확인",
+  cancel: "취소",
+  clear: "초기화",
+  placeholder: "날짜 선택",
+});
+
+function App() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} locale={ko} />;
+}
+```
+
+这也适用于任何其他变体（Tailwind v3、Tailwind v4、Headless）。
+
+## createLocale 自动生成的内容
+
+`createLocale(localeKey, overrides?)

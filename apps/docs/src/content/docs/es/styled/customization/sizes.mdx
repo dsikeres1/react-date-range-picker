@@ -1,0 +1,198 @@
+---
+sidebar_position: 5
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/styled/DatePicker/Sizes";
+import SizesSource from "@examples/styled/DatePicker/Sizes.tsx?raw";
+import CustomSizeViaCSS from "@examples/styled/Customization/CustomSizeViaCSS";
+import CustomSizeViaCSSSource from "@examples/styled/Customization/CustomSizeViaCSS.tsx?raw";
+
+# Tamaños
+
+El paquete con estilo incluye 4 variantes de tamaño incorporadas que escalan la tipografía, el espaciado, las dimensiones de las celdas y las dimensiones del disparador proporcionalmente.
+
+## Tamaños Disponibles
+
+| Tamaño    | Tamaño de Celda | Fuente Base | Ancho Mínimo del Disparador |
+| --------- | --------------- | ----------- | --------------------------- |
+| `small`   | 28px            | 11px        | 160px                       |
+| `medium`  | 36px            | 13px        | 200px                       |
+| `large`   | 44px            | 14px        | 240px                       |
+| `x-large` | 52px            | 15px        | 280px                       |
+
+`medium` es el predeterminado.
+
+## Uso
+
+Pasa la prop `size` a cualquier componente del selector:
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Qué Cambia por Tamaño
+
+Cada variante de tamaño sobrescribe un conjunto de variables CSS a través de una clase (p. ej., `rdrp-size-small`). Esto es lo que cada tamaño ajusta:
+
+### Pequeño
+
+```css
+.rdrp-size-small {
+  --rdrp-cell-size: 28px;
+  --rdrp-nav-btn-size: 24px;
+  --rdrp-weekday-height: 24px;
+  --rdrp-grid-min-height: 168px;
+  --rdrp-panel-min-width: 196px;
+  --rdrp-dual-gap: 16px;
+
+  --rdrp-font-size-xs: 10px;
+  --rdrp-font-size-sm: 11px;
+  --rdrp-font-size-base: 11px;
+  --rdrp-font-size-md: 12px;
+  --rdrp-font-size-lg: 13px;
+
+  --rdrp-trigger-min-width: 160px;
+  --rdrp-trigger-padding-x: 10px;
+  --rdrp-trigger-padding-y: 6px;
+  --rdrp-popup-padding: 12px;
+
+  --rdrp-btn-padding-x: 10px;
+  --rdrp-btn-padding-y: 4px;
+
+  --rdrp-spacing-lg: 8px;
+  --rdrp-spacing-xl: 12px;
+
+  --rdrp-time-item-height: 28px;
+  --rdrp-time-panel-height: 148px;
+  --rdrp-time-column-height: 132px;
+  --rdrp-time-panel-min-width: 100px;
+  --rdrp-time-picker-content-min-width: 210px;
+
+  --rdrp-preset-min-width: 110px;
+}
+```
+
+### Grande
+
+```css
+.rdrp-size-large {
+  --rdrp-cell-size: 44px;
+  --rdrp-nav-btn-size: 32px;
+  --rdrp-weekday-height: 32px;
+  --rdrp-grid-min-height: 264px;
+  --rdrp-panel-min-width: 308px;
+  --rdrp-dual-gap: 28px;
+
+  --rdrp-font-size-xs: 12px;
+  --rdrp-font-size-sm: 13px;
+  --rdrp-font-size-base: 14px;
+  --rdrp-font-size-md: 15px;
+  --rdrp-font-size-lg: 16px;
+
+  --rdrp-trigger-min-width: 240px;
+  --rdrp-trigger-padding-x: 16px;
+  --rdrp-trigger-padding-y: 10px;
+  --rdrp-popup-padding: 20px;
+
+  --rdrp-btn-padding-x: 16px;
+  --rdrp-btn-padding-y: 8px;
+
+  --rdrp-spacing-lg: 16px;
+  --rdrp-spacing-xl: 20px;
+
+  --rdrp-time-item-height: 36px;
+  --rdrp-time-panel-height: 196px;
+  --rdrp-time-column-height: 180px;
+  --rdrp-time-panel-min-width: 140px;
+  --rdrp-time-picker-content-min-width: 290px;
+
+  --rdrp-preset-min-width: 160px;
+}
+```
+
+### Extra Grande
+
+```css
+.rdrp-size-x-large {
+  --rdrp-cell-size: 52px;
+  --rdrp-nav-btn-size: 36px;
+  --rdrp-weekday-height: 36px;
+  --rdrp-grid-min-height: 312px;
+  --rdrp-panel-min-width: 364px;
+  --rdrp-dual-gap: 32px;
+
+  --rdrp-font-size-xs: 13px;
+  --rdrp-font-size-sm: 14px;
+  --rdrp-font-size-base: 15px;
+  --rdrp-font-size-md: 16px;
+  --rdrp-font-size-lg: 18px;
+
+  --rdrp-trigger-min-width: 280px;
+  --rdrp-trigger-padding-x: 20px;
+  --rdrp-trigger-padding-y: 12px;
+  --rdrp-popup-padding: 24px;
+
+  --rdrp-btn-padding-x: 20px;
+  --rdrp-btn-padding-y: 10px;
+
+  --rdrp-spacing-lg: 20px;
+  --rdrp-spacing-xl: 24px;
+
+  --rdrp-time-item-height: 40px;
+  --rdrp-time-panel-height: 216px;
+  --rdrp-time-column-height: 200px;
+  --rdrp-time-panel-min-width: 160px;
+
+  --rdrp-preset-min-width: 180px;
+}
+```
+
+## Tamaños Personalizados
+
+Crea tu propio tamaño definiendo una clase CSS que sobrescriba las variables de tamaño:
+
+```css
+.rdrp-size-custom {
+  --rdrp-cell-size: 40px;
+  --rdrp-nav-btn-size: 30px;
+  --rdrp-font-size-base: 14px;
+  --rdrp-font-size-md: 15px;
+  --rdrp-trigger-min-width: 220px;
+  --rdrp-popup-padding: 18px;
+}
+```
+
+Luego aplícalo a través de un contenedor:
+
+```tsx
+<div className="rdrp-size-custom">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+O con la API de Componentes Compuestos, añade la clase a Root:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} className="rdrp-size-custom">
+  {/* ... */}
+</DatePicker.Root>
+```
+
+También puedes sobrescribir las variables de tamaño mediante estilos en línea:
+
+<CodeDemo source={CustomSizeViaCSSSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSizeViaCSS client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip">
+  El tamaño `medium` es el predeterminado y no aplica ninguna sobreescritura. Las variables base en
+  `variables.css` son los valores de `medium`.
+</Admonition>

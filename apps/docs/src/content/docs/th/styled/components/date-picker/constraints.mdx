@@ -1,0 +1,82 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Required from "@examples/styled/DatePicker/Required";
+import RequiredSource from "@examples/styled/DatePicker/Required.tsx?raw";
+import MinMaxDate from "@examples/styled/DatePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/styled/DatePicker/MinMaxDate.tsx?raw";
+import DisabledDates from "@examples/styled/DatePicker/DisabledDates";
+import DisabledDatesSource from "@examples/styled/DatePicker/DisabledDates.tsx?raw";
+import DisablePastFuture from "@examples/styled/DatePicker/DisablePastFuture";
+import DisablePastFutureSource from "@examples/styled/DatePicker/DisablePastFuture.tsx?raw";
+import HighlightDates from "@examples/styled/DatePicker/HighlightDates";
+import HighlightDatesSource from "@examples/styled/DatePicker/HighlightDates.tsx?raw";
+import InitialMonth from "@examples/styled/DatePicker/InitialMonth";
+import InitialMonthSource from "@examples/styled/DatePicker/InitialMonth.tsx?raw";
+
+# ข้อจำกัด
+
+## จำเป็น (Required)
+
+เมื่อตั้งค่า `required` ปุ่มล้างค่าจะถูกปิดใช้งานและค่าจะไม่สามารถทำให้ว่างได้
+
+<CodeDemo source={RequiredSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Required client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## วันที่ต่ำสุดและสูงสุด (Min & Max Dates)
+
+จำกัดวันที่สามารถเลือกได้ให้อยู่ในช่วงที่กำหนดโดยใช้ `minDate` และ `maxDate`
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## วันที่ปิดใช้งาน (Disabled Dates)
+
+ใช้ `isDateUnavailable` เพื่อปิดใช้งานวันที่ที่ระบุแบบไดนามิก
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## ปิดใช้งานอดีต / อนาคต (Disable Past / Future)
+
+ใช้ `disablePast` หรือ `disableFuture` เพื่อปิดใช้งานวันที่ก่อน/หลังวันนี้อย่างรวดเร็ว
+
+<CodeDemo source={DisablePastFutureSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DisablePastFuture client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## ไฮไลท์วันที่ (Highlight Dates)
+
+ไฮไลท์วันที่ที่ระบุด้วยภาพ (เช่น วันหยุด, กิจกรรม) โดยใช้ prop `highlightDates`
+
+<CodeDemo source={HighlightDatesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <HighlightDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## เดือนเริ่มต้น (Initial Month)
+
+ตั้งค่าเดือนที่แสดงเริ่มต้นเมื่อตัวเลือกถูกเปิดครั้งแรก
+
+<CodeDemo source={InitialMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <InitialMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>

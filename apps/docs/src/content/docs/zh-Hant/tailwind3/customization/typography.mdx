@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind3/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind3/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind3/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind3/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind3/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind3/Customization/CompoundWebFonts.tsx?raw";
+
+# 字體排印
+
+Tailwind v3 套件使用 Tailwind 預設的 `font-sans` 類別 (`ui-sans-serif, system-ui, sans-serif, ...`)。由於 CSS 的 `font-family` 是可繼承的，您可以透過將選擇器包裹在一個帶有 `fontFamily` 樣式的容器中來覆寫其字體。容器的字體會層疊套用至所有選擇器元件。
+
+## 字體家族
+
+包裹選擇器並在包裹層設定 `fontFamily` 來切換字體：
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 使用 Web 字體 (Noto Sans)
+
+在執行階段載入一個 web 字體，並透過包裹層套用它。此範例從 Google Fonts 載入 [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans)：
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="生產環境使用建議">
+在實際專案中，應透過 HTML `<head>` 中的 `<link>` 標籤或您的 CSS 打包工具來載入字體，而不是在執行階段注入。這裡使用 `useEffect` 的方法僅為示範目的。
+</Admonition>
+
+## Web 字體展示
+
+比較不同的 web 字體，看看字體排印如何顯著地改變選擇器的外觀。以下所有字體都支援多語言渲染 (拉丁文、中日韓文、韓文)。
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

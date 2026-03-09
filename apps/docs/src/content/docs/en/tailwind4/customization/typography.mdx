@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind4/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind4/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind4/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind4/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind4/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind4/Customization/CompoundWebFonts.tsx?raw";
+
+# Typography
+
+The Tailwind v4 package uses Tailwind's default `font-sans` class (`ui-sans-serif, system-ui, sans-serif, ...`). Since CSS `font-family` is inherited, you can override the picker's font by wrapping it in a container with a `fontFamily` style. The wrapper's font cascades into all picker elements.
+
+## Font Family
+
+Wrap the picker and set `fontFamily` on the wrapper to switch fonts:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Using Web Fonts (Noto Sans)
+
+Load a web font at runtime and apply it via a wrapper. This example loads [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) from Google Fonts:
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="Production usage">
+In a real project, load the font via a `<link>` tag in your HTML `<head>` or through your CSS bundler instead of injecting it at runtime. The `useEffect` approach here is for demonstration purposes only.
+</Admonition>
+
+## Web Font Gallery
+
+Compare different web fonts to see how dramatically typography changes the picker's look. All fonts below support multi-language rendering (Latin, CJK, Korean).
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

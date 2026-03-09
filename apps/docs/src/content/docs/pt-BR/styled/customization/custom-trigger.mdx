@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: "Custom Trigger"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/styled/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/styled/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/styled/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/styled/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Gatilho Personalizado
+
+Substitua o gatilho padrão pelo seu próprio botão ou input. O componente `Trigger` aceita uma render prop que lhe dá controle total sobre a aparência e o comportamento do gatilho.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render Props do Gatilho
+
+| Prop           | Tipo             | Descrição                               |
+| -------------- | ---------------- | --------------------------------------- |
+| `displayValue` | `string`         | Data selecionada formatada              |
+| `placeholder`  | `string`         | Texto do placeholder                    |
+| `hasValue`     | `boolean`        | Se uma data está selecionada            |
+| `isOpen`       | `boolean`        | Se o pop-up está aberto                 |
+| `onToggle`     | `() => void`     | Alterna a abertura/fechamento do pop-up |
+| `onClear`      | `() => void`     | Limpa a seleção                         |
+| `locale`       | `Locale`         | Objeto de localidade atual              |
+| `triggerRef`   | `(node) => void` | Callback de ref para posicionamento     |
+
+## Gatilho do Seletor de Intervalo
+
+O mesmo padrão funciona com `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,48 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind3Basic from "@examples/tailwind3/DatePicker/Basic";
+import Tailwind3BasicSource from "@examples/tailwind3/DatePicker/Basic.tsx?raw";
+
+# Primeros Pasos con Tailwind CSS v3
+
+El paquete de Tailwind v3 proporciona componentes de selector de fechas estilizados con clases de utilidad de Tailwind CSS v3.
+
+## Instalación
+
+<PackageInstall pkg="react-date-range-picker-tailwind3" />
+
+No se necesita importar CSS adicional. Los componentes utilizan clases de utilidad de Tailwind directamente.
+
+## Configuración de Tailwind
+
+Añade el paquete a tus rutas de `content` en `tailwind.config.js` para que Tailwind pueda escanear las clases de los componentes:
+
+```js
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  // ...
+};
+```
+
+## Inicio Rápido
+
+<CodeDemo source={Tailwind3BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Tailwind3Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Qué se Incluye
+
+| Componente

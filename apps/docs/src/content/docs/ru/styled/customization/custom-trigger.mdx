@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: "Custom Trigger"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/styled/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/styled/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/styled/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/styled/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Пользовательский триггер
+
+Замените стандартный триггер своей собственной кнопкой или полем ввода. Компонент `Trigger` принимает `render prop`, который дает вам полный контроль над внешним видом и поведением триггера.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render Props для триггера
+
+| Проп           | Тип              | Описание                           |
+| :------------- | :--------------- | :--------------------------------- |
+| `displayValue` | `string`         | Отформатированная выбранная дата   |
+| `placeholder`  | `string`         | Текст-заполнитель                  |
+| `hasValue`     | `boolean`        | Выбрана ли дата                    |
+| `isOpen`       | `boolean`        | Открыто ли всплывающее окно        |
+| `onToggle`     | `() => void`     | Переключить открытие/закрытие окна |
+| `onClear`      | `() => void`     | Очистить выбор                     |
+| `locale`       | `Locale`         | Текущий объект локали              |
+| `triggerRef`   | `(node) => void` | Ref-колбэк для позиционирования    |
+
+## Триггер для выбора диапазона
+
+Этот же паттерн работает и с `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

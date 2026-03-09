@@ -1,0 +1,20 @@
+---
+sidebar_position: 2
+sidebar_label: With Presets
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import WithPresets from "@examples/tailwind3/DateRangePicker/WithPresets";
+import WithPresetsSource from "@examples/tailwind3/DateRangePicker/WithPresets.tsx?raw";
+
+# 使用預設選項
+
+定義預設的日期範圍以便快速選取。每個預設選項都有一個 `label` 和一個 `value`，`value` 可以是一個靜態物件或是一個回傳物件的函式。
+
+<CodeDemo source={WithPresetsSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <WithPresets client:load />
+  </ExampleWrapper>
+</CodeDemo>

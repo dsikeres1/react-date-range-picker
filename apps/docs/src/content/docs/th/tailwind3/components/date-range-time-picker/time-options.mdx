@@ -1,0 +1,36 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import SecondPrecision from "@examples/tailwind3/DateRangeTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/tailwind3/DateRangeTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/tailwind3/DateRangeTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/tailwind3/DateRangeTimePicker/TwelveHour.tsx?raw";
+
+# ตัวเลือกเวลา
+
+กำหนดค่าการทำงานของแผงควบคุมเวลาผ่าน prop `time`
+
+## ความแม่นยำระดับวินาที
+
+แสดงคอลัมน์วินาทีสำหรับทั้งแผงเวลาเริ่มต้นและเวลาสิ้นสุด
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## รูปแบบ 12 ชั่วโมง
+
+สลับไปใช้รูปแบบ 12 ชั่วโมงพร้อมปุ่มสลับ AM/PM สำหรับทั้งแผงเวลาเริ่มต้นและเวลาสิ้นสุด
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,106 @@
+---
+sidebar_position: 1
+title: Overview
+---
+
+import PackageInstall from "@/components/PackageInstall.astro";
+
+# Headless
+
+headless 패키지(`react-date-range-picker-headless`)는 스타일이 적용되지 않은 hook과 context provider를 제공합니다. 모든 상태 관리, 캘린더 로직, 키보드 탐색 및 접근성 기능을 포함하지만, CSS나 마크업에 대한 의견은 전혀 없습니다.
+
+사용자만의 UI를 직접 만들 수 있습니다.
+
+## 설치
+
+<PackageInstall pkg="react-date-range-picker-headless" />
+
+## Headless 사용 시점
+
+- 자체 컴포넌트 라이브러리를 갖춘 디자인 시스템이 있는 경우
+- 모든 요소에 대해 픽셀 단위의 완벽한 제어를 원하는 경우
+- 특정 사용 사례를 위한 맞춤형 날짜 선택기를 구축하는 경우
+- 스타일 패키지에서 다루지 않는 CSS 프레임워크와 통합하려는 경우
+
+바로 사용할 수 있는 스타일 컴포넌트를 원한다면, 대신 [Styled](/docs/styled/getting-started), [Tailwind v4](/docs/tailwind4/getting-started), 또는 [Tailwind v3](/docs/tailwind3/getting-started)를 참조하세요.
+
+## 작동 방식
+
+1. 사용 사례에 맞는 hook을 선택합니다
+2. 옵션(`value`, `onChange`, `config`)을 전달합니다
+3. 상태와 핸들러를 반환받습니다
+4. 반환된 값을 사용하여 자신만의 UI를 렌더링합니다
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  const {
+    isOpen,
+    calendar,
+    getDayProps,
+    displayValue,
+    handleToggle,
+    handleDateClick,
+    handleConfirm,
+    handlePrevMonth,
+    handleNextMonth,
+    locale,
+  } = useDatePicker({ value, onChange: setValue });
+
+  return (
+    <div>
+      <button onClick={handleToggle}>{displayValue || locale.placeholder}</button>
+      {isOpen && (
+        <div>
+          <div>
+            <button onClick={handlePrevMonth}>{locale.prevMonth}</button>
+            <span>{locale.formatMonthYear(calendar.month)}</span>
+            <button onClick={handleNextMonth}>{locale.nextMonth}</button>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}>
+            {calendar.weeks.flat().map((day, i) => {
+              if (!day) return <span key={i} />;
+              const props = getDayProps(day);
+              return (
+                <button
+                  key={i}
+                  onClick={() => handleDateClick(day)}
+                  style={{
+                    background: props.isSelected ? "#0ea5e9" : "transparent",
+                    color: props.isDisabled ? "#ccc" : props.isToday ? "#0ea5e9" : "inherit",
+                  }}
+                >
+                  {props.day}
+                </button>
+              );
+            })}
+          </div>
+          <button onClick={handleConfirm}>{locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## 사용 가능한 Hooks
+
+| Hook                                                                         | 사용 사례                           |
+| ---------------------------------------------------------------------------- | ----------------------------------- |
+| [`useDatePicker`](/docs/headless/hooks/use-date-picker)                      | 단일 날짜 선택                      |
+| [`useDateRangePicker`](/docs/headless/hooks/use-date-range-picker)           | 듀얼 캘린더를 사용한 날짜 범위 선택 |
+| [`useDateTimePicker`](/docs/headless/hooks/use-date-time-picker)             | 날짜 + 시간 선택                    |
+| [`useDateRangeTimePicker`](/docs/headless/hooks/use-date-range-time-picker)  | 날짜 범위 + 시간 선택               |
+| [`useTimePicker`](/docs/headless/hooks/use-time-picker)                      | 시간 전용 스크롤 휠                 |
+| [`useStandaloneTimePicker`](/docs/headless/hooks/use-standalone-time-picker) | 열기/닫기 동작이 있는 시간 선택기   |
+
+## 다음 단계
+
+- [사용자 정의 UI 구축](/docs/headless/building-custom-ui) -- headless 패턴 전체 둘러보기
+- [Hooks 참조](/docs/headless/hooks/use-date-picker) -- 상세 hook 문서
+- [Contexts](/docs/headless/contexts) -- 복합 컴포넌트를 위한 Provider 패턴
+- [날짜 유틸리티](/docs/headless/date-utilities) -- headless에서 내보내는 헬퍼 함수

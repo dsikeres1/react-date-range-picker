@@ -1,0 +1,34 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomLocale from "@examples/tailwind4/DateTimePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind4/DateTimePicker/CustomLocale.tsx?raw";
+import FormIntegration from "@examples/tailwind4/DateTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind4/DateTimePicker/FormIntegration.tsx?raw";
+
+# ลักษณะที่ปรากฏ
+
+## Locale ที่กำหนดเอง
+
+ระบุ locale ที่กำหนดเองสำหรับการปรับให้เป็นสากล คีย์ `dateTimePlaceholder` จะปรับแต่งข้อความทริกเกอร์
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## การรวมฟอร์ม
+
+ใช้ prop `name` เพื่อรวมอินพุตที่ซ่อนอยู่สำหรับการส่งฟอร์มแบบเนทีฟ
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

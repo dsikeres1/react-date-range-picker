@@ -1,0 +1,208 @@
+---
+sidebar_position: 10
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# การลบล้างธีม
+
+แพ็คเกจ Tailwind v3 ใช้คลาสยูทิลิตี้ของ Tailwind (เช่น `sky-500`, `slate-100`) สำหรับการจัดสไตล์ทั้งหมด คุณสามารถปรับแต่งรูปลักษณ์ได้โดยการลบล้างออบเจ็กต์ธีมที่ส่งออกจากแพ็คเกจ
+
+## ธีมเริ่มต้น
+
+ธีมถูกกำหนดเป็นชุดของออบเจ็กต์ที่ส่งออก ซึ่งแต่ละออบเจ็กต์ประกอบด้วยสตริงชื่อคลาสสำหรับส่วนประกอบต่างๆ นี่คือภาพรวมของชุดสีเริ่มต้น:
+
+| บทบาท                | คลาสโหมดสว่าง | คลาสโหมดมืด  |
+| -------------------- | ------------- | ------------ |
+| หลัก                 | `sky-500`     | `sky-500`    |
+| ข้อความหลัก          | `sky-500`     | `sky-400`    |
+| พื้นหลัง             | `white`       | `slate-950`  |
+| พื้นผิวเมื่อวางเมาส์ | `slate-100`   | `slate-800`  |
+| ข้อความ              | `slate-900`   | `slate-50`   |
+| ข้อความจาง           | `slate-500`   | `slate-400`  |
+| เส้นขอบ              | `slate-200`   | `slate-800`  |
+| พื้นหลังช่วงวันที่   | `sky-50`      | `sky-950/50` |
+| อันตราย              | `red-500`     | `red-600`    |
+
+## โครงสร้างออบเจ็กต์ธีม
+
+ธีมถูกแบ่งออกเป็นการส่งออกที่มีชื่อหลายรายการ:
+
+```ts
+import {
+  rootClassNames,
+  triggerClassNames,
+  headerClassNames,
+  gridClassNames,
+  dayClassNames,
+  footerClassNames,
+  contentClassNames,
+  rangeClassNames,
+  dateTimeClassNames,
+  timePanelClassNames,
+} from "react-date-range-picker-tailwind3";
+```
+
+แต่ละออบเจ็กต์มีคีย์ที่แมปกับสตริงคลาส Tailwind ทั้งหมด ตัวอย่างเช่น:
+
+```ts
+// dayClassNames
+{
+  day: "flex items-center justify-center w-9 h-9 mx-[1px] rounded-md transition-colors cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 ...",
+  today: "font-bold text-sky-500 dark:text-sky-400",
+  selected: "bg-sky-500 dark:bg-sky-500 text-white font-semibold ...",
+  inRange: "bg-sky-50 dark:bg-sky-950/50 text-slate-900 dark:text-slate-50 rounded-none mx-0 ...",
+  rangeStart: "bg-sky-500 dark:bg-sky-500 text-white rounded-r-none mx-0 ...",
+  rangeEnd: "bg-sky-500 dark:bg-sky-500 text-white rounded-l-none mx-0 ...",
+  // ...
+}
+```
+
+## การลบล้างด้วย Compound Components
+
+วิธีที่ตรงไปตรงมาที่สุดในการปรับแต่งธีมคือผ่าน Compound Component API แต่ละส่วนยอมรับ `className` prop ที่จะถูกรวมเข้ากับค่าเริ่มต้นโดยใช้ `twMerge` ดังนั้นยูทิลิตี้ที่ขัดแย้งกันจะได้รับการแก้ไขอย่างถูกต้อง
+
+### เปลี่ยนสีหลัก
+
+แทนที่ `sky` ด้วย `violet` สำหรับวันที่เลือกและสถานะที่เกี่ยวข้อง:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+function VioletPicker() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  return (
+    <DatePicker.Root value={value} onChange={setValue}>
+      <DatePicker.Trigger className="hover:border-violet-500/50 focus-visible:ring-violet-500 focus-visible:border-violet-500" />
+      <DatePicker.Content>
+        <DatePicker.Header>
+          <DatePicker.PrevButton className="focus-visible:ring-violet-500" />
+          <DatePicker.Title />
+          <DatePicker.NextButton className="focus-visible:ring-violet-500" />
+        </DatePicker.Header>
+        <DatePicker.Grid
+          dayClassName="hover:bg-violet-50 dark:hover:bg-violet-950/50 focus-visible:ring-violet-500"
+          dayTodayClassName="text-violet-500 dark:text-violet-400"
+          daySelectedClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayInRangeClassName="bg-violet-50 dark:bg-violet-950/50 hover:bg-violet-100"
+          dayRangeStartClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayRangeEndClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayFocusedClassName="ring-violet-500"
+        />
+        <DatePicker.Footer>
+          <DatePicker.ClearButton />
+          <DatePicker.CancelButton />
+          <DatePicker.ConfirmButton className="bg-violet-500 hover:bg-violet-500/90 focus-visible:ring-violet-500" />
+        </DatePicker.Footer>
+      </DatePicker.Content>
+    </DatePicker.Root>
+  );
+}
+```
+
+### พื้นหลังที่กำหนดเอง
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger className="bg-slate-50 dark:bg-slate-900" />
+  <DatePicker.Content className="bg-slate-50 dark:bg-slate-900">{/* ... */}</DatePicker.Content>
+</DatePicker.Root>
+```
+
+## การสร้างออบเจ็กต์ธีมที่กำหนดเอง
+
+สำหรับการรีแบรนด์ทั้งแอป ให้สร้างคอมโพเนนต์ครอบที่จะใช้คลาสที่คุณกำหนดเองกับทุกส่วน:
+
+```tsx
+// components/MyDatePicker.tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+const myTheme = {
+  trigger: "hover:border-emerald-500/50 focus-visible:ring-emerald-500",
+  dayToday: "text-emerald-500 dark:text-emerald-400",
+  daySelected: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  dayInRange: "bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100",
+  dayRangeStart: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  dayRangeEnd: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  confirmButton: "bg-emerald-500 hover:bg-emerald-500/90 focus-visible:ring-emerald-500",
+  focusRing: "focus-visible:ring-emerald-500",
+};
+
+export function MyDatePicker(props) {
+  return (
+    <DatePicker.Root {...props}>
+      <DatePicker.Trigger className={myTheme.trigger} />
+      <DatePicker.Content>
+        <DatePicker.Header>
+          <DatePicker.PrevButton className={myTheme.focusRing} />
+          <DatePicker.Title />
+          <DatePicker.NextButton className={myTheme.focusRing} />
+        </DatePicker.Header>
+        <DatePicker.Grid
+          dayTodayClassName={myTheme.dayToday}
+          daySelectedClassName={myTheme.daySelected}
+          dayInRangeClassName={myTheme.dayInRange}
+          dayRangeStartClassName={myTheme.dayRangeStart}
+          dayRangeEndClassName={myTheme.dayRangeEnd}
+          dayFocusedClassName={myTheme.focusRing}
+        />
+        <DatePicker.Footer>
+          <DatePicker.ClearButton />
+          <DatePicker.CancelButton />
+          <DatePicker.ConfirmButton className={myTheme.confirmButton} />
+        </DatePicker.Footer>
+      </DatePicker.Content>
+    </DatePicker.Root>
+  );
+}
+```
+
+ใช้มันทั่วทั้งแอปของคุณ:
+
+```tsx
+<MyDatePicker value={date} onChange={setDate} />
+```
+
+## Props คลาสวันของ Grid
+
+คอมโพเนนต์ `Grid` จะส่ง props className ที่เกี่ยวกับวันลงไปยังเซลล์ `Day` แต่ละเซลล์ นี่คือรายการของการลบล้างที่ใช้ได้:
+
+| Prop                      | รูปแบบคลาสเริ่มต้น          | คำอธิบาย                         |
+| ------------------------- | --------------------------- | -------------------------------- |
+| `dayClassName`            | สไตล์วันพื้นฐาน             | คลาสพื้นฐานสำหรับเซลล์วันทั้งหมด |
+| `dayTodayClassName`       | `text-sky-500`              | ตัวบ่งชี้วันนี้                  |
+| `daySelectedClassName`    | `bg-sky-500 text-white`     | วันที่เลือก                      |
+| `dayDisabledClassName`    | `opacity-50`                | วันที่ปิดใช้งาน                  |
+| `dayOutsideClassName`     | `text-slate-500/50`         | วันนอกเดือน                      |
+| `dayHighlightedClassName` | `after:bg-amber-500`        | จุดไฮไลท์                        |
+| `dayInRangeClassName`     | `bg-sky-50`                 | วันที่อยู่ในช่วง                 |
+| `dayRangeStartClassName`  | `bg-sky-500 rounded-r-none` | วันเริ่มต้นของช่วง               |
+| `dayRangeEndClassName`    | `bg-sky-500 rounded-l-none` | วันสิ้นสุดของช่วง                |
+| `dayRangeSingleClassName` | `bg-sky-500`                | ช่วงวันเดียว                     |
+| `dayHoverRangeClassName`  | `bg-sky-50/50`              | ช่วงแสดงตัวอย่างเมื่อวางเมาส์    |
+| `dayHoverTargetClassName` | `bg-sky-100`                | จุดสิ้นสุดเมื่อวางเมาส์          |
+| `dayFocusedClassName`     | `ring-sky-500`              | วงแหวนโฟกัสของคีย์บอร์ด          |
+| `dayEmptyClassName`       | `invisible`                 | ตัวยึดตำแหน่งเซลล์ว่าง           |
+
+## เส้นทางเนื้อหาของ Tailwind
+
+เมื่อทำการลบล้างด้วยคลาสสีที่กำหนดเอง ต้องแน่ใจว่าได้รวมคลาสเหล่านั้นไว้ในเส้นทางเนื้อหาของ Tailwind ของคุณ คลาสที่กำหนดในไฟล์คอมโพเนนต์ของคุณจะถูกสแกนโดยค่าเริ่มต้น แต่ถ้าคุณกำหนดไว้ในไฟล์การกำหนดค่าแยกต่างหาก ให้เพิ่มเส้นทางนั้นด้วย:
+
+```js
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+    // Add your theme config if it's in a separate file
+    "./src/config/date-picker-theme.ts",
+  ],
+};
+```
+
+<Admonition type="tip">
+  หากคุณต้องการการทำธีมโดยใช้โทเค็นเชิงความหมาย (เช่น shadcn/ui) แทนที่จะเป็นคลาสสีที่เป็นรูปธรรม
+  ลองพิจารณาใช้ [แพ็คเกจ Tailwind v4](/docs/tailwind4/getting-started)
+  ซึ่งใช้โทเค็นเชิงความหมายที่อิงกับตัวแปร CSS
+</Admonition>

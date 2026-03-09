@@ -1,0 +1,34 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind4/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind4/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind4/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind4/Customization/CompoundColorThemePopup.tsx?raw";
+
+# Colores
+
+Cambia los temas de color en tiempo de ejecución sobrescribiendo las propiedades personalizadas de CSS en un elemento contenedor. Dado que el paquete de Tailwind v4 lee todos los colores de tokens semánticos, cambiar las variables de CSS subyacentes cambia instantáneamente la marca de todo el selector.
+
+El paquete de Tailwind v4 usa el formato **oklch** para los tokens semánticos. Sobrescribe `--color-primary` y `--color-primary-foreground` para cambiar la marca del selector:
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Modo Emergente
+
+La misma técnica funciona con los selectores emergentes:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

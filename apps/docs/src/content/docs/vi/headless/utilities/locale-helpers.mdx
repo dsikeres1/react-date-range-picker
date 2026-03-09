@@ -1,0 +1,58 @@
+---
+sidebar_position: 5
+title: Locale Helpers
+---
+
+# Tiện ích Locale
+
+Các hàm để tạo và hợp nhất các cấu hình locale.
+
+```tsx
+import {
+  DEFAULT_LOCALE,
+  mergeLocale,
+  createLocale,
+  resolveLocale,
+  weekdayToNumber,
+} from "react-date-range-picker-headless";
+```
+
+## DEFAULT_LOCALE
+
+Đối tượng locale tiếng Anh mặc định. Tất cả các trường đều được điền bằng chuỗi tiếng Anh.
+
+|      |          |
+| ---- | -------- |
+| Loại | `Locale` |
+
+```tsx
+DEFAULT_LOCALE.weekdays; // ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+DEFAULT_LOCALE.months; // ["January", "February", ..., "December"]
+DEFAULT_LOCALE.confirm; // "Confirm"
+DEFAULT_LOCALE.placeholder; // "Select date"
+```
+
+## mergeLocale
+
+Hợp nhất một locale cục bộ vào locale mặc định.
+
+|        |                                                  |
+| ------ | ------------------------------------------------ |
+| Chữ ký | `mergeLocale(partial?: Partial<Locale>): Locale` |
+
+Trả về `DEFAULT_LOCALE` nếu không có phần cục bộ nào được cung cấp. Khi `rangeSeparator` bị ghi đè nhưng `formatRange` thì không, `formatRange` sẽ tự động được tạo lại để sử dụng dấu phân cách mới.
+
+```tsx
+mergeLocale(); // DEFAULT_LOCALE
+
+mergeLocale({
+  confirm: "OK",
+  cancel: "Back",
+  rangeSeparator: " - ",
+});
+// { ...DEFAULT_LOCALE, confirm: "OK", cancel: "Back", rangeSeparator: " - ", formatRange: (s, e) => `${s} - ${e}` }
+```
+
+## createLocale
+
+Tạo một locale từ khóa locale BCP 47 bằng cách sử

@@ -1,0 +1,54 @@
+---
+sidebar_position: 4
+sidebar_label: Custom Footer
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/tailwind3/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/tailwind3/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/tailwind3/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNoFooter.tsx?raw";
+
+# Özel Altbilgi
+
+## Yeniden Düzenlenmiş Altbilgi
+
+Altbilgi düğmelerini yeniden düzenleyin ve "Bugün" düğmesi gibi ekstra eylemler ekleyin. Bileşik bileşenler sayesinde, hangi düğmelerin hangi sırayla görüneceğini tam olarak siz kontrol edersiniz.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Minimal Düzen
+
+İhtiyaç duymadığınız herhangi bir bölümü kaldırın. Burada altbilgi, yalnızca takvimin gösterildiği minimal bir düzen için tamamen çıkarılmıştır:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Sınıfları Geçersiz Kılma
+
+Her bileşik parça bir `className` prop'u kabul eder. Tailwind v3 paketi, sınıflarınızı varsayılanlarla birleştirmek için `cn()` (bir `clsx` + `twMerge` yardımcı programı) kullanır, böylece çakışan yardımcı programlar doğru şekilde çözülür:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger className="min-w-[300px] px-4 py-3" />
+  <DatePicker.Content className="rounded-2xl shadow-xl">
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title className="text-lg" />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>;
+```

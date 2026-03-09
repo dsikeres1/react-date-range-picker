@@ -1,0 +1,69 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# พร็อพ
+
+| Prop                     | Type                                                          | Default     | คำอธิบาย                                                               |
+| :----------------------- | :------------------------------------------------------------ | :---------- | :--------------------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --          | ค่าช่วงวันที่และเวลาที่เลือก                                           |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | Callback เมื่อค่าเปลี่ยนแปลง                                           |
+| `time`                   | `TimeConfig`                                                  | --          | การกำหนดค่าแผงเวลา (ใช้กับทั้งเวลาเริ่มต้นและสิ้นสุด)                  |
+| `presets`                | `DateRangePreset[]`                                           | --          | ค่าที่ตั้งไว้ล่วงหน้าสำหรับช่วงวันที่                                  |
+| `maxDays`                | `number`                                                      | --          | จำนวนวันสูงสุดที่อนุญาตในช่วง (รวม)                                    |
+| `minDays`                | `number`                                                      | --          | จำนวนวันขั้นต่ำที่ต้องการในช่วง (รวม)                                  |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`      | อนุญาตให้ช่วงที่วันเริ่มต้นเท่ากับวันสิ้นสุด                           |
+| `minDate`                | `Date`                                                        | --          | วันที่ต่ำสุดที่สามารถเลือกได้                                          |
+| `maxDate`                | `Date`                                                        | --          | วันที่สูงสุดที่สามารถเลือกได้                                          |
+| `locale`                 | `Partial<Locale>`                                             | --          | การกำหนดค่า locale แบบกำหนดเอง                                         |
+| `initialMonth`           | `Date`                                                        | --          | เดือนที่แสดงผลเริ่มต้น                                                 |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`  | ขนาดของคอมโพเนนต์                                                      |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`  | วันแรกของสัปดาห์                                                       |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --          | ทำเครื่องหมายวันที่เป็นปิดใช้งาน                                       |
+| `displayFormat`          | `string`                                                      | --          | รูปแบบการแสดงผลแบบกำหนดเอง                                             |
+| `open`                   | `boolean`                                                     | --          | สถานะการเปิดแบบควบคุม                                                  |
+| `initialOpen`            | `boolean`                                                     | --          | สถานะการเปิดเริ่มต้น (ไม่ควบคุม)                                       |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --          | Callback เมื่อสถานะการเปิดเปลี่ยนแปลง                                  |
+| `required`               | `boolean`                                                     | `false`     | ปิดใช้งานการล้างค่า                                                    |
+| `showOutsideDays`        | `boolean`                                                     | `false`     | แสดงวันจากเดือนที่อยู่ติดกัน                                           |
+| `highlightDates`         | `Date[]`                                                      | --          | วันที่ที่ต้องการเน้น                                                   |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`     | ยืนยันอัตโนมัติเมื่อคลิกค่าที่ตั้งไว้                                  |
+| `numberOfMonths`         | `number`                                                      | `2`         | จำนวนเดือนที่จะแสดง                                                    |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"` | สไตล์การนำทางของหัวเรื่อง                                              |
+| `fromYear`               | `number`                                                      | --          | ปีเริ่มต้นสำหรับดรอปดาวน์                                              |
+| `toYear`                 | `number`                                                      | --          | ปีสิ้นสุดสำหรับดรอปดาวน์                                               |
+| `disablePast`            | `boolean`                                                     | `false`     | ปิดใช้งานวันที่ก่อนวันนี้                                              |
+| `disableFuture`          | `boolean`                                                     | `false`     | ปิดใช้งานวันที่หลังวันนี้                                              |
+| `inline`                 | `boolean`                                                     | `false`     | แสดงปฏิทินในบรรทัด (ไม่มีป๊อปอัป)                                      |
+| `name`                   | `string`                                                      | --          | ชื่อ input ที่ซ่อนไว้สำหรับการส่งฟอร์ม (วัน-เวลาเริ่มต้น)              |
+| `endName`                | `string`                                                      | --          | ชื่อ input ที่ซ่อนไว้สำหรับวัน-เวลาสิ้นสุด (ค่าเริ่มต้นคือ `name-end`) |
+| `placeholder`            | `string`                                                      | --          | ข้อความ Placeholder ของทริกเกอร์                                       |
+| `hideHeader`             | `boolean`                                                     | `false`     | ซ่อนส่วนหัวการนำทาง                                                    |
+| `hideFooter`             | `boolean`                                                     | `false`     | ซ่อนส่วนท้ายของการกระทำ                                                |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** ความแม่นยำในการแสดงเวลา ค่าเริ่มต้นคือ "minute" */
+  precision?: "hour" | "minute" | "second";
+  /** รูปแบบ 12 หรือ 24 ชั่วโมง ค่าเริ่มต้นคือ "24" */
+  hourFormat?: "12" | "24";
+  /** ขั้นการเพิ่มนาที ค่าเริ่มต้นคือ 5 */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** ขั้นการเพิ่มวินาที ค่าเริ่มต้นคือ 1 */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** ความสูง (เป็น px) ของแต่ละรายการในวงล้อเลื่อน ค่าเริ่มต้นคือ 32 */
+  itemHeight?: number;
+}
+```
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

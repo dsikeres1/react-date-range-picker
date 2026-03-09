@@ -1,0 +1,343 @@
+---
+sidebar_position: 4
+title: Contexts
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ContextExample from "@examples/headless/ContextExample";
+import ContextExampleSource from "@examples/headless/ContextExample.tsx?raw";
+
+# Context
+
+`headless` パッケージは、フックをラップし、その状態を React Context 経由で公開する Context プロバイダーを提供します。これにより、**コンパウンドコンポーネントパターン**が可能になります。UI を小さく、焦点を絞ったサブコンポーネントに分割し、props を下に渡す代わりに context から状態を読み取ります。
+
+## なぜ Context を使うのか？
+
+Context がなければ、すべての状態を props を通して渡すことになります：
+
+```tsx
+// Contextなし -- prop drilling
+function MyDatePicker() {
+  const picker = useDatePicker({ value, onChange });
+  return (
+    <MyTrigger displayValue={picker.displayValue} onToggle={picker.handleToggle} />
+    <MyCalendar calendar={picker.calendar} getDayProps={picker.getDayProps} ... />
+    <MyFooter onConfirm={picker.handleConfirm} onCancel={picker.handleCancel} ... />
+  );
+}
+```
+
+Context を使えば、サブコンポーネントは必要なものを直接消費します：
+
+```tsx
+// Contextあり -- コンパウンドコンポーネント
+function MyDatePicker() {
+  return (
+    <DatePickerProvider value={value} onChange={onChange}>
+      <ExampleWrapper variant="headless" client:load>
+        <MyTrigger client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyCalendar client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyFooter client:load />
+      </ExampleWrapper>
+    </DatePickerProvider>
+  );
+}
+
+function MyTrigger() {
+  const { displayValue, handleToggle } = useDatePickerContext();
+  return <button onClick={handleToggle}>{displayValue}</button>;
+}
+```
+
+## 利用可能なプロバイダー
+
+| プロバイダー                  | 内部で使用されるフック   | コンシューマーフック              |
+| ----------------------------- | ------------------------ | --------------------------------- |
+| `DatePickerProvider`          | `useDatePicker`          | `useDatePickerContext()`          |
+| `DateRangePickerProvider`     | `useDateRangePicker`     | `useDateRangePickerContext()`     |
+| `DateTimePickerProvider`      | `useDateTimePicker`      | `useDateTimePickerContext()`      |
+| `DateRangeTimePickerProvider` | `useDateRangeTimePicker` | `useDateRangeTimePickerContext()` |
+
+各プロバイダーは、**型付けされた context**（そのピッカータイプに固有）と**統一された `PickerContext`**（すべてのタイプで共有）の両方をレンダリングします。
+
+```tsx
+import {
+  DatePickerProvider,
+  DateRangePickerProvider,
+  DateTimePickerProvider,
+  DateRangeTimePickerProvider,
+} from "react-date-range-picker-headless";
+```
+
+### DatePickerProvider
+
+`useDatePicker` をラップします。`DatePickerContext` + `PickerContext` を提供します。
+
+```tsx
+import type { DatePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop          | 型                             | 説明                                                      |
+| ------------- | ------------------------------ | --------------------------------------------------------- |
+| `children`    | `ReactNode`                    | **必須。** 子コンポーネント。                             |
+| `value`       | `Date \| null`                 | **必須。** 現在の日付。                                   |
+| `onChange`    | `(date: Date \| null) => void` | **必須。** 変更ハンドラー。                               |
+| `inline`      | `boolean`                      | インラインでレンダリング（ポップアップなし）。            |
+| `size`        | `DatePickerSize`               | サイズのバリアント。                                      |
+| `placeholder` | `string`                       | トリガーのプレースホルダー。                              |
+| `name`        | `string`                       | フォームフィールド名。                                    |
+| _...rest_     | `BaseDatePickerOptions`        | すべての基本オプション（minDate, maxDate, locale など）。 |
+
+**コンシューマーフック:** `useDatePickerContext()` は `UseDatePickerReturn` を返します。
+
+### DateRangePickerProvider
+
+`useDateRangePicker` をラップします。`DateRangePickerContext` + `PickerContext` を提供します。
+
+```tsx
+import type { DateRangePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop                     | 型                                                            | 説明                          |
+| ------------------------ | ------------------------------------------------------------- | ----------------------------- |
+| `children`               | `ReactNode`                                                   | **必須。** 子コンポーネント。 |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | **必須。** 現在の範囲。       |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | **必須。** 変更ハンドラー。   |
+| `inline`                 | `boolean`                                                     | インラインでレンダリング。    |
+| `size`                   | `DatePickerSize`                                              | サイズのバリアント。          |
+| `placeholder`            | `string`                                                      | トリガーのプレースホルダー。  |
+| `name`                   | `string`                                                      | フォームフィールド名。        |
+| `maxDays`                | `number`                                                      | 範囲内の最大日数。            |
+| `minDays`                | `number`                                                      | 範囲内の最小日数。            |
+| `presets`                | `DateRangePreset[]`                                           | 範囲のプリセット。            |
+| `allowSingleDateInRange` | `boolean`                                                     | 単一日での範囲を許可。        |
+| _...rest_                | `BaseDatePickerOptions`                                       | すべての基本オプション。      |
+
+**コンシューマーフック:** `useDateRangePickerContext()` は `UseDateRangePickerReturn` を返します。
+
+### DateTimePickerProvider
+
+`useDateTimePicker` をラップします。`DateTimePickerContext` + `PickerContext` を提供します。
+
+```tsx
+import type { DateTimePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop          | 型                                 | 説明                          |
+| ------------- | ---------------------------------- | ----------------------------- |
+| `children`    | `ReactNode`                        | **必須。** 子コンポーネント。 |
+| `value`       | `Date \| null`                     | **必須。** 現在の日時。       |
+| `onChange`    | `(dateTime: Date \| null) => void` | **必須。** 変更ハンドラー。   |
+| `time`        | `TimeConfig`                       | 時刻の設定。                  |
+| `inline`      | `boolean`                          | インラインでレンダリング。    |
+| `size`        | `DatePickerSize`                   | サイズのバリアント。          |
+| `placeholder` | `string`                           | トリガーのプレースホルダー。  |
+| `name`        | `string`                           | フォームフィールド名。        |
+| _...rest_     | `BaseDatePickerOptions`            | すべての基本オプション。      |
+
+**コンシューマーフック:** `useDateTimePickerContext()` は `UseDateTimePickerReturn` を返します。
+
+### DateRangeTimePickerProvider
+
+`useDateRangeTimePicker` をラップします。`DateRangeTimePickerContext` + `PickerContext` を提供します。
+
+```tsx
+import type { DateRangeTimePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop                     | 型                                                            | 説明                          |
+| ------------------------ | ------------------------------------------------------------- | ----------------------------- |
+| `children`               | `ReactNode`                                                   | **必須。** 子コンポーネント。 |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | **必須。** 現在の範囲。       |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | **必須。** 変更ハンドラー。   |
+| `time`                   | `TimeConfig`                                                  | 時刻の設定。                  |
+| `inline`                 | `boolean`                                                     | インラインでレンダリング。    |
+| `size`                   | `DatePickerSize`                                              | サイズのバリアント。          |
+| `placeholder`            | `string`                                                      | トリガーのプレースホルダー。  |
+| `name`                   | `string`                                                      | フォームフィールド名。        |
+| `maxDays`                | `number`                                                      | 範囲内の最大日数。            |
+| `minDays`                | `number`                                                      | 範囲内の最小日数。            |
+| `presets`                | `DateRangePreset[]`                                           | 範囲のプリセット。            |
+| `allowSingleDateInRange` | `boolean`                                                     | 単一日での範囲を許可。        |
+| _...rest_                | `BaseDatePickerOptions`                                       | すべての基本オプション。      |
+
+**コンシューマーフック:** `useDateRangeTimePickerContext()` は `UseDateRangeTimePickerReturn` を返します。
+
+## PickerContext (統一)
+
+すべてのプロバイダーは、**統一された `PickerContext`** も注入します。これは、すべてのピッカータイプのすべてのフィールドを含むスーパーセットの context であり、ピッカー固有の値のためのオプショナルなフィールドがあります。
+
+```tsx
+import { usePickerContext } from "react-date-range-picker-headless";
+
+function MyGenericHeader() {
+  const { locale, handlePrevMonth, handleNextMonth, calendars } = usePickerContext();
+  return (
+    <div>
+      <button onClick={handlePrevMonth}>{locale.prevMonth}</button>
+      <span>{locale.formatMonthYear(calendars[0].month)}</span>
+      <button onClick={handleNextMonth}>{locale.nextMonth}</button>
+    </div>
+  );
+}
+```
+
+統一された context を使用すると、すべてのピッカータイプで機能する**共有サブコンポーネント**を構築できます。スタイル付きパッケージ（`styled`、`tailwind3`、`tailwind4`）は、このパターンを内部で使用しています。-- それらの `Header`、`Grid`、`Footer` などのコンポーネントはすべて `PickerContext` を消費します。
+
+### PickerContext のフィールド
+
+```tsx
+import { PickerContext, usePickerContext } from "react-date-range-picker-headless";
+import type { PickerContextValue } from "react-date-range-picker-headless";
+```
+
+```tsx
+function usePickerContext(): PickerContextValue;
+```
+
+ピッカープロバイダーの外部で使用するとエラーをスローします。
+
+#### コアフィールド（常に存在）
+
+| Field               | Type                                              |
+| ------------------- | ------------------------------------------------- |
+| `isOpen`            | `boolean`                                         |
+| `locale`            | `Locale`                                          |
+| `focusedDate`       | `Date \| null`                                    |
+| `displayValue`      | `string`                                          |
+| `hasValue`          | `boolean`                                         |
+| `canConfirm`        | `boolean`                                         |
+| `calendars`         | `CalendarMonth[]`                                 |
+| `getDayProps`       | `(date: Date, referenceMonth?: Date) => DayProps` |
+| `handleToggle`      | `() => void`                                      |
+| `handleOpen`        | `() => void`                                      |
+| `handleClose`       | `() => void`                                      |
+| `handleConfirm`     | `() => void`                                      |
+| `handleCancel`      | `() => void`                                      |
+| `handleClear`       | `() => void`                                      |
+| `handleGoToToday`   | `() => void`                                      |
+| `handlePrevMonth`   | `() => void`                                      |
+| `handleNextMonth`   | `() => void`                                      |
+| `handleKeyDown`     | `(e: KeyboardEvent<HTMLElement>) => void`         |
+| `handleDateClick`   | `(date: Date) => void`                            |
+| `containerRef`      | `RefObject<HTMLDivElement \| null>`               |
+| `popupRef`          | `RefObject<HTMLDivElement \| null>`               |
+| `years`             | `number[]`                                        |
+| `months`            | `number[]`                                        |
+| `handleYearSelect`  | `(year: number, calendarIndex?: number) => void`  |
+| `handleMonthSelect` | `(month: number, calendarIndex?: number) => void` |
+
+#### UI パススルーフィールド
+
+| Field             | Type                          |
+| ----------------- | ----------------------------- |
+| `value`           | `unknown`                     |
+| `endName`         | `string \| undefined`         |
+| `required`        | `boolean \| undefined`        |
+| `inline`          | `boolean \| undefined`        |
+| `showOutsideDays` | `boolean \| undefined`        |
+| `size`            | `DatePickerSize \| undefined` |
+| `placeholder`     | `string \| undefined`         |
+| `name`            | `string \| undefined`         |
+| `captionLayout`   | `CaptionLayout \| undefined`  |
+
+#### 範囲指定フィールド（オプショナル）
+
+| Field               | Type                                               |
+| ------------------- | -------------------------------------------------- |
+| `handleDateHover`   | `((date: Date \| null) => void) \| undefined`      |
+| `presets`           | `DateRangePreset[] \| undefined`                   |
+| `handlePresetClick` | `((preset: DateRangePreset) => void) \| undefined` |
+| `activePresetIndex` | `number \| undefined`                              |
+
+#### 単一時刻フィールド（オプショナル, DateTimePicker）
+
+| Field                     | Type                                             |
+| ------------------------- | ------------------------------------------------ |
+| `resolvedTimeConfig`      | `Required<TimeConfig> \| undefined`              |
+| `tempHour`                | `number \| undefined`                            |
+| `tempMinute`              | `number \| undefined`                            |
+| `tempSecond`              | `number \| undefined`                            |
+| `tempPeriod`              | `TimePeriod \| undefined`                        |
+| `handleHourChange`        | `((hour: number) => void) \| undefined`          |
+| `handleMinuteChange`      | `((minute: number) => void) \| undefined`        |
+| `handleSecondChange`      | `((second: number) => void) \| undefined`        |
+| `handlePeriodChange`      | `((period: TimePeriod) => void) \| undefined`    |
+| `isTimePickerOpen`        | `boolean \| undefined`                           |
+| `handleTimePickerOpen`    | `(() => void) \| undefined`                      |
+| `handleTimePickerClose`   | `(() => void) \| undefined`                      |
+| `handleTimePickerConfirm` | `(() => void) \| undefined`                      |
+| `handleTimePickerCancel`  | `(() => void) \| undefined`                      |
+| `timePickerRef`           | `RefObject<HTMLDivElement \| null> \| undefined` |
+| `timeDisplayValue`        | `string \| undefined`                            |
+
+#### 範囲時刻フィールド（オプショナル, DateRangeTimePicker）
+
+| Field                          | Type                                             |
+| ------------------------------ | ------------------------------------------------ |
+| `startHour`                    | `number \| undefined`                            |
+| `startMinute`                  | `number \| undefined`                            |
+| `startSecond`                  | `number \| undefined`                            |
+| `startPeriod`                  | `TimePeriod \| undefined`                        |
+| `endHour`                      | `number \| undefined`                            |
+| `endMinute`                    | `number \| undefined`                            |
+| `endSecond`                    | `number \| undefined`                            |
+| `endPeriod`                    | `TimePeriod \| undefined`                        |
+| `handleStartHourChange`        | `((hour: number) => void) \| undefined`          |
+| `handleStartMinuteChange`      | `((minute: number) => void) \| undefined`        |
+| `handleStartSecondChange`      | `((second: number) => void) \| undefined`        |
+| `handleStartPeriodChange`      | `((period: TimePeriod) => void) \| undefined`    |
+| `handleEndHourChange`          | `((hour: number) => void) \| undefined`          |
+| `handleEndMinuteChange`        | `((minute: number) => void) \| undefined`        |
+| `handleEndSecondChange`        | `((second: number) => void) \| undefined`        |
+| `handleEndPeriodChange`        | `((period: TimePeriod) => void) \| undefined`    |
+| `isStartTimePickerOpen`        | `boolean \| undefined`                           |
+| `isEndTimePickerOpen`          | `boolean \| undefined`                           |
+| `handleStartTimePickerOpen`    | `(() => void) \| undefined`                      |
+| `handleStartTimePickerClose`   | `(() => void) \| undefined`                      |
+| `handleStartTimePickerConfirm` | `(() => void) \| undefined`                      |
+| `handleStartTimePickerCancel`  | `(() => void) \| undefined`                      |
+| `handleEndTimePickerOpen`      | `(() => void) \| undefined`                      |
+| `handleEndTimePickerClose`     | `(() => void) \| undefined`                      |
+| `handleEndTimePickerConfirm`   | `(() => void) \| undefined`                      |
+| `handleEndTimePickerCancel`    | `(() => void) \| undefined`                      |
+| `startTimePickerRef`           | `RefObject<HTMLDivElement \| null> \| undefined` |
+| `endTimePickerRef`             | `RefObject<HTMLDivElement \| null> \| undefined` |
+| `startTimeDisplayValue`        | `string \| undefined`                            |
+| `endTimeDisplayValue`          | `string \| undefined`                            |
+
+## 型付き vs 統一 Context
+
+| ユースケース                                                            | どの Context                                                  |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------- |
+| すべてのピッカータイプで動作する共有コンポーネントを構築する            | `usePickerContext()`                                          |
+| 完全な型安全性を備えた、1つのピッカーに特化したコンポーネントを構築する | `useDatePickerContext()`, `useDateRangePickerContext()`, etc. |
+
+型付けされた context は正確なフックの戻り値の型を返すため、完全な TypeScript の型推論が得られます。統一された context は、ピッカー固有の値に対してオプショナルなフィールドを使用します。
+
+## デュアル Context パターン
+
+すべてのプロバイダーは、2つのネストされた context をレンダリングします：
+
+```tsx
+<SpecificPickerContext.Provider value={hookReturn}>
+  <PickerContext.Provider value={unifiedValue}>{children}</PickerContext.Provider>
+</SpecificPickerContext.Provider>
+```
+
+- 共有サブコンポーネントには `usePickerContext()` を使用します（どのピッカーでも動作します）
+- ピッカー固有のロジックには、型付けされたコンシューマーフックを使用します（完全な型安全性）
+
+## 例：コンパウンドデートピッカー
+
+<CodeDemo source={ContextExampleSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <ContextExample client:load />
+  </ExampleWrapper>
+</CodeDemo>

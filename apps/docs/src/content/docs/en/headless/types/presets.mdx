@@ -1,0 +1,61 @@
+---
+sidebar_position: 4
+title: DateRangePreset
+---
+
+# DateRangePreset
+
+Defines a predefined date range preset for `useDateRangePicker` and `useDateRangeTimePicker`.
+
+```tsx
+import type { DateRangePreset } from "react-date-range-picker-headless";
+```
+
+## Fields
+
+| Field   | Type                                                               | Description                                                   |
+| ------- | ------------------------------------------------------------------ | ------------------------------------------------------------- |
+| `label` | `string`                                                           | Display label for the preset button.                          |
+| `value` | `{ start: Date; end: Date } \| (() => { start: Date; end: Date })` | Static range object or factory function that returns a range. |
+
+## TypeScript Definition
+
+```tsx
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```
+
+## Usage
+
+Static presets use fixed Date objects. Factory presets compute the range dynamically (useful for relative ranges like "last 7 days").
+
+```tsx
+const presets: DateRangePreset[] = [
+  // Static preset
+  {
+    label: "Q1 2026",
+    value: { start: new Date(2026, 0, 1), end: new Date(2026, 2, 31) },
+  },
+  // Factory preset (computed on click)
+  {
+    label: "Last 7 days",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setDate(start.getDate() - 6);
+      return { start, end };
+    },
+  },
+  {
+    label: "This month",
+    value: () => {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), now.getMonth(), 1);
+      const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      return { start, end };
+    },
+  },
+];
+```

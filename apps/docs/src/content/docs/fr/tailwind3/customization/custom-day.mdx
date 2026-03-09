@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: Custom Day Cell
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/tailwind3/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/tailwind3/Customization/CompoundCustomDay.tsx?raw";
+
+# Cellule de Jour Personnalisée
+
+Utilisez la render prop du composant `Day` pour personnaliser chaque cellule de jour. Ceci est utile pour ajouter des indicateurs d'événements, un style personnalisé basé sur les propriétés de la date, ou pour remplacer entièrement le rendu du jour.
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Props de Rendu pour `Day`
+
+| Prop             | Type         | Description                                                        |
+| :--------------- | :----------- | :----------------------------------------------------------------- |
+| `date`           | `Date`       | L'objet Date                                                       |
+| `day`            | `number`     | Jour du mois (1-31)                                                |
+| `isToday`        | `boolean`    | Indique si c'est aujourd'hui                                       |
+| `isSelected`     | `boolean`    | Indique si ce jour est sélectionné                                 |
+| `isDisabled`     | `boolean`    | Indique si ce jour est désactivé                                   |
+| `isInRange`      | `boolean`    | Indique si ce jour est dans une plage sélectionnée                 |
+| `isRangeStart`   | `boolean`    | Indique si c'est le début de la plage                              |
+| `isRangeEnd`     | `boolean`    | Indique si c'est la fin de la plage                                |
+| `isInHoverRange` | `boolean`    | Indique si ce jour est dans la plage de prévisualisation au survol |
+| `isHoverTarget`  | `boolean`    | Indique si c'est le point final du survol                          |
+| `isOutsideDay`   | `boolean`    | Indique si ce jour appartient à un mois adjacent                   |
+| `isHighlighted`  | `boolean`    | Indique si ce jour a un point de surbrillance                      |
+| `isFocused`      | `boolean`    | Indique si ce jour a le focus du clavier                           |
+| `onClick`        | `() => void` | Gestionnaire de clic                                               |
+| `onMouseEnter`   | `() => void` | Gestionnaire d'entrée de la souris                                 |
+| `onMouseLeave`   | `() => void` | Gestionnaire de sortie de la souris                                |
