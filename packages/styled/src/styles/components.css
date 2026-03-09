@@ -1,0 +1,667 @@
+/* ══════════════════════════════════════════
+   React Date Range Picker — Component Styles
+   All values reference --rdrp-* CSS variables.
+   ══════════════════════════════════════════ */
+
+/* ── Scoped reset (normalizes elements in Tailwind / framework environments) ── */
+:where(.rdrp-root),
+:where(.rdrp-root *) {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+}
+
+:where(.rdrp-root button) {
+  appearance: none;
+  background-color: transparent;
+  background-image: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* ── Root ── */
+.rdrp-root {
+  font-family: var(--rdrp-font-family);
+  position: relative;
+  display: inline-block;
+  user-select: none;
+}
+
+/* ── Trigger ── */
+.rdrp-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--rdrp-spacing-md);
+  padding: var(--rdrp-trigger-padding-y) var(--rdrp-trigger-padding-x);
+  border: var(--rdrp-border-width) solid var(--rdrp-color-border);
+  border-radius: var(--rdrp-border-radius-md);
+  background: var(--rdrp-color-bg);
+  cursor: pointer;
+  font-size: var(--rdrp-font-size-md);
+  color: var(--rdrp-color-text);
+  min-width: var(--rdrp-trigger-min-width);
+  box-shadow: var(--rdrp-shadow-sm);
+  transition: border-color var(--rdrp-transition-normal);
+  font-family: inherit;
+}
+
+.rdrp-trigger:hover {
+  border-color: var(--rdrp-color-border-hover);
+}
+
+.rdrp-trigger:focus-visible {
+  outline: none;
+  border-color: var(--rdrp-color-primary);
+  box-shadow: 0 0 0 2px var(--rdrp-color-primary);
+}
+
+.rdrp-trigger-placeholder {
+  color: var(--rdrp-color-text-placeholder);
+}
+
+.rdrp-trigger-clear {
+  margin-left: auto;
+  padding: 0 var(--rdrp-spacing-sm);
+  margin-right: calc(-1 * var(--rdrp-spacing-sm));
+  border: none;
+  background: transparent;
+  color: var(--rdrp-color-text-placeholder);
+  cursor: pointer;
+  transition: color var(--rdrp-transition-normal);
+  font-size: var(--rdrp-font-size-md);
+  font-family: inherit;
+  line-height: inherit;
+}
+
+.rdrp-trigger-clear:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--rdrp-color-primary);
+  border-radius: var(--rdrp-border-radius-sm);
+}
+
+.rdrp-trigger-clear:hover {
+  color: var(--rdrp-color-text-muted);
+}
+
+/* ── Popup ── */
+.rdrp-content {
+  z-index: var(--rdrp-z-popup);
+  background: var(--rdrp-color-bg);
+  border: var(--rdrp-border-width) solid var(--rdrp-color-border-light);
+  border-radius: var(--rdrp-border-radius-xl);
+  box-shadow: var(--rdrp-shadow-popup);
+  padding: var(--rdrp-popup-padding);
+  width: max-content;
+}
+
+.rdrp-content-inline {
+  position: relative;
+  top: 0;
+  z-index: var(--rdrp-z-inline);
+  display: inline-block;
+  box-shadow: var(--rdrp-shadow-inline);
+}
+
+/* ── Header (month navigation) ── */
+.rdrp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--rdrp-spacing-lg);
+  padding: 0 var(--rdrp-spacing-xs);
+}
+
+.rdrp-header-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rdrp-spacing-sm);
+  font-size: var(--rdrp-font-size-lg);
+  font-weight: var(--rdrp-font-weight-semibold);
+  color: var(--rdrp-color-text-strong);
+}
+
+.rdrp-header-nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--rdrp-nav-btn-size);
+  height: var(--rdrp-nav-btn-size);
+  border: none;
+  border-radius: var(--rdrp-border-radius-md);
+  background: transparent;
+  cursor: pointer;
+  font-size: var(--rdrp-font-size-md);
+  color: var(--rdrp-color-text-muted);
+  transition: background var(--rdrp-transition-normal);
+  font-family: inherit;
+  padding: 0;
+}
+
+.rdrp-header-nav-button:hover {
+  background: var(--rdrp-color-bg-hover);
+}
+
+.rdrp-header-nav-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--rdrp-color-primary);
+}
+
+.rdrp-header-spacer {
+  flex: 1;
+}
+
+/* ── Caption dropdown ── */
+.rdrp-header-select {
+  padding: var(--rdrp-spacing-sm) var(--rdrp-spacing-md);
+  border: var(--rdrp-border-width) solid transparent;
+  border-radius: var(--rdrp-border-radius-md);
+  font-size: var(--rdrp-font-size-md);
+  font-weight: var(--rdrp-font-weight-semibold);
+  background: transparent;
+  cursor: pointer;
+  color: var(--rdrp-color-text-strong);
+  font-family: inherit;
+}
+
+.rdrp-header-select:hover {
+  border-color: var(--rdrp-color-border-light);
+}
+
+.rdrp-header-select:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--rdrp-color-primary);
+}
+
+/* ── Weekday headers ── */
+.rdrp-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(var(--rdrp-cell-size), 1fr));
+  margin-bottom: var(--rdrp-spacing-sm);
+}
+
+.rdrp-weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--rdrp-weekday-height);
+  font-size: var(--rdrp-font-size-sm);
+  font-weight: var(--rdrp-font-weight-medium);
+  color: var(--rdrp-color-text-placeholder);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 var(--rdrp-spacing-xs);
+}
+
+/* ── Calendar grid ── */
+.rdrp-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: var(--rdrp-grid-min-height);
+}
+
+.rdrp-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(var(--rdrp-cell-size), 1fr));
+}
+
+/* ── Day cell ── */
+.rdrp-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--rdrp-cell-size);
+  height: var(--rdrp-cell-size);
+  margin: 0 1px;
+  border: none;
+  border-radius: var(--rdrp-border-radius-lg);
+  background: transparent;
+  cursor: pointer;
+  font-size: var(--rdrp-font-size-base);
+  color: var(--rdrp-color-text);
+  transition: background var(--rdrp-transition-fast);
+  position: relative;
+  padding: 0;
+  font-family: inherit;
+}
+
+.rdrp-day:hover:not(.rdrp-day-disabled):not(.rdrp-day-selected):not(.rdrp-day-range-start):not(
+    .rdrp-day-range-end
+  ):not(.rdrp-day-in-range) {
+  background: var(--rdrp-color-bg-hover);
+}
+
+/* Suppress browser/Infima default focus outline — .rdrp-day-focused handles it */
+.rdrp-day:focus,
+.rdrp-day:focus-visible {
+  outline: none;
+}
+
+.rdrp-day.rdrp-day-focused {
+  outline: none;
+  box-shadow:
+    0 0 0 1px var(--rdrp-color-bg),
+    0 0 0 3px var(--rdrp-color-primary);
+  z-index: var(--rdrp-z-day-button);
+}
+
+/* Focused on filled backgrounds: outline not needed (bg color is enough) */
+.rdrp-day.rdrp-day-focused.rdrp-day-selected,
+.rdrp-day.rdrp-day-focused.rdrp-day-range-start,
+.rdrp-day.rdrp-day-focused.rdrp-day-range-end {
+  outline: none;
+  box-shadow: none;
+}
+
+.rdrp-day-today {
+  font-weight: var(--rdrp-font-weight-bold);
+  color: var(--rdrp-color-text-today);
+}
+
+.rdrp-day.rdrp-day-selected {
+  background: var(--rdrp-color-primary);
+  color: var(--rdrp-color-text-inverse);
+  font-weight: var(--rdrp-font-weight-semibold);
+}
+
+.rdrp-day-empty {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.rdrp-day-disabled {
+  color: var(--rdrp-color-text-disabled);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.rdrp-day-outside {
+  color: var(--rdrp-color-text-outside);
+}
+
+.rdrp-day-highlighted::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--rdrp-highlight-dot-size);
+  height: var(--rdrp-highlight-dot-size);
+  border-radius: var(--rdrp-border-radius-full);
+  background: var(--rdrp-color-highlight-dot);
+}
+
+.rdrp-day.rdrp-day-today.rdrp-day-in-range {
+  color: var(--rdrp-color-text);
+}
+
+/* ── Range day styles ── */
+/* Hover preview styles first (lower priority — confirmed range overrides) */
+.rdrp-day.rdrp-day-hover-range {
+  background: var(--rdrp-color-hover-range-bg);
+  border-radius: 0;
+  margin: 0;
+  transition: background var(--rdrp-transition-fast);
+}
+
+.rdrp-day.rdrp-day-hover-target {
+  background: var(--rdrp-color-hover-target-bg);
+  border-radius: var(--rdrp-border-radius-lg);
+  transition: background var(--rdrp-transition-fast);
+}
+
+/* Confirmed range styles (override hover preview) */
+.rdrp-day.rdrp-day-in-range {
+  background: var(--rdrp-color-range-bg);
+  border-radius: 0;
+  margin: 0;
+}
+
+.rdrp-day.rdrp-day-range-start,
+.rdrp-day.rdrp-day-in-range.rdrp-day-range-start {
+  background: var(--rdrp-color-primary);
+  color: var(--rdrp-color-text-inverse);
+  font-weight: var(--rdrp-font-weight-semibold);
+  border-radius: var(--rdrp-border-radius-lg) 0 0 var(--rdrp-border-radius-lg);
+  margin: 0;
+}
+
+.rdrp-day.rdrp-day-range-end,
+.rdrp-day.rdrp-day-in-range.rdrp-day-range-end {
+  background: var(--rdrp-color-primary);
+  color: var(--rdrp-color-text-inverse);
+  font-weight: var(--rdrp-font-weight-semibold);
+  border-radius: 0 var(--rdrp-border-radius-lg) var(--rdrp-border-radius-lg) 0;
+  margin: 0;
+}
+
+.rdrp-day-range-start.rdrp-day-range-end,
+.rdrp-day-in-range.rdrp-day-range-start.rdrp-day-range-end,
+.rdrp-day.rdrp-day-range-single {
+  border-radius: var(--rdrp-border-radius-lg);
+  margin: 0;
+}
+
+/* ── Footer ── */
+.rdrp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--rdrp-spacing-md);
+  margin-top: var(--rdrp-spacing-lg);
+  padding-top: var(--rdrp-spacing-lg);
+  border-top: var(--rdrp-border-width) solid var(--rdrp-color-border-subtle);
+}
+
+.rdrp-footer-button {
+  padding: var(--rdrp-btn-padding-y) var(--rdrp-btn-padding-x);
+  border: var(--rdrp-border-width) solid var(--rdrp-color-border);
+  border-radius: var(--rdrp-border-radius-md);
+  background: var(--rdrp-color-bg);
+  cursor: pointer;
+  font-size: var(--rdrp-font-size-base);
+  color: var(--rdrp-color-text-muted);
+  font-family: inherit;
+  transition:
+    background var(--rdrp-transition-normal),
+    border-color var(--rdrp-transition-normal);
+}
+
+.rdrp-footer-button:hover {
+  background: var(--rdrp-color-bg-hover);
+  border-color: var(--rdrp-color-border-hover);
+}
+
+.rdrp-footer-confirm-button {
+  padding: var(--rdrp-btn-padding-y) var(--rdrp-btn-padding-x);
+  border: none;
+  border-radius: var(--rdrp-border-radius-md);
+  background: var(--rdrp-color-primary);
+  cursor: pointer;
+  font-size: var(--rdrp-font-size-base);
+  color: var(--rdrp-color-text-inverse);
+  font-weight: var(--rdrp-font-weight-medium);
+  font-family: inherit;
+  transition: background var(--rdrp-transition-normal);
+}
+
+.rdrp-footer-confirm-button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.rdrp-footer-confirm-button:hover:not(:disabled) {
+  background: var(--rdrp-color-primary-hover);
+}
+
+.rdrp-footer-clear-button {
+  margin-right: auto;
+  padding: var(--rdrp-btn-padding-y) var(--rdrp-btn-padding-x);
+  border: none;
+  border-radius: var(--rdrp-border-radius-md);
+  background: transparent;
+  cursor: pointer;
+  font-size: var(--rdrp-font-size-base);
+  color: var(--rdrp-color-text-danger);
+  font-family: inherit;
+  transition:
+    color var(--rdrp-transition-normal),
+    background var(--rdrp-transition-normal);
+}
+
+.rdrp-footer-clear-button:hover {
+  color: var(--rdrp-color-text);
+  background: var(--rdrp-color-bg-hover);
+}
+
+.rdrp-footer-button:focus-visible,
+.rdrp-footer-confirm-button:focus-visible,
+.rdrp-footer-clear-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--rdrp-color-primary);
+}
+
+/* ── Dual calendar layout ── */
+.rdrp-calendars-container {
+  display: flex;
+  gap: var(--rdrp-dual-gap);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .rdrp-calendars-container {
+    flex-direction: column;
+    gap: var(--rdrp-spacing-lg);
+  }
+}
+
+.rdrp-grid-panel {
+  min-width: var(--rdrp-panel-min-width);
+  flex-shrink: 0;
+}
+
+/* ── Presets sidebar ── */
+.rdrp-presets-layout {
+  display: flex;
+  gap: var(--rdrp-spacing-xl);
+  flex-wrap: wrap;
+}
+
+.rdrp-presets-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rdrp-spacing-xs);
+  min-width: var(--rdrp-preset-min-width);
+  border-right: var(--rdrp-border-width) solid var(--rdrp-color-border-subtle);
+  padding-right: var(--rdrp-spacing-xl);
+}
+
+.rdrp-preset-button {
+  padding: var(--rdrp-spacing-md) var(--rdrp-spacing-xl);
+  border: none;
+  border-radius: var(--rdrp-border-radius-md);
+  background: transparent;
+  cursor: pointer;
+  font-size: var(--rdrp-font-size-base);
+  color: var(--rdrp-color-text);
+  text-align: left;
+  transition: background var(--rdrp-transition-fast);
+  font-family: inherit;
+}
+
+.rdrp-preset-button:hover {
+  background: var(--rdrp-color-bg-hover);
+}
+
+.rdrp-preset-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--rdrp-color-primary);
+}
+
+.rdrp-preset-button.rdrp-preset-button-active {
+  background: var(--rdrp-color-primary-lighter);
+  color: var(--rdrp-color-primary);
+  font-weight: var(--rdrp-font-weight-medium);
+}
+
+@media (max-width: 640px) {
+  .rdrp-presets-layout {
+    flex-direction: column;
+  }
+
+  .rdrp-presets-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-right: none;
+    border-bottom: var(--rdrp-border-width) solid var(--rdrp-color-border-subtle);
+    padding-right: 0;
+    padding-bottom: var(--rdrp-spacing-md);
+    min-width: 0;
+  }
+}
+
+/* ── Time panel section (DateTimePicker) ── */
+.rdrp-time-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rdrp-spacing-lg);
+  margin-top: var(--rdrp-spacing-lg);
+  padding-top: var(--rdrp-spacing-lg);
+  border-top: var(--rdrp-border-width) solid var(--rdrp-color-border-subtle);
+}
+
+.rdrp-time-label {
+  font-size: var(--rdrp-font-size-sm);
+  font-weight: var(--rdrp-font-weight-medium);
+  color: var(--rdrp-color-text-muted);
+  min-width: var(--rdrp-time-item-height);
+}
+
+.rdrp-time-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--rdrp-spacing-sm);
+}
+
+.rdrp-time-block-label {
+  font-size: var(--rdrp-font-size-sm);
+  font-weight: var(--rdrp-font-weight-medium);
+  color: var(--rdrp-color-text-muted);
+}
+
+/* ── TimePicker scroll panel ── */
+.rdrp-time-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: var(--rdrp-time-panel-min-width);
+  height: var(--rdrp-time-panel-height);
+}
+
+.rdrp-time-highlight {
+  position: absolute;
+  left: var(--rdrp-spacing-sm);
+  right: var(--rdrp-spacing-sm);
+  height: var(--rdrp-time-item-height);
+  border-radius: var(--rdrp-border-radius-md);
+  background: var(--rdrp-color-time-highlight);
+  pointer-events: none;
+}
+
+.rdrp-time-columns {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.rdrp-time-column {
+  flex: 1;
+  height: var(--rdrp-time-column-height);
+  overflow-y: auto;
+  scrollbar-width: none;
+  scroll-snap-type: y mandatory;
+}
+
+.rdrp-time-column:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--rdrp-color-primary);
+  border-radius: var(--rdrp-border-radius-md);
+}
+
+.rdrp-time-column::-webkit-scrollbar {
+  display: none;
+}
+
+.rdrp-time-item {
+  height: var(--rdrp-time-item-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: var(--rdrp-font-size-md);
+  color: var(--rdrp-color-text-placeholder);
+  scroll-snap-align: center;
+  transition: color var(--rdrp-transition-fast);
+  user-select: none;
+}
+
+.rdrp-time-item-active {
+  color: var(--rdrp-color-text-strong);
+  font-weight: var(--rdrp-font-weight-semibold);
+}
+
+.rdrp-time-period-button {
+  height: var(--rdrp-time-item-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: var(--rdrp-font-size-md);
+  color: var(--rdrp-color-text-strong);
+  font-weight: var(--rdrp-font-weight-semibold);
+  border: var(--rdrp-border-width) solid var(--rdrp-color-border);
+  background: var(--rdrp-color-bg);
+  border-radius: var(--rdrp-border-radius-md);
+  transition: background var(--rdrp-transition-fast);
+}
+
+.rdrp-time-period-button:hover {
+  background: var(--rdrp-color-bg-hover);
+}
+
+.rdrp-time-period-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--rdrp-color-primary);
+}
+
+.rdrp-time-item:hover {
+  color: var(--rdrp-color-text);
+}
+
+.rdrp-time-padding {
+  height: var(--rdrp-time-item-height);
+  flex-shrink: 0;
+}
+
+.rdrp-time-colon {
+  font-size: var(--rdrp-font-size-md);
+  font-weight: var(--rdrp-font-weight-semibold);
+  color: var(--rdrp-color-text-strong);
+  width: var(--rdrp-time-colon-width);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ── TimePicker ── */
+.rdrp-time-picker {
+  /* Base styles inherited from .rdrp-root */
+}
+
+.rdrp-time-picker-content {
+  min-width: var(--rdrp-time-picker-content-min-width);
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .rdrp-root,
+  .rdrp-root * {
+    transition-duration: 0s !important;
+  }
+}
