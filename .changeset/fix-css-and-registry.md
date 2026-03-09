@@ -1,5 +1,8 @@
 ---
+"react-date-range-picker-headless": patch
+"react-date-range-picker-styled": patch
+"react-date-range-picker-tailwind3": patch
 "react-date-range-picker-tailwind4": patch
 ---
 
-Fix CSS not rendering in user projects by adding @source directive to rdrp-theme.css and rdrp-reset.css for automatic Tailwind class detection. Fix shadcn registry TimePicker rendering -1 padding values, keyboard navigation skipping padding items, incorrect hook import name (useTimePickerPanel → useStandaloneTimePicker), and missing name prop in DatePickerProps type.
+fix: add @source directive for automatic Tailwind v4 class detection, fix TimePicker -1 rendering in registry, fix registry hook/type names
