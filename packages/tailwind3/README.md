@@ -87,13 +87,13 @@ function App() {
 
 ## Components
 
-| Component | Description |
-| --- | --- |
-| `DatePicker` | Single date selection |
-| `DateRangePicker` | Date range selection with presets |
-| `DateTimePicker` | Date + time selection |
-| `DateRangeTimePicker` | Date range + time selection |
-| `TimePicker` | Standalone time selection |
+| Component             | Description                       |
+| --------------------- | --------------------------------- |
+| `DatePicker`          | Single date selection             |
+| `DateRangePicker`     | Date range selection with presets |
+| `DateTimePicker`      | Date + time selection             |
+| `DateRangeTimePicker` | Date range + time selection       |
+| `TimePicker`          | Standalone time selection         |
 
 All components support **simple** and **compound component** patterns.
 
@@ -115,11 +115,11 @@ Use [`react-date-range-picker-tailwind4`](https://www.npmjs.com/package/react-da
 
 ## Other Packages
 
-| Package | Description |
-| --- | --- |
-| [`react-date-range-picker-headless`](https://www.npmjs.com/package/react-date-range-picker-headless) | Headless hooks — bring your own UI |
-| [`react-date-range-picker-tailwind4`](https://www.npmjs.com/package/react-date-range-picker-tailwind4) | Tailwind CSS v4 + shadcn/ui |
-| [`react-date-range-picker-styled`](https://www.npmjs.com/package/react-date-range-picker-styled) | Built-in CSS (no framework) |
+| Package                                                                                                | Description                        |
+| ------------------------------------------------------------------------------------------------------ | ---------------------------------- |
+| [`react-date-range-picker-headless`](https://www.npmjs.com/package/react-date-range-picker-headless)   | Headless hooks — bring your own UI |
+| [`react-date-range-picker-tailwind4`](https://www.npmjs.com/package/react-date-range-picker-tailwind4) | Tailwind CSS v4 + shadcn/ui        |
+| [`react-date-range-picker-styled`](https://www.npmjs.com/package/react-date-range-picker-styled)       | Built-in CSS (no framework)        |
 
 ## Documentation
 

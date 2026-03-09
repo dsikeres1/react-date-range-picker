@@ -14,5 +14,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["react-date-range-picker-ui-primitives", "demo", "docs"]
+  "ignore": ["docs"]
 }

@@ -62,8 +62,24 @@ function App() {
       value={range}
       onChange={setRange}
       presets={[
-        { label: "Last 7 days", getValue: () => { const e = new Date(); const s = new Date(); s.setDate(s.getDate() - 6); return { start: s, end: e }; }},
-        { label: "Last 30 days", getValue: () => { const e = new Date(); const s = new Date(); s.setDate(s.getDate() - 29); return { start: s, end: e }; }},
+        {
+          label: "Last 7 days",
+          getValue: () => {
+            const e = new Date();
+            const s = new Date();
+            s.setDate(s.getDate() - 6);
+            return { start: s, end: e };
+          },
+        },
+        {
+          label: "Last 30 days",
+          getValue: () => {
+            const e = new Date();
+            const s = new Date();
+            s.setDate(s.getDate() - 29);
+            return { start: s, end: e };
+          },
+        },
       ]}
     />
   );
@@ -101,13 +117,13 @@ function App() {
 
 ## Components
 
-| Component | Description |
-| --- | --- |
-| `DatePicker` | Single date selection |
-| `DateRangePicker` | Date range selection with presets |
-| `DateTimePicker` | Date + time selection |
-| `DateRangeTimePicker` | Date range + time selection |
-| `TimePicker` | Standalone time selection |
+| Component             | Description                       |
+| --------------------- | --------------------------------- |
+| `DatePicker`          | Single date selection             |
+| `DateRangePicker`     | Date range selection with presets |
+| `DateTimePicker`      | Date + time selection             |
+| `DateRangeTimePicker` | Date range + time selection       |
+| `TimePicker`          | Standalone time selection         |
 
 All components support **simple** and **compound component** patterns.
 
@@ -147,11 +163,11 @@ The components use CSS variables for theming. Define them in your CSS:
 
 ## Other Packages
 
-| Package | Description |
-| --- | --- |
-| [`react-date-range-picker-headless`](https://www.npmjs.com/package/react-date-range-picker-headless) | Headless hooks — bring your own UI |
-| [`react-date-range-picker-tailwind3`](https://www.npmjs.com/package/react-date-range-picker-tailwind3) | Tailwind CSS v3 |
-| [`react-date-range-picker-styled`](https://www.npmjs.com/package/react-date-range-picker-styled) | Built-in CSS (no framework) |
+| Package                                                                                                | Description                        |
+| ------------------------------------------------------------------------------------------------------ | ---------------------------------- |
+| [`react-date-range-picker-headless`](https://www.npmjs.com/package/react-date-range-picker-headless)   | Headless hooks — bring your own UI |
+| [`react-date-range-picker-tailwind3`](https://www.npmjs.com/package/react-date-range-picker-tailwind3) | Tailwind CSS v3                    |
+| [`react-date-range-picker-styled`](https://www.npmjs.com/package/react-date-range-picker-styled)       | Built-in CSS (no framework)        |
 
 ## Documentation
 

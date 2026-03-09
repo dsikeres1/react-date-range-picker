@@ -36,9 +36,7 @@ function MyDatePicker() {
 
   return (
     <div ref={picker.containerRef}>
-      <button onClick={picker.handleToggle}>
-        {picker.displayValue || "Select date"}
-      </button>
+      <button onClick={picker.handleToggle}>{picker.displayValue || "Select date"}</button>
       {picker.isOpen && (
         <div ref={picker.popupRef}>
           {/* Build your own calendar UI using picker.calendar, picker.getDayProps, etc. */}
@@ -64,14 +62,8 @@ function MyRangePicker() {
 
   return (
     <div ref={picker.containerRef}>
-      <button onClick={picker.handleToggle}>
-        {picker.displayValue || "Select range"}
-      </button>
-      {picker.isOpen && (
-        <div ref={picker.popupRef}>
-          {/* Build your own range calendar UI */}
-        </div>
-      )}
+      <button onClick={picker.handleToggle}>{picker.displayValue || "Select range"}</button>
+      {picker.isOpen && <div ref={picker.popupRef}>{/* Build your own range calendar UI */}</div>}
     </div>
   );
 }
@@ -101,11 +93,11 @@ const swedish = createLocale("sv-SE");
 
 Use a pre-styled package:
 
-| Package | Styling |
-| --- | --- |
+| Package                                                                                                | Styling                              |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------ |
 | [`react-date-range-picker-tailwind4`](https://www.npmjs.com/package/react-date-range-picker-tailwind4) | Tailwind CSS v4 + shadcn/ui registry |
-| [`react-date-range-picker-tailwind3`](https://www.npmjs.com/package/react-date-range-picker-tailwind3) | Tailwind CSS v3 |
-| [`react-date-range-picker-styled`](https://www.npmjs.com/package/react-date-range-picker-styled) | Built-in CSS (no framework) |
+| [`react-date-range-picker-tailwind3`](https://www.npmjs.com/package/react-date-range-picker-tailwind3) | Tailwind CSS v3                      |
+| [`react-date-range-picker-styled`](https://www.npmjs.com/package/react-date-range-picker-styled)       | Built-in CSS (no framework)          |
 
 ## Documentation
 

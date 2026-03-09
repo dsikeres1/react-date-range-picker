@@ -81,13 +81,13 @@ function App() {
 
 ## Components
 
-| Component | Description |
-| --- | --- |
-| `DatePicker` | Single date selection |
-| `DateRangePicker` | Date range selection with presets |
-| `DateTimePicker` | Date + time selection |
-| `DateRangeTimePicker` | Date range + time selection |
-| `TimePicker` | Standalone time selection |
+| Component             | Description                       |
+| --------------------- | --------------------------------- |
+| `DatePicker`          | Single date selection             |
+| `DateRangePicker`     | Date range selection with presets |
+| `DateTimePicker`      | Date + time selection             |
+| `DateRangeTimePicker` | Date range + time selection       |
+| `TimePicker`          | Standalone time selection         |
 
 All components support **simple** and **compound component** patterns.
 
@@ -127,15 +127,15 @@ Override CSS variables to customize the look:
 
 Consider using the Tailwind-specific packages instead:
 
-| Package | Description |
-| --- | --- |
+| Package                                                                                                | Description                          |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------ |
 | [`react-date-range-picker-tailwind4`](https://www.npmjs.com/package/react-date-range-picker-tailwind4) | Tailwind CSS v4 + shadcn/ui registry |
-| [`react-date-range-picker-tailwind3`](https://www.npmjs.com/package/react-date-range-picker-tailwind3) | Tailwind CSS v3 |
+| [`react-date-range-picker-tailwind3`](https://www.npmjs.com/package/react-date-range-picker-tailwind3) | Tailwind CSS v3                      |
 
 ## Other Packages
 
-| Package | Description |
-| --- | --- |
+| Package                                                                                              | Description                        |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------- |
 | [`react-date-range-picker-headless`](https://www.npmjs.com/package/react-date-range-picker-headless) | Headless hooks — bring your own UI |
 
 ## Documentation
