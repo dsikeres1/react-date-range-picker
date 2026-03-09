@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "react-date-range-picker-styled/styles.css";
+import "react-date-range-picker-styled/rdrp-styles.css";
 import { DateRangeTimePicker } from "react-date-range-picker-styled";
 import type { DateRangePreset } from "react-date-range-picker-styled";
 import { today, subtract, startOf, endOf } from "react-date-range-picker-headless";

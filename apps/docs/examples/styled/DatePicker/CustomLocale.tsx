@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { DatePicker } from "react-date-range-picker-styled";
 import { createLocale } from "react-date-range-picker-headless";
-import "react-date-range-picker-styled/styles.css";
+import "react-date-range-picker-styled/rdrp-styles.css";
 
 const koLocale = createLocale("ko-KR", {
   confirm: "확인",

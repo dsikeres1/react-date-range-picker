@@ -17,7 +17,7 @@ npm install react-date-range-picker-styled
 Import the stylesheet in your app entry:
 
 ```tsx
-import "react-date-range-picker-styled/styles.css";
+import "react-date-range-picker-styled/rdrp-styles.css";
 ```
 
 ## Quick Start
@@ -27,7 +27,7 @@ import "react-date-range-picker-styled/styles.css";
 ```tsx
 import { useState } from "react";
 import { DatePicker } from "react-date-range-picker-styled";
-import "react-date-range-picker-styled/styles.css";
+import "react-date-range-picker-styled/rdrp-styles.css";
 
 function App() {
   const [date, setDate] = useState<Date | null>(null);

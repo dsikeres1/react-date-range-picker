@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DateRangePicker } from "react-date-range-picker-styled";
-import "react-date-range-picker-styled/styles.css";
+import "react-date-range-picker-styled/rdrp-styles.css";
 
 const presets = [
   { label: "Today", value: { start: new Date(), end: new Date() } },

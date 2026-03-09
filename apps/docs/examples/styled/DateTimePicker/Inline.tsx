@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { DateTimePicker } from "react-date-range-picker-styled";
 import { formatDateTime } from "react-date-range-picker-headless";
-import "react-date-range-picker-styled/styles.css";
+import "react-date-range-picker-styled/rdrp-styles.css";
 
 export default function Inline() {
   const [value, setValue] = useState<Date | null>(null);

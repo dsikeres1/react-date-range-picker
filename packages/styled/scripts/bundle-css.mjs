@@ -16,5 +16,5 @@ for (const file of files) {
   output += `/* === ${file} === */\n${content}\n\n`;
 }
 
-writeFileSync(resolve(root, "dist/styles.css"), output.trim() + "\n");
-console.log("CSS bundled → dist/styles.css");
+writeFileSync(resolve(root, "dist/rdrp-styles.css"), output.trim() + "\n");
+console.log("CSS bundled → dist/rdrp-styles.css");

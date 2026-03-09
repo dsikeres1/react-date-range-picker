@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { DatePicker } from "react-date-range-picker-styled";
-import "react-date-range-picker-styled/styles.css";
+import "react-date-range-picker-styled/rdrp-styles.css";
 
 const WEB_FONTS = [
   { name: "Noto Sans", family: '"Noto Sans", sans-serif' },

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DateRangePicker } from "react-date-range-picker-styled";
-import "react-date-range-picker-styled/styles.css";
+import "react-date-range-picker-styled/rdrp-styles.css";
 
 export default function CompoundCustomTriggerRange() {
   const [value, setValue] = useState<{ start: Date | null; end: Date | null }>({

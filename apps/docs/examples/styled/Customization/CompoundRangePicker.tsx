@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DateRangePicker } from "react-date-range-picker-styled";
-import "react-date-range-picker-styled/styles.css";
+import "react-date-range-picker-styled/rdrp-styles.css";
 
 const presets = [
   { label: "Last 7 days", value: { start: new Date(Date.now() - 7 * 86400000), end: new Date() } },

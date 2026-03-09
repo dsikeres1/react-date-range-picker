@@ -26,7 +26,7 @@
         "default": "./dist/index.js"
       }
     },
-    "./styles.css": "./dist/styles.css"
+    "./rdrp-styles.css": "./dist/rdrp-styles.css"
   },
   "license": "MIT",
   "files": [

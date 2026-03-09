@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DateTimePicker } from "react-date-range-picker-styled";
-import "react-date-range-picker-styled/styles.css";
+import "react-date-range-picker-styled/rdrp-styles.css";
 
 export default function MinMaxDate() {
   const [value, setValue] = useState<Date | null>(null);

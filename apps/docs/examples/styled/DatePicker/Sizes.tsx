@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DatePicker } from "react-date-range-picker-styled";
-import "react-date-range-picker-styled/styles.css";
+import "react-date-range-picker-styled/rdrp-styles.css";
 import type { DatePickerSize } from "react-date-range-picker-headless";
 
 const sizes: DatePickerSize[] = ["small", "medium", "large", "x-large"];
