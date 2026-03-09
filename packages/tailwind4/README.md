@@ -70,7 +70,7 @@ function App() {
       presets={[
         {
           label: "Last 7 days",
-          getValue: () => {
+          value: () => {
             const e = new Date();
             const s = new Date();
             s.setDate(s.getDate() - 6);
@@ -79,7 +79,7 @@ function App() {
         },
         {
           label: "Last 30 days",
-          getValue: () => {
+          value: () => {
             const e = new Date();
             const s = new Date();
             s.setDate(s.getDate() - 29);
