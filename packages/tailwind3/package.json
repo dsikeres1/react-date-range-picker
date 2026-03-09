@@ -26,12 +26,12 @@
         "default": "./dist/index.js"
       }
     },
-    "./reset.css": "./reset.css"
+    "./rdrp-reset.css": "./rdrp-reset.css"
   },
   "license": "MIT",
   "files": [
     "dist",
-    "reset.css"
+    "rdrp-reset.css"
   ],
   "scripts": {
     "build": "tsup",
