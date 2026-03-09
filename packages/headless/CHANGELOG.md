@@ -1,5 +1,11 @@
 # react-date-range-picker-headless
 
+## 0.2.1
+
+### Patch Changes
+
+- Enhance npm discoverability: expanded keywords, improved descriptions, and enriched READMEs with badges and value proposition
+
 ## 0.2.0
 
 ### Minor Changes

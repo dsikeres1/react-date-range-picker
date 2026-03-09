@@ -1,5 +1,12 @@
 # react-date-range-picker-ui-primitives
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies
+  - react-date-range-picker-headless@0.2.1
+
 ## 0.1.5
 
 ### Patch Changes
