@@ -95,7 +95,10 @@ import { useState } from "react";
 import { useDateRangePicker } from "react-date-range-picker-headless";
 
 function MyRangePicker() {
-  const [range, setRange] = useState({ start: null, end: null });
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
   const picker = useDateRangePicker({ value: range, onChange: setRange });
 
   return (
@@ -115,6 +118,10 @@ function MyRangePicker() {
 
 ```bash
 npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
 ```
 
 ## Documentation

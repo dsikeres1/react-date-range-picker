@@ -27,6 +27,12 @@ module.exports = {
 };
 ```
 
+If Tailwind Preflight is disabled in your project, import the reset CSS to fix baseline styling:
+
+```tsx
+import "react-date-range-picker-tailwind3/rdrp-reset.css";
+```
+
 ## Quick Start
 
 ### Simple (One-liner)

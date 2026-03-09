@@ -21,6 +21,12 @@ Import the default theme (skip if you already use shadcn/ui — tokens are alrea
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
+If Tailwind Preflight is disabled in your project, also import the reset CSS:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+```
+
 ### shadcn/ui Registry
 
 ```bash
