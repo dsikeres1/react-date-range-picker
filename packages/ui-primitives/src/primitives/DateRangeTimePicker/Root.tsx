@@ -1,0 +1,80 @@
+import { mergeRefs } from "../../utils/mergeRefs";
+import { forwardRef, type ReactNode } from "react";
+import { usePickerContext } from "react-date-range-picker-headless";
+
+import {
+  DateRangeTimePickerProvider,
+  type DateRangeTimePickerProviderProps,
+} from "react-date-range-picker-headless";
+import { formatBasic } from "react-date-range-picker-headless";
+
+export interface DateRangeTimePickerRootProps extends DateRangeTimePickerProviderProps {
+  className?: string;
+  style?: React.CSSProperties;
+  endName?: string;
+  cn?: (...args: unknown[]) => string;
+}
+
+interface InnerProps {
+  className?: string;
+  style?: React.CSSProperties;
+  children?: ReactNode;
+  name?: string;
+  endName?: string;
+  value?: { start: Date | null; end: Date | null };
+}
+
+const Inner = forwardRef<HTMLDivElement, InnerProps>(
+  ({ className, style, children, name, endName, value }, ref) => {
+    const context = usePickerContext();
+    return (
+      <div
+        ref={mergeRefs(ref, context.containerRef)}
+        className={`rdrp-root${className ? ` ${className}` : ""}`}
+        style={style}
+        data-slot="root"
+      >
+        {name && (
+          <input
+            type="hidden"
+            name={name}
+            value={
+              value?.start && value?.end ? formatBasic(value.start, "YYYY-MM-DD HH:mm:ss") : ""
+            }
+          />
+        )}
+        {name && (
+          <input
+            type="hidden"
+            name={endName || `${name}-end`}
+            value={value?.start && value?.end ? formatBasic(value.end, "YYYY-MM-DD HH:mm:ss") : ""}
+          />
+        )}
+        {children}
+      </div>
+    );
+  },
+);
+Inner.displayName = "Inner";
+
+export const DateRangeTimePickerRoot = forwardRef<HTMLDivElement, DateRangeTimePickerRootProps>(
+  ({ className, style, cn: cnFn, children, endName, ...options }, ref) => {
+    const cn = cnFn ?? ((...args: unknown[]) => args.filter(Boolean).join(" "));
+
+    return (
+      <DateRangeTimePickerProvider {...options}>
+        <Inner
+          ref={ref}
+          className={cn(className)}
+          style={style}
+          endName={endName}
+          name={options.name}
+          value={options.value}
+        >
+          {children}
+        </Inner>
+      </DateRangeTimePickerProvider>
+    );
+  },
+);
+DateRangeTimePickerRoot.displayName = "DateRangeTimePickerRoot";
