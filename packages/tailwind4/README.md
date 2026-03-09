@@ -14,18 +14,18 @@
 npm install react-date-range-picker-tailwind4
 ```
 
-Import the default theme (skip if you already use shadcn/ui — tokens are already defined):
+Import the theme CSS in your main CSS file. This automatically registers the component's Tailwind classes — no extra config needed:
 
 ```css
 /* In your main CSS file */
 @import "react-date-range-picker-tailwind4/rdrp-theme.css";
 ```
 
-If Tailwind Preflight is disabled in your project, also import the reset CSS:
-
-```css
-@import "react-date-range-picker-tailwind4/rdrp-reset.css";
-```
+> **shadcn/ui users:** You already have the design tokens defined. Import `rdrp-reset.css` instead:
+>
+> ```css
+> @import "react-date-range-picker-tailwind4/rdrp-reset.css";
+> ```
 
 ### shadcn/ui Registry
 

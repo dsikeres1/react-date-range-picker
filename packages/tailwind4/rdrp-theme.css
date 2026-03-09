@@ -4,13 +4,16 @@
  * Import this in your main CSS file if your project does NOT already
  * define these tokens (shadcn/ui projects already have them — skip this).
  *
- *   @import "react-date-range-picker-tailwind4/theme.css";
+ *   @import "react-date-range-picker-tailwind4/rdrp-theme.css";
  *
  * Uses a Slate + Sky palette. Override any variable to match your brand.
  *
  * Dark mode: uses .dark class strategy by default.
  * If you prefer media query, remove the @variant line and the .dark block.
  */
+
+/* Auto-detect Tailwind classes used by this package's components. */
+@source "./dist";
 
 @variant dark (&:where(.dark, .dark *));
 

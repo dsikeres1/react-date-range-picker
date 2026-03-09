@@ -1,6 +1,9 @@
 /* react-date-range-picker reset for Preflight-disabled environments
    Reproduces the subset of Tailwind Preflight that this library depends on. */
 
+/* Auto-detect Tailwind classes used by this package's components. */
+@source "./dist";
+
 :where(.rdrp-root),
 :where(.rdrp-root *),
 :where(.rdrp-root *::before),
