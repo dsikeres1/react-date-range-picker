@@ -1,7 +1,7 @@
 {
   "name": "react-date-range-picker-styled",
   "version": "0.2.0",
-  "description": "Date range picker for React with styled CSS styling",
+  "description": "Date & range picker for React with built-in CSS — no Tailwind needed, CSS variables, dark mode, keyboard navigation, 15 locales",
   "author": "DSikeres1",
   "repository": {
     "type": "git",
@@ -61,14 +61,25 @@
   ],
   "keywords": [
     "react",
-    "date",
-    "range",
-    "picker",
+    "date-picker",
+    "date-range-picker",
     "datepicker",
     "daterange",
     "calendar",
     "css",
-    "styled"
+    "css-variables",
+    "styled",
+    "no-tailwind",
+    "time-picker",
+    "date-time-picker",
+    "compound-component",
+    "keyboard-navigation",
+    "accessible",
+    "a11y",
+    "dark-mode",
+    "i18n",
+    "locale",
+    "typescript"
   ],
   "type": "commonjs"
 }

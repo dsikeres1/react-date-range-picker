@@ -1,7 +1,7 @@
 {
   "name": "react-date-range-picker-headless",
   "version": "0.2.0",
-  "description": "A headless, composable date range picker for React",
+  "description": "Headless date & range picker hooks for React — zero dependencies, compound components, keyboard navigation, 15 locales",
   "author": "DSikeres1",
   "repository": {
     "type": "git",
@@ -41,13 +41,26 @@
   },
   "keywords": [
     "react",
-    "date",
-    "range",
-    "picker",
+    "date-picker",
+    "date-range-picker",
     "datepicker",
     "daterange",
     "calendar",
-    "headless"
+    "headless",
+    "hooks",
+    "unstyled",
+    "composable",
+    "compound-component",
+    "time-picker",
+    "date-time-picker",
+    "keyboard-navigation",
+    "accessible",
+    "a11y",
+    "i18n",
+    "locale",
+    "dark-mode",
+    "typescript",
+    "zero-dependency"
   ],
   "publishConfig": {
     "access": "public"
