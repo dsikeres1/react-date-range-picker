@@ -95,6 +95,7 @@ function buildRegistry() {
       "tailwind-merge",
     ],
     files,
+    type: "registry:component",
   };
 
   // Ensure output directory exists
