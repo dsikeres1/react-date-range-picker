@@ -1,4 +1,4 @@
-import { mergeRefs } from "../utils/mergeRefs";
+import { mergeRefs } from "../../utils/mergeRefs";
 import { forwardRef, type ReactNode } from "react";
 import { usePickerContext } from "react-date-range-picker-headless";
 

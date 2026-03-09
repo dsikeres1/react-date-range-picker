@@ -1,4 +1,3 @@
-import React from "react";
 import * as C from "./Compound";
 import type { DateRangeTimePickerRootProps } from "../../ui-primitives/index";
 import { cn } from "../../utils";

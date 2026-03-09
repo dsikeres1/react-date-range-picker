@@ -1,4 +1,3 @@
-import React from "react";
 import * as C from "./Compound";
 import type { DateTimePickerRootProps } from "../../ui-primitives/index";
 import { dateTimeClassNames } from "../../theme";

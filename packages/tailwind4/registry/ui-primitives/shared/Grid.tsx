@@ -8,6 +8,7 @@ export interface GridProps {
   weekdayClassName?: string;
   weekdaysClassName?: string;
   weekClassName?: string;
+  gridClassName?: string;
   children?: (props: { date: Date; calendarIndex: number }) => ReactNode;
   calendarIndex?: number;
   cn?: (...args: unknown[]) => string;
@@ -35,6 +36,7 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
       weekdayClassName,
       weekdaysClassName,
       weekClassName,
+      gridClassName,
       children,
       calendarIndex = 0,
       cn: cnFn,
@@ -57,7 +59,7 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
             </div>
           ))}
         </div>
-        <div className={cn("rdrp-grid")} role="grid">
+        <div className={cn("rdrp-grid", gridClassName)} role="grid">
           {cal.weeks.map((week, wIdx) => (
             <div key={wIdx} className={cn("rdrp-week", weekClassName)} role="row">
               {week.map((date, dIdx) => {
