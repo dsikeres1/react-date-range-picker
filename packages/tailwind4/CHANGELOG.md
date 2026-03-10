@@ -1,5 +1,20 @@
 # react-date-range-picker-tailwind4
 
+## 0.2.5
+
+### Patch Changes
+
+- ce5b3c5: fix(registry): add missing RangeTimeSectionRenderProps to time-picker registry types
+
+  The time-picker.json registry had an incomplete types.ts that was missing the
+  RangeTimeSectionRenderProps interface. When users installed time-picker after
+  other components, shadcn would overwrite the complete types.ts with the
+  incomplete one, causing TypeScript errors.
+
+  Also improved README documentation across all packages with preset and time
+  configuration examples.
+  - react-date-range-picker-headless@0.2.5
+
 ## 0.2.4
 
 ### Patch Changes
