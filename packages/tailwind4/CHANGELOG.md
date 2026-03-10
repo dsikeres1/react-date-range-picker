@@ -1,5 +1,16 @@
 # react-date-range-picker-tailwind4
 
+## 0.2.3
+
+### Patch Changes
+
+- Fix tw3 auto-dark mode and tw4 registry focus ring
+  - **tailwind3**: Remove all `dark:` Tailwind variants. Dark mode is now exclusively controlled via CSS variables (`.dark` class or `data-theme="dark"`), preventing unwanted auto-darkening on systems with dark color scheme preference.
+  - **tailwind4**: Remove `focus-visible:ring-*` from base day class. Focus ring is now exclusively applied via the `focused` className (controlled by `showFocusRing` logic), fixing unwanted ring/outline on selected dates in registry usage.
+
+- Updated dependencies
+  - react-date-range-picker-headless@0.2.3
+
 ## 0.2.2
 
 ### Patch Changes

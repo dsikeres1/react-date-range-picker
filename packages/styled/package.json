@@ -1,6 +1,6 @@
 {
   "name": "react-date-range-picker-styled",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Date & range picker for React with built-in CSS — no Tailwind needed, CSS variables, dark mode, keyboard navigation, 15 locales",
   "author": "DSikeres1",
   "repository": {
