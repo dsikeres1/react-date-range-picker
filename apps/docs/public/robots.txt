@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dsikeres1.github.io/react-date-range-picker/sitemap-index.xml

@@ -1,0 +1,111 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: string;
+}
+
+const {
+  title,
+  description = "A headless, composable date & range picker for React",
+  lang = "en",
+} = Astro.props;
+const siteTitle = "React Date Range Picker";
+const fullTitle = title === "Home" ? siteTitle : `${title} | ${siteTitle}`;
+const siteUrl = "https://dsikeres1.github.io/react-date-range-picker";
+const ogImage = `${siteUrl}/og.png`;
+const canonicalUrl = `https://dsikeres1.github.io${Astro.url.pathname}`;
+const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/react-date-range-picker/";
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{fullTitle}</title>
+    <link rel="icon" type="image/x-icon" href={`${import.meta.env.BASE_URL}/favicon.ico`} />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href={`${import.meta.env.BASE_URL}/favicon-32x32.png`}
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href={`${import.meta.env.BASE_URL}/favicon-16x16.png`}
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href={`${import.meta.env.BASE_URL}/apple-touch-icon.png`}
+    />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="manifest" href={`${import.meta.env.BASE_URL}/site.webmanifest`} />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    {
+      isHome && (
+        <>
+          <script
+            type="application/ld+json"
+            set:html={JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "React Date Range Picker",
+              url: siteUrl,
+              description:
+                "A headless-first, composable date & range picker for React with Tailwind CSS v4, shadcn/ui, and built-in CSS support.",
+            })}
+          />
+          <script
+            type="application/ld+json"
+            set:html={JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareSourceCode",
+              name: "React Date Range Picker",
+              description:
+                "A headless-first, composable date & range picker for React. Supports DatePicker, DateRangePicker, DateTimePicker, DateRangeTimePicker, and TimePicker with Tailwind CSS v4, v3, built-in CSS, or headless hooks.",
+              url: siteUrl,
+              codeRepository: "https://github.com/dsikeres1/react-date-range-picker",
+              programmingLanguage: ["TypeScript", "React"],
+              runtimePlatform: "Node.js",
+              license: "https://opensource.org/licenses/MIT",
+              operatingSystem: "Any",
+              applicationCategory: "DeveloperApplication",
+              keywords:
+                "react, date picker, date range picker, tailwind css, shadcn, headless, compound component, accessible, i18n",
+            })}
+          />
+        </>
+      )
+    }
+
+    <!-- Dark mode: prevent flash, respect stored preference or system default -->
+    <script is:inline>
+      const t = localStorage.getItem("theme") || "system";
+      if (t === "dark" || (t === "system" && matchMedia("(prefers-color-scheme: dark)").matches)) {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
+  </head>
+  <body class="flex min-h-screen flex-col bg-background text-foreground antialiased">
+    <slot />
+  </body>
+</html>

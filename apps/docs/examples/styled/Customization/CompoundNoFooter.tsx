@@ -1,0 +1,21 @@
+import { useState } from "react";
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/rdrp-styles.css";
+
+export default function CompoundNoFooter() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  return (
+    <DatePicker.Root value={value} onChange={setValue}>
+      <DatePicker.Trigger />
+      <DatePicker.Content>
+        <DatePicker.Header>
+          <DatePicker.PrevButton />
+          <DatePicker.Title />
+          <DatePicker.NextButton />
+        </DatePicker.Header>
+        <DatePicker.Grid />
+      </DatePicker.Content>
+    </DatePicker.Root>
+  );
+}

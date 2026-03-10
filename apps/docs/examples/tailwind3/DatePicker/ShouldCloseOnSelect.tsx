@@ -1,0 +1,8 @@
+import { useState } from "react";
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+export default function ShouldCloseOnSelect() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  return <DatePicker value={value} onChange={setValue} shouldCloseOnSelect />;
+}

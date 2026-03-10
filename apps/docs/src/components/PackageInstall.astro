@@ -1,0 +1,93 @@
+---
+interface Props {
+  pkg: string;
+}
+
+const { pkg } = Astro.props;
+---
+
+<div class="not-prose my-4">
+  <div class="flex gap-1 border-b border-border">
+    <button
+      class="tab-btn rounded-t-md border-b-2 border-primary px-3 py-1.5 text-sm font-medium text-primary"
+      data-tab="npm">npm</button
+    >
+    <button
+      class="tab-btn rounded-t-md px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground"
+      data-tab="pnpm">pnpm</button
+    >
+    <button
+      class="tab-btn rounded-t-md px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground"
+      data-tab="yarn">yarn</button
+    >
+  </div>
+  <div class="relative rounded-b-lg bg-code-bg p-4 font-mono text-sm">
+    <div class="tab-content" data-tab="npm">npm install {pkg}</div>
+    <div class="tab-content hidden" data-tab="pnpm">pnpm add {pkg}</div>
+    <div class="tab-content hidden" data-tab="yarn">yarn add {pkg}</div>
+    <button
+      class="copy-btn absolute right-2 top-1/2 -translate-y-1/2 rounded p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+      aria-label="Copy to clipboard"
+    >
+      <svg
+        class="copy-icon size-4"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path
+          d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg
+      >
+      <svg
+        class="check-icon hidden size-4 text-green-500"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg
+      >
+    </button>
+  </div>
+</div>
+
+<script is:inline>
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const container = btn.closest(".not-prose");
+      if (!container) return;
+      const tab = btn.getAttribute("data-tab");
+      container.querySelectorAll(".tab-btn").forEach((b) => {
+        b.classList.toggle("border-primary", b.getAttribute("data-tab") === tab);
+        b.classList.toggle("text-primary", b.getAttribute("data-tab") === tab);
+        b.classList.toggle("border-b-2", b.getAttribute("data-tab") === tab);
+        b.classList.toggle("text-muted-foreground", b.getAttribute("data-tab") !== tab);
+      });
+      container.querySelectorAll(".tab-content").forEach((c) => {
+        c.classList.toggle("hidden", c.getAttribute("data-tab") !== tab);
+      });
+    });
+  });
+
+  document.querySelectorAll(".not-prose .copy-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const container = btn.closest(".not-prose");
+      if (!container) return;
+      const visible = container.querySelector(".tab-content:not(.hidden)");
+      if (!visible) return;
+      navigator.clipboard.writeText(visible.textContent.trim());
+      const copyIcon = btn.querySelector(".copy-icon");
+      const checkIcon = btn.querySelector(".check-icon");
+      copyIcon.classList.add("hidden");
+      checkIcon.classList.remove("hidden");
+      setTimeout(() => {
+        copyIcon.classList.remove("hidden");
+        checkIcon.classList.add("hidden");
+      }, 2000);
+    });
+  });
+</script>

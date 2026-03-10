@@ -1,0 +1,147 @@
+---
+import type { SidebarItem } from "@/lib/sidebar";
+import SidebarNav from "./SidebarNav.astro";
+
+interface Props {
+  items: SidebarItem[];
+}
+
+const { items } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const currentPath = Astro.url.pathname;
+
+const sectionLinks = [
+  { label: "Tailwind v4", href: `${base}/docs/tailwind4/getting-started` },
+  { label: "Tailwind v3", href: `${base}/docs/tailwind3/getting-started` },
+  { label: "Styled", href: `${base}/docs/styled/getting-started` },
+  { label: "Headless", href: `${base}/docs/headless/getting-started` },
+  { label: "Guides", href: `${base}/docs/guides/accessibility` },
+];
+---
+
+<!-- Mobile sidebar backdrop + drawer -->
+<div id="sidebar-backdrop" class="fixed inset-0 z-40 hidden bg-black/50 lg:hidden"></div>
+<aside
+  id="sidebar-mobile"
+  class="fixed inset-y-0 left-0 z-50 w-72 -translate-x-full overflow-y-auto border-r border-sidebar-border bg-sidebar px-3 py-4 transition-transform duration-200 lg:hidden"
+>
+  <div class="mb-4 flex items-center justify-between px-2">
+    <span class="text-sm font-semibold text-foreground">Navigation</span>
+    <button
+      id="sidebar-close-btn"
+      type="button"
+      class="rounded-md p-1.5 text-muted-foreground hover:bg-accent"
+      aria-label="Close sidebar"
+    >
+      <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+  <!-- Section links (mobile) -->
+  <nav class="mb-3 border-b border-sidebar-border pb-3">
+    <div class="mb-1.5 px-2 text-xs font-medium tracking-wide text-muted-foreground/60">
+      Sections
+    </div>
+    {
+      sectionLinks.map(({ label, href }) => {
+        const isActive = currentPath.startsWith(href);
+        return (
+          <a
+            href={href}
+            class:list={[
+              "block rounded-md px-2 py-1.5 text-sm transition-colors",
+              isActive
+                ? "font-medium text-foreground bg-accent"
+                : "text-muted-foreground hover:text-foreground hover:bg-accent/50",
+            ]}
+          >
+            {label}
+          </a>
+        );
+      })
+    }
+  </nav>
+  <SidebarNav items={items} currentPath={currentPath} />
+</aside>
+
+<!-- Desktop sidebar -->
+<aside
+  class="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-64 shrink-0 overflow-y-auto border-r border-sidebar-border bg-sidebar px-3 py-4 lg:block"
+>
+  <SidebarNav items={items} currentPath={currentPath} />
+</aside>
+
+<script is:inline>
+  // === Mobile sidebar toggle ===
+  const backdrop = document.getElementById("sidebar-backdrop");
+  const sidebar = document.getElementById("sidebar-mobile");
+  const closeBtn = document.getElementById("sidebar-close-btn");
+
+  function openSidebar() {
+    backdrop?.classList.remove("hidden");
+    sidebar?.classList.remove("-translate-x-full");
+  }
+
+  function closeSidebar() {
+    backdrop?.classList.add("hidden");
+    sidebar?.classList.add("-translate-x-full");
+  }
+
+  document.getElementById("mobile-menu-btn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    document.getElementById("mobile-menu")?.classList.add("hidden");
+    openSidebar();
+  });
+
+  closeBtn?.addEventListener("click", closeSidebar);
+  backdrop?.addEventListener("click", closeSidebar);
+
+  // === Accordion behavior ===
+  // Strategy: animate with max-height for open/close, then switch to
+  // max-height:none when expanded so nested children can grow freely.
+  document.querySelectorAll("[data-sidebar-toggle]").forEach((btn) => {
+    const group = btn.closest("[data-sidebar-group]");
+    const content = group?.querySelector(":scope > [data-sidebar-content]");
+    const chevron = btn.querySelector("[data-sidebar-chevron]");
+    if (!content) return;
+
+    // Initialize from SSR data-expanded attribute
+    const isExpanded = btn.getAttribute("data-expanded") === "true";
+    if (isExpanded) {
+      content.style.maxHeight = "none";
+      chevron?.classList.add("rotate-90");
+    } else {
+      content.style.maxHeight = "0";
+    }
+
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      const next = !expanded;
+
+      btn.setAttribute("aria-expanded", String(next));
+      btn.setAttribute("data-expanded", String(next));
+      chevron?.classList.toggle("rotate-90", next);
+
+      if (next) {
+        // Expand: 0 -> scrollHeight (animated) -> none (after transition)
+        content.style.maxHeight = content.scrollHeight + "px";
+        content.addEventListener(
+          "transitionend",
+          () => {
+            if (btn.getAttribute("data-expanded") === "true") {
+              content.style.maxHeight = "none";
+            }
+          },
+          { once: true },
+        );
+      } else {
+        // Collapse: none -> scrollHeight (instant) -> 0 (animated)
+        content.style.maxHeight = content.scrollHeight + "px";
+        content.offsetHeight; // force reflow
+        content.style.maxHeight = "0";
+      }
+    });
+  });
+</script>

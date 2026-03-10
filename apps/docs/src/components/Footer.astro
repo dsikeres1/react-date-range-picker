@@ -1,0 +1,100 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
+<footer class="border-t border-footer-border bg-footer text-footer-foreground">
+  <div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-12 sm:grid-cols-3">
+    <!-- Docs -->
+    <div>
+      <h3 class="mb-3 text-sm font-semibold text-footer-foreground">Docs</h3>
+      <ul class="space-y-2 text-sm text-footer-muted">
+        <li>
+          <a href={`${base}/docs/tailwind4/getting-started`} class="hover:text-footer-foreground"
+            >Getting Started</a
+          >
+        </li>
+        <li>
+          <a href={`${base}/docs/guides/accessibility`} class="hover:text-footer-foreground"
+            >Guides</a
+          >
+        </li>
+        <li>
+          <a
+            href={`${base}/docs/headless/hooks/use-date-picker`}
+            class="hover:text-footer-foreground">Headless</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Packages -->
+    <div>
+      <h3 class="mb-3 text-sm font-semibold text-footer-foreground">Packages</h3>
+      <ul class="space-y-2 text-sm text-footer-muted">
+        <li>
+          <a
+            href="https://www.npmjs.com/package/react-date-range-picker-headless"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-footer-foreground">headless</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://www.npmjs.com/package/react-date-range-picker-styled"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-footer-foreground">styled</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://www.npmjs.com/package/react-date-range-picker-tailwind3"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-footer-foreground">tailwind3</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://www.npmjs.com/package/react-date-range-picker-tailwind4"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-footer-foreground">tailwind4</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Links -->
+    <div>
+      <h3 class="mb-3 text-sm font-semibold text-footer-foreground">Links</h3>
+      <ul class="space-y-2 text-sm text-footer-muted">
+        <li>
+          <a
+            href="https://github.com/dsikeres1/react-date-range-picker"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-footer-foreground">GitHub</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- BMAC logo -->
+  <div class="border-t border-footer-border px-4 py-6 text-center">
+    <a href="https://www.buymeacoffee.com/dsikeres1" target="_blank" rel="noopener noreferrer">
+      <img
+        src={`${base}/bmc-button.png`}
+        alt="Buy Me a Coffee"
+        width="180"
+        class="mx-auto"
+        loading="lazy"
+      />
+    </a>
+    <p class="mt-4 text-xs text-footer-muted">
+      Copyright &copy; {new Date().getFullYear()} DSikeres1. All rights reserved.
+    </p>
+  </div>
+</footer>
