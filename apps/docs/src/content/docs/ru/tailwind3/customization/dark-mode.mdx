@@ -6,19 +6,16 @@ import Admonition from "@/components/Admonition.astro";
 
 # Темный режим
 
-Пакет Tailwind v3 включает полную поддержку темного режима с использованием варианта `dark:` от Tailwind. Каждый элемент компонента имеет явные классы для темного режима.
+Пакет Tailwind v3 включает полную поддержку темного режима через пользовательские свойства CSS. Плагин Tailwind (`rdrpPlugin`) внедряет цветовые переменные, которые автоматически переключаются между светлой и темной палитрами.
 
 ## Как это работает
 
-Тема Tailwind v3 использует конкретные классы цветов с вариантами `dark:` повсеместно. Например:
+Плагин Tailwind v3 (`rdrpPlugin`) внедряет пользовательские свойства CSS, определяющие цветовую палитру. Темный режим работает путем переопределения этих переменных под `.dark` или `[data-theme="dark"]`:
 
-```
-bg-white dark:bg-slate-950
-text-slate-900 dark:text-slate-50
-border-slate-200 dark:border-slate-800
-```
+- **Светлый режим** — `:root` определяет цвета по умолчанию (палитра Slate + Sky)
+- **Темный режим** — `.dark` и `[data-theme="dark"]` автоматически переопределяют цвета
 
-Темный режим активируется, когда срабатывает вариант `dark:` от Tailwind, что зависит от стратегии `darkMode` в вашей конфигурации Tailwind.
+Тема компонента ссылается на них через `var(--rdrp-color-*)`, поэтому темный режим активируется, когда ваша стратегия `darkMode` в Tailwind запускает соответствующий селектор.
 
 ## Конфигурация Tailwind
 
@@ -27,13 +24,15 @@ border-slate-200 dark:border-slate-800
 Установите `darkMode: "class"` в вашей конфигурации Tailwind. Темный режим активируется, когда класс `dark` присутствует на `<html>` или родительском элементе:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "class",
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -63,13 +62,15 @@ document.documentElement.classList.toggle("dark", isDark);
 Tailwind v3.4+ поддерживает `darkMode: "selector"`, что позволяет использовать `[data-theme="dark"]` или любой другой пользовательский селектор:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -84,46 +85,53 @@ module.exports = {
 Установите `darkMode: "media"` (или опустите — это значение по умолчанию), чтобы следовать настройкам ОС:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "media",
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
 Дополнительная настройка не требуется. Компонент будет следовать `prefers-color-scheme`.
 
-## Пары цветов
+## Цветовые переменные
 
-Вот пары цветов для светлого/темного режимов, используемые в компоненте:
+Вот пользовательские свойства CSS, используемые для светлой/темной темы:
 
-| Элемент                | Светлый             | Темный                       |
-| ---------------------- | ------------------- | ---------------------------- |
-| Фон                    | `bg-white`          | `dark:bg-slate-950`          |
-| Текст                  | `text-slate-900`    | `dark:text-slate-50`         |
-| Приглушенный текст     | `text-slate-500`    | `dark:text-slate-400`        |
-| Граница                | `border-slate-200`  | `dark:border-slate-800`      |
-| Фон при наведении      | `bg-slate-100`      | `dark:bg-slate-800`          |
-| Основной цвет          | `bg-sky-500`        | `dark:bg-sky-500`            |
-| Основной текст         | `text-sky-500`      | `dark:text-sky-400`          |
-| Фон диапазона          | `bg-sky-50`         | `dark:bg-sky-950/50`         |
-| Диапазон при наведении | `bg-sky-50/50`      | `dark:bg-sky-950/30`         |
-| Кольцо фокуса          | `ring-sky-500`      | `ring-sky-500`               |
-| Смещение кольца        | `ring-offset-white` | `dark:ring-offset-slate-950` |
+| Переменная                | Светлый   | Темный                 |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
 
 ## Интеграция с Docusaurus
 
 Если вы используете Docusaurus (который использует `data-theme` на `<html>`), настройте стратегию селектора в Tailwind:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
-Docusaurus устанавливает `<html data-theme="dark">`, когда активен темный режим, и вариант `dark:` от Tailwind будет срабатывать по этому селектору.
+Docusaurus устанавливает `<html data-theme="dark">`, когда активен темный режим, и CSS-переменные автоматически переключатся на темные значения.
 
 ## Интеграция с next-themes
 

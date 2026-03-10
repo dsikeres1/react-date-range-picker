@@ -18,24 +18,21 @@ import Tailwind3BasicSource from "@examples/tailwind3/DatePicker/Basic.tsx?raw";
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-Импортируйте стили компонентов в точке входа вашего приложения:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-styles.css";
-```
-
 ## Конфигурация Tailwind
 
-Добавьте пакет в ваши пути `content` в файле `tailwind.config.js`, чтобы Tailwind мог сканировать классы компонентов:
+Добавьте плагин и путь content в конфигурацию Tailwind:
 
 ```js
 // tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
-  // ...
+  darkMode: "class",
+  plugins: [rdrpPlugin],
 };
 ```
 

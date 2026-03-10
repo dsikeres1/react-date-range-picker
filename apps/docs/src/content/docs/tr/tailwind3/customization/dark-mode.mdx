@@ -6,19 +6,16 @@ import Admonition from "@/components/Admonition.astro";
 
 # Karanlık Mod
 
-Tailwind v3 paketi, Tailwind'in `dark:` varyantını kullanarak tam karanlık mod desteği içerir. Her bileşen öğesi, açıkça belirtilmiş karanlık mod sınıflarına sahiptir.
+Tailwind v3 paketi, CSS özel özellikleri aracılığıyla tam karanlık mod desteği içerir. Tailwind eklentisi (`rdrpPlugin`), açık ve karanlık paletler arasında otomatik olarak geçiş yapan renk değişkenleri enjekte eder.
 
 ## Nasıl Çalışır
 
-Tailwind v3 teması, baştan sona `dark:` varyantlarına sahip somut renk sınıfları kullanır. Örneğin:
+Tailwind v3 eklentisi (`rdrpPlugin`), renk paletini tanımlayan CSS özel özellikleri enjekte eder. Karanlık mod, `.dark` veya `[data-theme="dark"]` altında bu değişkenlerin üzerine yazarak çalışır:
 
-```
-bg-white dark:bg-slate-950
-text-slate-900 dark:text-slate-50
-border-slate-200 dark:border-slate-800
-```
+- **Açık mod** — `:root` varsayılan renkleri tanımlar (Slate + Sky paleti)
+- **Karanlık mod** — `.dark` ve `[data-theme="dark"]` renkleri otomatik olarak geçersiz kılar
 
-Karanlık mod, Tailwind'in `dark:` varyantı tetiklendiğinde etkinleşir; bu, Tailwind yapılandırmanızın `darkMode` stratejisine bağlıdır.
+Bileşen teması bunlara `var(--rdrp-color-*)` aracılığıyla başvurur, bu nedenle Tailwind'in `darkMode` stratejisi uygun seçiciyi tetiklediğinde karanlık mod etkinleşir.
 
 ## Tailwind Yapılandırması
 
@@ -27,13 +24,15 @@ Karanlık mod, Tailwind'in `dark:` varyantı tetiklendiğinde etkinleşir; bu, T
 Tailwind yapılandırmanızda `darkMode: "class"` ayarlayın. Karanlık mod, `<html>` etiketinde veya bir üst öğede `dark` sınıfı bulunduğunda etkinleşir:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "class",
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -63,13 +62,15 @@ document.documentElement.classList.toggle("dark", isDark);
 Tailwind v3.4 ve üzeri, `[data-theme="dark"]` veya herhangi bir özel seçici kullanmanıza olanak tanıyan `darkMode: "selector"` özelliğini destekler:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -84,46 +85,53 @@ module.exports = {
 İşletim sistemi tercihini takip etmek için `darkMode: "media"` ayarlayın (veya atlayın - bu varsayılandır):
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "media",
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
 Ek bir kurulum gerekmez. Seçici, `prefers-color-scheme` özelliğini takip edecektir.
 
-## Renk Çiftleri
+## Renk Değişkenleri
 
-Seçici boyunca kullanılan açık/karanlık renk çiftleri şunlardır:
+Açık/karanlık tema için kullanılan CSS özel özellikleri şunlardır:
 
-| Öğe            | Açık Mod            | Karanlık Mod                 |
-| -------------- | ------------------- | ---------------------------- |
-| Arka Plan      | `bg-white`          | `dark:bg-slate-950`          |
-| Metin          | `text-slate-900`    | `dark:text-slate-50`         |
-| Soluk metin    | `text-slate-500`    | `dark:text-slate-400`        |
-| Kenarlık       | `border-slate-200`  | `dark:border-slate-800`      |
-| Hover bg       | `bg-slate-100`      | `dark:bg-slate-800`          |
-| Birincil       | `bg-sky-500`        | `dark:bg-sky-500`            |
-| Birincil metin | `text-sky-500`      | `dark:text-sky-400`          |
-| Aralık bg      | `bg-sky-50`         | `dark:bg-sky-950/50`         |
-| Hover aralık   | `bg-sky-50/50`      | `dark:bg-sky-950/30`         |
-| Odak halkası   | `ring-sky-500`      | `ring-sky-500`               |
-| Halka ofseti   | `ring-offset-white` | `dark:ring-offset-slate-950` |
+| Değişken                  | Açık Mod  | Karanlık Mod           |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
 
 ## Docusaurus ile Entegrasyon
 
 Eğer Docusaurus kullanıyorsanız (`<html>` üzerinde `data-theme` kullanan), Tailwind'in seçici stratejisini yapılandırın:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
-Docusaurus, karanlık mod etkin olduğunda `<html data-theme="dark">` ayarlar ve Tailwind'in `dark:` varyantı bu seçicide tetiklenir.
+Docusaurus, karanlık mod etkin olduğunda `<html data-theme="dark">` ayarlar ve CSS değişkenleri otomatik olarak karanlık değerlere geçer.
 
 ## next-themes ile Entegrasyon
 

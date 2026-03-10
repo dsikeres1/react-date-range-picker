@@ -18,24 +18,21 @@ Tailwind v3 패키지는 Tailwind CSS v3 유틸리티 클래스로 스타일이 
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-앱 진입점에서 컴포넌트 스타일을 가져오세요:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-styles.css";
-```
-
 ## Tailwind 설정
 
-Tailwind가 컴포넌트 클래스를 스캔할 수 있도록 `tailwind.config.js`의 `content` 경로에 패키지를 추가하세요:
+Tailwind 설정에 플러그인과 content 경로를 추가하세요:
 
 ```js
 // tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
-  // ...
+  darkMode: "class",
+  plugins: [rdrpPlugin],
 };
 ```
 

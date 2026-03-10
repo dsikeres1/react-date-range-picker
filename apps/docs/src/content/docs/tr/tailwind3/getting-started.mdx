@@ -18,24 +18,21 @@ Tailwind v3 paketi, Tailwind CSS v3 yardımcı sınıflarıyla stillendirilmiş 
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-Uygulama giriş noktanızda bileşen stillerini içe aktarın:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-styles.css";
-```
-
 ## Tailwind Yapılandırması
 
-Paketi `tailwind.config.js` dosyanızdaki `content` yollarınıza ekleyin, böylece Tailwind bileşen sınıflarını tarayabilir:
+Tailwind yapılandırmanıza plugin ve content yolunu ekleyin:
 
 ```js
 // tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
-  // ...
+  darkMode: "class",
+  plugins: [rdrpPlugin],
 };
 ```
 

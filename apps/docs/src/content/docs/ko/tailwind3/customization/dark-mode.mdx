@@ -6,19 +6,16 @@ import Admonition from "@/components/Admonition.astro";
 
 # 다크 모드
 
-Tailwind v3 패키지는 Tailwind의 `dark:` 변형을 사용하여 완벽한 다크 모드 지원을 포함합니다. 모든 컴포넌트 요소에는 명시적인 다크 모드 클래스가 있습니다.
+Tailwind v3 패키지는 CSS 사용자 정의 속성을 통한 완벽한 다크 모드 지원을 포함합니다. Tailwind 플러그인(`rdrpPlugin`)은 밝은 팔레트와 어두운 팔레트 사이를 자동으로 전환하는 색상 변수를 주입합니다.
 
 ## 작동 방식
 
-Tailwind v3 테마는 전체적으로 `dark:` 변형과 함께 구체적인 색상 클래스를 사용합니다. 예를 들면 다음과 같습니다:
+Tailwind v3 플러그인(`rdrpPlugin`)은 색상 팔레트를 정의하는 CSS 사용자 정의 속성을 주입합니다. 다크 모드는 `.dark` 또는 `[data-theme="dark"]` 아래에서 이러한 변수를 재정의하여 작동합니다:
 
-```
-bg-white dark:bg-slate-950
-text-slate-900 dark:text-slate-50
-border-slate-200 dark:border-slate-800
-```
+- **라이트 모드** — `:root`는 기본 색상을 정의합니다 (Slate + Sky 팔레트)
+- **다크 모드** — `.dark`와 `[data-theme="dark"]`가 자동으로 색상을 재정의합니다
 
-다크 모드는 Tailwind 설정의 `darkMode` 전략에 따라 Tailwind의 `dark:` 변형이 트리거될 때 활성화됩니다.
+컴포넌트 테마는 `var(--rdrp-color-*)`를 통해 이를 참조하므로, Tailwind의 `darkMode` 전략이 적절한 선택자를 트리거할 때 다크 모드가 활성화됩니다.
 
 ## Tailwind 설정
 
@@ -27,13 +24,15 @@ border-slate-200 dark:border-slate-800
 Tailwind 설정에서 `darkMode: "class"`로 설정합니다. 다크 모드는 `<html>` 또는 부모 요소에 `dark` 클래스가 있을 때 활성화됩니다:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "class",
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -63,13 +62,15 @@ document.documentElement.classList.toggle("dark", isDark);
 Tailwind v3.4+는 `[data-theme="dark"]` 또는 사용자 정의 선택자를 사용할 수 있는 `darkMode: "selector"`를 지원합니다:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -84,46 +85,53 @@ module.exports = {
 OS 기본 설정을 따르려면 `darkMode: "media"`로 설정(또는 생략 — 이것이 기본값)합니다:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "media",
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
 추가 설정이 필요하지 않습니다. picker는 `prefers-color-scheme`을 따릅니다.
 
-## 색상 쌍
+## 색상 변수
 
-picker 전체에서 사용되는 라이트/다크 색상 쌍은 다음과 같습니다:
+라이트/다크 테마에 사용되는 CSS 사용자 정의 속성은 다음과 같습니다:
 
-| 요소              | 라이트              | 다크                         |
-| ----------------- | ------------------- | ---------------------------- |
-| 배경              | `bg-white`          | `dark:bg-slate-950`          |
-| 텍스트            | `text-slate-900`    | `dark:text-slate-50`         |
-| 음소거된 텍스트   | `text-slate-500`    | `dark:text-slate-400`        |
-| 테두리            | `border-slate-200`  | `dark:border-slate-800`      |
-| 호버 배경         | `bg-slate-100`      | `dark:bg-slate-800`          |
-| 프라이머리        | `bg-sky-500`        | `dark:bg-sky-500`            |
-| 프라이머리 텍스트 | `text-sky-500`      | `dark:text-sky-400`          |
-| 범위 배경         | `bg-sky-50`         | `dark:bg-sky-950/50`         |
-| 호버 범위         | `bg-sky-50/50`      | `dark:bg-sky-950/30`         |
-| 포커스 링         | `ring-sky-500`      | `ring-sky-500`               |
-| 링 오프셋         | `ring-offset-white` | `dark:ring-offset-slate-950` |
+| 변수                      | 라이트    | 다크                   |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
 
 ## Docusaurus 연동
 
 (`<html>`에 `data-theme`을 사용하는) Docusaurus를 사용하는 경우, Tailwind의 선택자 전략을 설정하세요:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
-Docusaurus는 다크 모드가 활성화될 때 `<html data-theme="dark">`를 설정하며, 이 선택자에서 Tailwind의 `dark:` 변형이 트리거됩니다.
+Docusaurus는 다크 모드가 활성화될 때 `<html data-theme="dark">`를 설정하며, CSS 변수가 자동으로 다크 값으로 전환됩니다.
 
 ## next-themes 연동
 

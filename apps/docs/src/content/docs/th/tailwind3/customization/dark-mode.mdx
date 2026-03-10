@@ -6,19 +6,16 @@ import Admonition from "@/components/Admonition.astro";
 
 # โหมดมืด
 
-แพ็คเกจ Tailwind v3 รองรับโหมดมืดอย่างเต็มรูปแบบโดยใช้ `dark:` variant ของ Tailwind ทุกองค์ประกอบของคอมโพเนนต์มีการกำหนดคลาสสำหรับโหมดมืดไว้อย่างชัดเจน
+แพ็คเกจ Tailwind v3 รองรับโหมดมืดอย่างเต็มรูปแบบผ่าน CSS custom properties ปลั๊กอิน Tailwind (`rdrpPlugin`) จะแทรกตัวแปรสีที่สลับระหว่างพาเลตสว่างและมืดโดยอัตโนมัติ
 
 ## วิธีการทำงาน
 
-ธีม Tailwind v3 ใช้คลาสสีที่ระบุเจาะจงพร้อมกับ `dark:` variant อยู่ตลอด ตัวอย่างเช่น:
+ปลั๊กอิน Tailwind v3 (`rdrpPlugin`) จะแทรก CSS custom properties ที่กำหนดพาเลตสี โหมดมืดทำงานโดยการแทนที่ตัวแปรเหล่านี้ภายใต้ `.dark` หรือ `[data-theme="dark"]`:
 
-```
-bg-white dark:bg-slate-950
-text-slate-900 dark:text-slate-50
-border-slate-200 dark:border-slate-800
-```
+- **โหมดสว่าง** — `:root` กำหนดสีเริ่มต้น (พาเลต Slate + Sky)
+- **โหมดมืด** — `.dark` และ `[data-theme="dark"]` แทนที่สีโดยอัตโนมัติ
 
-โหมดมืดจะทำงานเมื่อ `dark:` variant ของ Tailwind ถูกกระตุ้น ซึ่งขึ้นอยู่กับกลยุทธ์ `darkMode` ในการตั้งค่า Tailwind ของคุณ
+ธีมของคอมโพเนนต์อ้างอิงค่าเหล่านี้ผ่าน `var(--rdrp-color-*)` ดังนั้นโหมดมืดจะทำงานเมื่อกลยุทธ์ `darkMode` ของ Tailwind กระตุ้น selector ที่เหมาะสม
 
 ## การตั้งค่า Tailwind
 
@@ -27,13 +24,15 @@ border-slate-200 dark:border-slate-800
 ตั้งค่า `darkMode: "class"` ในไฟล์คอนฟิก Tailwind ของคุณ โหมดมืดจะทำงานเมื่อมีคลาส `dark` อยู่บน `<html>` หรือองค์ประกอบแม่:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "class",
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -63,13 +62,15 @@ document.documentElement.classList.toggle("dark", isDark);
 Tailwind v3.4+ รองรับ `darkMode: "selector"` ซึ่งอนุญาตให้ใช้ `[data-theme="dark"]` หรือ selector ที่กำหนดเองได้:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -84,46 +85,53 @@ module.exports = {
 ตั้งค่า `darkMode: "media"` (หรือเว้นไว้ — นี่คือค่าเริ่มต้น) เพื่อให้เป็นไปตามการตั้งค่าของระบบปฏิบัติการ:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "media",
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
 ไม่จำเป็นต้องตั้งค่าเพิ่มเติม ตัวเลือกวันที่จะทำงานตาม `prefers-color-scheme`
 
-## คู่สี
+## ตัวแปรสี
 
-นี่คือคู่สีสำหรับโหมดสว่าง/มืดที่ใช้ทั่วทั้งตัวเลือกวันที่:
+นี่คือ CSS custom properties ที่ใช้สำหรับธีมสว่าง/มืด:
 
-| องค์ประกอบ              | โหมดสว่าง           | โหมดมืด                      |
-| ----------------------- | ------------------- | ---------------------------- |
-| พื้นหลัง                | `bg-white`          | `dark:bg-slate-950`          |
-| ข้อความ                 | `text-slate-900`    | `dark:text-slate-50`         |
-| ข้อความสีจาง            | `text-slate-500`    | `dark:text-slate-400`        |
-| เส้นขอบ                 | `border-slate-200`  | `dark:border-slate-800`      |
-| พื้นหลังเมื่อวางเมาส์   | `bg-slate-100`      | `dark:bg-slate-800`          |
-| สีหลัก                  | `bg-sky-500`        | `dark:bg-sky-500`            |
-| ข้อความสีหลัก           | `text-sky-500`      | `dark:text-sky-400`          |
-| พื้นหลังช่วงวันที่      | `bg-sky-50`         | `dark:bg-sky-950/50`         |
-| ช่วงวันที่เมื่อวางเมาส์ | `bg-sky-50/50`      | `dark:bg-sky-950/30`         |
-| วงแหวนโฟกัส             | `ring-sky-500`      | `ring-sky-500`               |
-| ออฟเซ็ตวงแหวน           | `ring-offset-white` | `dark:ring-offset-slate-950` |
+| ตัวแปร                    | โหมดสว่าง | โหมดมืด                |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
 
 ## การผนวกรวมกับ Docusaurus
 
 หากคุณใช้ Docusaurus (ซึ่งใช้ `data-theme` บน `<html>`) ให้ตั้งค่ากลยุทธ์ selector ของ Tailwind:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
-Docusaurus จะตั้งค่า `<html data-theme="dark">` เมื่อโหมดมืดทำงาน และ `dark:` variant ของ Tailwind จะทำงานตาม selector นี้
+Docusaurus จะตั้งค่า `<html data-theme="dark">` เมื่อโหมดมืดทำงาน และตัวแปร CSS จะสลับเป็นค่าสำหรับโหมดมืดโดยอัตโนมัติ
 
 ## การผนวกรวมกับ next-themes
 

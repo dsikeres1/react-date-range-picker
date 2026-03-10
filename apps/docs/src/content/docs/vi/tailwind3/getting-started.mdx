@@ -18,24 +18,21 @@ Gói Tailwind v3 cung cấp các thành phần bộ chọn ngày được tạo 
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-Nhập các kiểu thành phần tại điểm đầu vào của ứng dụng:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-styles.css";
-```
-
 ## Cấu hình Tailwind
 
-Thêm gói vào đường dẫn `content` trong tệp `tailwind.config.js` của bạn để Tailwind có thể quét các lớp của thành phần:
+Thêm plugin và đường dẫn content vào cấu hình Tailwind của bạn:
 
 ```js
 // tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
-  // ...
+  darkMode: "class",
+  plugins: [rdrpPlugin],
 };
 ```
 

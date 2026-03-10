@@ -18,24 +18,21 @@ Tailwind v3 包提供了使用 Tailwind CSS v3 功能类样式化的日期选择
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-在应用入口文件中导入组件样式：
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-styles.css";
-```
-
 ## Tailwind 配置
 
-将包路径添加到 `tailwind.config.js` 的 `content` 中，以便 Tailwind 扫描组件类：
+将插件和 content 路径添加到你的 Tailwind 配置中：
 
 ```js
 // tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
-  // ...
+  darkMode: "class",
+  plugins: [rdrpPlugin],
 };
 ```
 

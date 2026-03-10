@@ -18,24 +18,21 @@ Le package Tailwind v3 fournit des composants de sélecteur de date stylisés av
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-Importez les styles des composants dans le point d'entrée de votre application :
+## Configuration de Tailwind
 
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-styles.css";
-```
-
-## Configuration du vent arrière
-
-Ajoutez le package à vos chemins de « contenu » dans « tailwind.config.js » afin que Tailwind puisse analyser les classes de composants :
+Ajoutez le plugin et le chemin de contenu à votre configuration Tailwind :
 
 ```js
 // tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
-  // ...
+  darkMode: "class",
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -56,17 +53,17 @@ module.exports = {
 | `DateTimePicker`      | Date + time selection with time scroll panel        |
 | `DateRangeTimePicker` | Date range + time selection                         |
 
-Tous les composants prennent en charge :
+Tous les composants prennent en charge :
 
 - Valeur contrôlée avec `value` / `onChange`
 - Navigation au clavier
 - Mode sombre via la variante `dark:`
-- 4 tailles : "petit", "moyen", "grand", "x-large"
+- 4 tailles : "petit", "moyen", "grand", "x-large"
 - API de composant composé pour la personnalisation
 
 ## Types de scripts dactylographiés
 
-Tous les types de configuration et de données sont réexportés à partir du package — pas besoin d'installer le package sans tête séparément :
+Tous les types de configuration et de données sont réexportés à partir du package — pas besoin d'installer le package sans tête séparément :
 
 ```tsx
 import type {
@@ -86,7 +83,7 @@ import type {
 } from "react-date-range-picker-tailwind3";
 ```
 
-Ces types sont utiles pour :
+Ces types sont utiles pour :
 
 - **`Locale`** — Remplacements de paramètres régionaux personnalisés (noms des jours de la semaine, étiquettes des boutons, formatage de la date)
 - **`DatePickerSize`** — Saisie de l'accessoire `size` ("small"`|`"medium"`|`"large"`|`"x-large"`)

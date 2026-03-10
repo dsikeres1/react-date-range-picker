@@ -6,19 +6,16 @@ import Admonition from "@/components/Admonition.astro";
 
 # ダークモード
 
-Tailwind v3 パッケージは、Tailwind の `dark:` バリアントを使用して完全なダークモードをサポートしています。すべてのコンポーネント要素には、明示的なダークモードクラスが設定されています。
+Tailwind v3 パッケージは、CSSカスタムプロパティを通じて完全なダークモードをサポートしています。Tailwindプラグイン（`rdrpPlugin`）は、ライトパレットとダークパレットの間で自動的に切り替わるカラー変数を挿入します。
 
 ## 仕組み
 
-Tailwind v3 テーマでは、全体を通して `dark:` バリアントを持つ具体的な色クラスが使用されています。例:
+Tailwind v3 プラグイン（`rdrpPlugin`）は、カラーパレットを定義するCSSカスタムプロパティを挿入します。ダークモードは、`.dark` または `[data-theme="dark"]` の下でこれらの変数をオーバーライドすることで機能します:
 
-```
-bg-white dark:bg-slate-950
-text-slate-900 dark:text-slate-50
-border-slate-200 dark:border-slate-800
-```
+- **ライトモード** — `:root` がデフォルトの色を定義します（Slate + Sky パレット）
+- **ダークモード** — `.dark` と `[data-theme="dark"]` が自動的に色をオーバーライドします
 
-ダークモードは、Tailwind の `dark:` バリアントがトリガーされると有効になります。これは、Tailwind 設定の `darkMode` 戦略に依存します。
+コンポーネントのテーマは `var(--rdrp-color-*)` を通じてこれらを参照するため、Tailwind の `darkMode` 戦略が適切なセレクタをトリガーするとダークモードが有効になります。
 
 ## Tailwind の設定
 
@@ -27,13 +24,15 @@ border-slate-200 dark:border-slate-800
 Tailwind の設定で `darkMode: "class"` を設定します。ダークモードは、`<html>` または親要素に `dark` クラスが存在する場合に有効になります:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "class",
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -63,13 +62,15 @@ document.documentElement.classList.toggle("dark", isDark);
 Tailwind v3.4以降は `darkMode: "selector"` をサポートしており、`[data-theme="dark"]` や任意のカスタムセレクタを使用できます:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -84,46 +85,53 @@ module.exports = {
 OS の設定に従うには、`darkMode: "media"` を設定します（または省略します — これがデフォルトです）:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "media",
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
 追加の設定は不要です。ピッカーは `prefers-color-scheme` に従います。
 
-## カラーペア
+## カラー変数
 
-ピッカー全体で使用されているライト/ダークのカラーペアは次のとおりです:
+ライト/ダークのテーマに使用されるCSSカスタムプロパティは次のとおりです:
 
-| 要素                   | ライト              | ダーク                       |
-| ---------------------- | ------------------- | ---------------------------- |
-| 背景                   | `bg-white`          | `dark:bg-slate-950`          |
-| テキスト               | `text-slate-900`    | `dark:text-slate-50`         |
-| ミュートされたテキスト | `text-slate-500`    | `dark:text-slate-400`        |
-| ボーダー               | `border-slate-200`  | `dark:border-slate-800`      |
-| ホバー背景             | `bg-slate-100`      | `dark:bg-slate-800`          |
-| プライマリ             | `bg-sky-500`        | `dark:bg-sky-500`            |
-| プライマリテキスト     | `text-sky-500`      | `dark:text-sky-400`          |
-| 範囲の背景             | `bg-sky-50`         | `dark:bg-sky-950/50`         |
-| ホバー範囲             | `bg-sky-50/50`      | `dark:bg-sky-950/30`         |
-| フォーカスリング       | `ring-sky-500`      | `ring-sky-500`               |
-| リングオフセット       | `ring-offset-white` | `dark:ring-offset-slate-950` |
+| 変数                      | ライト    | ダーク                 |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
 
 ## Docusaurus との統合
 
 Docusaurus（`<html>` で `data-theme` を使用）を使用している場合は、Tailwind のセレクタ戦略を設定します:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
-Docusaurus はダークモードが有効なときに `<html data-theme="dark">` を設定し、Tailwind の `dark:` バリアントはこのセレクタでトリガーされます。
+Docusaurus はダークモードが有効なときに `<html data-theme="dark">` を設定し、CSS変数は自動的にダークの値に切り替わります。
 
 ## next-themes との統合
 

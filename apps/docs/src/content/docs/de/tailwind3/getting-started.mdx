@@ -18,24 +18,21 @@ Das Tailwind v3-Paket stellt Datumsauswahlkomponenten bereit, die mit Tailwind C
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-Importieren Sie die Komponentenstile in Ihrem App-Einstiegspunkt:
+## Tailwind-Konfiguration
 
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-styles.css";
-```
-
-## Rückenwind-Konfiguration
-
-Fügen Sie das Paket zu Ihren „Inhalts“-Pfaden in „tailwind.config.js“ hinzu, damit Tailwind die Komponentenklassen scannen kann:
+Fügen Sie das Plugin und den Content-Pfad zu Ihrer Tailwind-Konfiguration hinzu:
 
 ```js
 // tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from “react-date-range-picker-tailwind3/plugin”;
+
+export default {
   content: [
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+    “./src/**/*.{js,ts,jsx,tsx}”,
+    “./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}”,
   ],
-  // ...
+  darkMode: “class”,
+  plugins: [rdrpPlugin],
 };
 ```
 

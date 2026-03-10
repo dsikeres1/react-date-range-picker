@@ -18,24 +18,21 @@ The Tailwind v3 package provides date picker components styled with Tailwind CSS
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-Import the component styles in your app entry point:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-styles.css";
-```
-
 ## Tailwind Configuration
 
-Add the package to your `content` paths in `tailwind.config.js` so Tailwind can scan the component classes:
+Add the plugin and content path to your Tailwind config:
 
 ```js
 // tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
-  // ...
+  darkMode: "class",
+  plugins: [rdrpPlugin],
 };
 ```
 

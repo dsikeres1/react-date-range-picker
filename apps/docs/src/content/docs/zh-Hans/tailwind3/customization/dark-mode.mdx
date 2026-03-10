@@ -6,19 +6,16 @@ import Admonition from "@/components/Admonition.astro";
 
 # 深色模式
 
-Tailwind v3 包使用 Tailwind 的 `dark:` 变体提供完整的深色模式支持。每个组件元素都有明确的深色模式类。
+Tailwind v3 包通过 CSS 自定义属性提供完整的深色模式支持。Tailwind 插件（`rdrpPlugin`）注入颜色变量，自动在浅色和深色调色板之间切换。
 
 ## 工作原理
 
-Tailwind v3 主题在各处使用带有 `dark:` 变体的具体颜色类。例如：
+Tailwind v3 插件（`rdrpPlugin`）注入定义颜色调色板的 CSS 自定义属性。深色模式通过在 `.dark` 或 `[data-theme="dark"]` 下覆盖这些变量来工作：
 
-```
-bg-white dark:bg-slate-950
-text-slate-900 dark:text-slate-50
-border-slate-200 dark:border-slate-800
-```
+- **浅色模式** — `:root` 定义默认颜色（Slate + Sky 调色板）
+- **深色模式** — `.dark` 和 `[data-theme="dark"]` 自动覆盖颜色
 
-当 Tailwind 的 `dark:` 变体被触发时，深色模式会激活，这取决于你的 Tailwind 配置的 `darkMode` 策略。
+组件主题通过 `var(--rdrp-color-*)` 引用这些值，因此当你的 Tailwind `darkMode` 策略触发相应的选择器时，深色模式就会激活。
 
 ## Tailwind 配置
 
@@ -27,13 +24,15 @@ border-slate-200 dark:border-slate-800
 在你的 Tailwind 配置中设置 `darkMode: "class"`。当 `<html>` 或父元素上存在 `dark` 类时，深色模式会激活：
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "class",
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -63,13 +62,15 @@ document.documentElement.classList.toggle("dark", isDark);
 Tailwind v3.4+ 支持 `darkMode: "selector"`，它允许使用 `[data-theme="dark"]` 或任何自定义选择器：
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -84,46 +85,53 @@ module.exports = {
 设置 `darkMode: "media"` (或省略——这是默认设置) 以跟随操作系统的偏好：
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "media",
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
 无需额外设置。选择器将遵循 `prefers-color-scheme`。
 
-## 颜色配对
+## 颜色变量
 
-以下是选择器中使用的浅色/深色颜色配对：
+以下是用于浅色/深色主题的 CSS 自定义属性：
 
-| 元素     | 浅色                | 深色                         |
-| -------- | ------------------- | ---------------------------- |
-| 背景     | `bg-white`          | `dark:bg-slate-950`          |
-| 文本     | `text-slate-900`    | `dark:text-slate-50`         |
-| 柔和文本 | `text-slate-500`    | `dark:text-slate-400`        |
-| 边框     | `border-slate-200`  | `dark:border-slate-800`      |
-| 悬停背景 | `bg-slate-100`      | `dark:bg-slate-800`          |
-| 主色     | `bg-sky-500`        | `dark:bg-sky-500`            |
-| 主色文本 | `text-sky-500`      | `dark:text-sky-400`          |
-| 范围背景 | `bg-sky-50`         | `dark:bg-sky-950/50`         |
-| 悬停范围 | `bg-sky-50/50`      | `dark:bg-sky-950/30`         |
-| 聚焦环   | `ring-sky-500`      | `ring-sky-500`               |
-| 环偏移   | `ring-offset-white` | `dark:ring-offset-slate-950` |
+| 变量                      | 浅色      | 深色                   |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
 
 ## 与 Docusaurus 集成
 
 如果你正在使用 Docusaurus (它在 `<html>` 上使用 `data-theme`)，请配置 Tailwind 的选择器策略：
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
-当深色模式激活时，Docusaurus 会设置 `<html data-theme="dark">`，Tailwind 的 `dark:` 变体将在此选择器上触发。
+当深色模式激活时，Docusaurus 会设置 `<html data-theme="dark">`，CSS 变量将自动切换为深色值。
 
 ## 与 next-themes 集成
 

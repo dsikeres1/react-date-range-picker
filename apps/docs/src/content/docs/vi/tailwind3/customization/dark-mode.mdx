@@ -6,19 +6,16 @@ import Admonition from "@/components/Admonition.astro";
 
 # Chế độ tối
 
-Gói Tailwind v3 bao gồm hỗ trợ chế độ tối đầy đủ bằng cách sử dụng biến thể `dark:` của Tailwind. Mọi phần tử thành phần đều có các lớp chế độ tối rõ ràng.
+Gói Tailwind v3 bao gồm hỗ trợ chế độ tối đầy đủ thông qua CSS custom properties. Plugin Tailwind (`rdrpPlugin`) chèn các biến màu tự động chuyển đổi giữa bảng màu sáng và tối.
 
 ## Cách hoạt động
 
-Chủ đề Tailwind v3 sử dụng các lớp màu cụ thể với các biến thể `dark:` xuyên suốt. Ví dụ:
+Plugin Tailwind v3 (`rdrpPlugin`) chèn các CSS custom properties định nghĩa bảng màu. Chế độ tối hoạt động bằng cách ghi đè các biến này dưới `.dark` hoặc `[data-theme="dark"]`:
 
-```
-bg-white dark:bg-slate-950
-text-slate-900 dark:text-slate-50
-border-slate-200 dark:border-slate-800
-```
+- **Chế độ sáng** — `:root` định nghĩa các màu mặc định (bảng màu Slate + Sky)
+- **Chế độ tối** — `.dark` và `[data-theme="dark"]` ghi đè màu tự động
 
-Chế độ tối được kích hoạt khi biến thể `dark:` của Tailwind được kích hoạt, điều này phụ thuộc vào chiến lược `darkMode` trong cấu hình Tailwind của bạn.
+Theme của component tham chiếu các giá trị này qua `var(--rdrp-color-*)`, vì vậy chế độ tối được kích hoạt khi chiến lược `darkMode` của Tailwind kích hoạt selector phù hợp.
 
 ## Cấu hình Tailwind
 
@@ -27,13 +24,15 @@ Chế độ tối được kích hoạt khi biến thể `dark:` của Tailwind 
 Thiết lập `darkMode: "class"` trong tệp cấu hình Tailwind của bạn. Chế độ tối được kích hoạt khi có một lớp `dark` trên thẻ `<html>` hoặc một phần tử cha:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "class",
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -63,13 +62,15 @@ document.documentElement.classList.toggle("dark", isDark);
 Tailwind v3.4+ hỗ trợ `darkMode: "selector"`, cho phép sử dụng `[data-theme="dark"]` hoặc bất kỳ bộ chọn tùy chỉnh nào:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
+  plugins: [rdrpPlugin],
 };
 ```
 
@@ -84,46 +85,53 @@ module.exports = {
 Thiết lập `darkMode: "media"` (hoặc bỏ qua — đây là mặc định) để tuân theo sở thích của hệ điều hành:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: "media",
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
 Không cần thiết lập thêm. Bộ chọn sẽ tuân theo `prefers-color-scheme`.
 
-## Các cặp màu
+## Biến màu
 
-Dưới đây là các cặp màu sáng/tối được sử dụng trong bộ chọn:
+Dưới đây là các CSS custom properties được sử dụng cho theme sáng/tối:
 
-| Phần tử                     | Sáng                | Tối                          |
-| --------------------------- | ------------------- | ---------------------------- |
-| Nền                         | `bg-white`          | `dark:bg-slate-950`          |
-| Chữ                         | `text-slate-900`    | `dark:text-slate-50`         |
-| Chữ mờ                      | `text-slate-500`    | `dark:text-slate-400`        |
-| Viền                        | `border-slate-200`  | `dark:border-slate-800`      |
-| Nền khi di chuột            | `bg-slate-100`      | `dark:bg-slate-800`          |
-| Chính                       | `bg-sky-500`        | `dark:bg-sky-500`            |
-| Chữ chính                   | `text-sky-500`      | `dark:text-sky-400`          |
-| Nền khoảng (range)          | `bg-sky-50`         | `dark:bg-sky-950/50`         |
-| Khoảng (range) khi di chuột | `bg-sky-50/50`      | `dark:bg-sky-950/30`         |
-| Vòng lấy nét (focus ring)   | `ring-sky-500`      | `ring-sky-500`               |
-| Bù trừ vòng (ring offset)   | `ring-offset-white` | `dark:ring-offset-slate-950` |
+| Biến                      | Sáng      | Tối                    |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
 
 ## Tích hợp với Docusaurus
 
 Nếu bạn đang sử dụng Docusaurus (sử dụng `data-theme` trên thẻ `<html>`), hãy cấu hình chiến lược selector của Tailwind:
 
 ```js
-// tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   darkMode: ["selector", '[data-theme="dark"]'],
-  // ...
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
 };
 ```
 
-Docusaurus thiết lập `<html data-theme="dark">` khi chế độ tối đang hoạt động, và biến thể `dark:` của Tailwind sẽ được kích hoạt trên bộ chọn này.
+Docusaurus thiết lập `<html data-theme="dark">` khi chế độ tối đang hoạt động, và các biến CSS sẽ tự động chuyển sang giá trị tối.
 
 ## Tích hợp với next-themes
 

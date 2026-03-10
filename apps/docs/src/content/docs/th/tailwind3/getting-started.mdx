@@ -18,24 +18,21 @@ import Tailwind3BasicSource from "@examples/tailwind3/DatePicker/Basic.tsx?raw";
 
 <PackageInstall pkg="react-date-range-picker-tailwind3" />
 
-นำเข้าสไตล์ของคอมโพเนนต์ในจุดเริ่มต้นของแอป:
-
-```tsx
-import "react-date-range-picker-tailwind3/rdrp-styles.css";
-```
-
 ## การกำหนดค่า Tailwind
 
-เพิ่มแพ็คเกจไปยังพาร์ท `content` ของคุณในไฟล์ `tailwind.config.js` เพื่อให้ Tailwind สามารถสแกนคลาสของคอมโพเนนต์ได้:
+เพิ่มปลั๊กอินและ content path ลงในการกำหนดค่า Tailwind ของคุณ:
 
 ```js
 // tailwind.config.js
-module.exports = {
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
-  // ...
+  darkMode: "class",
+  plugins: [rdrpPlugin],
 };
 ```
 
