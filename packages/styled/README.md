@@ -110,17 +110,16 @@ Override CSS variables to customize the look:
 
 ```css
 :root {
-  --rdrp-primary: #3b82f6;
-  --rdrp-primary-foreground: #ffffff;
-  --rdrp-background: #ffffff;
-  --rdrp-foreground: #0a0a0a;
-  --rdrp-border: #e5e7eb;
+  --rdrp-color-primary: #3b82f6;
+  --rdrp-color-bg: #ffffff;
+  --rdrp-color-text: #0a0a0a;
+  --rdrp-color-border: #e5e7eb;
 }
 
 .dark {
-  --rdrp-background: #0a0a0a;
-  --rdrp-foreground: #fafafa;
-  --rdrp-border: #27272a;
+  --rdrp-color-bg: #0a0a0a;
+  --rdrp-color-text: #fafafa;
+  --rdrp-color-border: #27272a;
 }
 ```
 

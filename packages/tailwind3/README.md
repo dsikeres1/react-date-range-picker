@@ -16,20 +16,23 @@
 npm install react-date-range-picker-tailwind3
 ```
 
-Add the package to your Tailwind content config:
+Add the plugin and content path to your Tailwind config:
 
 ```js
-// tailwind.config.js (or tailwind.config.cjs if your package.json has "type": "module")
+// tailwind.config.js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
 export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
   ],
   darkMode: "class",
+  plugins: [rdrpPlugin],
 };
 ```
 
-If Tailwind Preflight is disabled in your project, import the reset CSS to fix baseline styling:
+If Tailwind Preflight is disabled in your project, import the reset CSS:
 
 ```tsx
 import "react-date-range-picker-tailwind3/rdrp-reset.css";
