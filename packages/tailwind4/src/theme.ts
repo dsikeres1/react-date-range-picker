@@ -31,22 +31,22 @@ export const gridClassNames = {
 };
 
 export const dayClassNames = {
-  day: "flex items-center justify-center min-w-9 h-9 mx-[1px] rounded-lg transition-colors cursor-pointer hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background",
+  day: "flex items-center justify-center min-w-9 h-9 mx-[1px] rounded-lg transition-colors cursor-pointer hover:bg-accent focus-visible:outline-none",
   empty: "invisible pointer-events-none",
   today: "font-bold text-primary",
   selected:
-    "bg-primary text-primary-foreground font-semibold hover:bg-primary hover:text-primary-foreground focus-visible:ring-0",
+    "bg-primary text-primary-foreground font-semibold hover:bg-primary hover:text-primary-foreground",
   disabled: "text-muted-foreground opacity-50 pointer-events-none",
   outside: "text-muted-foreground/50",
   highlighted:
     "relative after:absolute after:bottom-[3px] after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:bg-primary after:rounded-full",
   inRange: "bg-primary/10 text-foreground rounded-none mx-0 hover:bg-primary/10",
   rangeStart:
-    "bg-primary text-primary-foreground rounded-l-lg rounded-r-none mx-0 hover:bg-primary hover:text-primary-foreground focus-visible:ring-0",
+    "bg-primary text-primary-foreground rounded-l-lg rounded-r-none mx-0 hover:bg-primary hover:text-primary-foreground",
   rangeEnd:
-    "bg-primary text-primary-foreground rounded-r-lg rounded-l-none mx-0 hover:bg-primary hover:text-primary-foreground focus-visible:ring-0",
+    "bg-primary text-primary-foreground rounded-r-lg rounded-l-none mx-0 hover:bg-primary hover:text-primary-foreground",
   rangeSingle:
-    "bg-primary text-primary-foreground mx-0 hover:bg-primary hover:text-primary-foreground focus-visible:ring-0",
+    "bg-primary text-primary-foreground mx-0 hover:bg-primary hover:text-primary-foreground",
   hoverRange: "bg-primary/5 text-foreground rounded-none mx-0",
   hoverTarget: "bg-primary/15 text-foreground",
   focused: "ring-2 ring-ring ring-offset-1 ring-offset-background",
