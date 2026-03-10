@@ -1,6 +1,6 @@
 {
   "name": "react-date-range-picker-ui-primitives",
-  "version": "0.1.15",
+  "version": "1.0.0",
   "private": true,
   "description": "UI primitives for react-date-range-picker styled packages (internal, not published)",
   "main": "./dist/index.js",

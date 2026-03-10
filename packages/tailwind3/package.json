@@ -1,6 +1,6 @@
 {
   "name": "react-date-range-picker-tailwind3",
-  "version": "0.2.10",
+  "version": "1.0.0",
   "description": "Date & range picker for React + Tailwind CSS v3 — dark mode, keyboard navigation, compound components, 15 locales",
   "author": "DSikeres1",
   "repository": {
