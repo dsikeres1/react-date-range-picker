@@ -52,18 +52,55 @@ function App() {
 }
 ```
 
-### Date Range
+### Date Range with Presets
 
 ```tsx
 import { useState } from "react";
-import { DateRangePicker } from "react-date-range-picker-tailwind3";
+import { DateRangePicker, type DateRangePreset } from "react-date-range-picker-tailwind3";
+
+const presets: DateRangePreset[] = [
+  {
+    label: "Last 7 days",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setDate(end.getDate() - 6);
+      return { start, end };
+    },
+  },
+];
 
 function App() {
   const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
     start: null,
     end: null,
   });
-  return <DateRangePicker value={range} onChange={setRange} />;
+  return <DateRangePicker value={range} onChange={setRange} presets={presets} />;
+}
+```
+
+### Date & Time Picker
+
+```tsx
+import { useState } from "react";
+import { DateTimePicker } from "react-date-range-picker-tailwind3";
+
+function App() {
+  const [dateTime, setDateTime] = useState<Date | null>(null);
+
+  return (
+    <>
+      {/* 24-hour format (default) */}
+      <DateTimePicker value={dateTime} onChange={setDateTime} />
+
+      {/* 12-hour format with seconds */}
+      <DateTimePicker
+        value={dateTime}
+        onChange={setDateTime}
+        time={{ hourFormat: "12", precision: "second" }}
+      />
+    </>
+  );
 }
 ```
 
