@@ -1,0 +1,86 @@
+{
+  "name": "react-date-range-picker-styled",
+  "version": "0.2.10",
+  "description": "Date & range picker for React with built-in CSS — no Tailwind needed, CSS variables, dark mode, keyboard navigation, 15 locales",
+  "author": "DSikeres1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsikeres1/react-date-range-picker.git",
+    "directory": "packages/styled"
+  },
+  "bugs": {
+    "url": "https://github.com/dsikeres1/react-date-range-picker/issues"
+  },
+  "homepage": "https://dsikeres1.github.io/react-date-range-picker/",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./rdrp-styles.css": "./dist/rdrp-styles.css"
+  },
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "node scripts/bundle-css.mjs && tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@floating-ui/react": "^0.27.18",
+    "clsx": "^2.1.1",
+    "react-date-range-picker-headless": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "react-date-range-picker-ui-primitives": "workspace:*",
+    "tsup": "^8.5.1",
+    "typescript": "~5.9.3"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "keywords": [
+    "react",
+    "date-picker",
+    "date-range-picker",
+    "datepicker",
+    "daterange",
+    "calendar",
+    "css",
+    "css-variables",
+    "styled",
+    "no-tailwind",
+    "time-picker",
+    "date-time-picker",
+    "compound-component",
+    "keyboard-navigation",
+    "accessible",
+    "a11y",
+    "dark-mode",
+    "i18n",
+    "locale",
+    "typescript"
+  ],
+  "type": "commonjs"
+}
