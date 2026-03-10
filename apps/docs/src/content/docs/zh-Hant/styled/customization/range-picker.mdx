@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: "Range Picker"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/styled/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/styled/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/styled/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/styled/Customization/CompoundRangeInline.tsx?raw";
+
+# 範圍選擇器
+
+使用 `DateRangePicker` 複合 API 來建立一個帶有自訂觸發器和預設側邊欄的完全自訂的範圍選擇器。
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 內嵌模式與預設選項
+
+將範圍選擇器以內嵌方式顯示，並帶有預設選項側邊欄：
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

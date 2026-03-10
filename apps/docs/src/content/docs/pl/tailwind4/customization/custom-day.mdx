@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: Custom Day Cell
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/tailwind4/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/tailwind4/Customization/CompoundCustomDay.tsx?raw";
+
+# Niestandardowa komórka dnia
+
+Dostosuj sposób renderowania każdego dnia, korzystając z właściwości renderujących „Siatka” i „Dzień”. Dzięki temu możesz dodawać wskaźniki wydarzeń, niestandardową stylizację lub dowolną dodatkową zawartość do poszczególnych komórek dni.
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Rekwizyty do renderowania dziennego
+
+| Prop             | Type         | Description                                    |
+| ---------------- | ------------ | ---------------------------------------------- |
+| `date`           | `Date`       | The date object                                |
+| `day`            | `number`     | Day of month (1-31)                            |
+| `isToday`        | `boolean`    | Whether this is today                          |
+| `isSelected`     | `boolean`    | Whether this day is selected                   |
+| `isDisabled`     | `boolean`    | Whether this day is disabled                   |
+| `isInRange`      | `boolean`    | Whether this day is within a selected range    |
+| `isRangeStart`   | `boolean`    | Whether this is the range start                |
+| `isRangeEnd`     | `boolean`    | Whether this is the range end                  |
+| `isInHoverRange` | `boolean`    | Whether this day is in the hover preview range |
+| `isHoverTarget`  | `boolean`    | Whether this is the hover endpoint             |
+| `isOutsideDay`   | `boolean`    | Whether this day belongs to an adjacent month  |
+| `isHighlighted`  | `boolean`    | Whether this day has a highlight dot           |
+| `isFocused`      | `boolean`    | Whether this day has keyboard focus            |
+| `onClick`        | `() => void` | Click handler                                  |
+| `onMouseEnter`   | `() => void` | Mouse enter handler                            |
+| `onMouseLeave`   | `() => void` | Mouse leave handler                            |

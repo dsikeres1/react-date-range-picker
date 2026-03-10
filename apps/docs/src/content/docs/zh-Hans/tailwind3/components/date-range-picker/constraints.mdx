@@ -1,0 +1,46 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/tailwind3/DateRangePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/tailwind3/DateRangePicker/MinMaxDays.tsx?raw";
+import DisabledDates from "@examples/tailwind3/DateRangePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind3/DateRangePicker/DisabledDates.tsx?raw";
+import AllowSingleDate from "@examples/tailwind3/DateRangePicker/AllowSingleDate";
+import AllowSingleDateSource from "@examples/tailwind3/DateRangePicker/AllowSingleDate.tsx?raw";
+
+# 约束
+
+## 最小和最大天数
+
+使用 `minDays` 和 `maxDays`（含）限制范围长度。用户无法确认短于 `minDays` 或长于 `maxDays` 的范围。
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 禁用日期
+
+使用 `isDateUnavailable` 动态禁用特定日期。禁用的日期不能被选为范围的开始或结束。
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 允许单日
+
+默认情况下，允许开始和结束日期相同。设置 `allowSingleDateInRange={false}` 以要求至少两个不同的日期。
+
+<CodeDemo source={AllowSingleDateSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <AllowSingleDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

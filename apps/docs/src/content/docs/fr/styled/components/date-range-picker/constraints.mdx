@@ -1,0 +1,46 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/styled/DateRangePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/styled/DateRangePicker/MinMaxDays.tsx?raw";
+import DisabledDates from "@examples/styled/DateRangePicker/DisabledDates";
+import DisabledDatesSource from "@examples/styled/DateRangePicker/DisabledDates.tsx?raw";
+import AllowSingleDate from "@examples/styled/DateRangePicker/AllowSingleDate";
+import AllowSingleDateSource from "@examples/styled/DateRangePicker/AllowSingleDate.tsx?raw";
+
+# Contraintes
+
+## Jours Min & Max
+
+Restreignez la durée de la plage avec `minDays` et `maxDays` (inclus). Les utilisateurs ne peuvent pas confirmer une plage plus courte que `minDays` ou plus longue que `maxDays`.
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Dates Désactivées
+
+Utilisez `isDateUnavailable` pour désactiver dynamiquement des dates spécifiques. Les dates désactivées ne peuvent pas être sélectionnées comme début ou fin d'une plage.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Autoriser une Date Unique
+
+Par défaut, une plage où le début est égal à la fin est autorisée. Réglez `allowSingleDateInRange={false}` pour exiger au moins deux dates distinctes.
+
+<CodeDemo source={AllowSingleDateSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <AllowSingleDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

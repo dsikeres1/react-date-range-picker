@@ -1,0 +1,36 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import SecondPrecision from "@examples/tailwind3/DateRangeTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/tailwind3/DateRangeTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/tailwind3/DateRangeTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/tailwind3/DateRangeTimePicker/TwelveHour.tsx?raw";
+
+# 시간 옵션
+
+`time` prop을 통해 시간 패널 동작을 구성합니다.
+
+## 초 단위
+
+시작 및 종료 시간 패널 모두에 초 열을 표시합니다.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 12시간 형식
+
+시작 및 종료 시간 패널 모두에 대해 오전/오후 토글이 있는 12시간 형식으로 전환합니다.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

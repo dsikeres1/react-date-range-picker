@@ -1,0 +1,90 @@
+---
+sidebar_position: 1
+title: Overview
+---
+
+import PackageInstall from "@/components/PackageInstall.astro";
+
+# Headless
+
+Das Headless-Paket (`react-date-range-picker-headless`) stellt ungestylte Hooks und Context-Provider zur Verfügung. Es enthält die gesamte Zustandsverwaltung, Kalenderlogik, Tastaturnavigation und Barrierefreiheitsfunktionen – aber null CSS, null Markup-Meinungen.
+
+Sie bringen Ihre eigene Benutzeroberfläche mit.
+
+## Installation
+
+<PackageInstall pkg="react-date-range-picker-headless" />
+
+## Wann Sie Headless verwenden sollten
+
+- Sie haben ein Design-System mit einer eigenen Komponentenbibliothek
+- Sie möchten pixelgenaue Kontrolle über jedes Element
+- Sie erstellen einen benutzerdefinierten Datumswähler für einen speziellen Anwendungsfall
+- Sie möchten eine Integration mit einem CSS-Framework, das nicht von den Styled-Paketen abgedeckt wird
+
+Wenn Sie sofort einsatzbereite, gestylte Komponenten wünschen, sehen Sie sich stattdessen [Styled](/docs/styled/getting-started), [Tailwind v4](/docs/tailwind4/getting-started) oder [Tailwind v3](/docs/tailwind3/getting-started) an.
+
+## Wie es funktioniert
+
+1. Wählen Sie einen Hook basierend auf Ihrem Anwendungsfall
+2. Übergeben Sie Optionen (Wert, onChange, Konfiguration)
+3. Erhalten Sie Zustand und Handler zurück
+4. Rendern Sie Ihre eigene Benutzeroberfläche mit den zurückgegebenen Werten
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  const {
+    isOpen,
+    calendar,
+    getDayProps,
+    displayValue,
+    handleToggle,
+    handleDateClick,
+    handleConfirm,
+    handlePrevMonth,
+    handleNextMonth,
+    locale,
+  } = useDatePicker({ value, onChange: setValue });
+
+  return (
+    <div>
+      <button onClick={handleToggle}>{displayValue || locale.placeholder}</button>
+      {isOpen && (
+        <div>
+          <div>
+            <button onClick={handlePrevMonth}>{locale.prevMonth}</button>
+            <span>{locale.formatMonthYear(calendar.month)}</span>
+            <button onClick={handleNextMonth}>{locale.nextMonth}</button>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}>
+            {calendar.weeks.flat().map((day, i) => {
+              if (!day) return <span key={i} />;
+              const props = getDayProps(day);
+              return (
+                <button
+                  key={i}
+                  onClick={() => handleDateClick(day)}
+                  style={{
+                    background: props.isSelected ? "#0ea5e9" : "transparent",
+                    color: props.isDisabled ? "#ccc" : props.isToday ? "#0ea5e9" : "inherit",
+                  }}
+                >
+                  {props.day}
+                </button>
+              );
+            })}
+          </div>
+          <button onClick={handleConfirm}>{locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Verfügb

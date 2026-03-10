@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/tailwind3/TimePicker/Basic";
+import BasicSource from "@examples/tailwind3/TimePicker/Basic.tsx?raw";
+import Inline from "@examples/tailwind3/TimePicker/Inline";
+import InlineSource from "@examples/tailwind3/TimePicker/Inline.tsx?raw";
+
+# TimePicker
+
+Un sélecteur d'heure avec un déclencheur de saisie et un panneau contextuel. Cliquez sur l'entrée pour ouvrir une liste déroulante avec des colonnes d'heure défilables.
+
+## Utilisation de base
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## En ligne
+
+Affichez le panneau de l'heure en ligne sans déclencheur ni popup.
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

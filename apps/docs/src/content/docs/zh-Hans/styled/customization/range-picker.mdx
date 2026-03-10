@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: "Range Picker"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/styled/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/styled/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/styled/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/styled/Customization/CompoundRangeInline.tsx?raw";
+
+# 范围选择器
+
+使用 `DateRangePicker` 复合 API 构建具有自定义触发器和预设侧边栏的完全自定义范围选择器。
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 内联并带有预设
+
+将范围选择器与预设侧边栏一起内联显示：
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

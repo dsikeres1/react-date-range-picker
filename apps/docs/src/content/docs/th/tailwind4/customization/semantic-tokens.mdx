@@ -1,0 +1,167 @@
+---
+sidebar_position: 10
+---
+
+# โทเค็นความหมาย
+
+แพ็คเกจ Tailwind v4 ใช้ตัวแปร CSS เชิงความหมาย (โทเค็นการออกแบบ) สำหรับสีทั้งหมด โทเค็นเหล่านี้จะแยกสไตล์ของคอมโพเนนต์ออกจากค่าสีที่เฉพาะเจาะจง ทำให้การสร้างธีมเป็นเรื่องง่าย รูปแบบการตั้งชื่อโทเค็นเป็นไปตามรูปแบบเดียวกับที่ใช้โดย [shadcn/ui](https://ui.shadcn.com/)
+
+## ระบบโทเค็น
+
+แทนที่จะใช้สีที่ฮาร์ดโค้ดไว้ เช่น `bg-sky-500` คอมโพเนนต์ของ Tailwind v4 จะใช้ยูทิลิตี้เชิงความหมาย เช่น `bg-primary`, `text-foreground` และ `border-border` ซึ่งจะแมปกับตัวแปร CSS ที่คุณกำหนดในโปรเจกต์ของคุณ
+
+```
+bg-primary        → var(--color-primary)
+text-foreground   → var(--color-foreground)
+border-border     → var(--color-border)
+```
+
+## โทเค็นที่จำเป็น
+
+กำหนดโทเค็นเหล่านี้ใน CSS ของคุณโดยใช้คำสั่ง `@theme` ของ Tailwind v4:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+## การอ้างอิงโทเค็น
+
+| โทเค็น                       | ใช้สำหรับ                                                        | ตัวอย่างยูทิลิตี้            |
+| ---------------------------- | ---------------------------------------------------------------- | ---------------------------- |
+| `--color-background`         | พื้นหลังของหน้า/แอป                                              | `bg-background`              |
+| `--color-foreground`         | สีข้อความเริ่มต้น                                                | `text-foreground`            |
+| `--color-popover`            | พื้นหลังป๊อปอัป                                                  | `bg-popover`                 |
+| `--color-popover-foreground` | ข้อความป๊อปอัป                                                   | `text-popover-foreground`    |
+| `--color-primary`            | วันที่เลือก, ปุ่มยืนยัน, จุดสิ้นสุดของช่วง                       | `bg-primary`, `text-primary` |
+| `--color-primary-foreground` | ข้อความบนพื้นหลังหลัก                                            | `text-primary-foreground`    |
+| `--color-muted-foreground`   | ข้อความที่ถูกปิดเสียง (ข้อความตัวอย่าง, วันในสัปดาห์, ปุ่มนำทาง) | `text-muted-foreground`      |
+| `--color-accent`             | พื้นหลังเมื่อโฮเวอร์สำหรับวันและปุ่มต่างๆ                        | `bg-accent`                  |
+| `--color-accent-foreground`  | ข้อความบนพื้นหลังที่เน้น                                         | `text-accent-foreground`     |
+| `--color-destructive`        | ข้อความปุ่มล้าง/อันตราย                                          | `text-destructive`           |
+| `--color-border`             | เส้นขอบทั่วไป (ส่วนท้าย, ค่าที่ตั้งไว้ล่วงหน้า, ป๊อปอัป)         | `border-border`              |
+| `--color-input`              | เส้นขอบของอินพุต/ทริกเกอร์                                       | `border-input`               |
+| `--color-ring`               | สีของวงแหวนโฟกัส                                                 | `ring-ring`                  |
+
+## วิธีการแมปโทเค็นกับคอมโพเนนต์
+
+นี่คือวิธีการนำโทเค็นไปใช้กับตัวเลือก:
+
+### ทริกเกอร์
+
+- พื้นหลัง: `bg-background`
+- เส้นขอบ: `border-input`
+- ข้อความ: สืบทอดจาก `text-foreground` บน root
+- ข้อความตัวอย่าง: `text-muted-foreground`
+- วงแหวนโฟกัส: `ring-ring`
+
+### ป๊อปอัป
+
+- พื้นหลัง: `bg-popover`
+- ข้อความ: `text-popover-foreground`
+- เส้นขอบ: `border-border`
+
+### วันในปฏิทิน
+
+- โฮเวอร์เริ่มต้น: `bg-accent` / `text-accent-foreground`
+- ที่เลือก: `bg-primary` / `text-primary-foreground`
+- วันนี้: `text-primary`
+- ในช่วง: `bg-primary/10`
+- เริ่มต้น/สิ้นสุดช่วง: `bg-primary` / `text-primary-foreground`
+- ปิดใช้งาน: `text-muted-foreground` พร้อมลดความทึบ
+
+### ส่วนท้าย
+
+- เส้นขอบ: `border-border`
+- ปุ่มยกเลิก: `border-input`, โฮเวอร์ `bg-accent`
+- ปุ่มยืนยัน: `bg-primary` / `text-primary-foreground`
+- ปุ่มล้าง: `text-destructive`
+
+## การปรับแต่งโทเค็น
+
+### เปลี่ยนสีหลัก
+
+เปลี่ยน `--color-primary` และ `--color-primary-foreground` เพื่อรีแบรนด์ตัวเลือก:
+
+```css
+@theme {
+  /* สีม่วงเป็นสีหลัก */
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+}
+```
+
+### โทนสีอบอุ่น
+
+```css
+@theme {
+  --color-background: oklch(0.99 0.005 80);
+  --color-foreground: oklch(0.2 0.02 60);
+
+  --color-popover: oklch(0.99 0.005 80);
+  --color-popover-foreground: oklch(0.2 0.02 60);
+
+  --color-primary: oklch(0.6 0.2 40);
+  --color-primary-foreground: oklch(0.98 0.005 80);
+
+  --color-accent: oklch(0.95 0.02 80);
+  --color-accent-foreground: oklch(0.2 0.02 60);
+
+  --color-border: oklch(0.9 0.01 80);
+  --color-input: oklch(0.9 0.01 80);
+  --color-ring: oklch(0.85 0.02 80);
+}
+```
+
+### โทเค็นโหมดมืด
+
+สำหรับโหมดมืด ให้เขียนทับโทเค็นภายใต้ตัวเลือก `.dark` หรือ `@media (prefers-color-scheme: dark)`:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... ค่าสำหรับโหมดสว่าง */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+ดูรายละเอียดเพิ่มเติมได้ที่ [โหมดมืด](/docs/tailwind4/customization/dark-mode)
+
+## โปรเจกต์ shadcn/ui ที่มีอยู่
+
+หากโปรเจกต์ของคุณมีการกำหนดโทเค็นของ shadcn/ui ไว้อยู่แล้ว ตัวเลือกจะใช้โทเค็นเหล่านั้นโดยอัตโนมัติโดยไม่จำเป็นต้องตั้งค่าเพิ่มเติม ชื่อโทเค็นถูกสร้างขึ้นให้เข้ากันได้โดยตั้งใจ ดูเพิ่มเติมได้ที่ [shadcn Registry](/docs/tailwind4/customization/shadcn-registry)

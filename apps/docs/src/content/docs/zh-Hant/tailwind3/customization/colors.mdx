@@ -1,0 +1,38 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind3/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind3/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind3/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind3/Customization/CompoundColorThemePopup.tsx?raw";
+
+# 顏色
+
+`Tailwind v3` 套件使用**寫死的 Tailwind 功能類別**（例如 `bg-sky-500`），而非 CSS 變數。若要切換顏色，請使用 Compound API 並動態覆寫日期類別名稱：
+
+<Admonition type="info">
+  與使用 CSS 變數的 `styled` 套件不同，`Tailwind v3` 需要使用 Compound API
+  在執行時覆寫顏色。詳情請參閱 [主題覆寫](/docs/tailwind3/customization/theme-override)。
+</Admonition>
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 彈出視窗模式
+
+同樣的技巧也適用於彈出式選擇器：
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind3/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind3/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind3/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Custom Trigger
+
+Replace the default trigger with your own element using a render prop. The `Trigger` component accepts a function child that receives state and callbacks, letting you render any custom button or input.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Trigger Render Props
+
+| Prop           | Type             | Description                  |
+| -------------- | ---------------- | ---------------------------- |
+| `displayValue` | `string`         | Formatted selected date      |
+| `placeholder`  | `string`         | Placeholder text             |
+| `hasValue`     | `boolean`        | Whether a date is selected   |
+| `isOpen`       | `boolean`        | Whether the popup is open    |
+| `onToggle`     | `() => void`     | Toggle popup open/close      |
+| `onClear`      | `() => void`     | Clear the selection          |
+| `locale`       | `Locale`         | Current locale object        |
+| `triggerRef`   | `(node) => void` | Ref callback for positioning |
+
+## Range Picker Trigger
+
+The same pattern works with `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

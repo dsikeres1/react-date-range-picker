@@ -1,0 +1,167 @@
+---
+sidebar_position: 10
+---
+
+# Token ngữ nghĩa
+
+Gói Tailwind v4 sử dụng các biến CSS ngữ nghĩa (token thiết kế) cho tất cả các màu sắc. Các token này tách rời kiểu dáng của component khỏi các giá trị màu cụ thể, giúp việc tạo chủ đề trở nên đơn giản. Quy ước đặt tên token tuân theo mẫu tương tự được sử dụng bởi [shadcn/ui](https://ui.shadcn.com/).
+
+## Hệ thống Token
+
+Thay vì các màu được mã hóa cứng như `bg-sky-500`, các component Tailwind v4 sử dụng các tiện ích ngữ nghĩa như `bg-primary`, `text-foreground`, và `border-border`. Chúng ánh xạ tới các biến CSS bạn định nghĩa trong dự án của mình.
+
+```
+bg-primary        → var(--color-primary)
+text-foreground   → var(--color-foreground)
+border-border     → var(--color-border)
+```
+
+## Các Token bắt buộc
+
+Định nghĩa các token này trong tệp CSS của bạn bằng cách sử dụng chỉ thị `@theme` của Tailwind v4:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+## Tham chiếu Token
+
+| Token                        | Sử dụng cho                                                      | Tiện ích ví dụ               |
+| ---------------------------- | ---------------------------------------------------------------- | ---------------------------- |
+| `--color-background`         | Nền trang/ứng dụng                                               | `bg-background`              |
+| `--color-foreground`         | Màu văn bản mặc định                                             | `text-foreground`            |
+| `--color-popover`            | Nền popup                                                        | `bg-popover`                 |
+| `--color-popover-foreground` | Văn bản popup                                                    | `text-popover-foreground`    |
+| `--color-primary`            | Ngày được chọn, nút xác nhận, điểm cuối của khoảng               | `bg-primary`, `text-primary` |
+| `--color-primary-foreground` | Văn bản trên nền chính                                           | `text-primary-foreground`    |
+| `--color-muted-foreground`   | Văn bản bị làm mờ (chữ giữ chỗ, ngày trong tuần, nút điều hướng) | `text-muted-foreground`      |
+| `--color-accent`             | Nền khi di chuột cho các ngày và nút                             | `bg-accent`                  |
+| `--color-accent-foreground`  | Văn bản trên nền phụ                                             | `text-accent-foreground`     |
+| `--color-destructive`        | Văn bản nút xóa/nguy hiểm                                        | `text-destructive`           |
+| `--color-border`             | Đường viền chung (chân trang, cài đặt sẵn, popup)                | `border-border`              |
+| `--color-input`              | Đường viền của input/trigger                                     | `border-input`               |
+| `--color-ring`               | Màu vòng tiêu điểm                                               | `ring-ring`                  |
+
+## Cách Token ánh xạ tới các Component
+
+Đây là cách các token được áp dụng trên toàn bộ bộ chọn:
+
+### Trigger
+
+- Nền: `bg-background`
+- Đường viền: `border-input`
+- Văn bản: kế thừa từ `text-foreground` ở gốc
+- Chữ giữ chỗ: `text-muted-foreground`
+- Vòng tiêu điểm: `ring-ring`
+
+### Popup
+
+- Nền: `bg-popover`
+- Văn bản: `text-popover-foreground`
+- Đường viền: `border-border`
+
+### Các ngày trong Lịch
+
+- Di chuột mặc định: `bg-accent` / `text-accent-foreground`
+- Đã chọn: `bg-primary` / `text-primary-foreground`
+- Hôm nay: `text-primary`
+- Trong khoảng: `bg-primary/10`
+- Bắt đầu/kết thúc khoảng: `bg-primary` / `text-primary-foreground`
+- Bị vô hiệu hóa: `text-muted-foreground` với độ mờ giảm
+
+### Chân trang
+
+- Đường viền: `border-border`
+- Nút hủy: `border-input`, khi di chuột `bg-accent`
+- Nút xác nhận: `bg-primary` / `text-primary-foreground`
+- Nút xóa: `text-destructive`
+
+## Tùy chỉnh Token
+
+### Thay đổi màu chính
+
+Thay đổi `--color-primary` và `--color-primary-foreground` để thay đổi thương hiệu cho bộ chọn:
+
+```css
+@theme {
+  /* Màu tím chính */
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+}
+```
+
+### Bảng màu ấm
+
+```css
+@theme {
+  --color-background: oklch(0.99 0.005 80);
+  --color-foreground: oklch(0.2 0.02 60);
+
+  --color-popover: oklch(0.99 0.005 80);
+  --color-popover-foreground: oklch(0.2 0.02 60);
+
+  --color-primary: oklch(0.6 0.2 40);
+  --color-primary-foreground: oklch(0.98 0.005 80);
+
+  --color-accent: oklch(0.95 0.02 80);
+  --color-accent-foreground: oklch(0.2 0.02 60);
+
+  --color-border: oklch(0.9 0.01 80);
+  --color-input: oklch(0.9 0.01 80);
+  --color-ring: oklch(0.85 0.02 80);
+}
+```
+
+### Token cho Chế độ tối
+
+Đối với chế độ tối, hãy ghi đè các token dưới một bộ chọn `.dark` hoặc `@media (prefers-color-scheme: dark)`:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... giá trị sáng */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+Xem [Chế độ tối](/docs/tailwind4/customization/dark-mode) để biết thêm chi tiết.
+
+## Các dự án shadcn/ui hiện có
+
+Nếu dự án của bạn đã định nghĩa các token shadcn/ui, bộ chọn sẽ tự động sử dụng chúng mà không cần cấu hình thêm. Tên token được cố ý làm cho tương thích. Xem [shadcn Registry](/docs/tailwind4/customization/shadcn-registry) để biết thêm.

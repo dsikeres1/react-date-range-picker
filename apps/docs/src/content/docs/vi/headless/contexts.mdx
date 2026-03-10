@@ -1,0 +1,343 @@
+---
+sidebar_position: 4
+title: Contexts
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ContextExample from "@examples/headless/ContextExample";
+import ContextExampleSource from "@examples/headless/ContextExample.tsx?raw";
+
+# Contexts
+
+Gói headless cung cấp các Context provider bao bọc các hook và hiển thị trạng thái của chúng thông qua React Context. Điều này cho phép sử dụng **mẫu thành phần phức hợp (compound component pattern)** -- chia nhỏ giao diện người dùng của bạn thành các thành phần con nhỏ, tập trung đọc trạng thái từ context thay vì truyền props xuống.
+
+## Tại sao dùng Contexts?
+
+Nếu không có context, bạn sẽ phải luồn mọi phần của trạng thái qua props:
+
+```tsx
+// Không có context -- prop drilling
+function MyDatePicker() {
+  const picker = useDatePicker({ value, onChange });
+  return (
+    <MyTrigger displayValue={picker.displayValue} onToggle={picker.handleToggle} />
+    <MyCalendar calendar={picker.calendar} getDayProps={picker.getDayProps} ... />
+    <MyFooter onConfirm={picker.handleConfirm} onCancel={picker.handleCancel} ... />
+  );
+}
+```
+
+Với context, các thành phần con sử dụng những gì chúng cần một cách trực tiếp:
+
+```tsx
+// Với context -- các thành phần phức hợp
+function MyDatePicker() {
+  return (
+    <DatePickerProvider value={value} onChange={onChange}>
+      <ExampleWrapper variant="headless" client:load>
+        <MyTrigger client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyCalendar client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyFooter client:load />
+      </ExampleWrapper>
+    </DatePickerProvider>
+  );
+}
+
+function MyTrigger() {
+  const { displayValue, handleToggle } = useDatePickerContext();
+  return <button onClick={handleToggle}>{displayValue}</button>;
+}
+```
+
+## Các Provider có sẵn
+
+| Provider                      | Hook được dùng nội bộ    | Hook người dùng                   |
+| ----------------------------- | ------------------------ | --------------------------------- |
+| `DatePickerProvider`          | `useDatePicker`          | `useDatePickerContext()`          |
+| `DateRangePickerProvider`     | `useDateRangePicker`     | `useDateRangePickerContext()`     |
+| `DateTimePickerProvider`      | `useDateTimePicker`      | `useDateTimePickerContext()`      |
+| `DateRangeTimePickerProvider` | `useDateRangeTimePicker` | `useDateRangeTimePickerContext()` |
+
+Mỗi provider hiển thị cả một **context đã được định kiểu** (dành riêng cho loại picker đó) và **PickerContext thống nhất** (được chia sẻ trên tất cả các loại).
+
+```tsx
+import {
+  DatePickerProvider,
+  DateRangePickerProvider,
+  DateTimePickerProvider,
+  DateRangeTimePickerProvider,
+} from "react-date-range-picker-headless";
+```
+
+### DatePickerProvider
+
+Bao bọc `useDatePicker`. Cung cấp `DatePickerContext` + `PickerContext`.
+
+```tsx
+import type { DatePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop          | Kiểu                           | Mô tả                                                        |
+| ------------- | ------------------------------ | ------------------------------------------------------------ |
+| `children`    | `ReactNode`                    | **Bắt buộc.** Các thành phần con.                            |
+| `value`       | `Date \| null`                 | **Bắt buộc.** Ngày hiện tại.                                 |
+| `onChange`    | `(date: Date \| null) => void` | **Bắt buộc.** Hàm xử lý thay đổi.                            |
+| `inline`      | `boolean`                      | Hiển thị nội tuyến (không có popup).                         |
+| `size`        | `DatePickerSize`               | Biến thể kích thước.                                         |
+| `placeholder` | `string`                       | Placeholder cho trigger.                                     |
+| `name`        | `string`                       | Tên trường của form.                                         |
+| _...rest_     | `BaseDatePickerOptions`        | Tất cả các tùy chọn cơ bản (minDate, maxDate, locale, v.v.). |
+
+**Hook người dùng:** `useDatePickerContext()` trả về `UseDatePickerReturn`.
+
+### DateRangePickerProvider
+
+Bao bọc `useDateRangePicker`. Cung cấp `DateRangePickerContext` + `PickerContext`.
+
+```tsx
+import type { DateRangePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop                     | Kiểu                                                          | Mô tả                               |
+| ------------------------ | ------------------------------------------------------------- | ----------------------------------- |
+| `children`               | `ReactNode`                                                   | **Bắt buộc.** Các thành phần con.   |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | **Bắt buộc.** Khoảng ngày hiện tại. |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | **Bắt buộc.** Hàm xử lý thay đổi.   |
+| `inline`                 | `boolean`                                                     | Hiển thị nội tuyến.                 |
+| `size`                   | `DatePickerSize`                                              | Biến thể kích thước.                |
+| `placeholder`            | `string`                                                      | Placeholder cho trigger.            |
+| `name`                   | `string`                                                      | Tên trường của form.                |
+| `maxDays`                | `number`                                                      | Số ngày tối đa trong khoảng.        |
+| `minDays`                | `number`                                                      | Số ngày tối thiểu trong khoảng.     |
+| `presets`                | `DateRangePreset[]`                                           | Các thiết lập sẵn cho khoảng ngày.  |
+| `allowSingleDateInRange` | `boolean`                                                     | Cho phép khoảng một ngày.           |
+| _...rest_                | `BaseDatePickerOptions`                                       | Tất cả các tùy chọn cơ bản.         |
+
+**Hook người dùng:** `useDateRangePickerContext()` trả về `UseDateRangePickerReturn`.
+
+### DateTimePickerProvider
+
+Bao bọc `useDateTimePicker`. Cung cấp `DateTimePickerContext` + `PickerContext`.
+
+```tsx
+import type { DateTimePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop          | Kiểu                               | Mô tả                             |
+| ------------- | ---------------------------------- | --------------------------------- |
+| `children`    | `ReactNode`                        | **Bắt buộc.** Các thành phần con. |
+| `value`       | `Date \| null`                     | **Bắt buộc.** Ngày-giờ hiện tại.  |
+| `onChange`    | `(dateTime: Date \| null) => void` | **Bắt buộc.** Hàm xử lý thay đổi. |
+| `time`        | `TimeConfig`                       | Cấu hình thời gian.               |
+| `inline`      | `boolean`                          | Hiển thị nội tuyến.               |
+| `size`        | `DatePickerSize`                   | Biến thể kích thước.              |
+| `placeholder` | `string`                           | Placeholder cho trigger.          |
+| `name`        | `string`                           | Tên trường của form.              |
+| _...rest_     | `BaseDatePickerOptions`            | Tất cả các tùy chọn cơ bản.       |
+
+**Hook người dùng:** `useDateTimePickerContext()` trả về `UseDateTimePickerReturn`.
+
+### DateRangeTimePickerProvider
+
+Bao bọc `useDateRangeTimePicker`. Cung cấp `DateRangeTimePickerContext` + `PickerContext`.
+
+```tsx
+import type { DateRangeTimePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop                     | Kiểu                                                          | Mô tả                               |
+| ------------------------ | ------------------------------------------------------------- | ----------------------------------- |
+| `children`               | `ReactNode`                                                   | **Bắt buộc.** Các thành phần con.   |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | **Bắt buộc.** Khoảng ngày hiện tại. |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | **Bắt buộc.** Hàm xử lý thay đổi.   |
+| `time`                   | `TimeConfig`                                                  | Cấu hình thời gian.                 |
+| `inline`                 | `boolean`                                                     | Hiển thị nội tuyến.                 |
+| `size`                   | `DatePickerSize`                                              | Biến thể kích thước.                |
+| `placeholder`            | `string`                                                      | Placeholder cho trigger.            |
+| `name`                   | `string`                                                      | Tên trường của form.                |
+| `maxDays`                | `number`                                                      | Số ngày tối đa trong khoảng.        |
+| `minDays`                | `number`                                                      | Số ngày tối thiểu trong khoảng.     |
+| `presets`                | `DateRangePreset[]`                                           | Các thiết lập sẵn cho khoảng ngày.  |
+| `allowSingleDateInRange` | `boolean`                                                     | Cho phép khoảng một ngày.           |
+| _...rest_                | `BaseDatePickerOptions`                                       | Tất cả các tùy chọn cơ bản.         |
+
+**Hook người dùng:** `useDateRangeTimePickerContext()` trả về `UseDateRangeTimePickerReturn`.
+
+## PickerContext (Thống nhất)
+
+Mỗi provider cũng đưa vào một **`PickerContext` thống nhất**. Đây là một context cha chứa tất cả các trường từ mọi loại picker, với các trường tùy chọn cho các giá trị dành riêng cho picker.
+
+```tsx
+import { usePickerContext } from "react-date-range-picker-headless";
+
+function MyGenericHeader() {
+  const { locale, handlePrevMonth, handleNextMonth, calendars } = usePickerContext();
+  return (
+    <div>
+      <button onClick={handlePrevMonth}>{locale.prevMonth}</button>
+      <span>{locale.formatMonthYear(calendars[0].month)}</span>
+      <button onClick={handleNextMonth}>{locale.nextMonth}</button>
+    </div>
+  );
+}
+```
+
+Context thống nhất cho phép bạn xây dựng các **thành phần con dùng chung** hoạt động trên tất cả các loại picker. Các gói đã được tạo kiểu (`styled`, `tailwind3`, `tailwind4`) sử dụng mẫu này trong nội bộ -- các thành phần `Header`, `Grid`, `Footer`, v.v. của chúng đều sử dụng `PickerContext`.
+
+### Các trường của PickerContext
+
+```tsx
+import { PickerContext, usePickerContext } from "react-date-range-picker-headless";
+import type { PickerContextValue } from "react-date-range-picker-headless";
+```
+
+```tsx
+function usePickerContext(): PickerContextValue;
+```
+
+Sẽ báo lỗi nếu được sử dụng bên ngoài một provider của picker.
+
+#### Các trường cốt lõi (luôn có mặt)
+
+| Trường              | Kiểu                                              |
+| ------------------- | ------------------------------------------------- |
+| `isOpen`            | `boolean`                                         |
+| `locale`            | `Locale`                                          |
+| `focusedDate`       | `Date \| null`                                    |
+| `displayValue`      | `string`                                          |
+| `hasValue`          | `boolean`                                         |
+| `canConfirm`        | `boolean`                                         |
+| `calendars`         | `CalendarMonth[]`                                 |
+| `getDayProps`       | `(date: Date, referenceMonth?: Date) => DayProps` |
+| `handleToggle`      | `() => void`                                      |
+| `handleOpen`        | `() => void`                                      |
+| `handleClose`       | `() => void`                                      |
+| `handleConfirm`     | `() => void`                                      |
+| `handleCancel`      | `() => void`                                      |
+| `handleClear`       | `() => void`                                      |
+| `handleGoToToday`   | `() => void`                                      |
+| `handlePrevMonth`   | `() => void`                                      |
+| `handleNextMonth`   | `() => void`                                      |
+| `handleKeyDown`     | `(e: KeyboardEvent<HTMLElement>) => void`         |
+| `handleDateClick`   | `(date: Date) => void`                            |
+| `containerRef`      | `RefObject<HTMLDivElement \| null>`               |
+| `popupRef`          | `RefObject<HTMLDivElement \| null>`               |
+| `years`             | `number[]`                                        |
+| `months`            | `number[]`                                        |
+| `handleYearSelect`  | `(year: number, calendarIndex?: number) => void`  |
+| `handleMonthSelect` | `(month: number, calendarIndex?: number) => void` |
+
+#### Các trường chuyển qua cho UI
+
+| Trường            | Kiểu                          |
+| ----------------- | ----------------------------- |
+| `value`           | `unknown`                     |
+| `endName`         | `string \| undefined`         |
+| `required`        | `boolean \| undefined`        |
+| `inline`          | `boolean \| undefined`        |
+| `showOutsideDays` | `boolean \| undefined`        |
+| `size`            | `DatePickerSize \| undefined` |
+| `placeholder`     | `string \| undefined`         |
+| `name`            | `string \| undefined`         |
+| `captionLayout`   | `CaptionLayout \| undefined`  |
+
+#### Các trường dành riêng cho khoảng ngày (tùy chọn)
+
+| Trường              | Kiểu                                               |
+| ------------------- | -------------------------------------------------- |
+| `handleDateHover`   | `((date: Date \| null) => void) \| undefined`      |
+| `presets`           | `DateRangePreset[] \| undefined`                   |
+| `handlePresetClick` | `((preset: DateRangePreset) => void) \| undefined` |
+| `activePresetIndex` | `number \| undefined`                              |
+
+#### Các trường thời gian đơn (tùy chọn, DateTimePicker)
+
+| Trường                    | Kiểu                                             |
+| ------------------------- | ------------------------------------------------ |
+| `resolvedTimeConfig`      | `Required<TimeConfig> \| undefined`              |
+| `tempHour`                | `number \| undefined`                            |
+| `tempMinute`              | `number \| undefined`                            |
+| `tempSecond`              | `number \| undefined`                            |
+| `tempPeriod`              | `TimePeriod \| undefined`                        |
+| `handleHourChange`        | `((hour: number) => void) \| undefined`          |
+| `handleMinuteChange`      | `((minute: number) => void) \| undefined`        |
+| `handleSecondChange`      | `((second: number) => void) \| undefined`        |
+| `handlePeriodChange`      | `((period: TimePeriod) => void) \| undefined`    |
+| `isTimePickerOpen`        | `boolean \| undefined`                           |
+| `handleTimePickerOpen`    | `(() => void) \| undefined`                      |
+| `handleTimePickerClose`   | `(() => void) \| undefined`                      |
+| `handleTimePickerConfirm` | `(() => void) \| undefined`                      |
+| `handleTimePickerCancel`  | `(() => void) \| undefined`                      |
+| `timePickerRef`           | `RefObject<HTMLDivElement \| null> \| undefined` |
+| `timeDisplayValue`        | `string \| undefined`                            |
+
+#### Các trường thời gian cho khoảng ngày (tùy chọn, DateRangeTimePicker)
+
+| Trường                         | Kiểu                                             |
+| ------------------------------ | ------------------------------------------------ |
+| `startHour`                    | `number \| undefined`                            |
+| `startMinute`                  | `number \| undefined`                            |
+| `startSecond`                  | `number \| undefined`                            |
+| `startPeriod`                  | `TimePeriod \| undefined`                        |
+| `endHour`                      | `number \| undefined`                            |
+| `endMinute`                    | `number \| undefined`                            |
+| `endSecond`                    | `number \| undefined`                            |
+| `endPeriod`                    | `TimePeriod \| undefined`                        |
+| `handleStartHourChange`        | `((hour: number) => void) \| undefined`          |
+| `handleStartMinuteChange`      | `((minute: number) => void) \| undefined`        |
+| `handleStartSecondChange`      | `((second: number) => void) \| undefined`        |
+| `handleStartPeriodChange`      | `((period: TimePeriod) => void) \| undefined`    |
+| `handleEndHourChange`          | `((hour: number) => void) \| undefined`          |
+| `handleEndMinuteChange`        | `((minute: number) => void) \| undefined`        |
+| `handleEndSecondChange`        | `((second: number) => void) \| undefined`        |
+| `handleEndPeriodChange`        | `((period: TimePeriod) => void) \| undefined`    |
+| `isStartTimePickerOpen`        | `boolean \| undefined`                           |
+| `isEndTimePickerOpen`          | `boolean \| undefined`                           |
+| `handleStartTimePickerOpen`    | `(() => void) \| undefined`                      |
+| `handleStartTimePickerClose`   | `(() => void) \| undefined`                      |
+| `handleStartTimePickerConfirm` | `(() => void) \| undefined`                      |
+| `handleStartTimePickerCancel`  | `(() => void) \| undefined`                      |
+| `handleEndTimePickerOpen`      | `(() => void) \| undefined`                      |
+| `handleEndTimePickerClose`     | `(() => void) \| undefined`                      |
+| `handleEndTimePickerConfirm`   | `(() => void) \| undefined`                      |
+| `handleEndTimePickerCancel`    | `(() => void) \| undefined`                      |
+| `startTimePickerRef`           | `RefObject<HTMLDivElement \| null> \| undefined` |
+| `endTimePickerRef`             | `RefObject<HTMLDivElement \| null> \| undefined` |
+| `startTimeDisplayValue`        | `string \| undefined`                            |
+| `endTimeDisplayValue`          | `string \| undefined`                            |
+
+## Context đã được định kiểu vs Context thống nhất
+
+| Trường hợp sử dụng                                                        | Context nào                                                   |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Xây dựng một thành phần dùng chung hoạt động trên tất cả các loại picker  | `usePickerContext()`                                          |
+| Xây dựng một thành phần dành riêng cho một picker với an toàn kiểu đầy đủ | `useDatePickerContext()`, `useDateRangePickerContext()`, v.v. |
+
+Các context đã được định kiểu trả về kiểu trả về chính xác của hook, vì vậy bạn nhận được suy luận kiểu TypeScript đầy đủ. Context thống nhất sử dụng các trường tùy chọn cho các giá trị dành riêng cho picker.
+
+## Mẫu Context kép
+
+Mỗi provider hiển thị hai context lồng nhau:
+
+```tsx
+<SpecificPickerContext.Provider value={hookReturn}>
+  <PickerContext.Provider value={unifiedValue}>{children}</PickerContext.Provider>
+</SpecificPickerContext.Provider>
+```
+
+- Sử dụng `usePickerContext()` cho các thành phần con dùng chung (hoạt động với mọi picker)
+- Sử dụng hook người dùng đã được định kiểu cho logic dành riêng cho picker (an toàn kiểu đầy đủ)
+
+## Ví dụ: Date Picker phức hợp
+
+<CodeDemo source={ContextExampleSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <ContextExample client:load />
+  </ExampleWrapper>
+</CodeDemo>

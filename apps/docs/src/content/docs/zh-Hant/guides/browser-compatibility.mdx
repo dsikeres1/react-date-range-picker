@@ -1,0 +1,66 @@
+---
+sidebar_position: 3
+title: Browser Compatibility
+description: 支援的瀏覽器、使用的 CSS 功能和 JavaScript API。
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 瀏覽器相容性
+
+## 支援矩陣
+
+| 瀏覽器           | 最低版本       |
+| ---------------- | -------------- |
+| Chrome           | 88+            |
+| Edge             | 88+ (Chromium) |
+| Firefox          | 85+            |
+| Safari           | 15.4+          |
+| iOS Safari       | 15.4+          |
+| Samsung Internet | 15+            |
+
+**不支援 IE 11。** 此函式庫依賴於 CSS 自訂屬性、現代 JavaScript API 和 React 18+。
+
+Safari 15.4 的最低版本要求取決於 `Styled` 套件中焦點指示器樣式所使用的 `:focus-visible` 支援。
+
+## CSS 功能
+
+| 功能                     | 使用於                    | 最早支援版本                           |
+| ------------------------ | ------------------------- | -------------------------------------- |
+| CSS Custom Properties    | 所有樣式化套件 (主題化)   | Chrome 49, Firefox 31, Safari 9.1      |
+| `:focus-visible`         | 焦點指示器 (Styled)       | Chrome 86, Firefox 85, **Safari 15.4** |
+| `color-scheme`           | 深色模式原生輸入 (Styled) | Chrome 81, Firefox 96, Safari 12.1     |
+| `prefers-color-scheme`   | 自動深色模式 (Styled)     | Chrome 76, Firefox 67, Safari 12.1     |
+| `prefers-reduced-motion` | 減少動態效果 (Styled)     | Chrome 74, Firefox 63, Safari 10.1     |
+| `scroll-snap-type`       | 時間選擇器滾動 (Styled)   | Chrome 69, Firefox 68, Safari 11       |
+| Flexbox                  | 版面配置                  | 通用                                   |
+| CSS Grid                 | 日曆網格                  | Chrome 57, Firefox 52, Safari 10.1     |
+
+## JavaScript API
+
+| API                                 | 使用者                            | 最早支援版本                       |
+| ----------------------------------- | --------------------------------- | ---------------------------------- |
+| `Intl.DateTimeFormat`               | `createLocale()` 地區設定生成     | 所有現代瀏覽器                     |
+| `Intl.DateTimeFormat.formatToParts` | AM/PM 標籤提取                    | Chrome 57, Firefox 51, Safari 11   |
+| `ResizeObserver`                    | `@floating-ui/react` 彈出視窗定位 | Chrome 64, Firefox 69, Safari 13.1 |
+| React 18+ hooks                     | 所有 hooks 和元件                 | React 18.0+                        |
+
+## 各套件注意事項
+
+### Headless
+
+無 CSS 依賴。僅需 React 18+ 和標準 JavaScript API。與任何支援 React 的環境相容。
+
+### Styled
+
+使用 CSS 自訂屬性、`:focus-visible`、`color-scheme` 和 `scroll-snap-type`。瀏覽器支援的瓶頸是 **Safari 15.4+** (因 `:focus-visible`)。
+
+基於滾動的時間選擇器使用 `scroll-snap-type: y mandatory` 並隱藏了滾動條。由於不同平台的慣性/動量實現不同，滾動行為可能會略有差異。
+
+### Tailwind v3
+
+需要 Tailwind CSS v3。JavaScript 相容性與 Headless 相同。CSS 支援取決於 Tailwind v3 的輸出 (廣泛相容)。
+
+### Tailwind v4
+
+需要 Tailwind CSS v4，其本身使用現代 CSS 功能 (`@layer`, `@property`, CSS nesting)。詳情請參

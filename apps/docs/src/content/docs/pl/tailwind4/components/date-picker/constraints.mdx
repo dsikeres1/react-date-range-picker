@@ -1,0 +1,82 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Required from "@examples/tailwind4/DatePicker/Required";
+import RequiredSource from "@examples/tailwind4/DatePicker/Required.tsx?raw";
+import MinMaxDate from "@examples/tailwind4/DatePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/tailwind4/DatePicker/MinMaxDate.tsx?raw";
+import DisabledDates from "@examples/tailwind4/DatePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind4/DatePicker/DisabledDates.tsx?raw";
+import DisablePastFuture from "@examples/tailwind4/DatePicker/DisablePastFuture";
+import DisablePastFutureSource from "@examples/tailwind4/DatePicker/DisablePastFuture.tsx?raw";
+import HighlightDates from "@examples/tailwind4/DatePicker/HighlightDates";
+import HighlightDatesSource from "@examples/tailwind4/DatePicker/HighlightDates.tsx?raw";
+import InitialMonth from "@examples/tailwind4/DatePicker/InitialMonth";
+import InitialMonthSource from "@examples/tailwind4/DatePicker/InitialMonth.tsx?raw";
+
+# Ograniczenia
+
+## Wymagane
+
+Gdy `required` jest ustawione, przycisk czyszczenia jest wyłączony, a wartość nie może być pusta.
+
+<CodeDemo source={RequiredSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Required client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Minimalna i maksymalna data
+
+Ogranicz wybieralne daty do określonego zakresu za pomocą `minDate` i `maxDate`.
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Wyłączone daty
+
+Użyj `isDateUnavailable`, aby dynamicznie wyłączać określone daty.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Wyłącz przeszłość / przyszłość
+
+Użyj `disablePast` lub `disableFuture`, aby szybko wyłączyć daty przed/po dzisiejszym dniu.
+
+<CodeDemo source={DisablePastFutureSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisablePastFuture client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Wyróżnione daty
+
+Wyróżnij wizualnie określone daty (np. święta, wydarzenia) za pomocą właściwości `highlightDates`.
+
+<CodeDemo source={HighlightDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <HighlightDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Początkowy miesiąc
+
+Ustaw początkowy wyświetlany miesiąc, gdy picker jest otwierany po raz pierwszy.
+
+<CodeDemo source={InitialMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <InitialMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/styled/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/styled/DateRangePicker/CustomLocale";
+import CustomLocaleSource from "@examples/styled/DateRangePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/styled/DateRangePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/styled/DateRangePicker/CaptionDropdown.tsx?raw";
+
+# Giao diện
+
+## Nhiều tháng
+
+Hiển thị nhiều hơn 2 tháng liền kề. Mặc định là `2` cho bộ chọn khoảng ngày.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Tùy chỉnh ngôn ngữ
+
+Sử dụng `createLocale` từ gói headless để tùy chỉnh tên tháng/ngày và các chuỗi giao diện người dùng.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Tiêu đề dạng Dropdown
+
+Chuyển từ điều hướng bằng nút sang bộ chọn thả xuống cho tháng và năm. Hữu ích để chọn ngày ở xa tháng hiện tại.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

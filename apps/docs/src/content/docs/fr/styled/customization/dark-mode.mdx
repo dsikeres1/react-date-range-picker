@@ -1,0 +1,179 @@
+---
+sidebar_position: 3
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDarkMode from "@examples/styled/Customization/CustomDarkMode";
+import CustomDarkModeSource from "@examples/styled/Customization/CustomDarkMode.tsx?raw";
+import DarkModeToggle from "@examples/styled/Customization/CompoundDarkMode";
+import DarkModeToggleSource from "@examples/styled/Customization/CompoundDarkMode.tsx?raw";
+
+# Mode Sombre
+
+Le package "styled" inclut un support complet pour le mode sombre. Des valeurs sombres sont définies pour chaque variable CSS, de sorte que le sélecteur s'adapte entièrement de manière automatique.
+
+## Comment Ça Marche
+
+Le mode sombre est activé via deux mécanismes :
+
+1.  **Préférence système** — media query `prefers-color-scheme: dark`
+2.  **Bascule manuelle** — attribut `data-theme="dark"` sur `.rdrp-root` ou un élément parent
+
+La préférence système est appliquée par défaut. Si vous définissez explicitement `data-theme="light"` ou `data-theme="dark"`, cela surcharge la préférence système.
+
+## Automatique (Préférence Système)
+
+Aucune configuration requise. Le sélecteur respecte le paramètre du système d'exploitation de l'utilisateur :
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/rdrp-styles.css";
+
+// Suit automatiquement le mode sombre/clair du système
+<DatePicker value={value} onChange={setValue} />;
+```
+
+Le CSS utilise `@media (prefers-color-scheme: dark)` pour basculer toutes les variables `--rdrp-*` vers leurs valeurs sombres.
+
+## Bascule Manuelle
+
+Définissez `data-theme` sur la racine du sélecteur ou sur n'importe quel élément ancêtre :
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div data-theme={dark ? "dark" : "light"}>
+      <button onClick={() => setDark(!dark)}>Basculer en mode {dark ? "Clair" : "Sombre"}</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+Ou appliquez-le directement sur le sélecteur :
+
+```tsx
+<DatePicker value={value} onChange={setValue} data-theme="dark" />
+```
+
+Lorsque vous utilisez l'API de Composants Composés, définissez-le sur `Root` :
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} data-theme="dark">
+  <DatePicker.Trigger />
+  <DatePicker.Content>{/* ... */}</DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Valeurs de Couleur du Mode Sombre
+
+Toutes les variables de couleur basculent automatiquement. Voici les principales différences :
+
+| Variable                   | Clair             | Sombre            |
+| -------------------------- | ----------------- | ----------------- |
+| `--rdrp-color-primary`     | `#3b82f6`         | `#60a5fa`         |
+| `--rdrp-color-bg`          | `#ffffff`         | `#1f2937`         |
+| `--rdrp-color-bg-hover`    | `#f3f4f6`         | `#374151`         |
+| `--rdrp-color-text`        | `#374151`         | `#e5e7eb`         |
+| `--rdrp-color-text-strong` | `#111827`         | `#f9fafb`         |
+| `--rdrp-color-text-muted`  | `#6b7280`         | `#9ca3af`         |
+| `--rdrp-color-border`      | `#d1d5db`         | `#4b5563`         |
+| `--rdrp-color-range-bg`    | `#dbeafe`         | `#1e3a5f`         |
+| `--rdrp-color-text-today`  | `#2563eb`         | `#60a5fa`         |
+| `--rdrp-shadow-popup`      | `rgba(0,0,0,0.1)` | `rgba(0,0,0,0.3)` |
+
+Consultez la liste complète dans [Variables CSS](/docs/styled/customization/css-variables).
+
+## Personnalisation des Couleurs du Mode Sombre
+
+Surchargez les variables sombres à l'intérieur du sélecteur `data-theme="dark"` ou de la media query `prefers-color-scheme` :
+
+```css
+/* Surcharger la couleur primaire du mode sombre */
+@media (prefers-color-scheme: dark) {
+  .rdrp-root {
+    --rdrp-color-primary: #a78bfa;
+    --rdrp-color-primary-hover: #8b5cf6;
+    --rdrp-color-primary-light: #2e1065;
+    --rdrp-color-range-bg: #2e1065;
+    --rdrp-color-text-today: #a78bfa;
+  }
+}
+
+/* Appliquer aussi lors de la bascule manuelle en mode sombre */
+.rdrp-root[data-theme="dark"] {
+  --rdrp-color-primary: #a78bfa;
+  --rdrp-color-primary-hover: #8b5cf6;
+  --rdrp-color-primary-light: #2e1065;
+  --rdrp-color-range-bg: #2e1065;
+  --rdrp-color-text-today: #a78bfa;
+}
+```
+
+## Forcer le Mode Clair
+
+Si votre application ne prend pas en charge le mode sombre, forcez le mode clair pour empêcher le sélecteur de basculer en fonction des préférences système :
+
+```tsx
+<div data-theme="light">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## Intégration avec le Thème de l'Application
+
+Si votre application gère déjà une bascule de mode sombre (par ex. via une classe `dark` sur `<html>`), mappez-la sur `data-theme`:
+
+```tsx
+// Synchroniser avec l'état du mode sombre de votre application
+function ThemeSyncedPicker({ value, onChange }) {
+  const isDark = useAppTheme(); // votre hook de thème
+
+  return (
+    <div data-theme={isDark ? "dark" : "light"}>
+      <DatePicker value={value} onChange={onChange} />
+    </div>
+  );
+}
+```
+
+Pour les frameworks qui utilisent `<html class="dark">` (comme Next.js avec next-themes), vous pouvez ajouter une règle CSS pour faire le pont entre les deux :
+
+```css
+html.dark .rdrp-root {
+  /* Copiez les valeurs des variables du mode sombre ici, ou utilisez l'approche data-theme */
+}
+```
+
+Ou définissez `data-theme` sur l'élément html à côté de la classe :
+
+```tsx
+// Dans votre fournisseur de thème
+document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+```
+
+## Exemples en Direct
+
+### Bascule du Mode Sombre
+
+Un exemple interactif montrant un **DatePicker** (en ligne) avec un bouton de bascule pour passer du mode clair au mode sombre.
+
+<CodeDemo source={DarkModeToggleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DarkModeToggle client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Mode Sombre Forcé
+
+Un **DateTimePicker** affiché en mode sombre en utilisant `data-theme="dark"` sur un fond sombre.
+
+<CodeDemo source={CustomDarkModeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomDarkMode client:load />
+  </ExampleWrapper>
+</CodeDemo>

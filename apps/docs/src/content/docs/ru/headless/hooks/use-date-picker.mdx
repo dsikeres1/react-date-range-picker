@@ -1,0 +1,65 @@
+---
+sidebar_position: 1
+title: useDatePicker
+---
+
+# useDatePicker
+
+Основной хук для выбора одной даты. Управляет состоянием календаря, поведением открытия/закрытия, навигацией с клавиатуры и форматированием даты.
+
+## Импорт
+
+```tsx
+import { useDatePicker } from "react-date-range-picker-headless";
+```
+
+## Использование
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  const picker = useDatePicker({
+    value: date,
+    onChange: setDate,
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.placeholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Calendar header */}
+          <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+          <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+          <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+
+          {/* Calendar grid */}
+          {picker.calendar.weeks.flat().map((day, i) => {
+            if (!day) return <span key={i} />;
+            const dp = picker.getDayProps(day);
+            return (
+              <button key={i} onClick={() => picker.handleDateClick(day)} disabled={dp.isDisabled}>
+                {dp.day}
+              </button>
+            );
+          })}
+
+          {/* Footer */}
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Опции
+
+| Опция | Тип | По умолчанию | Описание |
+| ----- | --- | ------------ | -------- |

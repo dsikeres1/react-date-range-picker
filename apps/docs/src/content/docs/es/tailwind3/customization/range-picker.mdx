@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: Range Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/tailwind3/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/tailwind3/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/tailwind3/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/tailwind3/Customization/CompoundRangeInline.tsx?raw";
+
+# Selector de Rango
+
+La API compuesta `DateRangePicker` proporciona partes adicionales para calendarios duales y rangos preestablecidos. Obtienes control total sobre el diseño de los preajustes, las cuadrículas del calendario, los encabezados y las acciones del pie de página.
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## En Línea con Preajustes
+
+Muestra el selector de rango en línea con una barra lateral de preajustes:
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

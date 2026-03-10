@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/styled/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/styled/DateRangePicker/CustomLocale";
+import CustomLocaleSource from "@examples/styled/DateRangePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/styled/DateRangePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/styled/DateRangePicker/CaptionDropdown.tsx?raw";
+
+# Aspetto
+
+## Mesi Multipli
+
+Visualizza più di 2 mesi affiancati. Il valore predefinito è `2` per i selettori di intervallo.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Localizzazione Personalizzata
+
+Usa `createLocale` dal pacchetto headless per personalizzare i nomi dei mesi/giorni e le stringhe dell'interfaccia utente.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Menu a Discesa per la Didascalia
+
+Passa dalla navigazione con pulsanti ai selettori a discesa per mese e anno. Utile per selezionare date lontane dal mese corrente.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

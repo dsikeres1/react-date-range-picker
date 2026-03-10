@@ -1,0 +1,52 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/styled/DateRangePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/styled/DateRangePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/styled/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/styled/DateRangePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DateRangePicker/FormIntegration.tsx?raw";
+
+# Comportement
+
+## Fermeture à la sélection
+
+Lorsque `shouldCloseOnSelect` est activé, le sélecteur confirme et se ferme automatiquement lorsque la date de fin est sélectionnée.
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Plusieurs mois
+
+Affichez plus que les deux mois par défaut côte à côte.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Intégration de formulaire
+
+Utilisez la prop `name` pour inclure des champs de saisie masqués pour la soumission de formulaire native.
+
+<Admonition type="tip">
+  Le style du bouton de soumission dans cet exemple est personnalisé — la bibliothèque ne fournit
+  que le sélecteur de dates.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

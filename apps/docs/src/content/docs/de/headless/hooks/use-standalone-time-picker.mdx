@@ -1,0 +1,77 @@
+---
+sidebar_position: 7
+title: useStandaloneTimePicker
+---
+
+# useStandaloneTimePicker
+
+Verwaltet den Zeitzustand mit Öffnen/Schließen und Klick-außerhalb-Verhalten.
+
+## Import
+
+```tsx
+import { useStandaloneTimePicker } from "react-date-range-picker-headless";
+```
+
+## Verwendung
+
+```tsx
+import { useState } from "react";
+import { useStandaloneTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [time, setTime] = useState<Date | null>(null);
+
+  const picker = useStandaloneTimePicker({
+    value: time,
+    onChange: setTime,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 5 },
+    placeholder: "Select time",
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.hasValue ? picker.displayValue : "Select time"}
+      </button>
+
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          <div>
+            <span>{String(picker.tempHour).padStart(2, "0")}</span>
+            <span>:</span>
+            <span>{String(picker.tempMinute).padStart(2, "0")}</span>
+          </div>
+
+          {/* Hook up hour/minute controls */}
+          <input
+            type="range"
+            min={0}
+            max={23}
+            value={picker.tempHour}
+            onChange={(e) => picker.handleHourChange(Number(e.target.value))}
+          />
+          <input
+            type="range"
+            min={0}
+            max={55}
+            step={5}
+            value={picker.tempMinute}
+            onChange={(e) => picker.handleMinuteChange(Number(e.target.value))}
+          />
+
+          <div>
+            <button onClick={picker.handleClear}>Leeren</button>
+            <button onClick={picker.handleCancel}>Abbrechen</button>
+            <button onClick={picker.handleConfirm}>Bestätigen</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Optionen
+
+| Option | Typ | Standard | Beschreibung

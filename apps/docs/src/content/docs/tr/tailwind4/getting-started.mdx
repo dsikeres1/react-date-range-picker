@@ -1,0 +1,136 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind4Basic from "@examples/tailwind4/DatePicker/Basic";
+import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
+
+# Tailwind CSS v4 ile Başlarken
+
+Tailwind v4 paketi, Tailwind CSS v4 yardımcı sınıfları ve anlamsal tasarım belirteçleri ile stillendirilmiş tarih seçici bileşenleri sağlar.
+
+## Kurulum
+
+<PackageInstall pkg="react-date-range-picker-tailwind4" />
+
+Bileşen stillerini ana CSS dosyanıza aktarın:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+Projeniz henüz anlamsal tasarım belirteçlerini tanımlamıyorsa (örneğin shadcn/ui projeleri bunlara zaten sahiptir), varsayılan temayı da içe aktarın:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+```
+
+### shadcn/ui Projeleri
+
+shadcn/ui gerekli belirteçleri zaten tanımlar. Yalnızca bileşen stillerine ihtiyacınız var:
+
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### Bağımsız Tailwind v4 Projeleri
+
+shadcn/ui olmayan projeler için hem tema belirteçlerini hem de bileşen stillerini içe aktarın:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+## Anlamsal Belirteçler
+
+Bileşenler dahili olarak `--rdrp-*` CSS özel özelliklerini kullanır. Bunlar `var()` ile yedek değerler aracılığıyla Tailwind v4 / shadcn anlamsal belirteçlerine eşlenir. Eşlemeyi özelleştirmek isterseniz CSS'nizde `--rdrp-*` değişkenlerini geçersiz kılın.
+
+`rdrp-theme.css` dosyası bu belirteçlerle varsayılan bir Slate + Sky paleti sağlar:
+
+| Belirteç                     | Kullanım                        |
+| ---------------------------- | ------------------------------- |
+| `--color-background`         | Bileşen arka planları           |
+| `--color-foreground`         | Metin rengi                     |
+| `--color-primary`            | Seçili tarihler, aktif durumlar |
+| `--color-primary-foreground` | Birincil renk üzerindeki metin  |
+| `--color-muted-foreground`   | Soluk metin, yer tutucular      |
+| `--color-accent`             | Üzerine gelme arka planları     |
+| `--color-border`             | Kenarlık renkleri               |
+| `--color-ring`               | Odak halkası rengi              |
+
+## Hızlı Başlangıç
+
+<CodeDemo source={Tailwind4BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Tailwind4Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Neler Dahil
+
+| Bileşen               | Açıklama                                           |
+| --------------------- | -------------------------------------------------- |
+| `DatePicker`          | Açılır takvim ile tek tarih seçimi                 |
+| `DateRangePicker`     | Çift takvim ve ön ayarlar ile tarih aralığı seçimi |
+| `DateTimePicker`      | Zaman kaydırma paneli ile tarih + saat seçimi      |
+| `DateRangeTimePicker` | Tarih aralığı + saat seçimi                        |
+
+Tüm bileşenler şunları destekler:
+
+- `value` / `onChange` ile kontrollü değer
+- Klavye ile gezinme
+- `dark:` varyantı ile karanlık mod
+- 4 boyut: `small`, `medium`, `large`, `x-large`
+- Özelleştirme için Bileşik Bileşen API'si
+
+## TypeScript Tipleri
+
+Tüm yapılandırma ve veri tipleri paketten yeniden dışa aktarılır — headless paketini ayrıca kurmanıza gerek yoktur:
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind4";
+```
+
+Bu tipler şunlar için kullanışlıdır:
+
+- **`Locale`** — Özel yerel ayar geçersiz kılmaları (hafta içi adları, düğme etiketleri, tarih biçimlendirme)
+- **`DatePickerSize`** — `size` prop'unu tipleme (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — Zaman seçicinin hassasiyetini, biçimini ve adımlarını yapılandırma
+- **`DateRangePreset`** — `DateRangePicker` / `DateRangeTimePicker` için ön ayarları tanımlama
+- **`CalendarMonth`**, **`DayProps`** — Bileşik Bileşenler ile özel render etme
+
+Ayrıntılı tip tanımları için bkz. [Headless Tipleri](/docs/headless/types/common-types).
+
+## Sonraki Adımlar
+
+- [DatePicker](/docs/tailwind4/components/date-picker/basic) — Tek tarih seçimi
+- [DateRangePicker](/docs/tailwind4/components/date-range-picker/basic) — Ön ayarlarla tarih aralığı
+- [Bileşik Bileşenler](/docs/tailwind4/customization/overview) — Dahili yapıyı özelleştirin
+- [Anlamsal Belirteçler](/docs/tailwind4/customization/semantic-tokens) — Tasarım belirteçleriyle tema oluşturma
+- [Karanlık Mod](/docs/tailwind4/customization/dark-mode) — Karanlık tema desteği

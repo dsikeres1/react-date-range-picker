@@ -1,0 +1,39 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind3/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind3/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind3/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind3/Customization/CompoundColorThemePopup.tsx?raw";
+
+# Renkler
+
+Tailwind v3 paketi, CSS değişkenleri yerine **sabit kodlanmış Tailwind yardımcı sınıflarını** (ör. `bg-sky-500`) kullanır. Renkleri değiştirmek için Bileşik (Compound) API'sini kullanın ve gün sınıf adlarını dinamik olarak geçersiz kılın:
+
+<Admonition type="info">
+  Styled paketinin (CSS değişkenleri kullanan) aksine, Tailwind v3 çalışma zamanında renkleri
+  geçersiz kılmak için Bileşik (Compound) API'sini gerektirir. Daha fazla ayrıntı için [Tema
+  Geçersiz Kılma](/docs/tailwind3/customization/theme-override) bölümüne bakın.
+</Admonition>
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Açılır Pencere Modu
+
+Aynı teknik, açılır pencere seçicilerle de çalışır:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

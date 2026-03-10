@@ -1,0 +1,136 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind4Basic from "@examples/tailwind4/DatePicker/Basic";
+import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
+
+# Tailwind CSS v4로 시작하기
+
+Tailwind v4 패키지는 Tailwind CSS v4 유틸리티 클래스와 시맨틱 디자인 토큰으로 스타일링된 날짜 선택기 컴포넌트를 제공합니다.
+
+## 설치
+
+<PackageInstall pkg="react-date-range-picker-tailwind4" />
+
+메인 CSS 파일에서 컴포넌트 스타일을 가져오세요:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+프로젝트에 시맨틱 디자인 토큰이 아직 정의되어 있지 **않은** 경우 (예: shadcn/ui 프로젝트는 이미 포함하고 있음), 기본 테마도 가져오세요:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+```
+
+### shadcn/ui 프로젝트
+
+shadcn/ui는 이미 필요한 토큰을 정의하고 있습니다. 컴포넌트 스타일만 필요합니다:
+
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### 단독 Tailwind v4 프로젝트
+
+shadcn/ui 없는 프로젝트의 경우, 테마 토큰과 컴포넌트 스타일을 모두 가져오세요:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+## 시맨틱 토큰
+
+컴포넌트들은 내부적으로 `--rdrp-*` CSS 커스텀 프로퍼티를 사용하며, `var()` 폴백 값을 통해 Tailwind v4 / shadcn 시맨틱 토큰에 매핑됩니다. 매핑을 커스터마이징하려면 CSS에서 `--rdrp-*` 변수를 오버라이드하세요.
+
+`rdrp-theme.css` 파일은 다음 토큰과 함께 기본 Slate + Sky 팔레트를 제공합니다:
+
+| 토큰                         | 용도                      |
+| ---------------------------- | ------------------------- |
+| `--color-background`         | 컴포넌트 배경             |
+| `--color-foreground`         | 텍스트 색상               |
+| `--color-primary`            | 선택된 날짜, 활성 상태    |
+| `--color-primary-foreground` | 기본 색상 위의 텍스트     |
+| `--color-muted-foreground`   | 흐린 텍스트, 플레이스홀더 |
+| `--color-accent`             | 호버 배경                 |
+| `--color-border`             | 테두리 색상               |
+| `--color-ring`               | 포커스 링 색상            |
+
+## 빠른 시작
+
+<CodeDemo source={Tailwind4BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Tailwind4Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 포함된 기능
+
+| 컴포넌트              | 설명                                       |
+| --------------------- | ------------------------------------------ |
+| `DatePicker`          | 팝업 캘린더를 통한 단일 날짜 선택          |
+| `DateRangePicker`     | 듀얼 캘린더와 프리셋을 통한 날짜 범위 선택 |
+| `DateTimePicker`      | 시간 스크롤 패널을 통한 날짜 + 시간 선택   |
+| `DateRangeTimePicker` | 날짜 범위 + 시간 선택                      |
+
+모든 컴포넌트는 다음을 지원합니다:
+
+- `value` / `onChange`를 통한 제어 컴포넌트 방식 값 관리
+- 키보드 내비게이션
+- `dark:` 변형을 통한 다크 모드
+- 4가지 크기: `small`, `medium`, `large`, `x-large`
+- 커스터마이징을 위한 컴파운드 컴포넌트(Compound Component) API
+
+## TypeScript 타입
+
+모든 설정과 데이터 타입은 패키지에서 재수출(re-export)되므로 헤드리스(headless) 패키지를 따로 설치할 필요가 없습니다:
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind4";
+```
+
+이러한 타입들은 다음의 경우에 유용합니다:
+
+- **`Locale`** — 커스텀 로케일 재정의 (요일 이름, 버튼 레이블, 날짜 포맷)
+- **`DatePickerSize`** — `size` prop 타이핑 (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — 시간 선택기 정밀도, 형식 및 간격 설정
+- **`DateRangePreset`** — `DateRangePicker` / `DateRangeTimePicker`를 위한 프리셋 정의
+- **`CalendarMonth`**, **`DayProps`** — 컴파운드 컴포넌트를 이용한 커스텀 렌더링
+
+상세한 타입 정의는 [헤드리스 타입](/docs/headless/types/common-types)을 참조하세요.
+
+## 다음 단계
+
+- [DatePicker](/docs/tailwind4/components/date-picker/basic) — 단일 날짜 선택
+- [DateRangePicker](/docs/tailwind4/components/date-range-picker/basic) — 프리셋을 포함한 날짜 범위
+- [컴파운드 컴포넌트](/docs/tailwind4/customization/overview) — 내부 구조 커스터마이징
+- [시맨틱 토큰](/docs/tailwind4/customization/semantic-tokens) — 디자인 토큰을 통한 테마
+- [다크 모드](/docs/tailwind4/customization/dark-mode) — 다크 테마 지원

@@ -1,0 +1,94 @@
+---
+sidebar_position: 3
+title: Locale
+---
+
+# Локаль
+
+Интерфейс для всех строк, видимых пользователю. Передайте `Partial<Locale>` в любой хук, чтобы переопределить конкретные строки — неуказанные поля вернутся к значениям из `DEFAULT_LOCALE`.
+
+```tsx
+import type { Locale } from "react-date-range-picker-headless";
+```
+
+## Поля
+
+| Поле                   | Тип                                                                          | Описание                                                                                    |
+| ---------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `weekdays`             | `string[]`                                                                   | 7 сокращенных названий дней недели, начиная с воскресенья. Например, `["Вс", "Пн", ...]`.   |
+| `months`               | `string[]`                                                                   | 12 названий месяцев. Например, `["Январь", "Февраль", ...]`.                                |
+| `confirm`              | `string`                                                                     | Метка кнопки подтверждения. По умолчанию: `"Подтвердить"`.                                  |
+| `cancel`               | `string`                                                                     | Метка кнопки отмены. По умолчанию: `"Отмена"`.                                              |
+| `clear`                | `string`                                                                     | Метка кнопки очистки. По умолчанию: `"Очистить"`.                                           |
+| `today`                | `string`                                                                     | Метка кнопки "Сегодня". По умолчанию: `"Сегодня"`.                                          |
+| `placeholder`          | `string`                                                                     | Заполнитель для одиночной даты. По умолчанию: `"Выберите дату"`.                            |
+| `rangePlaceholder`     | `string`                                                                     | Заполнитель для диапазона дат. По умолчанию: `"Выберите диапазон дат"`.                     |
+| `dateTimePlaceholder`  | `string`                                                                     | Заполнитель для даты и времени. По умолчанию: `"Выберите дату и время"`.                    |
+| `rangeTimePlaceholder` | `string`                                                                     | Заполнитель для диапазона дат и времени. По умолчанию: `"Выберите диапазон дат и время"`.   |
+| `timePlaceholder`      | `string`                                                                     | Заполнитель только для времени. По умолчанию: `"Выберите время"`.                           |
+| `am`                   | `string`                                                                     | Метка AM. По умолчанию: `"AM"`.                                                             |
+| `pm`                   | `string`                                                                     | Метка PM. По умолчанию: `"PM"`.                                                             |
+| `yearLabel`            | `string`                                                                     | Заголовок столбца года. По умолчанию: `""`.                                                 |
+| `monthLabel`           | `string`                                                                     | Заголовок столбца месяца. По умолчанию: `""`.                                               |
+| `hourLabel`            | `string`                                                                     | aria-label для столбца часов. По умолчанию: `"Часы"`.                                       |
+| `minuteLabel`          | `string`                                                                     | aria-label для столбца минут. По умолчанию: `"Минуты"`.                                     |
+| `secondLabel`          | `string`                                                                     | aria-label для столбца секунд. По умолчанию: `"Секунды"`.                                   |
+| `hoursLabel`           | `string`                                                                     | Доступная метка для часов. По умолчанию: `"Часы"`.                                          |
+| `minutesLabel`         | `string`                                                                     | Доступная метка для минут. По умолчанию: `"Минуты"`.                                        |
+| `secondsLabel`         | `string`                                                                     | Доступная метка для секунд. По умолчанию: `"Секунды"`.                                      |
+| `startTimeLabel`       | `string`                                                                     | Метка времени начала. По умолчанию: `"Время начала"`.                                       |
+| `endTimeLabel`         | `string`                                                                     | Метка времени окончания. По умолчанию: `"Время окончания"`.                                 |
+| `rangeSeparator`       | `string`                                                                     | Разделитель между началом и концом диапазона при отображении. По умолчанию: `" ~ "`.        |
+| `prevMonth`            | `string`                                                                     | Текст кнопки предыдущего месяца. По умолчанию: `"\u2039"` (одиночная левая угловая скобка). |
+| `nextMonth`            | `string`                                                                     | Текст кнопки следующего месяца. По умолчанию: `"\u203A"` (одиночная правая угловая скобка). |
+| `prevMonthLabel`       | `string`                                                                     | Доступная метка для предыдущего месяца. По умолчанию: `"Предыдущий месяц"`.                 |
+| `nextMonthLabel`       | `string`                                                                     | Доступная метка для следующего месяца. По умолчанию: `"Следующий месяц"`.                   |
+| `selectYearLabel`      | `string`                                                                     | Доступная метка для выпадающего списка выбора года. По умолчанию: `"Выберите год"`.         |
+| `selectMonthLabel`     | `string`                                                                     | Доступная метка для выпадающего списка выбора месяца. По умолчанию: `"Выберите месяц"`.     |
+| `formatMonthYear`      | `(month: Date) => string`                                                    | Форматирование заголовка месяца. По умолчанию: `"Январь 2026"`.                             |
+| `formatDate`           | `(date: Date) => string`                                                     | Форматирование отображения одиночной даты. По умолчанию: `"2026-01-15"`.                    |
+| `formatDateTime`       | `(date: Date, precision?: TimePrecision, hourFormat?: HourFormat) => string` | Форматирование отображения даты и времени. По умолчанию: `"2026-01-15 14:30"`.              |
+| `formatTime`           | `(hour, minute, second, period?) => string`                                  | Форматирование отображения времени. По умолчанию: `"14:30:00"`.                             |
+| `formatRange`          | `(start: string, end: string) => string`                                     | Форматирование отображения диапазона. По умолчанию: `"начало ~ конец"`.                     |
+
+## Определение TypeScript
+
+```tsx
+interface Locale {
+  weekdays: string[];
+  months: string[];
+  confirm: string;
+  cancel: string;
+  clear: string;
+  today: string;
+  placeholder: string;
+  rangePlaceholder: string;
+  dateTimePlaceholder: string;
+  rangeTimePlaceholder: string;
+  timePlaceholder: string;
+  am: string;
+  pm: string;
+  yearLabel: string;
+  monthLabel: string;
+  hourLabel: string;
+  minuteLabel: string;
+  secondLabel: string;
+  hoursLabel: string;
+  minutesLabel: string;
+  secondsLabel: string;
+  startTimeLabel: string;
+  endTimeLabel: string;
+  rangeSeparator: string;
+  prevMonth: string;
+  nextMonth: string;
+  prevMonthLabel: string;
+  nextMonthLabel: string;
+  selectYearLabel: string;
+  selectMonthLabel: string;
+  formatMonthYear: (month: Date) => string;
+  formatDate: (date: Date) => string;
+  formatDateTime: (date: Date, precision?: TimePrecision, hourFormat?: HourFormat) => string;
+  formatTime: (hour: number, minute: number, second: number, period?: TimePeriod) => string;
+  formatRange: (start: string, end: string) => string;
+}
+```

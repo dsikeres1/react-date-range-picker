@@ -1,0 +1,48 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinuteStep from "@examples/tailwind4/DateTimePicker/MinuteStep";
+import MinuteStepSource from "@examples/tailwind4/DateTimePicker/MinuteStep.tsx?raw";
+import SecondPrecision from "@examples/tailwind4/DateTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/tailwind4/DateTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/tailwind4/DateTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/tailwind4/DateTimePicker/TwelveHour.tsx?raw";
+
+# 时间选项
+
+通过 `time` 属性配置时间面板的行为。
+
+## 分钟步长
+
+设置分钟的增量步长。适用于按固定间隔进行调度。
+
+<CodeDemo source={MinuteStepSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinuteStep client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 秒级精度
+
+通过将 `precision` 设置为 `"second"` 来显示秒列。
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 12 小时制
+
+切换到带 AM/PM 开关的 12 小时制。
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,82 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Required from "@examples/styled/DatePicker/Required";
+import RequiredSource from "@examples/styled/DatePicker/Required.tsx?raw";
+import MinMaxDate from "@examples/styled/DatePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/styled/DatePicker/MinMaxDate.tsx?raw";
+import DisabledDates from "@examples/styled/DatePicker/DisabledDates";
+import DisabledDatesSource from "@examples/styled/DatePicker/DisabledDates.tsx?raw";
+import DisablePastFuture from "@examples/styled/DatePicker/DisablePastFuture";
+import DisablePastFutureSource from "@examples/styled/DatePicker/DisablePastFuture.tsx?raw";
+import HighlightDates from "@examples/styled/DatePicker/HighlightDates";
+import HighlightDatesSource from "@examples/styled/DatePicker/HighlightDates.tsx?raw";
+import InitialMonth from "@examples/styled/DatePicker/InitialMonth";
+import InitialMonthSource from "@examples/styled/DatePicker/InitialMonth.tsx?raw";
+
+# Restricciones
+
+## Requerido
+
+Cuando se establece `required`, el botón de limpiar se deshabilita y el valor no se puede vaciar.
+
+<CodeDemo source={RequiredSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Required client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Fechas Mínima y Máxima
+
+Restringe las fechas seleccionables a un rango específico usando `minDate` y `maxDate`.
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Fechas Deshabilitadas
+
+Usa `isDateUnavailable` para deshabilitar dinámicamente fechas específicas.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Deshabilitar Pasado / Futuro
+
+Usa `disablePast` o `disableFuture` para deshabilitar rápidamente fechas antes/después de hoy.
+
+<CodeDemo source={DisablePastFutureSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DisablePastFuture client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Resaltar Fechas
+
+Resalta visualmente fechas específicas (por ejemplo, festivos, eventos) usando la prop `highlightDates`.
+
+<CodeDemo source={HighlightDatesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <HighlightDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Mes Inicial
+
+Establece el mes que se muestra inicialmente cuando el selector se abre por primera vez.
+
+<CodeDemo source={InitialMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <InitialMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>

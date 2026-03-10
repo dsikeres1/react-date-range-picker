@@ -1,0 +1,55 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Właściwości
+
+| Prop                  | Typ                                           | Domyślne    | Opis                                                      |
+| --------------------- | --------------------------------------------- | ----------- | --------------------------------------------------------- |
+| `value`               | `Date \| null`                                | --          | Wybrana wartość daty i czasu                              |
+| `onChange`            | `(dateTime: Date \| null) => void`            | --          | Funkcja zwrotna wywoływana przy zmianie wartości          |
+| `time`                | `TimeConfig`                                  | --          | Konfiguracja panelu czasu                                 |
+| `minDate`             | `Date`                                        | --          | Minimalna data do wyboru                                  |
+| `maxDate`             | `Date`                                        | --          | Maksymalna data do wyboru                                 |
+| `locale`              | `Partial<Locale>`                             | --          | Niestandardowa konfiguracja lokalizacji                   |
+| `initialMonth`        | `Date`                                        | --          | Początkowy wyświetlany miesiąc                            |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | Rozmiar komponentu                                        |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | Pierwszy dzień tygodnia                                   |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | Oznacz daty jako niedostępne                              |
+| `displayFormat`       | `string`                                      | --          | Niestandardowy format wyświetlania                        |
+| `open`                | `boolean`                                     | --          | Kontrolowany stan otwarcia                                |
+| `initialOpen`         | `boolean`                                     | --          | Początkowy stan otwarcia (niekontrolowany)                |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | Funkcja zwrotna wywoływana przy zmianie stanu otwarcia    |
+| `required`            | `boolean`                                     | `false`     | Wyłącz możliwość czyszczenia wartości                     |
+| `showOutsideDays`     | `boolean`                                     | `false`     | Pokaż dni z sąsiednich miesięcy                           |
+| `highlightDates`      | `Date[]`                                      | --          | Daty do podświetlenia                                     |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | Automatyczne zatwierdzenie po kliknięciu presetu          |
+| `numberOfMonths`      | `number`                                      | `1`         | Liczba miesięcy do wyświetlenia                           |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | Styl nawigacji w nagłówku                                 |
+| `fromYear`            | `number`                                      | --          | Rok początkowy dla listy rozwijanej                       |
+| `toYear`              | `number`                                      | --          | Rok końcowy dla listy rozwijanej                          |
+| `disablePast`         | `boolean`                                     | `false`     | Wyłącz daty przed dzisiaj                                 |
+| `disableFuture`       | `boolean`                                     | `false`     | Wyłącz daty po dzisiaj                                    |
+| `inline`              | `boolean`                                     | `false`     | Pokaż kalendarz w linii (bez wyskakującego okienka)       |
+| `name`                | `string`                                      | --          | Nazwa ukrytego pola wejściowego do przesyłania formularza |
+| `placeholder`         | `string`                                      | --          | Tekst zastępczy dla elementu wyzwalającego                |
+| `hideHeader`          | `boolean`                                     | `false`     | Ukryj nagłówek nawigacyjny                                |
+| `hideFooter`          | `boolean`                                     | `false`     | Ukryj stopkę z akcjami                                    |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Precyzja wyświetlania czasu. Domyślnie "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** Format 12-godzinny lub 24-godzinny. Domyślnie "24". */
+  hourFormat?: "12" | "24";
+  /** Krok inkrementacji minut. Domyślnie 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Krok inkrementacji sekund. Domyślnie 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Wysokość (w px) każdego elementu kółka przewijania. Domyślnie 32. */
+  itemHeight?: number;
+}
+```

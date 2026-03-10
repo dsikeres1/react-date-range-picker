@@ -1,0 +1,54 @@
+---
+sidebar_position: 4
+sidebar_label: Custom Footer
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/tailwind3/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/tailwind3/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/tailwind3/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNoFooter.tsx?raw";
+
+# 自定义页脚
+
+## 重排页脚
+
+重新排列页脚按钮并添加额外的操作，例如“今天”按钮。通过复合组件，您可以精确控制显示哪些按钮以及它们的顺序。
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 最小化布局
+
+移除任何您不需要的部分。这里完全省略了页脚，以实现一个最小化的纯日历布局：
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 覆盖类
+
+每个复合部分都接受一个 `className` 属性。Tailwind v3 包使用 `cn()`（一个 `clsx` + `twMerge` 工具）来将您的类与默认类合并，因此冲突的工具类会被正确解析：
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger className="min-w-[300px] px-4 py-3" />
+  <DatePicker.Content className="rounded-2xl shadow-xl">
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title className="text-lg" />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>;
+```

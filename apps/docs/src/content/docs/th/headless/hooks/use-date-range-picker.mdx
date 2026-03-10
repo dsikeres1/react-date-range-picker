@@ -1,0 +1,98 @@
+---
+sidebar_position: 2
+title: useDateRangePicker
+---
+
+# useDateRangePicker
+
+Hook สำหรับการเลือกช่วงวันที่พร้อมปฏิทินสองเดือน, การแสดงตัวอย่างเมื่อนำเมาส์ไปชี้ และช่วงวันที่ที่กำหนดไว้ล่วงหน้า
+
+## Import
+
+```tsx
+import { useDateRangePicker } from "react-date-range-picker-headless";
+```
+
+## การใช้งาน
+
+```tsx
+import { useState } from "react";
+import { useDateRangePicker } from "react-date-range-picker-headless";
+
+function MyDateRangePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangePicker({
+    value: range,
+    onChange: setRange,
+    presets: [
+      {
+        label: "7 วันล่าสุด",
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setDate(start.getDate() - 6);
+          return { start, end };
+        },
+      },
+    ],
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* ปฏิทินสองอันข้างกัน */}
+          {[picker.leftCalendar, picker.rightCalendar].map((cal, calIdx) => (
+            <div key={calIdx}>
+              <span>{picker.locale.formatMonthYear(cal.month)}</span>
+              {cal.weeks.flat().map((day, i) => {
+                if (!day) return <span key={i} />;
+                const dp = picker.getDayProps(day, cal.month);
+                return (
+                  <button
+                    key={i}
+                    onClick={() => picker.handleDateClick(day)}
+                    onMouseEnter={() => picker.handleDateHover(day)}
+                    onMouseLeave={() => picker.handleDateHover(null)}
+                  >
+                    {dp.day}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+
+          {/* ค่าที่ตั้งไว้ล่วงหน้า */}
+          {picker.presets.map((preset, i) => (
+            <button
+              key={i}
+              onClick={() => picker.handlePresetClick(preset)}
+              style={{ fontWeight: i === picker.activePresetIndex ? "bold" : "normal" }}
+            >
+              {preset.label}
+            </button>
+          ))}
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Options
+
+| Option     | Type                                                          | ค่าเริ่มต้น | คำอธิบาย                                     |
+| ---------- | ------------------------------------------------------------- | ----------- | -------------------------------------------- |
+| `value`    | `{ start: Date \| null; end: Date \| null }`                  | --          | **จำเป็น** ค่าช่วงปัจจุบัน                   |
+| `onChange` | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | **จำเป็น** ถูกเรียกเมื่อช่วงมีการเปลี่ยนแปลง |
+
+|

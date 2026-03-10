@@ -1,0 +1,46 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Composants Composés
+
+Le paquet Tailwind v3 expose une API de Composants Composés qui vous donne un contrôle total sur la structure interne et le rendu de chaque sélecteur. Au lieu d'un seul composant monolithique, vous composez le sélecteur à partir de parties individuelles.
+
+## Comment Ça Marche
+
+Chaque sélecteur (par ex. `DatePicker`) est à la fois un composant simple et un espace de noms pour ses parties composées :
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+// Utilisation simple — rend la disposition par défaut
+<DatePicker value={value} onChange={setValue} />
+
+// Utilisation composée — contrôle total sur la structure
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Parties Disponibles
+
+### DatePicker
+
+| Partie               | Description                                                                                           |
+| -------------------- | ----------------------------------------------------------------------------------------------------- |
+| `DatePicker.Root`    | Fournisseur + conteneur. Accepte toutes les props du sélecteur (`value`, `onChange`, `minDate`, etc.) |
+| `DatePicker.Trigger` | Bouton qui ouvre/ferme la popup. Affiche la valeur sélectionnée                                       |

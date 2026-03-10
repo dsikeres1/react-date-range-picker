@@ -1,0 +1,22 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDate from "@examples/styled/DateTimePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/styled/DateTimePicker/MinMaxDate.tsx?raw";
+
+# Ograniczenia
+
+## Daty minimalne i maksymalne
+
+Ogranicz wybierane daty do określonego zakresu.
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

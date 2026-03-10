@@ -1,0 +1,108 @@
+---
+sidebar_position: 5
+title: useTimePicker
+---
+
+# useTimePicker
+
+用於滾輪式時間選擇器的低階掛鉤。管理基於滾動的時、分、秒選擇，並具有對齊行為。此掛鉤通常由時間面板 UI 內部使用，但也可以直接用於自訂時間選擇器的實現。
+
+## 匯入
+
+```tsx
+import { useTimePicker } from "react-date-range-picker-headless";
+```
+
+## 使用方式
+
+```tsx
+import { useState } from "react";
+import { useTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [hour, setHour] = useState(12);
+  const [minute, setMinute] = useState(0);
+
+  const picker = useTimePicker({
+    hour,
+    minute,
+    onHourChange: setHour,
+    onMinuteChange: setMinute,
+    precision: "minute",
+    hourFormat: "24",
+    minuteStep: 5,
+  });
+
+  return (
+    <div style={{ display: "flex", gap: 8 }}>
+      {/* 小時欄 */}
+      <div
+        ref={picker.hourListRef}
+        onScroll={picker.handleHourScroll}
+        style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+      >
+        {picker.hours.map((h) => (
+          <div
+            key={h}
+            onClick={() => picker.handleHourClick(h)}
+            style={{
+              height: picker.itemHeight,
+              fontWeight: h === hour ? "bold" : "normal",
+            }}
+          >
+            {String(h).padStart(2, "0")}
+          </div>
+        ))}
+      </div>
+
+      {/* 分鐘欄 */}
+      {picker.showMinutes && (
+        <div
+          ref={picker.minuteListRef}
+          onScroll={picker.handleMinuteScroll}
+          style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+        >
+          {picker.minutes.map((m) => (
+            <div
+              key={m}
+              onClick={() => picker.handleMinuteClick(m)}
+              style={{
+                height: picker.itemHeight,
+                fontWeight: m === minute ? "bold" : "normal",
+              }}
+            >
+              {String(m).padStart(2, "0")}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* 上下午切換 (12 小時制) */}
+      {picker.is12Hour && <button onClick={picker.handlePeriodToggle}>{picker.period}</button>}
+    </div>
+  );
+}
+```
+
+## 選項
+
+| 選項             | 類型                           | 預設值     | 說明                                                    |
+| ---------------- | ------------------------------ | ---------- | ------------------------------------------------------- |
+| `hour`           | `number`                       | --         | **必要。** 目前小時。24 小時制：0-23，12 小時制：1-12。 |
+| `minute`         | `number`                       | --         | **必要。** 目前分鐘。                                   |
+| `second`         | `number`                       | --         | 目前秒數。                                              |
+| `period`         | `TimePeriod`                   | --         | 目前的 AM/PM 時段 (12 小時制為必要)。                   |
+| `onHourChange`   | `(hour: number) => void`       | --         | **必要。** 小時變更處理常式。                           |
+| `onMinuteChange` | `(minute: number) => void`     | --         | **必要。** 分鐘變更處理常式。                           |
+| `onSecondChange` | `(second: number) => void`     | --         | 秒數變更處理常式。                                      |
+| `onPeriodChange` | `(period: TimePeriod) => void` | --         | AM/PM 變更處理常式。                                    |
+| `precision`      | `TimePrecision`                | `"minute"` | 時間精度：`"hour"`、`"minute"` 或 `"second"`。          |
+| `hourFormat`     | `HourFormat`                   | `"24"`     | `"12"` 或 `"24"` 小時格式。                             |
+| `minuteStep`     | `MinuteStep`                   | `5`        | 分鐘遞增步長。                                          |
+| `secondStep`     | `SecondStep`                   | `1`        | 秒數遞增步長。                                          |
+| `itemHeight`     | `number`                       | `32`       | 每個滾動項目的高度 (以 px 為單位)。                     |
+
+## 回傳值
+
+| 名稱 | 類型 | 說明 |
+| ---- | ---- | ---- |

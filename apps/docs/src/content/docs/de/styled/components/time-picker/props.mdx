@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+sidebar_label: Props
+---
+
+# Props
+
+| Prop            | Typ                            | Standard | Beschreibung                                                |
+| --------------- | ------------------------------ | -------- | ----------------------------------------------------------- |
+| `value`         | `Date \| null`                 | --       | Ausgewählter Zeitwert (nur der Zeitteil wird verwendet)     |
+| `onChange`      | `(date: Date \| null) => void` | --       | Callback bei Wertänderung                                   |
+| `time`          | `TimeConfig`                   | --       | Konfiguration des Zeit-Panels                               |
+| `locale`        | `Partial<Locale>`              | --       | Benutzerdefinierte Locale-Konfiguration                     |
+| `displayFormat` | `string`                       | --       | Benutzerdefiniertes Anzeigeformat für den Auslöser          |
+| `placeholder`   | `string`                       | --       | Platzhaltertext für den Auslöser                            |
+| `open`          | `boolean`                      | --       | Kontrollierter geöffneter Zustand                           |
+| `initialOpen`   | `boolean`                      | `false`  | Initialer geöffneter Zustand (unkontrolliert)               |
+| `onOpenChange`  | `(open: boolean) => void`      | --       | Callback bei Änderung des geöffneten Zustands               |
+| `required`      | `boolean`                      | `false`  | Deaktiviert das Löschen des Wertes                          |
+| `inline`        | `boolean`                      | `false`  | Rendert inline ohne Auslöser/Popup                          |
+| `hideFooter`    | `boolean`                      | --       | Aktions-Fußzeile ausblenden                                 |
+| `name`          | `string`                       | --       | Name des versteckten Eingabefeldes für Formularübermittlung |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Anzeigegenauigkeit der Zeit. Standard ist "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** 12-Stunden- oder 24-Stunden-Format. Standard ist "24". */
+  hourFormat?: "12" | "24";
+  /** Inkrement-Schritt für Minuten. Standard ist 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Inkrement-Schritt für Sekunden. Standard ist 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Höhe (in px) jedes Scrollrad-Elements. Standard ist 32. */
+  itemHeight?: number;
+}
+```

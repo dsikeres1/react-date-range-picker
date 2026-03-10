@@ -1,0 +1,18 @@
+---
+sidebar_position: 3
+title: Locale
+---
+
+# Yerelleştirme
+
+Tüm kullanıcıya yönelik metinler için arayüz. Belirli metinleri geçersiz kılmak için herhangi bir hook'a bir `Partial<Locale>` geçin -- belirtilmemiş alanlar `DEFAULT_LOCALE`'e geri döner.
+
+```tsx
+import type { Locale } from "react-date-range-picker-headless";
+```
+
+## Alanlar
+
+| Alan       | Tip        | Açıklama  |
+| ---------- | ---------- | --------- |
+| `weekdays` | `string[]` | Pazar'dan |

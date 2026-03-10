@@ -1,0 +1,61 @@
+---
+sidebar_position: 4
+title: DateRangePreset
+---
+
+# DateRangePreset
+
+`useDateRangePicker` ve `useDateRangeTimePicker` için önceden tanımlanmış bir tarih aralığı ön ayarını tanımlar.
+
+```tsx
+import type { DateRangePreset } from "react-date-range-picker-headless";
+```
+
+## Alanlar
+
+| Alan    | Tür                                                                | Açıklama                                                           |
+| ------- | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `label` | `string`                                                           | Ön ayar düğmesi için görüntüleme etiketi.                          |
+| `value` | `{ start: Date; end: Date } \| (() => { start: Date; end: Date })` | Statik aralık nesnesi veya bir aralık döndüren fabrika fonksiyonu. |
+
+## TypeScript Tanımı
+
+```tsx
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```
+
+## Kullanım
+
+Statik ön ayarlar sabit `Date` nesneleri kullanır. Fabrika ön ayarları aralığı dinamik olarak hesaplar ("son 7 gün" gibi göreceli aralıklar için kullanışlıdır).
+
+```tsx
+const presets: DateRangePreset[] = [
+  // Statik ön ayar
+  {
+    label: "2026 1. Çeyrek",
+    value: { start: new Date(2026, 0, 1), end: new Date(2026, 2, 31) },
+  },
+  // Fabrika ön ayarı (tıklandığında hesaplanır)
+  {
+    label: "Son 7 gün",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setDate(start.getDate() - 6);
+      return { start, end };
+    },
+  },
+  {
+    label: "Bu ay",
+    value: () => {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), now.getMonth(), 1);
+      const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      return { start, end };
+    },
+  },
+];
+```

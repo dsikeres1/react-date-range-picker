@@ -1,0 +1,79 @@
+---
+sidebar_position: 4
+sidebar_label: "Custom Footer"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/styled/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/styled/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/styled/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/styled/Customization/CompoundNoFooter.tsx?raw";
+
+# Пользовательский футер
+
+Создайте полностью настраиваемый футер со своими кнопками и разметкой или полностью удалите его части для минималистичного вида.
+
+## Перекомпонованный футер
+
+Переставляйте кнопки футера или добавляйте новые, например `TodayButton`. Составной компонент `DateTimePicker` включает `TimeSection` с `TimePanel` для выбора времени, а `Footer` служит контейнером для кнопок действий.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+Вы также можете полностью отказаться от встроенных кнопок действий и использовать свои собственные элементы внутри `Footer`:
+
+```tsx
+<DatePicker.Footer>
+  <button onClick={() => setValue(new Date())}>Set Today</button>
+  <button onClick={() => setValue(null)}>Clear</button>
+</DatePicker.Footer>
+```
+
+## Минималистичный вид
+
+Опускайте любые ненужные части. Например, встраиваемый календарь без заголовка, футера или триггера:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+Или средство выбора без футера:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Добавление пользовательских имен классов
+
+Каждая составная часть принимает свойство `className`, которое объединяется со стилизованными CSS-классами по умолчанию:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} className="my-picker">
+  <DatePicker.Trigger className="my-trigger" />
+  <DatePicker.Content className="my-content">
+    <DatePicker.Header className="my-header">
+      <DatePicker.PrevButton className="my-nav" />
+      <DatePicker.Title className="my-title" />
+      <DatePicker.NextButton className="my-nav" />
+    </DatePicker.Header>
+    <DatePicker.Grid className="my-grid" />
+  </DatePicker.Content>
+</DatePicker.Root>
+```

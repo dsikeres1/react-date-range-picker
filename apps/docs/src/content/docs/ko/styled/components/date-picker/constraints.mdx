@@ -1,0 +1,82 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Required from "@examples/styled/DatePicker/Required";
+import RequiredSource from "@examples/styled/DatePicker/Required.tsx?raw";
+import MinMaxDate from "@examples/styled/DatePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/styled/DatePicker/MinMaxDate.tsx?raw";
+import DisabledDates from "@examples/styled/DatePicker/DisabledDates";
+import DisabledDatesSource from "@examples/styled/DatePicker/DisabledDates.tsx?raw";
+import DisablePastFuture from "@examples/styled/DatePicker/DisablePastFuture";
+import DisablePastFutureSource from "@examples/styled/DatePicker/DisablePastFuture.tsx?raw";
+import HighlightDates from "@examples/styled/DatePicker/HighlightDates";
+import HighlightDatesSource from "@examples/styled/DatePicker/HighlightDates.tsx?raw";
+import InitialMonth from "@examples/styled/DatePicker/InitialMonth";
+import InitialMonthSource from "@examples/styled/DatePicker/InitialMonth.tsx?raw";
+
+# 제약조건
+
+## 필수값
+
+`required`가 설정되면 지우기 버튼이 비활성화되며 값을 비울 수 없습니다.
+
+<CodeDemo source={RequiredSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Required client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 최소 & 최대 날짜
+
+`minDate`와 `maxDate`를 사용하여 선택 가능한 날짜를 특정 범위로 제한합니다.
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 날짜 비활성화
+
+`isDateUnavailable`을 사용하여 특정 날짜를 동적으로 비활성화합니다.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 과거 / 미래 비활성화
+
+`disablePast` 또는 `disableFuture`를 사용하여 오늘 이전/이후의 날짜를 쉽게 비활성화할 수 있습니다.
+
+<CodeDemo source={DisablePastFutureSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DisablePastFuture client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 날짜 강조
+
+`highlightDates` prop을 사용하여 특정 날짜(예: 휴일, 이벤트)를 시각적으로 강조합니다.
+
+<CodeDemo source={HighlightDatesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <HighlightDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 초기 표시 월
+
+선택기가 처음 열릴 때 표시되는 초기 월을 설정합니다.
+
+<CodeDemo source={InitialMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <InitialMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>

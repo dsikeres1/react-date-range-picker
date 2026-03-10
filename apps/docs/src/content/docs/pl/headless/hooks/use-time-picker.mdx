@@ -1,0 +1,102 @@
+---
+sidebar_position: 5
+title: useTimePicker
+---
+
+# useTimePicker
+
+Niskopoziomowy hook do wyboru czasu za pomocą kółka przewijania. Zarządza wyborem godziny/minuty/sekundy w oparciu o przewijanie z zachowaniem przyciągania. Ten hook jest zazwyczaj używany wewnętrznie przez interfejs panelu czasu, ale może być również używany bezpośrednio do niestandardowych implementacji wyboru czasu.
+
+## Import
+
+```tsx
+import { useTimePicker } from "react-date-range-picker-headless";
+```
+
+## Użycie
+
+```tsx
+import { useState } from "react";
+import { useTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [hour, setHour] = useState(12);
+  const [minute, setMinute] = useState(0);
+
+  const picker = useTimePicker({
+    hour,
+    minute,
+    onHourChange: setHour,
+    onMinuteChange: setMinute,
+    precision: "minute",
+    hourFormat: "24",
+    minuteStep: 5,
+  });
+
+  return (
+    <div style={{ display: "flex", gap: 8 }}>
+      {/* Kolumna godzin */}
+      <div
+        ref={picker.hourListRef}
+        onScroll={picker.handleHourScroll}
+        style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+      >
+        {picker.hours.map((h) => (
+          <div
+            key={h}
+            onClick={() => picker.handleHourClick(h)}
+            style={{
+              height: picker.itemHeight,
+              fontWeight: h === hour ? "bold" : "normal",
+            }}
+          >
+            {String(h).padStart(2, "0")}
+          </div>
+        ))}
+      </div>
+
+      {/* Kolumna minut */}
+      {picker.showMinutes && (
+        <div
+          ref={picker.minuteListRef}
+          onScroll={picker.handleMinuteScroll}
+          style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+        >
+          {picker.minutes.map((m) => (
+            <div
+              key={m}
+              onClick={() => picker.handleMinuteClick(m)}
+              style={{
+                height: picker.itemHeight,
+                fontWeight: m === minute ? "bold" : "normal",
+              }}
+            >
+              {String(m).padStart(2, "0")}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Przełącznik okresu (tryb 12-godzinny) */}
+      {picker.is12Hour && <button onClick={picker.handlePeriodToggle}>{picker.period}</button>}
+    </div>
+  );
+}
+```
+
+## Opcje
+
+| Opcja            | Typ                            | Domyślnie  | Opis                                                           |
+| ---------------- | ------------------------------ | ---------- | -------------------------------------------------------------- |
+| `hour`           | `number`                       | --         | **Wymagane.** Bieżąca godzina. Tryb 24h: 0-23, tryb 12h: 1-12. |
+| `minute`         | `number`                       | --         | **Wymagane.** Bieżąca minuta.                                  |
+| `second`         | `number`                       | --         | Bieżąca sekunda.                                               |
+| `period`         | `TimePeriod`                   | --         | Bieżący okres AM/PM (wymagany w trybie 12h).                   |
+| `onHourChange`   | `(hour: number) => void`       | --         | **Wymagane.** Handler zmiany godziny.                          |
+| `onMinuteChange` | `(minute: number) => void`     | --         | **Wymagane.** Handler zmiany minuty.                           |
+| `onSecondChange` | `(second: number) => void`     | --         | Handler zmiany sekundy.                                        |
+| `onPeriodChange` | `(period: TimePeriod) => void` | --         | Handler zmiany AM/PM.                                          |
+| `precision`      | `TimePrecision`                | `"minute"` | Precyzja czasu: `"hour"`, `"minute"` lub `"second"`.           |
+| `hourFormat`     | `HourFormat`                   | `"24"`     | Format godziny `"12"` lub `"24"`.                              |
+| `minuteStep`     | `MinuteStep`                   | `5`        | Krok inkrementacji minut.                                      |
+| `secondStep`     | `SecondStep`                   | `1`        | Krok                                                           |

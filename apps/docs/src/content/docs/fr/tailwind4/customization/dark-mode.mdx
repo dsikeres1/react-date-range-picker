@@ -1,0 +1,185 @@
+---
+sidebar_position: 9
+---
+
+# Mode Sombre
+
+Le package Tailwind v4 prend en charge le mode sombre via son système de jetons sémantiques. Étant donné que toutes les couleurs font référence à des variables CSS, le passage en mode sombre consiste simplement à redéfinir ces variables.
+
+## Comment ça marche
+
+Les composants utilisent des classes utilitaires sémantiques comme `bg-primary`, `text-foreground`, et `border-border`. Celles-ci se résolvent en variables CSS (`--color-primary`, `--color-foreground`, etc.) que vous définissez dans le CSS de votre projet. Le mode sombre fonctionne en fournissant des valeurs alternatives pour ces variables sous un sélecteur sombre.
+
+## Configuration
+
+### Utilisation de l'attribut `data-theme`
+
+Définissez les valeurs des jetons pour les modes clair et sombre en utilisant les sélecteurs `data-theme` :
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+
+[data-theme="dark"] {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+Basculez en mode sombre en définissant l'attribut :
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div data-theme={dark ? "dark" : "light"}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+### Utilisation de la classe `.dark`
+
+Si votre framework utilise une classe `.dark` (par exemple, Next.js avec `next-themes`), définissez les jetons sous cette classe :
+
+```css
+@theme {
+  /* Jetons pour le mode clair */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  /* ... */
+}
+```
+
+### Utilisation des préférences système
+
+Utilisez `@media (prefers-color-scheme: dark)` pour suivre le paramètre du système d'exploitation :
+
+```css
+@theme {
+  /* Jetons pour le mode clair */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: oklch(0.145 0.004 285.823);
+    --color-foreground: oklch(0.985 0.001 285.823);
+    /* ... */
+  }
+}
+```
+
+## Intégration avec next-themes
+
+Un modèle courant avec Next.js et `next-themes` :
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+```css
+/* globals.css */
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  /* ... tous les jetons du mode clair */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  /* ... tous les jetons du mode sombre */
+}
+```
+
+Le sélecteur récupérera automatiquement les bonnes valeurs de jetons à mesure que le thème change.
+
+## Point de surbrillance en mode sombre
+
+Le point de surbrillance utilise `after:bg-amber-500 dark:after:bg-amber-400` (une couleur Tailwind concrète, pas un jeton) pour assurer une bonne visibilité dans les deux modes. C'est la seule couleur non sémantique du composant. Si vous devez la modifier, utilisez l'API de composant composé avec un rendu `Day` personnalisé :
+
+```tsx
+<DatePicker.Day date={date}>
+  {(props) => (
+    <button /* ... */>
+      {props.day}
+      {props.isHighlighted && (
+        <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+      )}
+    </button>
+  )}
+</DatePicker.Day>
+```
+
+## Forcer un mode spécifique
+
+Pour forcer le mode clair ou sombre indépendamment des préférences système, définissez le thème explicitement :
+
+```tsx
+{
+  /* Toujours en mode clair */
+}
+<div data-theme="light">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Toujours en mode sombre */
+}
+<div data-theme="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```

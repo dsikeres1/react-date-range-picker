@@ -1,0 +1,112 @@
+---
+sidebar_position: 8
+sidebar_label: "Typography"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/styled/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/styled/Customization/CompoundCustomFont.tsx?raw";
+import CompoundCustomFontPopup from "@examples/styled/Customization/CompoundCustomFontPopup";
+import CompoundCustomFontPopupSource from "@examples/styled/Customization/CompoundCustomFontPopup.tsx?raw";
+import CompoundNotoSans from "@examples/styled/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/styled/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/styled/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/styled/Customization/CompoundWebFonts.tsx?raw";
+import CSSCustomFont from "@examples/styled/Customization/CSSCustomFont";
+import CSSCustomFontSource from "@examples/styled/Customization/CSSCustomFont.tsx?raw";
+
+# Typographie
+
+Le paquet styled utilise par défaut une **pile de polices système** :
+
+```css
+--rdrp-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+```
+
+Cela s'affiche avec la police native du système d'exploitation sur chaque plateforme (San Francisco sur macOS, Segoe UI sur Windows, Roboto sur Android). Les polices système offrent un bon support multilingue car le système d'exploitation gère automatiquement les polices de secours pour le CJK, l'arabe et d'autres écritures.
+
+Pour surcharger, définissez `--rdrp-font-family` sur n'importe quel élément ancêtre — cela se propage en cascade dans le sélecteur.
+
+## Style en ligne avec variable CSS
+
+Surchargez la police via l'attribut `style` sur un élément conteneur :
+
+<CodeDemo source={CSSCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CSSCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Famille de polices
+
+Basculez entre les familles de polices en définissant `--rdrp-font-family` sur un conteneur :
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Utilisation des polices Web (Noto Sans)
+
+Pour un rendu multiplateforme cohérent ou des projets d'internationalisation, chargez une police web comme [Noto Sans](https://fonts.google.com/noto) et surchargez la variable :
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/rdrp-styles.css";
+
+// 1. Chargez Noto Sans dans votre HTML ou CSS :
+//    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+// 2. Surchargez la variable de police :
+<div style={{ "--rdrp-font-family": '"Noto Sans", sans-serif' } as React.CSSProperties}>
+  <DatePicker value={value} onChange={setValue} inline />
+</div>;
+```
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Galerie de polices Web
+
+Comparez différentes polices web pour voir à quel point la typographie change radicalement l'apparence du sélecteur. Toutes les polices ci-dessous prennent en charge le rendu multilingue (latin, CJK, coréen).
+
+<Admonition type="warning" title="Démo uniquement">
+  Les polices ci-dessous sont chargées depuis le CDN de Google Fonts à des fins de démonstration.
+  Cette bibliothèque **n'inclut** aucune police web — vous devez les charger dans votre propre
+  projet.
+</Admonition>
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Taille et graisse de la police
+
+Ajustez finement la densité de la typographie en surchargeant les variables de taille et de graisse :
+
+| Variable                      | Défaut | Description                        |
+| ----------------------------- | ------ | ---------------------------------- |
+| `--rdrp-font-size-xs`         | `11px` | Texte le plus petit                |
+| `--rdrp-font-size-sm`         | `12px` | Étiquettes des jours de la semaine |
+| `--rdrp-font-size-base`       | `13px` | Cellules de jour, boutons          |
+| `--rdrp-font-size-md`         | `14px` | Déclencheur, éléments temporels    |
+| `--rdrp-font-size-lg`         | `15px` | Titre du mois                      |
+| `--rdrp-font-weight-normal`   | `400`  | Graisse de base                    |
+| `--rdrp-font-weight-medium`   | `500`  | Emphase moyenne                    |
+| `--rdrp-font-weight-semibold` | `600`  | Jours sélectionnés, titres         |
+| `--rdrp-font-weight-bold`     | `700`  | Indicateur d'aujourd'hui           |
+
+<CodeDemo source={CompoundCustomFontPopupSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFontPopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

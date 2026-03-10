@@ -1,0 +1,48 @@
+---
+sidebar_position: 2
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import TwelveHour from "@examples/tailwind3/TimePicker/TwelveHour";
+import TwelveHourSource from "@examples/tailwind3/TimePicker/TwelveHour.tsx?raw";
+import MinuteStep from "@examples/tailwind3/TimePicker/MinuteStep";
+import MinuteStepSource from "@examples/tailwind3/TimePicker/MinuteStep.tsx?raw";
+import SecondPrecision from "@examples/tailwind3/TimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/tailwind3/TimePicker/SecondPrecision.tsx?raw";
+
+# 시간 옵션
+
+`time` prop을 통해 시간 패널 동작을 구성합니다.
+
+## 12시간 형식
+
+AM/PM 토글이 있는 12시간 형식으로 전환합니다.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 분 단위 간격
+
+분 증가 간격을 설정합니다. 고정된 간격으로 일정을 예약할 때 유용합니다.
+
+<CodeDemo source={MinuteStepSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinuteStep client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 초 정밀도
+
+`precision`을 `"second"`로 설정하여 초 열을 표시합니다.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>

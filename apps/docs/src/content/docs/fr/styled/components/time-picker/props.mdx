@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+sidebar_label: Props
+---
+
+# Propriétés
+
+| Propriété       | Type                           | Défaut  | Description                                                         |
+| --------------- | ------------------------------ | ------- | ------------------------------------------------------------------- |
+| `value`         | `Date \| null`                 | --      | Valeur de l'heure sélectionnée (seule la partie heure est utilisée) |
+| `onChange`      | `(date: Date \| null) => void` | --      | Callback lorsque la valeur change                                   |
+| `time`          | `TimeConfig`                   | --      | Configuration du panneau de l'heure                                 |
+| `locale`        | `Partial<Locale>`              | --      | Configuration de la locale personnalisée                            |
+| `displayFormat` | `string`                       | --      | Format d'affichage personnalisé pour le déclencheur                 |
+| `placeholder`   | `string`                       | --      | Texte indicatif pour le déclencheur                                 |
+| `open`          | `boolean`                      | --      | État d'ouverture contrôlé                                           |
+| `initialOpen`   | `boolean`                      | `false` | État d'ouverture initial (non contrôlé)                             |
+| `onOpenChange`  | `(open: boolean) => void`      | --      | Callback lorsque l'état d'ouverture change                          |
+| `required`      | `boolean`                      | `false` | Désactiver l'effacement de la valeur                                |
+| `inline`        | `boolean`                      | `false` | Affichage en ligne sans déclencheur/popup                           |
+| `hideFooter`    | `boolean`                      | --      | Masquer le pied de page des actions                                 |
+| `name`          | `string`                       | --      | Nom du champ de saisie masqué pour la soumission de formulaire      |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Précision d'affichage de l'heure. Par défaut "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** Format 12 heures ou 24 heures. Par défaut "24". */
+  hourFormat?: "12" | "24";
+  /** Pas d'incrémentation des minutes. Par défaut 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Pas d'incrémentation des secondes. Par défaut 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Hauteur (en px) de chaque élément de la molette de défilement. Par défaut 32. */
+  itemHeight?: number;
+}
+```

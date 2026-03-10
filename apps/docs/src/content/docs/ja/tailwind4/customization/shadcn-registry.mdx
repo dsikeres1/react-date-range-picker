@@ -1,0 +1,131 @@
+---
+sidebar_position: 11
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# shadcn/uiとの互換性
+
+Tailwind v4パッケージは、[shadcn/ui](https://ui.shadcn.com/)プロジェクトとすぐに互換性を持つように設計されています。同じセマンティックトークン規約を使用しているため、プロジェクトにshadcn/uiがすでに設定されている場合、デイトピッカーは自動的にテーマに一致します。
+
+## なぜ機能するのか
+
+shadcn/uiは、以下のようなセマンティックCSS変数を定義しています:
+
+```css
+--background
+--foreground
+--primary
+--primary-foreground
+--muted-foreground
+--accent
+--accent-foreground
+--destructive
+--border
+--input
+--ring
+```
+
+`react-date-range-picker-tailwind4`コンポーネントは、Tailwindユーティリティクラス（`bg-primary`、`text-foreground`、`border-border`など）を介して同じトークン名を使用します。両方のシステムが同じCSS変数を参照するため、ピッカーは既存のテーマを継承します。
+
+## ゼロコンフィグ設定
+
+shadcn/uiプロジェクトがある場合は、パッケージをインストールして直接使用してください:
+
+```bash
+npm install react-date-range-picker-tailwind4
+```
+
+```tsx
+import { useState } from "react";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} />;
+}
+```
+
+追加のトークン定義やCSSの変更は必要ありません。ピッカーは既存の`--color-primary`、`--color-background`などを使用します。
+
+## トークンマッピング
+
+ピッカーのトークンがshadcn/uiのトークンにどのように対応するかを以下に示します:
+
+| ピッカーでの用途       | Tailwindクラス            | shadcnトークン         |
+| ---------------------- | ------------------------- | ---------------------- |
+| ポップアップの背景     | `bg-popover`              | `--popover`            |
+| ポップアップのテキスト | `text-popover-foreground` | `--popover-foreground` |
+| 選択された日           | `bg-primary`              | `--primary`            |
+| 選択された日のテキスト | `text-primary-foreground` | `--primary-foreground` |
+| 日付のホバー           | `bg-accent`               | `--accent`             |
+| 日付ホバー時のテキスト | `text-accent-foreground`  | `--accent-foreground`  |
+| ミュートされたテキスト | `text-muted-foreground`   | `--muted-foreground`   |
+| クリアボタン           | `text-destructive`        | `--destructive`        |
+| ボーダー               | `border-border`           | `--border`             |
+| トリガーのボーダー     | `border-input`            | `--input`              |
+| フォーカスリング       | `ring-ring`               | `--ring`               |
+
+## shadcnコンポーネントとの併用
+
+デイトピッカーは他のshadcn/uiコンポーネントと並べて配置することができ、視覚的に一致します:
+
+```tsx
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function DateForm() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  return (
+    <div className="flex flex-col gap-2">
+      <Label>Select a date</Label>
+      <DatePicker value={date} onChange={setDate} />
+      <Button onClick={() => console.log(date)}>Submit</Button>
+    </div>
+  );
+}
+```
+
+## ダークモード
+
+shadcn/uiプロジェクトが`next-themes`を`class`ストラテジーで使用している場合、ダークモードは自動的に機能します。shadcnとデイトピッカーの両方が同じCSS変数を読み取り、`.dark`セレクターが両方を切り替えます。
+
+```tsx
+// shadcnのダークモード設定でそのまま動作します
+<ThemeProvider attribute="class" defaultTheme="system">
+  <DatePicker value={value} onChange={setValue} />
+</ThemeProvider>
+```
+
+## shadcnレジストリ
+
+<Admonition type="info" title="近日公開">
+完全な[shadcn/uiレジストリ](https://ui.shadcn.com/docs/registry)の統合が計画されています。これにより、次のコマンドでデイトピッカーをインストールできるようになります:
+
+```bash
+npx shadcn@latest add react-date-range-picker
+```
+
+それまでは、npmパッケージを直接インストールし、構造的なカスタマイズにはCompound Component APIを使用してください。
+
+</Admonition>
+
+## shadcnのデフォルトを超えるカスタマイズ
+
+ピッカーを他のshadcnテーマと異なる外観にしたい場合は、トークンの上書きをラッパーにスコープします:
+
+```css
+.custom-picker {
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+  --color-accent: oklch(0.95 0.05 300);
+}
+```
+
+```tsx
+<div className="custom-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```

@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# 사용자 정의 UI 구축하기
+
+이 가이드는 헤드리스 훅을 기반으로 사용자 정의 데이트 피커 UI를 구축하는 패턴을 설명합니다.
+
+## 패턴
+
+모든 헤드리스 훅은 동일한 패턴을 따릅니다:
+
+1. 옵션(value, onChange, 구성)을 사용하여 **훅을 호출합니다**
+2. **반환값을 구조 분해 할당하여** 상태, 계산된 값 및 핸들러를 가져옵니다
+3. 반환된 값을 사용하여 **자신의 마크업을 렌더링합니다**
+4. 제공된 핸들러를 호출하여 **상호작용을 연결합니다**
+
+훅은 달력 생성, 날짜 계산, 열림/닫힘 상태, 키보드 탐색, 범위 로직 등 모든 복잡성을 관리하며, 여러분은 오로지 프레젠테이션에만 집중할 수 있습니다.
+
+## 예제: 사용자 정의 데이트 피커
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 주요 개념
+
+### getDayProps
+
+`getDayProps` 함수는 달력 렌더링의 핵심입니다. 각 날짜 셀에 대해, 셀의 상태를 설명하는 18개의 불리언/숫자 플래그가 포함된 `DayProps` 객체를 반환합니다:
+
+```tsx
+const dp = getDayProps(day);
+
+// Selection state
+dp.isSelected; // Currently selected date
+dp.isToday; // Today's date
+
+// Range state (for range pickers)
+dp.isInRange; // Between start and end dates
+dp.isRangeStart; // First date of the range
+dp.isRangeEnd; // Last date of the range
+dp.isInHoverRange; // In the hover preview range
+dp.isHoverTarget; // The hovered date itself
+dp.isRangeSingle; // Both range start and range end (single-day range)
+
+// Visual connection helpers
+dp.hasLeftConnection; // Connected to previous day (for range backgrounds)
+dp.hasRightConnection; // Connected to next day
+dp.isConsecutiveRange; // Part of a multi-day range
+
+// State
+dp.isDisabled; // Disabled by minDate/maxDate/isDateUnavailable
+dp.isFocused; // Has keyboard focus
+dp.isOutsideDay; // Belongs to adjacent month (when showOutsideDays is enabled)
+dp.isHighlighted; // In the highlightDates array
+
+// Data
+dp.date; // The Date object
+dp.day; // Day of month number
+dp.dayOfWeek; // 0-6 (Sunday-Saturday)
+```
+
+### 외부 클릭을 위한 참조 (Refs)
+
+훅은 `containerRef`와 `popupRef`를 반환합니다. 이들을 래퍼(wrapper) 및 팝업 요소에 연결하세요 -- 훅은 이를 사용하여 외부 클릭을 감지하고 팝업을 자동으로 닫습니다.
+
+### 키보드 탐색
+
+`handleKeyDown` 핸들러는 완벽한 키보드 탐색을 위해 화살표 키, Enter, Escape 및 Tab을 지원합니다. 팝업 컨테이너에 이를 연결하세요.
+
+### 로케일
+
+모든 사용자 대상 문자열은 `locale` 객체에서 가져옵니다. 부분적인 `locale` 옵션을 전달하여 문자열을 사용자 정의할 수 있습니다:
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "OK",
+    cancel: "Back",
+    placeholder: "Pick a date...",
+  },
+});
+```
+
+## 다음 단계
+
+- [훅 참조](/docs/headless/hooks/use-date-picker) -- 각 훅에 대한 전체 옵션 및 반환값
+- [컨텍스트](/docs/headless/contexts) -- 컴파운드 컴포넌트 패턴을 위한 프로바이더 사용
+- [날짜 유틸리티](/docs/headless/date-utilities) -- 날짜 조작을 위한 헬퍼 함수

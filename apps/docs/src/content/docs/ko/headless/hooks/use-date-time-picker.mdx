@@ -1,0 +1,77 @@
+---
+sidebar_position: 3
+title: useDateTimePicker
+---
+
+# useDateTimePicker
+
+날짜와 시간을 함께 선택하기 위한 Hook입니다. `useDatePicker`를 확장하여 시간 상태(시, 분, 초, 오전/오후)와 중첩된 타임 피커를 제공합니다.
+
+## 임포트
+
+```tsx
+import { useDateTimePicker } from "react-date-range-picker-headless";
+```
+
+## 사용법
+
+```tsx
+import { useState } from "react";
+import { useDateTimePicker } from "react-date-range-picker-headless";
+
+function MyDateTimePicker() {
+  const [dateTime, setDateTime] = useState<Date | null>(null);
+
+  const picker = useDateTimePicker({
+    value: dateTime,
+    onChange: setDateTime,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 5 },
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.dateTimePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* 캘린더 (useDatePicker와 동일) */}
+          <div>
+            <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+            <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+            <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+          </div>
+          {/* ...캘린더 그리드... */}
+
+          {/* 시간 표시 */}
+          <div>
+            <span>Time: {picker.timeDisplayValue}</span>
+          </div>
+
+          {/* 시간 컨트롤 */}
+          <div>
+            <input
+              type="number"
+              value={picker.tempHour}
+              onChange={(e) => picker.handleHourChange(Number(e.target.value))}
+            />
+            <span>:</span>
+            <input
+              type="number"
+              value={picker.tempMinute}
+              onChange={(e) => picker.handleMinuteChange(Number(e.target.value))}
+            />
+          </div>
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## 옵션
+
+| 옵션 | 타입 | 기본값 | 설명 |
+| ---- | ---- | ------ | ---- |

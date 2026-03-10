@@ -1,0 +1,132 @@
+---
+sidebar_position: 11
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Совместимость с shadcn/ui
+
+Пакет для Tailwind v4 разработан для полной совместимости с проектами на [shadcn/ui](https://ui.shadcn.com/). Он использует те же соглашения о семантических токенах, поэтому, если в вашем проекте уже настроен shadcn/ui, календарь автоматически подхватит вашу тему.
+
+## Почему это работает
+
+shadcn/ui определяет семантические переменные CSS, такие как:
+
+```css
+--background
+--foreground
+--primary
+--primary-foreground
+--muted-foreground
+--accent
+--accent-foreground
+--destructive
+--border
+--input
+--ring
+```
+
+Компоненты `react-date-range-picker-tailwind4` используют те же имена токенов через утилитарные классы Tailwind (`bg-primary`, `text-foreground`, `border-border` и т.д.). Поскольку обе системы ссылаются на одни и те же переменные CSS, календарь наследует вашу существующую тему.
+
+## Настройка без конфигурации
+
+Если у вас есть проект на shadcn/ui, установите пакет и используйте его напрямую:
+
+```bash
+npm install react-date-range-picker-tailwind4
+```
+
+```tsx
+import { useState } from "react";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} />;
+}
+```
+
+Никаких дополнительных определений токенов или изменений в CSS не требуется. Календарь будет использовать ваши существующие `--color-primary`, `--color-background` и т.д.
+
+## Сопоставление токенов
+
+Вот как токены календаря соответствуют токенам shadcn/ui:
+
+| Использование в календаре | Tailwind Class            | shadcn Token           |
+| ------------------------- | ------------------------- | ---------------------- |
+| Фон всплывающего окна     | `bg-popover`              | `--popover`            |
+| Текст всплывающего окна   | `text-popover-foreground` | `--popover-foreground` |
+| Выбранный день            | `bg-primary`              | `--primary`            |
+| Текст выбранного дня      | `text-primary-foreground` | `--primary-foreground` |
+| День при наведении        | `bg-accent`               | `--accent`             |
+| Текст дня при наведении   | `text-accent-foreground`  | `--accent-foreground`  |
+| Приглушенный текст        | `text-muted-foreground`   | `--muted-foreground`   |
+| Кнопка очистки            | `text-destructive`        | `--destructive`        |
+| Границы                   | `border-border`           | `--border`             |
+| Граница триггера          | `border-input`            | `--input`              |
+| Кольцо фокуса             | `ring-ring`               | `--ring`               |
+
+## Использование вместе с компонентами shadcn
+
+Календарь можно размещать рядом с другими компонентами shadcn/ui, и он будет визуально соответствовать им:
+
+```tsx
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function DateForm() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  return (
+    <div className="flex flex-col gap-2">
+      <Label>Выберите дату</Label>
+      <DatePicker value={date} onChange={setDate} />
+      <Button onClick={() => console.log(date)}>Отправить</Button>
+    </div>
+  );
+}
+```
+
+## Тёмный режим
+
+Если ваш проект на shadcn/ui использует `next-themes` со стратегией `class`, тёмный режим работает автоматически. И shadcn, и календарь читают одни и те же переменные CSS, и ваш селектор `.dark` переключает их оба.
+
+```tsx
+// Работает "из коробки" с настройкой тёмного режима shadcn
+<ThemeProvider attribute="class" defaultTheme="system">
+  <DatePicker value={value} onChange={setValue} />
+</ThemeProvider>
+```
+
+## Реестр shadcn
+
+Вы также можете установить компоненты напрямую через CLI shadcn:
+
+```bash
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
+```
+
+Это копирует исходный код компонента в ваш проект в `components/ui/`, позволяя вам изменять его напрямую.
+
+## Кастомизация за пределами настроек shadcn
+
+Если вы хотите, чтобы календарь выглядел отлично от остальной части вашей темы shadcn, вы можете переопределить токены в пределах обертки:
+
+```css
+.custom-picker {
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+  --color-accent: oklch(0.95 0.05 300);
+}
+```
+
+```tsx
+<div className="custom-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```

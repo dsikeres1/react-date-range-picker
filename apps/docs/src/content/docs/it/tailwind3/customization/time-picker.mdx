@@ -1,0 +1,32 @@
+---
+sidebar_position: 6
+sidebar_label: Time Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundTimePicker from "@examples/tailwind3/Customization/CompoundTimePicker";
+import CompoundTimePickerSource from "@examples/tailwind3/Customization/CompoundTimePicker.tsx?raw";
+import CompoundTimePickerTwelveHour from "@examples/tailwind3/Customization/CompoundTimePickerTwelveHour";
+import CompoundTimePickerTwelveHourSource from "@examples/tailwind3/Customization/CompoundTimePickerTwelveHour.tsx?raw";
+
+# Selettore Orario
+
+L'API composta `TimePicker` ti consente di creare un'interfaccia utente personalizzata per la selezione dell'ora con un trigger, un pannello orario e azioni a piè di pagina.
+
+<CodeDemo source={CompoundTimePickerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundTimePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Formato 12 Ore
+
+Configura il formato a 12 ore con `time`:
+
+<CodeDemo source={CompoundTimePickerTwelveHourSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundTimePickerTwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

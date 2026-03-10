@@ -1,0 +1,214 @@
+---
+sidebar_position: 2
+sidebar_label: "CSS Variables"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomColors from "@examples/styled/Customization/CustomColors";
+import CustomColorsSource from "@examples/styled/Customization/CustomColors.tsx?raw";
+import CustomFont from "@examples/styled/Customization/CustomFont";
+import CustomFontSource from "@examples/styled/Customization/CustomFont.tsx?raw";
+import CustomBorderRadius from "@examples/styled/Customization/CustomBorderRadius";
+import CustomBorderRadiusSource from "@examples/styled/Customization/CustomBorderRadius.tsx?raw";
+import CustomSize from "@examples/styled/Customization/CustomSize";
+import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw";
+
+# Variables CSS
+
+Le paquet `styled` utilise des propriétés personnalisées CSS (variables) pour toutes les valeurs visuelles. Surchargez-les sur `.rdrp-root` ou tout autre élément parent pour personnaliser l'apparence sans toucher au code du composant.
+
+## Comment surcharger
+
+Toutes les variables sont limitées à `.rdrp-root`. Surchargez-les dans votre propre CSS :
+
+```css
+/* Votre thème personnalisé */
+.rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-border-radius-lg: 12px;
+}
+```
+
+Ou limitez les surcharges à une instance spécifique en utilisant une classe d'encapsulation :
+
+```css
+.my-purple-picker .rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-color-primary-light: #ede9fe;
+  --rdrp-color-primary-lighter: #f5f3ff;
+}
+```
+
+```tsx
+<div className="my-purple-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## Référence des variables
+
+### Couleurs
+
+| Variable                        | Défaut (Clair)             | Description                                                            |
+| ------------------------------- | -------------------------- | ---------------------------------------------------------------------- |
+| `--rdrp-color-primary`          | `#3b82f6`                  | Couleur d'action principale (jour sélectionné, bouton de confirmation) |
+| `--rdrp-color-primary-hover`    | `#2563eb`                  | État de survol principal                                               |
+| `--rdrp-color-primary-light`    | `#dbeafe`                  | Arrière-plan de la plage, accent principal clair                       |
+| `--rdrp-color-primary-lighter`  | `#eff6ff`                  | Arrière-plan du préréglage actif                                       |
+| `--rdrp-color-primary-disabled` | `#93c5fd`                  | Bouton de confirmation désactivé                                       |
+| `--rdrp-color-bg`               | `#ffffff`                  | Couleur d'arrière-plan                                                 |
+| `--rdrp-color-bg-hover`         | `#f3f4f6`                  | Arrière-plan de survol pour les jours, les boutons                     |
+| `--rdrp-color-bg-subtle`        | `#f9fafb`                  | Arrière-plan subtil                                                    |
+| `--rdrp-color-text`             | `#374151`                  | Couleur du texte par défaut                                            |
+| `--rdrp-color-text-strong`      | `#111827`                  | Texte fort (titres, heure active)                                      |
+| `--rdrp-color-text-muted`       | `#6b7280`                  | Texte atténué (boutons de navigation, étiquettes)                      |
+| `--rdrp-color-text-placeholder` | `#6b7280`                  | Texte de l'espace réservé                                              |
+| `--rdrp-color-text-disabled`    | `#d1d5db`                  | Texte du jour désactivé                                                |
+| `--rdrp-color-text-outside`     | `#9ca3af`                  | Jours hors du mois                                                     |
+| `--rdrp-color-text-inverse`     | `#ffffff`                  | Texte sur les arrière-plans principaux                                 |
+| `--rdrp-color-text-danger`      | `#ef4444`                  | Texte du bouton effacer/danger                                         |
+| `--rdrp-color-text-today`       | `#2563eb`                  | Couleur de l'indicateur d'aujourd'hui                                  |
+| `--rdrp-color-border`           | `#d1d5db`                  | Bordure par défaut                                                     |
+| `--rdrp-color-border-light`     | `#e5e7eb`                  | Bordure claire (popup, sélecteurs)                                     |
+| `--rdrp-color-border-subtle`    | `#f3f4f6`                  | Bordure subtile (pied de page, préréglages)                            |
+| `--rdrp-color-border-hover`     | `#93c5fd`                  | État de survol de la bordure                                           |
+| `--rdrp-color-highlight-dot`    | `#f59e0b`                  | Couleur du point de surbrillance                                       |
+| `--rdrp-highlight-dot-size`     | `4px`                      | Diamètre du point de surbrillance                                      |
+| `--rdrp-color-range-bg`         | `#dbeafe`                  | Arrière-plan des jours dans la plage                                   |
+| `--rdrp-color-hover-range-bg`   | `#eff6ff`                  | Arrière-plan de l'aperçu de la plage en survol                         |
+| `--rdrp-color-hover-target-bg`  | `#bfdbfe`                  | Arrière-plan du point de terminaison en survol                         |
+| `--rdrp-color-time-highlight`   | `rgba(59, 130, 246, 0.08)` | Barre de surbrillance du panneau horaire                               |
+
+### Typographie
+
+| Variable                      | Défaut                  | Description                                               |
+| ----------------------------- | ----------------------- | --------------------------------------------------------- |
+| `--rdrp-font-family`          | Pile de polices système | Famille de polices                                        |
+| `--rdrp-font-size-xs`         | `11px`                  | Extra petit (en-tête de jour de semaine en petite taille) |
+| `--rdrp-font-size-sm`         | `12px`                  | Petit (en-têtes de jour de semaine, étiquettes)           |
+| `--rdrp-font-size-base`       | `13px`                  | Base (cellules de jour, boutons)                          |
+| `--rdrp-font-size-md`         | `14px`                  | Moyen (déclencheur, éléments temporels)                   |
+| `--rdrp-font-size-lg`         | `15px`                  | Grand (titre de l'en-tête)                                |
+| `--rdrp-font-weight-normal`   | `400`                   | Graisse normale                                           |
+| `--rdrp-font-weight-medium`   | `500`                   | Graisse moyenne                                           |
+| `--rdrp-font-weight-semibold` | `600`                   | Graisse demi-grasse                                       |
+| `--rdrp-font-weight-bold`     | `700`                   | Graisse grasse (indicateur d'aujourd'hui)                 |
+
+### Espacement
+
+| Variable             | Défaut | Description               |
+| -------------------- | ------ | ------------------------- |
+| `--rdrp-spacing-xs`  | `2px`  | Espacement extra petit    |
+| `--rdrp-spacing-sm`  | `4px`  | Petit espacement          |
+| `--rdrp-spacing-md`  | `8px`  | Espacement moyen          |
+| `--rdrp-spacing-lg`  | `12px` | Grand espacement          |
+| `--rdrp-spacing-xl`  | `16px` | Espacement extra large    |
+| `--rdrp-spacing-2xl` | `24px` | Espacement 2x extra large |
+
+### Bordures
+
+| Variable                    | Défaut   | Description                           |
+| --------------------------- | -------- | ------------------------------------- |
+| `--rdrp-border-radius-sm`   | `4px`    | Petit rayon                           |
+| `--rdrp-border-radius-md`   | `6px`    | Rayon moyen (boutons, sélecteurs)     |
+| `--rdrp-border-radius-lg`   | `8px`    | Grand rayon (jours, déclencheur)      |
+| `--rdrp-border-radius-xl`   | `12px`   | Rayon extra large (popup)             |
+| `--rdrp-border-radius-full` | `9999px` | Rayon complet (point de surbrillance) |
+| `--rdrp-border-width`       | `1px`    | Largeur de bordure                    |
+
+### Ombres
+
+| Variable               | Défaut                        | Description            |
+| ---------------------- | ----------------------------- | ---------------------- |
+| `--rdrp-shadow-popup`  | `0 10px 25px rgba(0,0,0,0.1)` | Ombre du popup         |
+| `--rdrp-shadow-inline` | `0 4px 12px rgba(0,0,0,0.06)` | Ombre du mode en ligne |
+| `--rdrp-shadow-sm`     | `0 2px 6px rgba(0,0,0,0.04)`  | Petite ombre           |
+
+### Dimensionnement
+
+| Variable                   | Défaut  | Description                                           |
+| -------------------------- | ------- | ----------------------------------------------------- |
+| `--rdrp-cell-size`         | `36px`  | Largeur/hauteur de la cellule de jour                 |
+| `--rdrp-nav-btn-size`      | `28px`  | Taille du bouton de navigation                        |
+| `--rdrp-weekday-height`    | `28px`  | Hauteur de la ligne d'en-tête du jour de la semaine   |
+| `--rdrp-grid-min-height`   | `216px` | Hauteur minimale de la grille du calendrier           |
+| `--rdrp-panel-min-width`   | `252px` | Largeur du panneau de calendrier unique               |
+| `--rdrp-dual-gap`          | `24px`  | Espace entre les doubles calendriers                  |
+| `--rdrp-trigger-min-width` | `200px` | Largeur minimale du bouton déclencheur                |
+| `--rdrp-trigger-padding-x` | `14px`  | Rembourrage horizontal du déclencheur                 |
+| `--rdrp-trigger-padding-y` | `8px`   | Rembourrage vertical du déclencheur                   |
+| `--rdrp-popup-padding`     | `16px`  | Rembourrage interne du popup                          |
+| `--rdrp-popup-gap`         | `6px`   | Espace du contenu du popup                            |
+| `--rdrp-btn-padding-x`     | `14px`  | Rembourrage horizontal du bouton de pied de page      |
+| `--rdrp-btn-padding-y`     | `6px`   | Rembourrage vertical du bouton de pied de page        |
+| `--rdrp-preset-min-width`  | `140px` | Largeur minimale de la barre latérale des préréglages |
+
+### Sélecteur d'heure
+
+| Variable                      | Défaut  | Description                                   |
+| ----------------------------- | ------- | --------------------------------------------- |
+| `--rdrp-time-item-height`     | `32px`  | Hauteur de l'élément de défilement de l'heure |
+| `--rdrp-time-panel-height`    | `176px` | Hauteur totale du panneau de l'heure          |
+| `--rdrp-time-column-height`   | `160px` | Hauteur de la colonne déroulante              |
+| `--rdrp-time-panel-min-width` | `120px` | Largeur minimale du panneau de l'heure        |
+| `--rdrp-time-colon-width`     | `12px`  | Largeur du séparateur deux-points             |
+
+### Z-index
+
+| Variable              | Défaut | Description              |
+| --------------------- | ------ | ------------------------ |
+| `--rdrp-z-popup`      | `50`   | Z-index du popup         |
+| `--rdrp-z-day-button` | `20`   | Z-index du jour focalisé |
+
+### Transitions
+
+| Variable                   | Défaut  | Description                                 |
+| -------------------------- | ------- | ------------------------------------------- |
+| `--rdrp-transition-fast`   | `0.1s`  | Transitions rapides (survol du jour)        |
+| `--rdrp-transition-normal` | `0.15s` | Transitions normales (déclencheur, boutons) |
+
+## Exemples en direct
+
+### Couleurs personnalisées (Thème violet)
+
+Surchargez les variables de couleur primaire pour créer un schéma de couleurs complètement différent. Cet exemple utilise un **DatePicker** avec des tons violets/pourpres.
+
+<CodeDemo source={CustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Police personnalisée (Serif)
+
+Les polices se propagent en cascade via CSS, donc envelopper le sélecteur dans une div avec une `font-family` personnalisée s'applique à tout le texte. Cet exemple utilise un **DateRangePicker** avec la police serif Georgia.
+
+<CodeDemo source={CustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Coins vifs (Pas de rayon de bordure)
+
+Définissez toutes les variables de rayon de bordure à `0px` pour un aspect complètement carré.
+
+<CodeDemo source={CustomBorderRadiusSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomBorderRadius client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Taille personnalisée via les variables CSS
+
+Au lieu d'utiliser la prop `size` intégrée, surchargez les variables de dimensionnement individuelles pour un contrôle précis. Cet exemple utilise un **DateRangePicker** avec une taille de cellule et des tailles de police personnalisées.
+
+<CodeDemo source={CustomSizeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSize client:load />
+  </ExampleWrapper>
+</CodeDemo>

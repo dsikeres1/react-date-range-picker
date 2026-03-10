@@ -1,0 +1,43 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Componentes Compuestos
+
+El paquete de Tailwind v3 expone una API de Componentes Compuestos que te da control total sobre la estructura interna y el renderizado de cada selector. En lugar de un único componente monolítico, compones el selector a partir de partes individuales.
+
+## Cómo Funciona
+
+Cada selector (p. ej. `DatePicker`) es tanto un componente simple como un espacio de nombres de partes compuestas:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+// Uso simple — renderiza el diseño predeterminado
+<DatePicker value={value} onChange={setValue} />
+
+// Uso compuesto — control total sobre la estructura
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Partes Disponibles
+
+### DatePicker
+
+|

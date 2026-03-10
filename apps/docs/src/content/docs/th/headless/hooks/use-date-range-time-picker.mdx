@@ -1,0 +1,54 @@
+---
+sidebar_position: 4
+title: useDateRangeTimePicker
+---
+
+# useDateRangeTimePicker
+
+Hook สำหรับการเลือกช่วงวันที่พร้อมกับการเลือกเวลาสำหรับทั้งวันที่เริ่มต้นและสิ้นสุด รวมความสามารถของ `useDateRangePicker` และการจัดการเวลาไว้ใน hook เดียว
+
+## การนำเข้า
+
+```tsx
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+```
+
+## การใช้งาน
+
+```tsx
+import { useState } from "react";
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+
+function MyDateRangeTimePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangeTimePicker({
+    value: range,
+    onChange: setRange,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 15 },
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangeTimePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* ปฏิทินคู่, ค่าที่ตั้งไว้ล่วงหน้า, ตัวควบคุมเวลาสำหรับเริ่มต้นและสิ้นสุด */}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## ตัวเลือก
+
+| ตัวเลือก | ประเภท | ค่าเริ่มต้น | คำอธิบาย |
+| -------- | ------ | ----------- | -------- |
+
+| `value`

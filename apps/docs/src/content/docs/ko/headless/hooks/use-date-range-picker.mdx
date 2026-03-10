@@ -1,0 +1,96 @@
+---
+sidebar_position: 2
+title: useDateRangePicker
+---
+
+# useDateRangePicker
+
+듀얼 월 달력, 호버 미리보기, 사전 설정 범위를 지원하는 날짜 범위 선택을 위한 훅입니다.
+
+## 임포트
+
+```tsx
+import { useDateRangePicker } from "react-date-range-picker-headless";
+```
+
+## 사용법
+
+```tsx
+import { useState } from "react";
+import { useDateRangePicker } from "react-date-range-picker-headless";
+
+function MyDateRangePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangePicker({
+    value: range,
+    onChange: setRange,
+    presets: [
+      {
+        label: "Last 7 days",
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setDate(start.getDate() - 6);
+          return { start, end };
+        },
+      },
+    ],
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* 두 개의 달력을 나란히 표시 */}
+          {[picker.leftCalendar, picker.rightCalendar].map((cal, calIdx) => (
+            <div key={calIdx}>
+              <span>{picker.locale.formatMonthYear(cal.month)}</span>
+              {cal.weeks.flat().map((day, i) => {
+                if (!day) return <span key={i} />;
+                const dp = picker.getDayProps(day, cal.month);
+                return (
+                  <button
+                    key={i}
+                    onClick={() => picker.handleDateClick(day)}
+                    onMouseEnter={() => picker.handleDateHover(day)}
+                    onMouseLeave={() => picker.handleDateHover(null)}
+                  >
+                    {dp.day}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+
+          {/* 프리셋 */}
+          {picker.presets.map((preset, i) => (
+            <button
+              key={i}
+              onClick={() => picker.handlePresetClick(preset)}
+              style={{ fontWeight: i === picker.activePresetIndex ? "bold" : "normal" }}
+            >
+              {preset.label}
+            </button>
+          ))}
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## 옵션
+
+| 옵션       | 타입                                                          | 기본값 | 설명                          |
+| ---------- | ------------------------------------------------------------- | ------ | ----------------------------- |
+| `value`    | `{ start: Date \| null; end: Date \| null }`                  | --     | **필수.** 현재 범위 값입니다. |
+| `onChange` | `(value: { start: Date \| null; end: Date \| null }) => void` | --     |

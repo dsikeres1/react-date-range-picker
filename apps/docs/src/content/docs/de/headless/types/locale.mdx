@@ -1,0 +1,94 @@
+---
+sidebar_position: 3
+title: Locale
+---
+
+# Gebietsschema
+
+Schnittstelle für alle benutzerseitigen Zeichenfolgen. Übergeben Sie ein `Partial<Locale>` an einen beliebigen Hook, um bestimmte Zeichenfolgen zu überschreiben – nicht spezifizierte Felder fallen auf `DEFAULT_LOCALE` zurück.
+
+```tsx
+import type { Locale } from "react-date-range-picker-headless";
+```
+
+## Felder
+
+| Feld                   | Typ                                                                          | Beschreibung                                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `weekdays`             | `string[]`                                                                   | 7 Wochentagsabkürzungen, beginnend mit Sonntag. Z.B. `["So", "Mo", ...]`.                     |
+| `months`               | `string[]`                                                                   | 12 Monatsnamen. Z.B. `["Januar", "Februar", ...]`.                                            |
+| `confirm`              | `string`                                                                     | Beschriftung für die Bestätigungsschaltfläche. Standard: `"Bestätigen"`.                      |
+| `cancel`               | `string`                                                                     | Beschriftung für die Abbrechen-Schaltfläche. Standard: `"Abbrechen"`.                         |
+| `clear`                | `string`                                                                     | Beschriftung für die Löschen-Schaltfläche. Standard: `"Löschen"`.                             |
+| `today`                | `string`                                                                     | Beschriftung für die Heute-Schaltfläche. Standard: `"Heute"`.                                 |
+| `placeholder`          | `string`                                                                     | Platzhalter für ein einzelnes Datum. Standard: `"Datum auswählen"`.                           |
+| `rangePlaceholder`     | `string`                                                                     | Platzhalter für einen Datumsbereich. Standard: `"Datumsbereich auswählen"`.                   |
+| `dateTimePlaceholder`  | `string`                                                                     | Platzhalter für Datum und Uhrzeit. Standard: `"Datum und Uhrzeit auswählen"`.                 |
+| `rangeTimePlaceholder` | `string`                                                                     | Platzhalter für Datumsbereich und Uhrzeit. Standard: `"Datumsbereich und Uhrzeit auswählen"`. |
+| `timePlaceholder`      | `string`                                                                     | Platzhalter nur für die Uhrzeit. Standard: `"Uhrzeit auswählen"`.                             |
+| `am`                   | `string`                                                                     | AM-Beschriftung. Standard: `"AM"`.                                                            |
+| `pm`                   | `string`                                                                     | PM-Beschriftung. Standard: `"PM"`.                                                            |
+| `yearLabel`            | `string`                                                                     | Spaltenüberschrift für das Jahr. Standard: `""`.                                              |
+| `monthLabel`           | `string`                                                                     | Spaltenüberschrift für den Monat. Standard: `""`.                                             |
+| `hourLabel`            | `string`                                                                     | aria-label für die Stundenspalte. Standard: `"Stunden"`.                                      |
+| `minuteLabel`          | `string`                                                                     | aria-label für die Minutenspalte. Standard: `"Minuten"`.                                      |
+| `secondLabel`          | `string`                                                                     | aria-label für die Sekundenspalte. Standard: `"Sekunden"`.                                    |
+| `hoursLabel`           | `string`                                                                     | Barrierefreie Beschriftung für Stunden. Standard: `"Stunden"`.                                |
+| `minutesLabel`         | `string`                                                                     | Barrierefreie Beschriftung für Minuten. Standard: `"Minuten"`.                                |
+| `secondsLabel`         | `string`                                                                     | Barrierefreie Beschriftung für Sekunden. Standard: `"Sekunden"`.                              |
+| `startTimeLabel`       | `string`                                                                     | Beschriftung für die Startzeit. Standard: `"Startzeit"`.                                      |
+| `endTimeLabel`         | `string`                                                                     | Beschriftung für die Endzeit. Standard: `"Endzeit"`.                                          |
+| `rangeSeparator`       | `string`                                                                     | Trennzeichen zwischen Bereichsanfang/-ende in der Anzeige. Standard: `" ~ "`.                 |
+| `prevMonth`            | `string`                                                                     | Text für die Schaltfläche "Vorheriger Monat". Standard: `"\u2039"` (einfacher linker Winkel). |
+| `nextMonth`            | `string`                                                                     | Text für die Schaltfläche "Nächster Monat". Standard: `"\u203A"` (einfacher rechter Winkel).  |
+| `prevMonthLabel`       | `string`                                                                     | Barrierefreie Beschriftung für "Vorheriger Monat". Standard: `"Vorheriger Monat"`.            |
+| `nextMonthLabel`       | `string`                                                                     | Barrierefreie Beschriftung für "Nächster Monat". Standard: `"Nächster Monat"`.                |
+| `selectYearLabel`      | `string`                                                                     | Barrierefreie Beschriftung für das Jahr-Dropdown. Standard: `"Jahr auswählen"`.               |
+| `selectMonthLabel`     | `string`                                                                     | Barrierefreie Beschriftung für das Monat-Dropdown. Standard: `"Monat auswählen"`.             |
+| `formatMonthYear`      | `(month: Date) => string`                                                    | Monatskopfzeile formatieren. Standard: `"Januar 2026"`.                                       |
+| `formatDate`           | `(date: Date) => string`                                                     | Anzeige für ein einzelnes Datum formatieren. Standard: `"15.01.2026"`.                        |
+| `formatDateTime`       | `(date: Date, precision?: TimePrecision, hourFormat?: HourFormat) => string` | Anzeige für Datum und Uhrzeit formatieren. Standard: `"15.01.2026 14:30"`.                    |
+| `formatTime`           | `(hour, minute, second, period?) => string`                                  | Zeitanzeige formatieren. Standard: `"14:30:00"`.                                              |
+| `formatRange`          | `(start: string, end: string) => string`                                     | Bereichsanzeige formatieren. Standard: `"start ~ end"`.                                       |
+
+## TypeScript-Definition
+
+```tsx
+interface Locale {
+  weekdays: string[];
+  months: string[];
+  confirm: string;
+  cancel: string;
+  clear: string;
+  today: string;
+  placeholder: string;
+  rangePlaceholder: string;
+  dateTimePlaceholder: string;
+  rangeTimePlaceholder: string;
+  timePlaceholder: string;
+  am: string;
+  pm: string;
+  yearLabel: string;
+  monthLabel: string;
+  hourLabel: string;
+  minuteLabel: string;
+  secondLabel: string;
+  hoursLabel: string;
+  minutesLabel: string;
+  secondsLabel: string;
+  startTimeLabel: string;
+  endTimeLabel: string;
+  rangeSeparator: string;
+  prevMonth: string;
+  nextMonth: string;
+  prevMonthLabel: string;
+  nextMonthLabel: string;
+  selectYearLabel: string;
+  selectMonthLabel: string;
+  formatMonthYear: (month: Date) => string;
+  formatDate: (date: Date) => string;
+  formatDateTime: (date: Date, precision?: TimePrecision, hourFormat?: HourFormat) => string;
+  formatTime: (hour: number, minute: number, second: number, period?: TimePeriod) => string;
+  formatRange: (start: string, end: string) => string;
+}
+```

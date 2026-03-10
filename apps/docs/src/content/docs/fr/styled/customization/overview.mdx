@@ -1,0 +1,73 @@
+---
+sidebar_position: 1
+sidebar_label: "Overview"
+---
+
+# Composants Composés
+
+Le paquet "styled" expose une API de Composants Composés qui vous donne un contrôle total sur la structure interne et le rendu de chaque sélecteur. Au lieu d'un seul composant monolithique, vous composez le sélecteur à partir de parties individuelles.
+
+## Comment Ça Marche
+
+Chaque sélecteur (par ex. `DatePicker`) est à la fois un composant simple et un espace de noms pour ses parties composées :
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/rdrp-styles.css";
+
+// Utilisation simple — rend la mise en page par défaut
+<DatePicker value={value} onChange={setValue} />
+
+// Utilisation composée — contrôle total sur la structure
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Parties Disponibles
+
+### DatePicker
+
+| Partie                     | Description                                                                                           |
+| -------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `DatePicker.Root`          | Fournisseur + conteneur. Accepte toutes les props du sélecteur (`value`, `onChange`, `minDate`, etc.) |
+| `DatePicker.Trigger`       | Bouton qui ouvre/ferme la popup. Affiche la valeur sélectionnée.                                      |
+| `DatePicker.Content`       | Conteneur de la popup (ou conteneur en ligne si `inline` est défini sur Root)                         |
+| `DatePicker.Header`        | Ligne de navigation du mois                                                                           |
+| `DatePicker.PrevButton`    | Naviguer vers le mois précédent                                                                       |
+| `DatePicker.NextButton`    | Naviguer vers le mois suivant                                                                         |
+| `DatePicker.Title`         | Affichage du mois/année en cours (prend en charge les menus déroulants)                               |
+| `DatePicker.Grid`          | Grille du calendrier avec en-têtes des jours de la semaine et cellules des jours                      |
+| `DatePicker.Day`           | Cellule de jour individuelle (utilisée à l'intérieur de la render prop de Grid)                       |
+| `DatePicker.Footer`        | Conteneur des boutons d'action                                                                        |
+| `DatePicker.ClearButton`   | Efface la valeur sélectionnée                                                                         |
+| `DatePicker.CancelButton`  | Annule et ferme                                                                                       |
+| `DatePicker.ConfirmButton` | Confirme la sélection                                                                                 |
+| `DatePicker.TodayButton`   | Navigue à la date d'aujourd'hui                                                                       |
+
+### DateRangePicker
+
+Inclut toutes les parties ci-dessus, plus :
+
+| Partie                       | Description                                                |
+| ---------------------------- | ---------------------------------------------------------- |
+| `DateRangePicker.Calendars`  | Conteneur pour deux calendriers                            |
+| `DateRangePicker.Presets`    | Conteneur de la barre latérale pour les plages prédéfinies |
+| `DateRangePicker.PresetItem` | Bouton de préréglage individuel                            |
+
+### DateTimePicker / DateRangeTimePicker
+
+Incluent leurs parties de base respectives plus l'intégration du panneau horaire via l'API simple. Les panneaux horaires sont rendus automatiquement lors de l'utilisation de composants composés avec des sélecteurs activés pour l'heure.

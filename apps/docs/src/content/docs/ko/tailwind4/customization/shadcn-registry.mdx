@@ -1,0 +1,132 @@
+---
+sidebar_position: 11
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# shadcn/ui 호환성
+
+Tailwind v4 패키지는 추가 설정 없이 [shadcn/ui](https://ui.shadcn.com/) 프로젝트와 완벽하게 호환되도록 설계되었습니다. 동일한 시맨틱 토큰 규칙을 사용하므로, 프로젝트에 이미 shadcn/ui가 설정되어 있다면 데이트 피커가 자동으로 테마에 맞춰집니다.
+
+## 작동 원리
+
+shadcn/ui는 다음과 같은 시맨틱 CSS 변수를 정의합니다:
+
+```css
+--background
+--foreground
+--primary
+--primary-foreground
+--muted-foreground
+--accent
+--accent-foreground
+--destructive
+--border
+--input
+--ring
+```
+
+`react-date-range-picker-tailwind4` 컴포넌트는 Tailwind 유틸리티 클래스(`bg-primary`, `text-foreground`, `border-border` 등)를 통해 동일한 토큰 이름을 사용합니다. 두 시스템 모두 동일한 CSS 변수를 참조하기 때문에 피커가 기존 테마를 상속합니다.
+
+## 무설정(Zero-Config) 셋업
+
+shadcn/ui 프로젝트가 있다면 패키지를 설치하고 바로 사용할 수 있습니다:
+
+```bash
+npm install react-date-range-picker-tailwind4
+```
+
+```tsx
+import { useState } from "react";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} />;
+}
+```
+
+추가적인 토큰 정의나 CSS 변경이 필요하지 않습니다. 피커는 기존의 `--color-primary`, `--color-background` 등을 사용합니다.
+
+## 토큰 매핑
+
+피커 토큰이 shadcn/ui 토큰과 매핑되는 방식은 다음과 같습니다:
+
+| 피커 사용처        | Tailwind 클래스           | shadcn 토큰            |
+| ------------------ | ------------------------- | ---------------------- |
+| 팝업 배경          | `bg-popover`              | `--popover`            |
+| 팝업 텍스트        | `text-popover-foreground` | `--popover-foreground` |
+| 선택된 날짜        | `bg-primary`              | `--primary`            |
+| 선택된 날짜 텍스트 | `text-primary-foreground` | `--primary-foreground` |
+| 날짜 호버          | `bg-accent`               | `--accent`             |
+| 날짜 호버 텍스트   | `text-accent-foreground`  | `--accent-foreground`  |
+| 뮤트된 텍스트      | `text-muted-foreground`   | `--muted-foreground`   |
+| 초기화 버튼        | `text-destructive`        | `--destructive`        |
+| 테두리             | `border-border`           | `--border`             |
+| 트리거 테두리      | `border-input`            | `--input`              |
+| 포커스 링          | `ring-ring`               | `--ring`               |
+
+## shadcn 컴포넌트와 함께 사용하기
+
+데이트 피커는 다른 shadcn/ui 컴포넌트와 나란히 배치할 수 있으며 시각적으로 잘 어울립니다:
+
+```tsx
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function DateForm() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  return (
+    <div className="flex flex-col gap-2">
+      <Label>Select a date</Label>
+      <DatePicker value={date} onChange={setDate} />
+      <Button onClick={() => console.log(date)}>Submit</Button>
+    </div>
+  );
+}
+```
+
+## 다크 모드
+
+shadcn/ui 프로젝트에서 `class` 전략으로 `next-themes`를 사용 중이라면 다크 모드가 자동으로 작동합니다. shadcn과 데이트 피커 모두 동일한 CSS 변수를 읽어오며, `.dark` 선택자가 두 가지 모두를 전환합니다.
+
+```tsx
+// Works out of the box with shadcn's dark mode setup
+<ThemeProvider attribute="class" defaultTheme="system">
+  <DatePicker value={value} onChange={setValue} />
+</ThemeProvider>
+```
+
+## shadcn 레지스트리
+
+shadcn CLI를 통해 컴포넌트를 직접 설치할 수도 있습니다:
+
+```bash
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
+```
+
+이렇게 하면 컴포넌트 소스가 프로젝트의 `components/ui/`에 복사되어 직접 수정할 수 있습니다.
+
+## shadcn 기본값 외 커스터마이징
+
+피커가 나머지 shadcn 테마와 다르게 보이도록 하려면, 토큰 오버라이드를 래퍼(wrapper)로 제한하세요:
+
+```css
+.custom-picker {
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+  --color-accent: oklch(0.95 0.05 300);
+}
+```
+
+```tsx
+<div className="custom-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```

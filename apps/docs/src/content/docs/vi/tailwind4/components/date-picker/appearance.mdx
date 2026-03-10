@@ -1,0 +1,82 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/tailwind4/DatePicker/Sizes";
+import SizesSource from "@examples/tailwind4/DatePicker/Sizes.tsx?raw";
+import CustomFormat from "@examples/tailwind4/DatePicker/CustomFormat";
+import CustomFormatSource from "@examples/tailwind4/DatePicker/CustomFormat.tsx?raw";
+import CustomLocale from "@examples/tailwind4/DatePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind4/DatePicker/CustomLocale.tsx?raw";
+import WeekStartsOn from "@examples/tailwind4/DatePicker/WeekStartsOn";
+import WeekStartsOnSource from "@examples/tailwind4/DatePicker/WeekStartsOn.tsx?raw";
+import ShowOutsideDays from "@examples/tailwind4/DatePicker/ShowOutsideDays";
+import ShowOutsideDaysSource from "@examples/tailwind4/DatePicker/ShowOutsideDays.tsx?raw";
+import CaptionDropdown from "@examples/tailwind4/DatePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind4/DatePicker/CaptionDropdown.tsx?raw";
+
+# Giao diện
+
+## Kích thước
+
+Bốn kích thước tích hợp: `small`, `medium`, `large`, và `x-large`.
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Định dạng tùy chỉnh
+
+Tùy chỉnh chuỗi định dạng hiển thị.
+
+<CodeDemo source={CustomFormatSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomFormat client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Ngôn ngữ tùy chỉnh
+
+Cung cấp một ngôn ngữ tùy chỉnh để quốc tế hóa bằng cách sử dụng `createLocale` từ gói headless.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Tuần bắt đầu vào
+
+Thay đổi ngày đầu tiên trong tuần. Mặc định là `"sunday"`.
+
+<CodeDemo source={WeekStartsOnSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <WeekStartsOn client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Hiển thị ngày ngoài tháng
+
+Hiển thị các ngày từ các tháng liền kề để lấp đầy lưới lịch. Mặc định là `false`.
+
+<CodeDemo source={ShowOutsideDaysSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <ShowOutsideDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Tiêu đề dạng thả xuống
+
+Chuyển đổi điều hướng tháng/năm từ mũi tên sang danh sách thả xuống với `captionLayout="dropdown"`. Sử dụng `fromYear` và `toYear` để đặt phạm vi năm.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

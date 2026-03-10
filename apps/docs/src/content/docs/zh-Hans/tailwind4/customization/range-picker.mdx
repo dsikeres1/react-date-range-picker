@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: Range Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/tailwind4/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/tailwind4/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/tailwind4/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/tailwind4/Customization/CompoundRangeInline.tsx?raw";
+
+# 范围选择器
+
+使用复合组件构建完全自定义的 `DateRangePicker`。此示例结合了自定义触发器、预设侧边栏、双日历网格和页脚——所有这些都由各个部分组成。
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 带预设的内联模式
+
+以内联方式显示带有预设侧边栏的范围选择器：
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

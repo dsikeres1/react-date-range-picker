@@ -1,0 +1,198 @@
+---
+sidebar_position: 3
+title: useDateTimePicker
+---
+
+# useDateTimePicker
+
+用于组合日期和时间选择的 Hook。它扩展了 `useDatePicker`，增加了时间状态（小时、分钟、秒、时间段）和一个嵌套的时间选择器。
+
+## 导入
+
+```tsx
+import { useDateTimePicker } from "react-date-range-picker-headless";
+```
+
+## 用法
+
+```tsx
+import { useState } from "react";
+import { useDateTimePicker } from "react-date-range-picker-headless";
+
+function MyDateTimePicker() {
+  const [dateTime, setDateTime] = useState<Date | null>(null);
+
+  const picker = useDateTimePicker({
+    value: dateTime,
+    onChange: setDateTime,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 5 },
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.dateTimePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* 日历 (与 useDatePicker 相同) */}
+          <div>
+            <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+            <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+            <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+          </div>
+          {/* ...日历网格... */}
+
+          {/* 时间显示 */}
+          <div>
+            <span>时间: {picker.timeDisplayValue}</span>
+          </div>
+
+          {/* 时间控件 */}
+          <div>
+            <input
+              type="number"
+              value={picker.tempHour}
+              onChange={(e) => picker.handleHourChange(Number(e.target.value))}
+            />
+            <span>:</span>
+            <input
+              type="number"
+              value={picker.tempMinute}
+              onChange={(e) => picker.handleMinuteChange(Number(e.target.value))}
+            />
+          </div>
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## 选项
+
+| 选项                  | 类型                               | 默认值                                                                    | 描述                                                     |
+| --------------------- | ---------------------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `value`               | `Date \| null`                     | --                                                                        | **必需。** 当前的日期时间值。                            |
+| `onChange`            | `(dateTime: Date \| null) => void` | --                                                                        | **必需。** 当日期时间更改时调用。                        |
+| `time`                | `TimeConfig`                       | `{ precision: "minute", hourFormat: "24", minuteStep: 5, secondStep: 1 }` | 时间选择器配置。                                         |
+| `minDate`             | `Date`                             | --                                                                        | 最早可选日期。                                           |
+| `maxDate`             | `Date`                             | --                                                                        | 最晚可选日期。                                           |
+| `locale`              | `Partial<Locale>`                  | `DEFAULT_LOCALE`                                                          | 覆盖本地化字符串。                                       |
+| `initialMonth`        | `Date`                             | --                                                                        | 要显示的初始月份。                                       |
+| `size`                | `DatePickerSize`                   | --                                                                        | UI 传递。                                                |
+| `weekStartsOn`        | `WeekDay`                          | `"sunday"`                                                                | 一周的第一天。                                           |
+| `isDateUnavailable`   | `(date: Date) => boolean`          | --                                                                        | 用于禁用特定日期的自定义函数。                           |
+| `displayFormat`       | `string`                           | --                                                                        | 用于显示值的自定义格式字符串。                           |
+| `open`                | `boolean`                          | --                                                                        | 受控的打开状态。                                         |
+| `initialOpen`         | `boolean`                          | `false`                                                                   | 初始打开状态。                                           |
+| `onOpenChange`        | `(open: boolean) => void`          | --                                                                        | 当打开状态更改时的回调。                                 |
+| `required`            | `boolean`                          | `false`                                                                   | 当为 true 时，`handleClear` 是一个空操作。               |
+| `today`               | `Date`                             | `new Date()`                                                              | 覆盖今天的日期。                                         |
+| `onMonthChange`       | `(month: Date) => void`            | --                                                                        | 当月份更改时的回调。                                     |
+| `disablePast`         | `boolean`                          | `false`                                                                   | 禁用过去的日期。                                         |
+| `disableFuture`       | `boolean`                          | `false`                                                                   | 禁用未来的日期。                                         |
+| `showOutsideDays`     | `boolean`                          | `false`                                                                   | 显示相邻月份的日期。                                     |
+| `highlightDates`      | `Date[]`                           | --                                                                        | 要高亮的日期。                                           |
+| `shouldCloseOnSelect` | `boolean`                          | `false`                                                                   | 对于日期时间选择器，仅适用于预设点击，不适用于日期点击。 |
+| `numberOfMonths`      | `number`                           | `1`                                                                       | 日历月份的数量。                                         |
+| `captionLayout`       | `CaptionLayout`                    | `"buttons"`                                                               | 标题布局模式。                                           |
+| `fromYear`            | `number`                           | current year - 100                                                        | 下拉菜单的起始年份。                                     |
+| `toYear`              | `number`                           | current year + 10                                                         | 下拉菜单的结束年份。                                     |
+
+## 返回值
+
+### 日期状态
+
+| 名称           | 类型           | 描述                 |
+| -------------- | -------------- | -------------------- |
+| `isOpen`       | `boolean`      | 弹出窗口是否打开。   |
+| `tempDate`     | `Date \| null` | 临时选择的日期。     |
+| `currentMonth` | `Date`         | 当前显示的月份。     |
+| `locale`       | `Locale`       | 解析后的本地化对象。 |
+
+### 时间状态
+
+| 名称               | 类型         | 描述                                    |
+| ------------------ | ------------ | --------------------------------------- |
+| `isTimePickerOpen` | `boolean`    | 时间选择器子面板是否打开。              |
+| `tempHour`         | `number`     | 当前的临时小时值。                      |
+| `tempMinute`       | `number`     | 当前的临时分钟值。                      |
+| `tempSecond`       | `number`     | 当前的临时秒值。                        |
+| `tempPeriod`       | `TimePeriod` | 当前的 AM/PM 时段（`"AM"` 或 `"PM"`）。 |
+
+### 日期操作
+
+| 名称              | 类型                   | 描述                   |
+| ----------------- | ---------------------- | ---------------------- |
+| `handleDateClick` | `(date: Date) => void` | 处理日期单元格点击。   |
+| `handlePrevMonth` | `() => void`           | 导航到上一个月。       |
+| `handleNextMonth` | `() => void`           | 导航到下一个月。       |
+| `handleOpen`      | `() => void`           | 打开弹出窗口。         |
+| `handleClose`     | `() => void`           | 关闭弹出窗口。         |
+| `handleToggle`    | `() => void`           | 切换弹出窗口。         |
+| `handleConfirm`   | `() => void`           | 确认日期和时间并关闭。 |
+| `handleCancel`    | `() => void`           | 取消并还原。           |
+| `handleClear`     | `() => void`           | 清除值。               |
+| `handleGoToToday` | `() => void`           | 导航到今天。           |
+
+### 时间操作
+
+| 名称                      | 类型                           | 描述                   |
+| ------------------------- | ------------------------------ | ---------------------- |
+| `handleHourChange`        | `(hour: number) => void`       | 更新小时。             |
+| `handleMinuteChange`      | `(minute: number) => void`     | 更新分钟。             |
+| `handleSecondChange`      | `(second: number) => void`     | 更新秒。               |
+| `handlePeriodChange`      | `(period: TimePeriod) => void` | 切换 AM/PM。           |
+| `handleTimePickerOpen`    | `() => void`                   | 打开时间选择器子面板。 |
+| `handleTimePickerClose`   | `() => void`                   | 关闭时间选择器子面板。 |
+| `handleTimePickerConfirm` | `() => void`                   | 确认时间选择器子面板。 |
+| `handleTimePickerCancel`  | `() => void`                   | 取消时间选择器子面板。 |
+
+### 计算值
+
+| 名称                 | 类型                                              | 描述                           |
+| -------------------- | ------------------------------------------------- | ------------------------------ |
+| `calendar`           | `CalendarMonth`                                   | 当前月份的日历数据。           |
+| `calendars`          | `CalendarMonth[]`                                 | 日历月份数组。                 |
+| `getDayProps`        | `(date: Date, referenceMonth?: Date) => DayProps` | 日期单元格的 props。           |
+| `displayValue`       | `string`                                          | 格式化的日期时间字符串。       |
+| `timeDisplayValue`   | `string`                                          | 格式化的时间字符串。           |
+| `hasValue`           | `boolean`                                         | 值是否已确认。                 |
+| `canConfirm`         | `boolean`                                         | 确认是否有效。                 |
+| `containerRef`       | `RefObject<HTMLDivElement \| null>`               | 容器 ref。                     |
+| `popupRef`           | `RefObject<HTMLDivElement \| null>`               | 弹出窗口 ref。                 |
+| `timePickerRef`      | `RefObject<HTMLDivElement \| null>`               | 时间选择器子面板 ref。         |
+| `focusedDate`        | `Date \| null`                                    | 键盘聚焦的日期。               |
+| `handleKeyDown`      | `(e: KeyboardEvent<HTMLElement>) => void`         | 键盘处理器。                   |
+| `resolvedTimeConfig` | `Required<TimeConfig>`                            | 已解析并填充默认值的时间配置。 |
+| `years`              | `number[]`                                        | 下拉模式的年份。               |
+| `months`             | `number[]`                                        | 下拉模式的月份。               |
+| `handleYearSelect`   | `(year: number, calendarIndex?: number) => void`  | 设置年份。                     |
+| `handleMonthSelect`  | `(month: number, calendarIndex?: number) => void` | 设置月份。                     |
+
+## 关键行为
+
+### 时间配置
+
+`time` 选项接受一个 `TimeConfig` 对象：
+
+```tsx
+interface TimeConfig {
+  precision?: "hour" | "minute" | "second"; // default: "minute"
+  hourFormat?: "12" | "24"; // default: "24"
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30; // default: 5
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30; // default: 1
+  itemHeight?: number; // default: 32
+}
+```
+
+### shouldCloseOnSelect
+
+对于日期时间选择器，`shouldCloseOnSelect` 仅在 **点击预设值** 时触发，而不是在点击日期时触发。这是因为用户在选择日期后仍需要设置时间。
+
+### resolvedTimeConfig
+
+`resolvedTimeConfig` 返回值包含完全解析并填充了所有默认值的时间配置。在构建与时间相关的 UI 组件时使用此值，以避免重新计算默认值。

@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: "Range Picker"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/styled/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/styled/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/styled/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/styled/Customization/CompoundRangeInline.tsx?raw";
+
+# Выбор диапазона
+
+Используйте составной API `DateRangePicker`, чтобы создать полностью настраиваемый выбор диапазона с пользовательским триггером и боковой панелью с предустановками.
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Встроенный с предустановками
+
+Отобразите встроенный выбор диапазона с боковой панелью предустановок:
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

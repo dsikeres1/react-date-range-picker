@@ -1,0 +1,205 @@
+---
+sidebar_position: 2
+title: useDateRangePicker
+---
+
+# useDateRangePicker
+
+Hook for date range selection with dual-month calendar, hover preview, and preset ranges.
+
+## Import
+
+```tsx
+import { useDateRangePicker } from "react-date-range-picker-headless";
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { useDateRangePicker } from "react-date-range-picker-headless";
+
+function MyDateRangePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangePicker({
+    value: range,
+    onChange: setRange,
+    presets: [
+      {
+        label: "Last 7 days",
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setDate(start.getDate() - 6);
+          return { start, end };
+        },
+      },
+    ],
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Two calendars side by side */}
+          {[picker.leftCalendar, picker.rightCalendar].map((cal, calIdx) => (
+            <div key={calIdx}>
+              <span>{picker.locale.formatMonthYear(cal.month)}</span>
+              {cal.weeks.flat().map((day, i) => {
+                if (!day) return <span key={i} />;
+                const dp = picker.getDayProps(day, cal.month);
+                return (
+                  <button
+                    key={i}
+                    onClick={() => picker.handleDateClick(day)}
+                    onMouseEnter={() => picker.handleDateHover(day)}
+                    onMouseLeave={() => picker.handleDateHover(null)}
+                  >
+                    {dp.day}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+
+          {/* Presets */}
+          {picker.presets.map((preset, i) => (
+            <button
+              key={i}
+              onClick={() => picker.handlePresetClick(preset)}
+              style={{ fontWeight: i === picker.activePresetIndex ? "bold" : "normal" }}
+            >
+              {preset.label}
+            </button>
+          ))}
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Options
+
+| Option                   | Type                                                          | Default            | Description                                                       |
+| ------------------------ | ------------------------------------------------------------- | ------------------ | ----------------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --                 | **Required.** Current range value.                                |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --                 | **Required.** Called when the range changes.                      |
+| `maxDays`                | `number`                                                      | --                 | Maximum number of days allowed in a range (inclusive).            |
+| `minDays`                | `number`                                                      | --                 | Minimum number of days required in a range (inclusive).           |
+| `presets`                | `DateRangePreset[]`                                           | --                 | Predefined date range presets (e.g. "Last 7 days", "This month"). |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`             | When `false`, prevents selecting a range where start equals end.  |
+| `minDate`                | `Date`                                                        | --                 | Earliest selectable date.                                         |
+| `maxDate`                | `Date`                                                        | --                 | Latest selectable date.                                           |
+| `locale`                 | `Partial<Locale>`                                             | `DEFAULT_LOCALE`   | Override locale strings.                                          |
+| `initialMonth`           | `Date`                                                        | --                 | Initial month to display.                                         |
+| `size`                   | `DatePickerSize`                                              | --                 | UI pass-through.                                                  |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`         | First day of the week.                                            |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --                 | Custom function to disable specific dates.                        |
+| `displayFormat`          | `string`                                                      | --                 | Custom format string for the display value.                       |
+| `open`                   | `boolean`                                                     | --                 | Controlled open state.                                            |
+| `initialOpen`            | `boolean`                                                     | `false`            | Initial open state (uncontrolled).                                |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --                 | Callback when open state changes.                                 |
+| `required`               | `boolean`                                                     | `false`            | When true, `handleClear` is a no-op.                              |
+| `today`                  | `Date`                                                        | `new Date()`       | Override today's date.                                            |
+| `onMonthChange`          | `(month: Date) => void`                                       | --                 | Callback when the displayed month changes.                        |
+| `disablePast`            | `boolean`                                                     | `false`            | Disable all dates before today.                                   |
+| `disableFuture`          | `boolean`                                                     | `false`            | Disable all dates after today.                                    |
+| `showOutsideDays`        | `boolean`                                                     | `false`            | Show adjacent month days.                                         |
+| `highlightDates`         | `Date[]`                                                      | --                 | Array of dates to highlight.                                      |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`            | Auto-confirm when end date is selected.                           |
+| `numberOfMonths`         | `number`                                                      | `2`                | Number of calendar months to display.                             |
+| `captionLayout`          | `CaptionLayout`                                               | `"buttons"`        | Caption layout mode.                                              |
+| `fromYear`               | `number`                                                      | current year - 100 | Start year for dropdown.                                          |
+| `toYear`                 | `number`                                                      | current year + 10  | End year for dropdown.                                            |
+
+## Return Values
+
+| Name                | Type                                              | Description                                                                                                                   |
+| ------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `isOpen`            | `boolean`                                         | Whether the popup is open.                                                                                                    |
+| `tempStartDate`     | `Date \| null`                                    | Temporary start date (before confirmation).                                                                                   |
+| `tempEndDate`       | `Date \| null`                                    | Temporary end date (before confirmation).                                                                                     |
+| `hoveredDate`       | `Date \| null`                                    | Currently hovered date (for range preview).                                                                                   |
+| `leftMonth`         | `Date`                                            | Left calendar's displayed month.                                                                                              |
+| `rightMonth`        | `Date`                                            | Right calendar's displayed month.                                                                                             |
+| `locale`            | `Locale`                                          | Resolved locale object.                                                                                                       |
+| `leftCalendar`      | `CalendarMonth`                                   | Calendar data for the left panel.                                                                                             |
+| `rightCalendar`     | `CalendarMonth`                                   | Calendar data for the right panel.                                                                                            |
+| `calendars`         | `CalendarMonth[]`                                 | Array of all calendar months.                                                                                                 |
+| `getDayProps`       | `(date: Date, referenceMonth?: Date) => DayProps` | Compute flags for a calendar day cell. Pass `referenceMonth` so outside-day detection works correctly in multi-month layouts. |
+| `displayValue`      | `string`                                          | Formatted string of the confirmed range.                                                                                      |
+| `hasValue`          | `boolean`                                         | Whether a range is currently confirmed.                                                                                       |
+| `canConfirm`        | `boolean`                                         | Whether the current selection is valid for confirmation.                                                                      |
+| `handleDateClick`   | `(date: Date) => void`                            | Handle a day cell click. First click sets start, second sets end.                                                             |
+| `handleDateHover`   | `(date: Date \| null) => void`                    | Handle mouse hover for range preview.                                                                                         |
+| `handlePrevMonth`   | `() => void`                                      | Navigate both calendars one month back.                                                                                       |
+| `handleNextMonth`   | `() => void`                                      | Navigate both calendars one month forward.                                                                                    |
+| `handleOpen`        | `() => void`                                      | Open the popup.                                                                                                               |
+| `handleClose`       | `() => void`                                      | Close the popup.                                                                                                              |
+| `handleToggle`      | `() => void`                                      | Toggle the popup.                                                                                                             |
+| `handleConfirm`     | `() => void`                                      | Confirm the selection and close.                                                                                              |
+| `handleCancel`      | `() => void`                                      | Cancel and revert to previous value.                                                                                          |
+| `handleClear`       | `() => void`                                      | Clear the range (no-op if `required`).                                                                                        |
+| `handleGoToToday`   | `() => void`                                      | Navigate to today's month.                                                                                                    |
+| `containerRef`      | `RefObject<HTMLDivElement \| null>`               | Attach to wrapper for click-outside detection.                                                                                |
+| `popupRef`          | `RefObject<HTMLDivElement \| null>`               | Attach to the popup element.                                                                                                  |
+| `focusedDate`       | `Date \| null`                                    | Keyboard-focused date.                                                                                                        |
+| `handleKeyDown`     | `(e: KeyboardEvent<HTMLElement>) => void`         | Keyboard navigation handler.                                                                                                  |
+| `presets`           | `DateRangePreset[]`                               | The presets array (passthrough for rendering).                                                                                |
+| `handlePresetClick` | `(preset: DateRangePreset) => void`               | Apply a preset range.                                                                                                         |
+| `activePresetIndex` | `number`                                          | Index of the currently matching preset (-1 if none).                                                                          |
+| `years`             | `number[]`                                        | Years array for dropdown mode.                                                                                                |
+| `months`            | `number[]`                                        | Month indices for dropdown mode.                                                                                              |
+| `handleYearSelect`  | `(year: number, calendarIndex?: number) => void`  | Set displayed year.                                                                                                           |
+| `handleMonthSelect` | `(month: number, calendarIndex?: number) => void` | Set displayed month.                                                                                                          |
+
+## Key Behaviors
+
+### Range Selection Flow
+
+1. First click sets the **start date** (end date clears)
+2. Second click sets the **end date** (auto-swaps if before start)
+3. Third click resets and starts a new range
+
+### Hover Preview
+
+While the user has selected a start date but not yet an end date, `handleDateHover` updates `hoveredDate`. The `getDayProps` function uses this to compute `isInHoverRange` and `isHoverTarget`, allowing you to show a preview of the potential range.
+
+### Presets
+
+Presets can be static objects or factory functions:
+
+```tsx
+const presets = [
+  { label: "Today", value: { start: new Date(), end: new Date() } },
+  {
+    label: "Last 30 days",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setDate(start.getDate() - 29);
+      return { start, end };
+    },
+  },
+];
+```
+
+`activePresetIndex` returns the index of the preset that matches the current selection, or `-1` if none match.
+
+### maxDays / minDays
+
+When `maxDays` is set, dates beyond the allowed range from the start date are automatically disabled. When `minDays` is set, dates too close to the start date are disabled.
+
+### shouldCloseOnSelect
+
+For range pickers, `shouldCloseOnSelect` triggers auto-confirm when the **end date** is selected (not the start date).

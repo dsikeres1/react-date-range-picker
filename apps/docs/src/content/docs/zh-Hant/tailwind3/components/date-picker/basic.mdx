@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/tailwind3/DatePicker/Basic";
+import BasicSource from "@examples/tailwind3/DatePicker/Basic.tsx?raw";
+import Inline from "@examples/tailwind3/DatePicker/Inline";
+import InlineSource from "@examples/tailwind3/DatePicker/Inline.tsx?raw";
+
+# DatePicker
+
+一個帶有彈出日曆的單日選擇組件。
+
+## 基本用法
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 內聯模式
+
+無需彈出觸發器即可內嵌顯示日曆。
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

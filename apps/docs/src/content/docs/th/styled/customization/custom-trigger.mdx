@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: "Custom Trigger"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/styled/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/styled/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/styled/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/styled/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# ทริกเกอร์แบบกำหนดเอง
+
+แทนที่ทริกเกอร์เริ่มต้นด้วยปุ่มหรืออินพุตของคุณเอง คอมโพเนนต์ `Trigger` ยอมรับ render prop ที่ให้คุณควบคุมลักษณะการทำงานของทริกเกอร์ได้อย่างเต็มที่
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render Props ของทริกเกอร์
+
+| Prop           | ประเภท           | คำอธิบาย                         |
+| -------------- | ---------------- | -------------------------------- |
+| `displayValue` | `string`         | วันที่เลือกที่จัดรูปแบบแล้ว      |
+| `placeholder`  | `string`         | ข้อความ Placeholder              |
+| `hasValue`     | `boolean`        | ระบุว่ามีการเลือกวันที่หรือไม่   |
+| `isOpen`       | `boolean`        | ระบุว่าป๊อปอัปเปิดอยู่หรือไม่    |
+| `onToggle`     | `() => void`     | สลับการเปิด/ปิดป๊อปอัป           |
+| `onClear`      | `() => void`     | ล้างค่าที่เลือก                  |
+| `locale`       | `Locale`         | อ็อบเจกต์ Locale ปัจจุบัน        |
+| `triggerRef`   | `(node) => void` | Ref callback สำหรับการจัดตำแหน่ง |
+
+## ทริกเกอร์สำหรับตัวเลือกช่วงวันที่
+
+รูปแบบเดียวกันนี้ใช้ได้กับ `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,124 @@
+---
+sidebar_position: 5
+title: Common Types
+---
+
+# Общие типы
+
+Общие псевдонимы типов, используемые в пакете headless.
+
+```tsx
+import type {
+  DatePickerSize,
+  WeekDay,
+  CaptionLayout,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  MinuteStep,
+  SecondStep,
+  CalendarMonth,
+  DateUnit,
+} from "react-date-range-picker-headless";
+```
+
+## DatePickerSize
+
+Вариант размера пользовательского интерфейса. Хуки Headless передают это значение, не используя его. Стилизованные компоненты используют его для визуального изменения размера.
+
+```tsx
+type DatePickerSize = "x-large" | "large" | "medium" | "small";
+```
+
+## WeekDay
+
+День недели в виде строки. Используется в опции `weekStartsOn`.
+
+```tsx
+type WeekDay = "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday";
+```
+
+## CaptionLayout
+
+Режим макета заголовка календаря.
+
+```tsx
+type CaptionLayout = "buttons" | "dropdown";
+```
+
+| Значение     | Описание                                                          |
+| ------------ | ----------------------------------------------------------------- |
+| `"buttons"`  | Кнопки навигации по предыдущему/следующему месяцу (по умолчанию). |
+| `"dropdown"` | Выпадающие списки для выбора года и месяца.                       |
+
+## TimePrecision
+
+Управляет тем, какие столбцы времени отображаются.
+
+```tsx
+type TimePrecision = "hour" | "minute" | "second";
+```
+
+| Значение   | Отображаемые столбцы    |
+| ---------- | ----------------------- |
+| `"hour"`   | Только час.             |
+| `"minute"` | Час + минута.           |
+| `"second"` | Час + минута + секунда. |
+
+## HourFormat
+
+12-часовой или 24-часовой формат отображения времени.
+
+```tsx
+type HourFormat = "12" | "24";
+```
+
+## TimePeriod
+
+Индикатор AM/PM для 12-часового формата.
+
+```tsx
+type TimePeriod = "AM" | "PM";
+```
+
+## MinuteStep
+
+Допустимые значения приращения минут для пошагового выбора минут.
+
+```tsx
+type MinuteStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## SecondStep
+
+Допустимые значения приращения секунд для пошагового выбора секунд.
+
+```tsx
+type SecondStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## CalendarMonth
+
+Сгенерированные данные календаря для одного месяца.
+
+```tsx
+interface CalendarMonth {
+  month: Date;
+  days: (Date | null)[];
+  weeks: (Date | null)[][];
+}
+```
+
+| Поле    | Тип                  | Описание                                                                 |
+| ------- | -------------------- | ------------------------------------------------------------------------ |
+| `month` | `Date`               | Месяц, который представляет этот календарь.                              |
+| `days`  | `(Date \| null)[]`   | Плоский массив из 42 ячеек (6 недель x 7 дней). `null` для пустых ячеек. |
+| `weeks` | `(Date \| null)[][]` | Двумерный массив из 6 недель, каждая из которых содержит 7 ячеек дней.   |
+
+## DateUnit
+
+Единица времени для утилитных функций даты (`startOf`, `endOf`, `add`, `subtract`, `isSame`, `isBefore`, `isAfter`, `diff`).
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```

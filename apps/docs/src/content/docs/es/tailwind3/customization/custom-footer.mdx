@@ -1,0 +1,54 @@
+---
+sidebar_position: 4
+sidebar_label: Custom Footer
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/tailwind3/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/tailwind3/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/tailwind3/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNoFooter.tsx?raw";
+
+# Pie de Página Personalizado
+
+## Pie de Página Reorganizado
+
+Reorganiza los botones del pie de página y añade acciones extra como un botón "Hoy". Con los componentes compuestos, controlas exactamente qué botones aparecen y en qué orden.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Diseño Mínimo
+
+Elimina cualquier parte que no necesites. Aquí el pie de página se omite por completo para un diseño mínimo de solo calendario:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Sobrescribir Clases
+
+Cada parte compuesta acepta una prop `className`. El paquete de Tailwind v3 utiliza `cn()` (una utilidad de `clsx` + `twMerge`) para fusionar tus clases con las predeterminadas, de modo que las utilidades en conflicto se resuelvan correctamente:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger className="min-w-[300px] px-4 py-3" />
+  <DatePicker.Content className="rounded-2xl shadow-xl">
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title className="text-lg" />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>;
+```

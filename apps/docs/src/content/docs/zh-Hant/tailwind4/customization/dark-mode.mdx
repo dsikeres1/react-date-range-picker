@@ -1,0 +1,185 @@
+---
+sidebar_position: 9
+---
+
+# 深色模式
+
+Tailwind v4 套件透過其語意化權杖系統支援深色模式。由於所有顏色都參照 CSS 變數，切換到深色模式只需重新定義這些變數即可。
+
+## 運作方式
+
+元件使用如 `bg-primary`、`text-foreground` 和 `border-border` 等語意化功能類別。這些類別會解析為您在專案 CSS 中定義的 CSS 變數（`--color-primary`、`--color-foreground` 等）。深色模式的運作方式是在深色選擇器下為這些變數提供替代值。
+
+## 設定
+
+### 使用 `data-theme` 屬性
+
+使用 `data-theme` 選擇器定義淺色和深色權杖值：
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+
+[data-theme="dark"] {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+透過設定屬性來切換深色模式：
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div data-theme={dark ? "dark" : "light"}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+### 使用 `.dark` 類別
+
+如果您的框架使用 `.dark` 類別（例如，Next.js 搭配 `next-themes`），請在該類別下定義權杖：
+
+```css
+@theme {
+  /* 淺色權杖 */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  /* ... */
+}
+```
+
+### 使用系統偏好
+
+使用 `@media (prefers-color-scheme: dark)` 來遵循作業系統的設定：
+
+```css
+@theme {
+  /* 淺色權杖 */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: oklch(0.145 0.004 285.823);
+    --color-foreground: oklch(0.985 0.001 285.823);
+    /* ... */
+  }
+}
+```
+
+## 與 next-themes 整合
+
+一個搭配 Next.js 和 `next-themes` 的常見模式：
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+```css
+/* globals.css */
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  /* ... 所有淺色權杖 */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  /* ... 所有深色權杖 */
+}
+```
+
+當主題變更時，選擇器將自動選取正確的權杖值。
+
+## 深色模式下的醒目標示點
+
+醒目標示點使用 `after:bg-amber-500 dark:after:bg-amber-400`（一個具體的 Tailwind 顏色，而非權杖）以確保在兩種模式下都有良好的可見度。這是元件中唯一的非語意化顏色。如果您需要更改它，請使用複合元件 API 搭配自訂的 `Day` 渲染：
+
+```tsx
+<DatePicker.Day date={date}>
+  {(props) => (
+    <button /* ... */>
+      {props.day}
+      {props.isHighlighted && (
+        <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+      )}
+    </button>
+  )}
+</DatePicker.Day>
+```
+
+## 強制特定模式
+
+若要無論系統偏好如何都強制使用淺色或深色模式，請明確設定主題：
+
+```tsx
+{
+  /* 恆為淺色 */
+}
+<div data-theme="light">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* 恆為深色 */
+}
+<div data-theme="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```

@@ -1,0 +1,48 @@
+---
+sidebar_position: 2
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import TwelveHour from "@examples/styled/TimePicker/TwelveHour";
+import TwelveHourSource from "@examples/styled/TimePicker/TwelveHour.tsx?raw";
+import MinuteStep from "@examples/styled/TimePicker/MinuteStep";
+import MinuteStepSource from "@examples/styled/TimePicker/MinuteStep.tsx?raw";
+import SecondPrecision from "@examples/styled/TimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/styled/TimePicker/SecondPrecision.tsx?raw";
+
+# Zeitoptionen
+
+Konfigurieren Sie das Verhalten des Zeit-Panels über die `time`-Prop.
+
+## 12-Stunden-Format
+
+Wechseln Sie zum 12-Stunden-Format mit AM/PM-Umschalter.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Minutenschritt
+
+Legen Sie den Schritt für die Minutenerhöhung fest. Nützlich für die Planung in festen Intervallen.
+
+<CodeDemo source={MinuteStepSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinuteStep client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Sekundengenaue Präzision
+
+Zeigen Sie die Sekundenspalte an, indem Sie `precision` auf `"second"` setzen.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>

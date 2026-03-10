@@ -1,0 +1,123 @@
+---
+sidebar_position: 1
+title: Accessibility
+description: 键盘导航、ARIA 属性、焦点管理和 WCAG 合规性。
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 无障碍性
+
+所有选择器组件都内置了无障碍性支持。键盘导航、ARIA 属性和焦点管理在每个变体中——Styled、Tailwind v3/v4 和 Headless——都可以开箱即用。
+
+标准使用无需额外配置。本页记录了包含的内容，以便您可以在自定义 UI 中审核、扩展或复制这些模式。
+
+## 键盘导航
+
+### 日历选择器
+
+| 按键              | 操作                                 |
+| ----------------- | ------------------------------------ |
+| `ArrowLeft`       | 将焦点移动到前一天                   |
+| `ArrowRight`      | 将焦点移动到后一天                   |
+| `ArrowUp`         | 将焦点移动到上一周（同一工作日）     |
+| `ArrowDown`       | 将焦点移动到下一周（同一工作日）     |
+| `Enter` / `Space` | 选择聚焦的日期                       |
+| `Escape`          | 取消更改并关闭弹窗                   |
+| `Tab`             | 移动到下一个可聚焦元素（浏览器默认） |
+
+**禁用日期跳过：** 使用箭头键导航时，禁用的日期会自动跳过。选择器会在移动方向上最多搜索 365 天，以找到下一个启用的日期。
+
+**自动月份滚动：** 当键盘焦点移动到不同月份的某一天时，日历视图会更新以显示该月份。
+
+### 时间选择器
+
+| 按键     | 操作               |
+| -------- | ------------------ |
+| `Escape` | 取消更改并关闭弹窗 |
+
+时间选择使用带有点触交互的滚轮 UI。滚动列使用 `scroll-snap` 来实现精确的值选择。
+
+## ARIA 属性
+
+每个交互元素都具有适当的 ARIA 角色和属性：
+
+### 弹窗与容器
+
+| 元素     | 属性                    | 值                       |
+| -------- | ----------------------- | ------------------------ |
+| 弹窗容器 | `role`                  | `"dialog"`               |
+| 内联容器 | `role`                  | `"group"`                |
+| 容器     | `aria-label`            | 来自 locale 的占位符文本 |
+| 容器     | `aria-activedescendant` | 当前聚焦日期单元格的 ID  |
+
+### 触发按钮
+
+| 属性            | 值                  |
+| --------------- | ------------------- |
+| `aria-expanded` | 弹窗打开时为 `true` |
+| `aria-haspopup` | `"dialog"`          |
+
+### 日历网格
+
+| 元素             | 属性            | 值                                        |
+| ---------------- | --------------- | ----------------------------------------- |
+| 网格包装器       | `role`          | `"grid"`                                  |
+| 周行             | `role`          | `"row"`                                   |
+| 工作日标题单元格 | `role`          | `"columnheader"`                          |
+| 日期单元格       | `role`          | `"gridcell"`                              |
+| 日期单元格       | `aria-selected` | 选中时为 `true`                           |
+| 日期单元格       | `aria-current`  | 当单元格为今天时为 `"date"`               |
+| 日期单元格       | `aria-label`    | 格式化的日期字符串（例如 `"2026-03-04"`） |
+| 日期单元格       | `disabled`      | 在禁用日期上设置（原生 HTML 属性）        |
+
+### 导航与下拉菜单
+
+| 元素         | 属性         | 值                                            |
+| ------------ | ------------ | --------------------------------------------- |
+| 上个月按钮   | `aria-label` | `"上个月"` (来自 `locale.prevMonthLabel`)     |
+| 下个月按钮   | `aria-label` | `"下个月"` (来自 `locale.nextMonthLabel`)     |
+| 月份下拉菜单 | `aria-label` | `"选择月份"` (来自 `locale.selectMonthLabel`) |
+| 年份下拉菜单 | `aria-label` | `"选择年份"` (来自 `locale.selectYearLabel`)  |
+
+### 时间列
+
+| 元素     | 属性               | 值                                    |
+| -------- | ------------------ | ------------------------------------- |
+| 小时列   | `role`             | `"listbox"`                           |
+| 小时列   | `aria-orientation` | `"vertical"`                          |
+| 小时列   | `aria-label`       | `"小时"` (来自 `locale.hourLabel`)    |
+| 分钟列   | `role`             | `"listbox"`                           |
+| 分钟列   | `aria-orientation` | `"vertical"`                          |
+| 分钟列   | `aria-label`       | `"分钟"` (来自 `locale.minuteLabel`)  |
+| 秒列     | `role`             | `"listbox"`                           |
+| 秒列     | `aria-orientation` | `"vertical"`                          |
+| 秒列     | `aria-label`       | `"秒"` (来自 `locale.secondLabel`)    |
+| 时间项   | `role`             | `"option"` (填充项: `"presentation"`) |
+| 时间项   | `aria-selected`    | 当项目为当前值时为 `true`             |
+| 时段切换 | `aria-label`       | 当前时段 + ", 切换 AM/PM"             |
+| 清除按钮 | `aria-label`       | `"清除"` (来自 `locale.clear`)        |
+
+所有标签字符串都可以通过 [locale 系统](/docs/guides/internationalization) 进行自定义。
+
+## 焦点管理
+
+### 漫游 Tabindex
+
+日历网格使用 **roving tabindex** (漫游 tabindex) 模式：
+
+- 只有当前聚焦的日期单元格具有 `tabIndex={0}`（可 tab 切换）。
+- 所有其他日期单元格都具有 `tabIndex={-1}`（不可 tab 切换，但可通过箭头键聚焦）。
+- 这意味着 `Tab` 将焦点移出日历网格（到下一个控件），而箭头键在网格内移动焦点。
+
+### 弹窗焦点捕获
+
+弹窗模式使用来自 `@floating-ui/react` 的 `FloatingFocusManager` 来：
+
+- 在弹窗打开时将焦点捕获在内部。
+- 在弹窗关闭时将焦点返回到触发按钮。
+- 防止通过 tab 键将焦点移出弹窗到背景内容。
+
+### 原生元素
+
+月份和年份选择使用原生的 `<select>` 元素，这些元素本身就是键盘可访问的。日期单元格使用带有适当禁用状态的原生 `<button>` 元素。

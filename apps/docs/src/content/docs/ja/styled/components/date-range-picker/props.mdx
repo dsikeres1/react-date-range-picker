@@ -1,0 +1,51 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# 小道具
+
+| プロップ                 | タイプ                                                        | デフォルト  | 説明                                                    |
+| ------------------------ | ------------------------------------------------------------- | ----------- | ------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --          | Selected date range value                               |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | Callback when value changes                             |
+| `presets`                | `DateRangePreset[]`                                           | --          | Predefined date range presets                           |
+| `maxDays`                | `number`                                                      | --          | Maximum days allowed in range (inclusive)               |
+| `minDays`                | `number`                                                      | --          | Minimum days required in range (inclusive)              |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`      | 開始と終了が等しい範囲を許可する                        |
+| `minDate`                | `Date`                                                        | --          | Minimum selectable date                                 |
+| `maxDate`                | `Date`                                                        | --          | Maximum selectable date                                 |
+| `locale`                 | `Partial<Locale>`                                             | --          | Custom locale configuration                             |
+| `initialMonth`           | `Date`                                                        | --          | Initial displayed month                                 |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`  | Component size                                          |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`  | 週の最初の日                                            |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --          | Mark dates as disabled                                  |
+| `displayFormat`          | `string`                                                      | --          | Custom display format (e.g. `"YYYY/MM/DD"`)             |
+| `open`                   | `boolean`                                                     | --          | Controlled open state                                   |
+| `initialOpen`            | `boolean`                                                     | --          | Initial open state (uncontrolled)                       |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --          | Callback when open state changes                        |
+| `required`               | `boolean`                                                     | `false`     | 値のクリアを無効にする                                  |
+| `showOutsideDays`        | `boolean`                                                     | `false`     | 隣接する月の日を表示する                                |
+| `highlightDates`         | `Date[]`                                                      | --          | Dates to highlight                                      |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`     | 終了日の選択時に自動確認                                |
+| `numberOfMonths`         | `number`                                                      | `2`         | 表示する月数                                            |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"` | Caption navigation style                                |
+| `fromYear`               | `number`                                                      | --          | Start year for dropdown                                 |
+| `toYear`                 | `number`                                                      | --          | End year for dropdown                                   |
+| `disablePast`            | `boolean`                                                     | `false`     | 今日より前の日付を無効にする                            |
+| `disableFuture`          | `boolean`                                                     | `false`     | 今日以降の日付を無効にする                              |
+| `inline`                 | `boolean`                                                     | `false`     | カレンダーをインラインで表示 (ポップアップなし)         |
+| `name`                   | `string`                                                      | --          | Hidden input name for form submission (start date)      |
+| `endName`                | `string`                                                      | --          | Hidden input name for end date (defaults to `name-end`) |
+| `placeholder`            | `string`                                                      | --          | Trigger placeholder text                                |
+| `hideHeader`             | `boolean`                                                     | `false`     | ナビゲーションヘッダーを非表示にする                    |
+| `hideFooter`             | `boolean`                                                     | `false`     | アクションフッターを非表示にする                        |
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

@@ -1,0 +1,179 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# ダークモード
+
+Tailwind v3 パッケージは、CSSカスタムプロパティを通じて完全なダークモードをサポートしています。Tailwindプラグイン（`rdrpPlugin`）は、ライトパレットとダークパレットの間で自動的に切り替わるカラー変数を挿入します。
+
+## 仕組み
+
+Tailwind v3 プラグイン（`rdrpPlugin`）は、カラーパレットを定義するCSSカスタムプロパティを挿入します。ダークモードは、`.dark` または `[data-theme="dark"]` の下でこれらの変数をオーバーライドすることで機能します:
+
+- **ライトモード** — `:root` がデフォルトの色を定義します（Slate + Sky パレット）
+- **ダークモード** — `.dark` と `[data-theme="dark"]` が自動的に色をオーバーライドします
+
+コンポーネントのテーマは `var(--rdrp-color-*)` を通じてこれらを参照するため、Tailwind の `darkMode` 戦略が適切なセレクタをトリガーするとダークモードが有効になります。
+
+## Tailwind の設定
+
+### Class 戦略 (推奨)
+
+Tailwind の設定で `darkMode: "class"` を設定します。ダークモードは、`<html>` または親要素に `dark` クラスが存在する場合に有効になります:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+ダークモードの切り替え:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+または、`<html>` にクラスを適用します:
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### Selector 戦略
+
+Tailwind v3.4以降は `darkMode: "selector"` をサポートしており、`[data-theme="dark"]` や任意のカスタムセレクタを使用できます:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### Media 戦略
+
+OS の設定に従うには、`darkMode: "media"` を設定します（または省略します — これがデフォルトです）:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "media",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+追加の設定は不要です。ピッカーは `prefers-color-scheme` に従います。
+
+## カラー変数
+
+ライト/ダークのテーマに使用されるCSSカスタムプロパティは次のとおりです:
+
+| 変数                      | ライト    | ダーク                 |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
+
+## Docusaurus との統合
+
+Docusaurus（`<html>` で `data-theme` を使用）を使用している場合は、Tailwind のセレクタ戦略を設定します:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Docusaurus はダークモードが有効なときに `<html data-theme="dark">` を設定し、CSS変数は自動的にダークの値に切り替わります。
+
+## next-themes との統合
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes` は `<html>` に `dark` クラスを追加/削除します。Tailwind の設定で `darkMode: "class"` を使用すると、ピッカーは自動的に切り替わります。
+
+## 特定のモードを強制する
+
+ピッカーに常にライトモードまたはダークモードを使用させるには、適切なクラスを持つコンテナでラップします:
+
+```tsx
+{
+  /* 常にライトモード — "dark" クラスの祖先なし */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* 常にダークモード */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+`darkMode: "class"` を使用する場合、`dark` クラスは親要素または `<html>` に存在する必要があります。ピッカー自体はダークモードの切り替えを管理しません。
+</Admonition>

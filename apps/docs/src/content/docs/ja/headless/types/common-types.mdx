@@ -1,0 +1,124 @@
+---
+sidebar_position: 5
+title: Common Types
+---
+
+# Common Types
+
+headless パッケージ全体で使用される共有の型エイリアスです。
+
+```tsx
+import type {
+  DatePickerSize,
+  WeekDay,
+  CaptionLayout,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  MinuteStep,
+  SecondStep,
+  CalendarMonth,
+  DateUnit,
+} from "react-date-range-picker-headless";
+```
+
+## DatePickerSize
+
+UI サイズのバリアントです。headless フックはこれを使用せずにそのまま通過させます。styled コンポーネントは視覚的なサイズ調整に使用します。
+
+```tsx
+type DatePickerSize = "x-large" | "large" | "medium" | "small";
+```
+
+## WeekDay
+
+文字列としての曜日。`weekStartsOn` オプションで使用されます。
+
+```tsx
+type WeekDay = "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday";
+```
+
+## CaptionLayout
+
+カレンダーのヘッダーレイアウトモード。
+
+```tsx
+type CaptionLayout = "buttons" | "dropdown";
+```
+
+| 値           | 説明                                           |
+| ------------ | ---------------------------------------------- |
+| `"buttons"`  | 前/次の月のナビゲーションボタン (デフォルト)。 |
+| `"dropdown"` | 年と月の選択ドロップダウン。                   |
+
+## TimePrecision
+
+表示される時間の列を制御します。
+
+```tsx
+type TimePrecision = "hour" | "minute" | "second";
+```
+
+| 値         | 表示される列   |
+| ---------- | -------------- |
+| `"hour"`   | 時のみ。       |
+| `"minute"` | 時 + 分。      |
+| `"second"` | 時 + 分 + 秒。 |
+
+## HourFormat
+
+12 時間制または 24 時間制の時間表示。
+
+```tsx
+type HourFormat = "12" | "24";
+```
+
+## TimePeriod
+
+12 時間制表示の AM/PM インジケーター。
+
+```tsx
+type TimePeriod = "AM" | "PM";
+```
+
+## MinuteStep
+
+ステップベースの分選択に有効な増分値。
+
+```tsx
+type MinuteStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## SecondStep
+
+ステップベースの秒選択に有効な増分値。
+
+```tsx
+type SecondStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## CalendarMonth
+
+単一月の生成されたカレンダーデータ。
+
+```tsx
+interface CalendarMonth {
+  month: Date;
+  days: (Date | null)[];
+  weeks: (Date | null)[][];
+}
+```
+
+| フィールド | 型                   | 説明                                                             |
+| ---------- | -------------------- | ---------------------------------------------------------------- |
+| `month`    | `Date`               | このカレンダーが表す月。                                         |
+| `days`     | `(Date \| null)[]`   | 42 セルのフラットな配列 (6 週 x 7 日)。空のセルの場合は `null`。 |
+| `weeks`    | `(Date \| null)[][]` | 7 つの日のセルを含む 6 週の 2D 配列。                            |
+
+## DateUnit
+
+日付ユーティリティ関数 (`startOf`、`endOf`、`add`、`subtract`、`isSame`、`isBefore`、`isAfter`、`diff`) の時間単位。
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```

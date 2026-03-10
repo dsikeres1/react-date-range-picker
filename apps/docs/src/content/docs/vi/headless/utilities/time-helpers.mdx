@@ -1,0 +1,100 @@
+---
+sidebar_position: 4
+title: Time Helpers
+---
+
+# Các hàm tiện ích về thời gian
+
+Các hàm để tạo giá trị thời gian, chuyển đổi giữa định dạng 12/24 giờ, làm tròn theo bước và phân giải cấu hình thời gian.
+
+```tsx
+import {
+  generateHours,
+  generateHours12,
+  generateMinutes,
+  generateSeconds,
+  adjustMinuteToStep,
+  adjustSecondToStep,
+  to12Hour,
+  to24Hour,
+  resolveTimeConfig,
+} from "react-date-range-picker-headless";
+```
+
+## generateHours
+
+Tạo một mảng các giá trị 24 giờ.
+
+|        |                             |
+| ------ | --------------------------- |
+| Chữ ký | `generateHours(): number[]` |
+| Trả về | `[0, 1, 2, ..., 23]`        |
+
+## generateHours12
+
+Tạo một mảng các giá trị 12 giờ.
+
+|        |                               |
+| ------ | ----------------------------- |
+| Chữ ký | `generateHours12(): number[]` |
+| Trả về | `[1, 2, 3, ..., 12]`          |
+
+## generateMinutes
+
+Tạo mảng phút được lọc theo bước.
+
+|          |                                                      |
+| -------- | ---------------------------------------------------- |
+| Chữ ký   | `generateMinutes(minuteStep?: MinuteStep): number[]` |
+| Mặc định | `5`                                                  |
+
+```tsx
+generateMinutes(); // [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
+generateMinutes(15); // [0, 15, 30, 45]
+generateMinutes(1); // [0, 1, 2, ..., 59]
+```
+
+## generateSeconds
+
+Tạo mảng giây được lọc theo bước.
+
+|          |                                                      |
+| -------- | ---------------------------------------------------- |
+| Chữ ký   | `generateSeconds(secondStep?: SecondStep): number[]` |
+| Mặc định | `1`                                                  |
+
+```tsx
+generateSeconds(); // [0, 1, 2, ..., 59]
+generateSeconds(15); // [0, 15, 30, 45]
+```
+
+## adjustMinuteToStep
+
+Làm tròn giá trị phút xuống bước hợp lệ gần nhất.
+
+|        |                                                                      |
+| ------ | -------------------------------------------------------------------- |
+| Chữ ký | `adjustMinuteToStep(minute: number, minuteStep: MinuteStep): number` |
+
+```tsx
+adjustMinuteToStep(7, 5); // 5
+adjustMinuteToStep(13, 10); // 10
+adjustMinuteToStep(29, 15); // 15
+```
+
+## adjustSecondToStep
+
+Làm tròn giá trị giây xuống bước hợp lệ gần nhất.
+
+|        |                                                                      |
+| ------ | -------------------------------------------------------------------- |
+| Chữ ký | `adjustSecondToStep(second: number, secondStep: SecondStep): number` |
+
+```tsx
+adjustSecondToStep(7, 5); // 5
+adjustSecondToStep(14, 10); // 10
+```
+
+## to12Hour
+
+Chuyển đổi giá

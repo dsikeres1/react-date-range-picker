@@ -1,0 +1,69 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Props
+
+| Prop                     | Type                                                          | デフォルト  | 説明                                                     |
+| :----------------------- | :------------------------------------------------------------ | :---------- | :------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --          | 選択された日時範囲の値                                   |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | 値が変更されたときのコールバック                         |
+| `time`                   | `TimeConfig`                                                  | --          | タイムパネルの設定（開始と終了の両方に適用）             |
+| `presets`                | `DateRangePreset[]`                                           | --          | 事前定義された日付範囲のプリセット                       |
+| `maxDays`                | `number`                                                      | --          | 範囲内で許可される最大日数（その日を含む）               |
+| `minDays`                | `number`                                                      | --          | 範囲内で必要な最小日数（その日を含む）                   |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`      | 開始日と終了日が同じ範囲を許可                           |
+| `minDate`                | `Date`                                                        | --          | 選択可能な最小日付                                       |
+| `maxDate`                | `Date`                                                        | --          | 選択可能な最大日付                                       |
+| `locale`                 | `Partial<Locale>`                                             | --          | カスタムロケールの設定                                   |
+| `initialMonth`           | `Date`                                                        | --          | 初期表示月                                               |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`  | コンポーネントのサイズ                                   |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`  | 週の最初の日                                             |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --          | 日付を無効としてマーク                                   |
+| `displayFormat`          | `string`                                                      | --          | カスタム表示フォーマット                                 |
+| `open`                   | `boolean`                                                     | --          | 制御されたオープン状態                                   |
+| `initialOpen`            | `boolean`                                                     | --          | 初期オープン状態（非制御）                               |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --          | オープン状態が変更されたときのコールバック               |
+| `required`               | `boolean`                                                     | `false`     | 値のクリアを無効化                                       |
+| `showOutsideDays`        | `boolean`                                                     | `false`     | 隣接する月の日付を表示                                   |
+| `highlightDates`         | `Date[]`                                                      | --          | ハイライトする日付                                       |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`     | プリセットクリック時に自動確定                           |
+| `numberOfMonths`         | `number`                                                      | `2`         | 表示する月数                                             |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"` | キャプションのナビゲーションスタイル                     |
+| `fromYear`               | `number`                                                      | --          | ドロップダウンの開始年                                   |
+| `toYear`                 | `number`                                                      | --          | ドロップダウンの終了年                                   |
+| `disablePast`            | `boolean`                                                     | `false`     | 今日より前の日付を無効化                                 |
+| `disableFuture`          | `boolean`                                                     | `false`     | 今日より後の日付を無効化                                 |
+| `inline`                 | `boolean`                                                     | `false`     | カレンダーをインラインで表示（ポップアップなし）         |
+| `name`                   | `string`                                                      | --          | フォーム送信用の非表示inputの名前（開始日時）            |
+| `endName`                | `string`                                                      | --          | 終了日時用の非表示inputの名前（デフォルトは `name-end`） |
+| `placeholder`            | `string`                                                      | --          | トリガーのプレースホルダーテキスト                       |
+| `hideHeader`             | `boolean`                                                     | `false`     | ナビゲーションヘッダーを非表示                           |
+| `hideFooter`             | `boolean`                                                     | `false`     | アクションフッターを非表示                               |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Time display precision. Defaults to "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** 12-hour or 24-hour format. Defaults to "24". */
+  hourFormat?: "12" | "24";
+  /** Minute increment step. Defaults to 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Second increment step. Defaults to 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Height (in px) of each scroll wheel item. Defaults to 32. */
+  itemHeight?: number;
+}
+```
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

@@ -1,0 +1,230 @@
+---
+sidebar_position: 1
+title: Date Helpers
+---
+
+# ยูทิลิตี้สำหรับวันที่
+
+แพ็คเกจ headless มีชุดฟังก์ชันตัวช่วยสำหรับ `Date` แบบเนทีฟมาให้ ซึ่งช่วยลดความจำเป็นในการใช้ไลบรารีอย่าง dayjs หรือ date-fns -- ไลบรารีนี้ไม่มี dependency ภายนอกที่เกี่ยวกับวันที่เลย
+
+ฟังก์ชันทั้งหมดเป็น pure function (จะคืนค่าอ็อบเจกต์ Date ใหม่ แทนที่จะแก้ไขข้อมูลอินพุตเดิม)
+
+## การนำเข้า
+
+```tsx
+import {
+  today,
+  parseDate,
+  startOf,
+  endOf,
+  add,
+  subtract,
+  isSame,
+  isBefore,
+  isAfter,
+  diff,
+  daysInMonth,
+  setYear,
+  setMonth,
+  setDate,
+  setHour,
+  setMinute,
+  setSecond,
+  formatBasic,
+} from "react-date-range-picker-headless";
+```
+
+## ประเภท DateUnit
+
+ฟังก์ชันส่วนใหญ่รับพารามิเตอร์ `DateUnit`:
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```
+
+## ฟังก์ชัน
+
+### today
+
+คืนค่าวันที่/เวลาปัจจุบัน
+
+```tsx
+const now = today(); // new Date()
+```
+
+### parseDate
+
+แยกวิเคราะห์ค่าให้เป็นอ็อบเจกต์ Date คืนค่า `new Date()` หากอินพุตเป็นค่าเท็จ (falsy)
+
+```tsx
+parseDate("2026-03-01"); // Date
+parseDate(1709251200000); // Date from timestamp
+parseDate(existingDate); // Clone
+parseDate(null); // new Date() (fallback)
+```
+
+**ลายเซ็น:** `parseDate(date?: Date | string | number | null): Date`
+
+### startOf
+
+รับค่าเริ่มต้นของหน่วยเวลา
+
+```tsx
+startOf(date, "day"); // 2026-03-01 00:00:00.000
+startOf(date, "month"); // 2026-03-01 00:00:00.000
+startOf(date, "year"); // 2026-01-01 00:00:00.000
+startOf(date, "week"); // Start of week (default Sunday)
+startOf(date, "week", 1); // Start of week (Monday)
+```
+
+**ลายเซ็น:** `startOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### endOf
+
+รับค่าสิ้นสุดของหน่วยเวลา
+
+```tsx
+endOf(date, "day"); // 2026-03-01 23:59:59.999
+endOf(date, "month"); // 2026-03-31 23:59:59.999
+endOf(date, "year"); // 2026-12-31 23:59:59.999
+```
+
+**ลายเซ็น:** `endOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### add
+
+เพิ่มจำนวนเวลาให้กับวันที่
+
+```tsx
+add(date, 1, "day"); // Tomorrow
+add(date, 3, "month"); // 3 months later
+add(date, -1, "year"); // 1 year ago
+add(date, 2, "hour"); // 2 hours later
+```
+
+จัดการกับการล้นของเดือน (เช่น 31 ม.ค. + 1 เดือน = 28 ก.พ. ไม่ใช่ 3 มี.ค.)
+
+**ลายเซ็น:** `add(date: Date, amount: number, unit: DateUnit): Date`
+
+### subtract
+
+ลบจำนวนเวลาออกจากวันที่ เทียบเท่ากับ `add(date, -amount, unit)`
+
+```tsx
+subtract(date, 7, "day"); // 7 days ago
+subtract(date, 1, "month"); // 1 month ago
+```
+
+**ลายเซ็น:** `subtract(date: Date, amount: number, unit: DateUnit): Date`
+
+### isSame
+
+ตรวจสอบว่าวันที่สองวันเหมือนกันหรือไม่ในหน่วยความแม่นยำที่กำหนด
+
+```tsx
+isSame(date1, date2, "day"); // Same calendar day?
+isSame(date1, date2, "month"); // Same month?
+isSame(date1, date2, "year"); // Same year?
+isSame(null, date2, "day"); // false (null-safe)
+```
+
+**ลายเซ็น:** `isSame(date1: Date | null | undefined, date2: Date | null | undefined, unit?: DateUnit): boolean`
+
+### isBefore
+
+ตรวจสอบว่าวันที่แรกอยู่ก่อนวันที่สองหรือไม่ในความแม่นยำที่กำหนด
+
+```tsx
+isBefore(date1, date2, "day"); // Is date1 on an earlier day?
+isBefore(date1, date2); // Millisecond comparison
+```
+
+**ลายเซ็น:** `isBefore(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### isAfter
+
+ตรวจสอบว่าวันที่แรกอยู่หลังวันที่สองหรือไม่ในความแม่นยำที่กำหนด
+
+```tsx
+isAfter(date1, date2, "day"); // Is date1 on a later day?
+```
+
+**ลายเซ็น:** `isAfter(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### diff
+
+รับผลต่างระหว่างวันที่สองวันในหน่วยที่กำหนด
+
+```tsx
+diff(date1, date2, "day"); // Number of days between
+diff(date1, date2, "month"); // Number of months between
+diff(date1, date2, "year"); // Number of years between
+```
+
+**ลายเซ็น:** `diff(date1: Date, date2: Date, unit: DateUnit): number`
+
+### daysInMonth
+
+รับจำนวนวันในเดือนของวันที่นั้นๆ
+
+```tsx
+daysInMonth(new Date(2026, 1)); // 28 (February 2026)
+daysInMonth(new Date(2026, 0)); // 31 (January 2026)
+```
+
+**ลายเซ็น:** `daysInMonth(date: Date): number`
+
+### setYear / setMonth / setDate / setHour / setMinute / setSecond
+
+ตั้งค่าส่วนเฉพาะของวันที่ โดยจะคืนค่าเป็น Date ใหม่
+
+```tsx
+setYear(date, 2027); // Change year to 2027
+setMonth(date, 5); // Change to June (0-indexed)
+setDate(date, 15); // Change to 15th
+setHour(date, 14); // Change to 2 PM
+setMinute(date, 30); // Change to :30
+setSecond(date, 0); // Change to :00
+```
+
+`setYear` และ `setMonth` จัดการกับการล้น (เช่น 29 ก.พ. ในปีอธิกสุรทิน เมื่อตั้งค่าเป็นปีที่ไม่ใช่ปีอธิกสุรทิน จะถูกปัดเป็น 28 ก.พ.)
+
+**ลายเซ็น:**
+
+- `setYear(date: Date, year: number): Date`
+- `setMonth(date: Date, month: number): Date`
+- `setDate(date: Date, day: number): Date`
+- `setHour(date: Date, hour: number): Date`
+- `setMinute(date: Date, minute: number): Date`
+- `setSecond(date: Date, second: number): Date`
+
+### formatBasic
+
+จัดรูปแบบวันที่โดยใช้สตริงเทมเพลต
+
+```tsx
+formatBasic(date, "YYYY-MM-DD"); // "2026-03-01"
+formatBasic(date, "YYYY/MM/DD HH:mm:ss"); // "2026/03/01 14:30:00"
+formatBasic(date, "M/D"); // "3/1"
+formatBasic(date, "hh:mm A"); // Note: A token not supported, use period from hook
+```
+
+**โทเค็นที่รองรับ:**
+
+| โทเค็น | ผลลัพธ์                         | ตัวอย่าง |
+| ------ | ------------------------------- | -------- |
+| `YYYY` | ปี 4 หลัก                       | `2026`   |
+| `MM`   | เดือน 2 หลัก                    | `03`     |
+| `M`    | เดือน (ไม่มี padding)           | `3`      |
+| `DD`   | วัน 2 หลัก                      | `01`     |
+| `D`    | วัน (ไม่มี padding)             | `1`      |
+| `HH`   | ชั่วโมง 2 หลัก (24 ชม.)         | `14`     |
+| `H`    | ชั่วโมง (24 ชม., ไม่มี padding) | `14`     |
+| `hh`   | ชั่วโมง 2 หลัก (12 ชม.)         | `02`     |
+| `h`    | ชั่วโมง (12 ชม., ไม่มี padding) | `2`      |
+| `mm`   | นาที 2 หลัก                     | `30`     |
+| `m`    | นาที (ไม่มี padding)            | `30`     |
+| `ss`   | วินาที 2 หลัก                   | `05`     |
+| `s`    | วินาที (ไม่มี padding)          | `5`      |
+
+**ลายเซ็น:** `formatBasic(date: Date, format: string): string`

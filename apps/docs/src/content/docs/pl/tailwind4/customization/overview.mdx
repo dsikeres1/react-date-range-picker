@@ -1,0 +1,99 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Komponenty Złożone
+
+Paczka Tailwind v4 udostępnia API Komponentów Złożonych, które daje pełną kontrolę nad wewnętrzną strukturą i renderowaniem każdego pickera. Zamiast pojedynczego, monolitycznego komponentu, tworzysz picker z poszczególnych części.
+
+## Jak to działa
+
+Każdy picker (np. `DatePicker`) jest zarówno prostym komponentem, jak i przestrzenią nazw dla jego złożonych części:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+// Proste użycie -- renderuje domyślny układ
+<DatePicker value={value} onChange={setValue} />
+
+// Złożone użycie -- pełna kontrola nad strukturą
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+Dzięki komponentom złożonym możesz:
+
+- **Zastąpić** dowolną część własnym renderowaniem (np. niestandardowy przycisk otwierający, niestandardowa komórka dnia)
+- **Zmieniać układ** (np. przenieść przyciski w stopce, dodać przycisk "Dzisiaj")
+- **Pominąć** części, których nie potrzebujesz (np. usunąć stopkę dla minimalistycznego kalendarza)
+- **Nadpisać klasy** dowolnej części za pomocą propa `className`
+
+Na kolejnych stronach omówiono każdy wzorzec dostosowywania wraz z działającymi demonstracjami.
+
+## Dostępne części
+
+### DatePicker
+
+| Część                      | Opis                                                                                         |
+| -------------------------- | -------------------------------------------------------------------------------------------- |
+| `DatePicker.Root`          | Provider + kontener. Akceptuje wszystkie propy pickera (`value`, `onChange`, `minDate` itp.) |
+| `DatePicker.Trigger`       | Przycisk otwierający/zamykający wyskakujące okienko. Wyświetla wybraną wartość.              |
+| `DatePicker.Content`       | Kontener wyskakującego okienka (lub kontener wbudowany, gdy `inline` jest ustawione na Root) |
+| `DatePicker.Header`        | Wiersz nawigacji miesiąca                                                                    |
+| `DatePicker.PrevButton`    | Nawiguj do poprzedniego miesiąca                                                             |
+| `DatePicker.NextButton`    | Nawiguj do następnego miesiąca                                                               |
+| `DatePicker.Title`         | Wyświetlanie bieżącego miesiąca/roku (obsługuje rozwijane listy wyboru)                      |
+| `DatePicker.Grid`          | Siatka kalendarza z nagłówkami dni tygodnia i komórkami dni                                  |
+| `DatePicker.Day`           | Pojedyncza komórka dnia (używana wewnątrz render propa siatki)                               |
+| `DatePicker.Footer`        | Kontener przycisków akcji                                                                    |
+| `DatePicker.ClearButton`   | Czyści wybraną wartość                                                                       |
+| `DatePicker.CancelButton`  | Anuluje i zamyka                                                                             |
+| `DatePicker.ConfirmButton` | Potwierdza wybór                                                                             |
+| `DatePicker.TodayButton`   | Nawiguje do dzisiaj                                                                          |
+
+### DateRangePicker
+
+Zawiera wszystkie powyższe części oraz dodatkowo:
+
+| Część                        | Opis                                                 |
+| ---------------------------- | ---------------------------------------------------- |
+| `DateRangePicker.Calendars`  | Kontener podwójnego kalendarza                       |
+| `DateRangePicker.Presets`    | Kontener paska bocznego z predefiniowanymi zakresami |
+| `DateRangePicker.PresetItem` | Pojedynczy przycisk predefiniowanego zakresu         |
+
+### DateTimePicker / DateRangeTimePicker
+
+Zawierają odpowiednie części bazowe oraz dodatkowo:
+
+| Część           | Opis                                                                |
+| --------------- | ------------------------------------------------------------------- |
+| `*.TimeSection` | Kontener sekcji panelu czasu                                        |
+| `*.TimePanel`   | Indywidualny panel czasu (`target="single"`, `"start"` lub `"end"`) |
+
+### TimePicker
+
+| Część                      | Opis                                                |
+| -------------------------- | --------------------------------------------------- |
+| `TimePicker.Root`          | Provider + kontener                                 |
+| `TimePicker.Trigger`       | Przycisk otwierający/zamykający wyskakujące okienko |
+| `TimePicker.Content`       | Kontener wyskakującego okienka                      |
+| `TimePicker.TimePanel`     | Panel wyboru czasu                                  |
+| `TimePicker.Footer`        | Kontener przycisków akcji                           |
+| `TimePicker.ClearButton`   | Czyści wybraną wartość                              |
+| `TimePicker.CancelButton`  | Anuluje i zamyka                                    |
+| `TimePicker.ConfirmButton` | Potwierdza wybór                                    |

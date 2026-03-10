@@ -1,0 +1,85 @@
+---
+sidebar_position: 4
+title: Time Helpers
+---
+
+# Time ヘルパー
+
+時刻値の生成、12時間形式と24時間形式の変換、ステップへのスナップ、および時刻設定の解決を行うための関数。
+
+```tsx
+import {
+  generateHours,
+  generateHours12,
+  generateMinutes,
+  generateSeconds,
+  adjustMinuteToStep,
+  adjustSecondToStep,
+  to12Hour,
+  to24Hour,
+  resolveTimeConfig,
+} from "react-date-range-picker-headless";
+```
+
+## generateHours
+
+24時間形式の値の配列を生成します。
+
+|            |                             |
+| ---------- | --------------------------- |
+| シグネチャ | `generateHours(): number[]` |
+| 戻り値     | `[0, 1, 2, ..., 23]`        |
+
+## generateHours12
+
+12時間形式の値の配列を生成します。
+
+|            |                               |
+| ---------- | ----------------------------- |
+| シグネチャ | `generateHours12(): number[]` |
+| 戻り値     | `[1, 2, 3, ..., 12]`          |
+
+## generateMinutes
+
+ステップでフィルタリングされた分の配列を生成します。
+
+|            |                                                      |
+| ---------- | ---------------------------------------------------- |
+| シグネチャ | `generateMinutes(minuteStep?: MinuteStep): number[]` |
+| デフォルト | `5`                                                  |
+
+```tsx
+generateMinutes(); // [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
+generateMinutes(15); // [0, 15, 30, 45]
+generateMinutes(1); // [0, 1, 2, ..., 59]
+```
+
+## generateSeconds
+
+ステップでフィルタリングされた秒の配列を生成します。
+
+|            |                                                      |
+| ---------- | ---------------------------------------------------- |
+| シグネチャ | `generateSeconds(secondStep?: SecondStep): number[]` |
+| デフォルト | `1`                                                  |
+
+```tsx
+generateSeconds(); // [0, 1, 2, ..., 59]
+generateSeconds(15); // [0, 15, 30, 45]
+```
+
+## adjustMinuteToStep
+
+分の値を最も近い有効なステップにスナップします（切り捨て）。
+
+|            |                                                                      |
+| ---------- | -------------------------------------------------------------------- |
+| シグネチャ | `adjustMinuteToStep(minute: number, minuteStep: MinuteStep): number` |
+
+```tsx
+adjustMinuteToStep(7, 5); // 5
+adjustMinuteToStep(13, 10); // 10
+adjustMinuteToStep(29, 15); // 15
+```
+
+## adjustSecondTo

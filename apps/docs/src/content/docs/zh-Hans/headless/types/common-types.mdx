@@ -1,0 +1,124 @@
+---
+sidebar_position: 5
+title: Common Types
+---
+
+# 通用类型
+
+在 headless 包中使用的共享类型别名。
+
+```tsx
+import type {
+  DatePickerSize,
+  WeekDay,
+  CaptionLayout,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  MinuteStep,
+  SecondStep,
+  CalendarMonth,
+  DateUnit,
+} from "react-date-range-picker-headless";
+```
+
+## DatePickerSize
+
+UI 尺寸变体。Headless hooks 会直接传递它而不使用它。样式化组件使用它来调整视觉尺寸。
+
+```tsx
+type DatePickerSize = "x-large" | "large" | "medium" | "small";
+```
+
+## WeekDay
+
+星期几的字符串表示。用于 `weekStartsOn` 选项。
+
+```tsx
+type WeekDay = "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday";
+```
+
+## CaptionLayout
+
+日历标题布局模式。
+
+```tsx
+type CaptionLayout = "buttons" | "dropdown";
+```
+
+| 值           | 描述                            |
+| ------------ | ------------------------------- |
+| `"buttons"`  | 上一月/下一月导航按钮（默认）。 |
+| `"dropdown"` | 年份和月份选择下拉框。          |
+
+## TimePrecision
+
+控制显示哪些时间列。
+
+```tsx
+type TimePrecision = "hour" | "minute" | "second";
+```
+
+| 值         | 显示的列           |
+| ---------- | ------------------ |
+| `"hour"`   | 仅小时。           |
+| `"minute"` | 小时 + 分钟。      |
+| `"second"` | 小时 + 分钟 + 秒。 |
+
+## HourFormat
+
+12 小时制或 24 小时制时间显示。
+
+```tsx
+type HourFormat = "12" | "24";
+```
+
+## TimePeriod
+
+用于 12 小时制的 AM/PM 指示符。
+
+```tsx
+type TimePeriod = "AM" | "PM";
+```
+
+## MinuteStep
+
+用于分步选择分钟的有效分钟增量值。
+
+```tsx
+type MinuteStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## SecondStep
+
+用于分步选择秒的有效秒增量值。
+
+```tsx
+type SecondStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## CalendarMonth
+
+为单个月份生成的日历数据。
+
+```tsx
+interface CalendarMonth {
+  month: Date;
+  days: (Date | null)[];
+  weeks: (Date | null)[][];
+}
+```
+
+| 字段    | 类型                 | 描述                                                             |
+| ------- | -------------------- | ---------------------------------------------------------------- |
+| `month` | `Date`               | 此日历所代表的月份。                                             |
+| `days`  | `(Date \| null)[]`   | 包含 42 个单元格（6 周 x 7 天）的一维数组。`null` 代表空单元格。 |
+| `weeks` | `(Date \| null)[][]` | 包含 6 周的二维数组，每周包含 7 个日期单元格。                   |
+
+## DateUnit
+
+用于日期工具函数（`startOf`, `endOf`, `add`, `subtract`, `isSame`, `isBefore`, `isAfter`, `diff`）的时间单位。
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```

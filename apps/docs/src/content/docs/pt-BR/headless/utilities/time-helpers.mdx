@@ -1,0 +1,128 @@
+---
+sidebar_position: 4
+title: Time Helpers
+---
+
+# Auxiliares de Tempo
+
+Funções para gerar valores de tempo, converter entre formatos de 12/24 horas, ajustar para intervalos e resolver a configuração de tempo.
+
+```tsx
+import {
+  generateHours,
+  generateHours12,
+  generateMinutes,
+  generateSeconds,
+  adjustMinuteToStep,
+  adjustSecondToStep,
+  to12Hour,
+  to24Hour,
+  resolveTimeConfig,
+} from "react-date-range-picker-headless";
+```
+
+## generateHours
+
+Gera um array de valores de 24 horas.
+
+|            |                             |
+| ---------- | --------------------------- |
+| Assinatura | `generateHours(): number[]` |
+| Retorna    | `[0, 1, 2, ..., 23]`        |
+
+## generateHours12
+
+Gera um array de valores de 12 horas.
+
+|            |                               |
+| ---------- | ----------------------------- |
+| Assinatura | `generateHours12(): number[]` |
+| Retorna    | `[1, 2, 3, ..., 12]`          |
+
+## generateMinutes
+
+Gera um array de minutos filtrado pelo intervalo (step).
+
+|            |                                                      |
+| ---------- | ---------------------------------------------------- |
+| Assinatura | `generateMinutes(minuteStep?: MinuteStep): number[]` |
+| Padrão     | `5`                                                  |
+
+```tsx
+generateMinutes(); // [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
+generateMinutes(15); // [0, 15, 30, 45]
+generateMinutes(1); // [0, 1, 2, ..., 59]
+```
+
+## generateSeconds
+
+Gera um array de segundos filtrado pelo intervalo (step).
+
+|            |                                                      |
+| ---------- | ---------------------------------------------------- |
+| Assinatura | `generateSeconds(secondStep?: SecondStep): number[]` |
+| Padrão     | `1`                                                  |
+
+```tsx
+generateSeconds(); // [0, 1, 2, ..., 59]
+generateSeconds(15); // [0, 15, 30, 45]
+```
+
+## adjustMinuteToStep
+
+Ajusta um valor de minuto para o intervalo válido mais próximo (arredonda para baixo).
+
+|            |                                                                      |
+| ---------- | -------------------------------------------------------------------- |
+| Assinatura | `adjustMinuteToStep(minute: number, minuteStep: MinuteStep): number` |
+
+```tsx
+adjustMinuteToStep(7, 5); // 5
+adjustMinuteToStep(13, 10); // 10
+adjustMinuteToStep(29, 15); // 15
+```
+
+## adjustSecondToStep
+
+Ajusta um valor de segundo para o intervalo válido mais próximo (arredonda para baixo).
+
+|            |                                                                      |
+| ---------- | -------------------------------------------------------------------- |
+| Assinatura | `adjustSecondToStep(second: number, secondStep: SecondStep): number` |
+
+```tsx
+adjustSecondToStep(7, 5); // 5
+adjustSecondToStep(14, 10); // 10
+```
+
+## to12Hour
+
+Converte um valor de 24 horas para o formato de 12 horas com AM/PM.
+
+|            |                                                                  |
+| ---------- | ---------------------------------------------------------------- |
+| Assinatura | `to12Hour(hour24: number): { hour: number; period: TimePeriod }` |
+
+```tsx
+to12Hour(0); // { hour: 12, period: "AM" }
+to12Hour(12); // { hour: 12, period: "PM" }
+to12Hour(13); // { hour: 1, period: "PM" }
+to12Hour(23); // { hour: 11, period: "PM" }
+```
+
+## to24Hour
+
+Converte um valor de 12 horas com AM/PM para o formato de 24 horas.
+
+|            |                                                        |
+| ---------- | ------------------------------------------------------ |
+| Assinatura | `to24Hour(hour12: number, period: TimePeriod): number` |
+
+```tsx
+to24Hour(12, "AM"); // 0
+to24Hour(12, "PM"); // 12
+to24Hour(1, "PM"); // 13
+to24Hour(11, "PM"); // 23
+```
+
+## resolveTime

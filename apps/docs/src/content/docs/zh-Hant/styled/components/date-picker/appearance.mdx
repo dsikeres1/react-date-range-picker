@@ -1,0 +1,82 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/styled/DatePicker/Sizes";
+import SizesSource from "@examples/styled/DatePicker/Sizes.tsx?raw";
+import CustomFormat from "@examples/styled/DatePicker/CustomFormat";
+import CustomFormatSource from "@examples/styled/DatePicker/CustomFormat.tsx?raw";
+import CustomLocale from "@examples/styled/DatePicker/CustomLocale";
+import CustomLocaleSource from "@examples/styled/DatePicker/CustomLocale.tsx?raw";
+import WeekStartsOn from "@examples/styled/DatePicker/WeekStartsOn";
+import WeekStartsOnSource from "@examples/styled/DatePicker/WeekStartsOn.tsx?raw";
+import ShowOutsideDays from "@examples/styled/DatePicker/ShowOutsideDays";
+import ShowOutsideDaysSource from "@examples/styled/DatePicker/ShowOutsideDays.tsx?raw";
+import CaptionDropdown from "@examples/styled/DatePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/styled/DatePicker/CaptionDropdown.tsx?raw";
+
+# 外觀
+
+## 尺寸
+
+四種內建尺寸：`small`、`medium`、`large` 和 `x-large`。
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 自訂格式
+
+自訂顯示格式字串。
+
+<CodeDemo source={CustomFormatSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFormat client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 自訂語系
+
+使用 headless 套件中的 `createLocale` 提供自訂語系以進行國際化。
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 週的起始日
+
+變更一週的第一天。預設為 `"sunday"`。
+
+<CodeDemo source={WeekStartsOnSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <WeekStartsOn client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 顯示非當月日期
+
+顯示相鄰月份的日期以填滿日曆網格。預設為 `false`。
+
+<CodeDemo source={ShowOutsideDaysSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShowOutsideDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 標題下拉選單
+
+使用 `captionLayout="dropdown"` 將月份/年份導覽從箭頭切換為下拉選單。使用 `fromYear` 和 `toYear` 設定年份範圍。
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

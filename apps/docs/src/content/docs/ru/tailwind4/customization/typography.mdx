@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind4/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind4/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind4/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind4/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind4/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind4/Customization/CompoundWebFonts.tsx?raw";
+
+# Типографика
+
+Пакет Tailwind v4 использует класс `font-sans` по умолчанию от Tailwind (`ui-sans-serif, system-ui, sans-serif, ...`). Поскольку CSS свойство `font-family` наследуется, вы можете переопределить шрифт компонента, обернув его в контейнер со стилем `fontFamily`. Шрифт из обертки каскадом применится ко всем элементам компонента.
+
+## Семейство шрифтов
+
+Оберните компонент и установите `fontFamily` для обертки, чтобы сменить шрифт:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Использование веб-шрифтов (Noto Sans)
+
+Загрузите веб-шрифт во время выполнения и примените его с помощью обертки. В этом примере загружается [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) из Google Fonts:
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="Использование в продакшене">
+В реальном проекте загружайте шрифт через тег `<link>` в `<head>` вашего HTML или через сборщик CSS, а не внедряйте его во время выполнения. Подход с `useEffect` здесь используется только для демонстрационных целей.
+</Admonition>
+
+## Галерея веб-шрифтов
+
+Сравните различные веб-шрифты, чтобы увидеть, как сильно типографика меняет внешний вид компонента. Все шрифты ниже поддерживают многоязычный рендеринг (латиница, CJK, корейский).
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

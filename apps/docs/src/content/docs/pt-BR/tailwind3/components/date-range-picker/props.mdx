@@ -1,0 +1,51 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Adereços
+
+| Suporte                  | Tipo                                                          | Padrão      | Descrição                                                          |
+| ------------------------ | ------------------------------------------------------------- | ----------- | ------------------------------------------------------------------ |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --          | Selected date range value                                          |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | Callback when value changes                                        |
+| `presets`                | `DateRangePreset[]`                                           | --          | Predefined date range presets                                      |
+| `maxDays`                | `number`                                                      | --          | Maximum days allowed in range (inclusive)                          |
+| `minDays`                | `number`                                                      | --          | Minimum days required in range (inclusive)                         |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`      | Permitir intervalo onde o início é igual ao fim                    |
+| `minDate`                | `Date`                                                        | --          | Minimum selectable date                                            |
+| `maxDate`                | `Date`                                                        | --          | Maximum selectable date                                            |
+| `locale`                 | `Partial<Locale>`                                             | --          | Custom locale configuration                                        |
+| `initialMonth`           | `Date`                                                        | --          | Initial displayed month                                            |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`  | Component size                                                     |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`  | Primeiro dia da semana                                             |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --          | Mark dates as disabled                                             |
+| `displayFormat`          | `string`                                                      | --          | Custom display format (e.g. `"YYYY/MM/DD"`)                        |
+| `open`                   | `boolean`                                                     | --          | Controlled open state                                              |
+| `initialOpen`            | `boolean`                                                     | --          | Initial open state (uncontrolled)                                  |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --          | Callback when open state changes                                   |
+| `required`               | `boolean`                                                     | `false`     | Desative a limpeza do valor                                        |
+| `showOutsideDays`        | `boolean`                                                     | `false`     | Mostrar dias de meses adjacentes                                   |
+| `highlightDates`         | `Date[]`                                                      | --          | Dates to highlight                                                 |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`     | Confirmar automaticamente quando a data de término for selecionada |
+| `numberOfMonths`         | `number`                                                      | `2`         | Número de meses para exibir                                        |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"` | Caption navigation style                                           |
+| `fromYear`               | `number`                                                      | --          | Start year for dropdown                                            |
+| `toYear`                 | `number`                                                      | --          | End year for dropdown                                              |
+| `disablePast`            | `boolean`                                                     | `false`     | Desativar datas anteriores a hoje                                  |
+| `disableFuture`          | `boolean`                                                     | `false`     | Desativar datas depois de hoje                                     |
+| `inline`                 | `boolean`                                                     | `false`     | Mostrar calendário embutido (sem pop-up)                           |
+| `name`                   | `string`                                                      | --          | Hidden input name for form submission (start date)                 |
+| `endName`                | `string`                                                      | --          | Hidden input name for end date (defaults to `name-end`)            |
+| `placeholder`            | `string`                                                      | --          | Trigger placeholder text                                           |
+| `hideHeader`             | `boolean`                                                     | `false`     | Ocultar o cabeçalho de navegação                                   |
+| `hideFooter`             | `boolean`                                                     | `false`     | Ocultar o rodapé da ação                                           |
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

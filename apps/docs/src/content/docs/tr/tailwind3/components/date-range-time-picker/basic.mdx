@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/tailwind3/DateRangeTimePicker/Basic";
+import BasicSource from "@examples/tailwind3/DateRangeTimePicker/Basic.tsx?raw";
+import Inline from "@examples/tailwind3/DateRangeTimePicker/Inline";
+import InlineSource from "@examples/tailwind3/DateRangeTimePicker/Inline.tsx?raw";
+
+# DateRangeTimePicker
+
+Başlangıç ve bitiş için çift takvim ve zaman panellerine sahip bir tarih aralığı ve zaman seçim bileşeni.
+
+## Temel Kullanım
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Satır İçi Modu
+
+Takvimleri ve zaman panellerini bir açılır pencere tetikleyicisi olmadan satır içinde görüntüleyin.
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

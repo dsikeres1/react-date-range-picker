@@ -1,0 +1,34 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind4/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind4/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind4/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind4/Customization/CompoundColorThemePopup.tsx?raw";
+
+# สี
+
+สลับธีมสีขณะรันไทม์โดยการลบล้างคุณสมบัติ CSS custom properties บนองค์ประกอบ wrapper เนื่องจากแพ็คเกจ Tailwind v4 อ่านค่าสีทั้งหมดจาก semantic tokens การเปลี่ยนตัวแปร CSS พื้นฐานจะรีแบรนด์ picker ทั้งหมดทันที
+
+แพ็คเกจ Tailwind v4 ใช้รูปแบบ **oklch** สำหรับ semantic tokens ลบล้าง `--color-primary` และ `--color-primary-foreground` เพื่อรีแบรนด์ picker:
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## โหมดป๊อปอัป
+
+เทคนิคเดียวกันนี้ใช้ได้กับ picker แบบป๊อปอัป:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

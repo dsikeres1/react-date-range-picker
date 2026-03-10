@@ -1,0 +1,48 @@
+---
+sidebar_position: 1
+sidebar_label: "Overview"
+---
+
+# Bileşen Grupları
+
+Styled paketi, her bir seçicinin (picker) iç yapısı ve render edilmesi üzerinde tam kontrol sağlayan bir Bileşen Grubu API'si (Compound Component API) sunar. Tek bir monolitik bileşen yerine, seçiciyi ayrı ayrı parçalardan oluşturursunuz.
+
+## Nasıl Çalışır?
+
+Her seçici (ör. `DatePicker`), hem basit bir bileşen hem de bileşen grubu parçaları için bir isim alanıdır:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/rdrp-styles.css";
+
+// Basit kullanım — varsayılan düzeni render eder
+<DatePicker value={value} onChange={setValue} />
+
+// Bileşen grubu kullanımı — yapı üzerinde tam kontrol
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Mevcut Parçalar
+
+### DatePicker
+
+| Parça                | Açıklama                                                                                      |
+| -------------------- | --------------------------------------------------------------------------------------------- |
+| `DatePicker.Root`    | Sağlayıcı + kapsayıcı. Tüm seçici proplarını kabul eder (`value`, `onChange`, `minDate`, vb.) |
+| `DatePicker.Trigger` | Popup'ı açan/kapatan düğme. Seçili değeri gösterir.                                           |
+| `DatePicker.Content` | Popup kaps                                                                                    |

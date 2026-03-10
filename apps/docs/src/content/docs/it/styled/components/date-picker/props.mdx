@@ -1,0 +1,37 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Prop
+
+| Prop                  | Tipo                                          | Predefinito | Descrizione                                                    |
+| --------------------- | --------------------------------------------- | ----------- | -------------------------------------------------------------- |
+| `value`               | `Date \| null`                                | --          | Valore della data selezionata                                  |
+| `onChange`            | `(date: Date \| null) => void`                | --          | Callback richiamata al cambio del valore                       |
+| `minDate`             | `Date`                                        | --          | Data minima selezionabile                                      |
+| `maxDate`             | `Date`                                        | --          | Data massima selezionabile                                     |
+| `locale`              | `Partial<Locale>`                             | --          | Configurazione personalizzata della localizzazione             |
+| `initialMonth`        | `Date`                                        | --          | Mese iniziale visualizzato                                     |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | Dimensione del componente                                      |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | Primo giorno della settimana                                   |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | Contrassegna le date come disabilitate                         |
+| `displayFormat`       | `string`                                      | --          | Formato di visualizzazione personalizzato (es. `"DD/MM/YYYY"`) |
+| `open`                | `boolean`                                     | --          | Stato di apertura controllato                                  |
+| `initialOpen`         | `boolean`                                     | --          | Stato di apertura iniziale (non controllato)                   |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | Callback richiamata al cambio dello stato di apertura          |
+| `required`            | `boolean`                                     | `false`     | Disabilita la cancellazione del valore                         |
+| `showOutsideDays`     | `boolean`                                     | `false`     | Mostra i giorni dei mesi adiacenti                             |
+| `highlightDates`      | `Date[]`                                      | --          | Date da evidenziare                                            |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | Conferma automatica al clic sulla data                         |
+| `numberOfMonths`      | `number`                                      | `1`         | Numero di mesi da visualizzare                                 |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | Stile di navigazione della didascalia                          |
+| `fromYear`            | `number`                                      | --          | Anno di inizio per il menu a discesa                           |
+| `toYear`              | `number`                                      | --          | Anno di fine per il menu a discesa                             |
+| `disablePast`         | `boolean`                                     | `false`     | Disabilita le date precedenti a oggi                           |
+| `disableFuture`       | `boolean`                                     | `false`     | Disabilita le date successive a oggi                           |
+| `inline`              | `boolean`                                     | `false`     | Mostra il calendario in linea (senza popup)                    |
+| `name`                | `string`                                      | --          | Nome dell'input nascosto per l'invio del modulo                |
+| `placeholder`         | `string`                                      | --          | Testo segnaposto del trigger                                   |
+| `hideHeader`          | `boolean`                                     | `false`     | Nascondi l'intestazione di navigazione                         |
+| `hideFooter`          | `boolean`                                     | `false`     | Nascondi il piè di pagina delle azioni                         |

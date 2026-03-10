@@ -1,0 +1,167 @@
+---
+sidebar_position: 10
+---
+
+# Jetons Sémantiques
+
+Le package Tailwind v4 utilise des variables CSS sémantiques (jetons de conception) pour toutes les couleurs. Ces jetons découplent les styles des composants des valeurs de couleur spécifiques, ce qui facilite la création de thèmes. La convention de nommage des jetons suit le même modèle que celui utilisé par [shadcn/ui](https://ui.shadcn.com/).
+
+## Système de Jetons
+
+Au lieu de couleurs codées en dur comme `bg-sky-500`, les composants Tailwind v4 utilisent des utilitaires sémantiques comme `bg-primary`, `text-foreground`, et `border-border`. Ceux-ci correspondent à des variables CSS que vous définissez dans votre projet.
+
+```
+bg-primary        → var(--color-primary)
+text-foreground   → var(--color-foreground)
+border-border     → var(--color-border)
+```
+
+## Jetons Requis
+
+Définissez ces jetons dans votre CSS en utilisant la directive `@theme` de Tailwind v4 :
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+## Référence des Jetons
+
+| Jeton                        | Utilisé Pour                                                             | Exemples d'Utilitaires       |
+| ---------------------------- | ------------------------------------------------------------------------ | ---------------------------- |
+| `--color-background`         | Arrière-plan de la page/application                                      | `bg-background`              |
+| `--color-foreground`         | Couleur de texte par défaut                                              | `text-foreground`            |
+| `--color-popover`            | Arrière-plan de la popup                                                 | `bg-popover`                 |
+| `--color-popover-foreground` | Texte de la popup                                                        | `text-popover-foreground`    |
+| `--color-primary`            | Jour sélectionné, bouton de confirmation, extrémités de la plage         | `bg-primary`, `text-primary` |
+| `--color-primary-foreground` | Texte sur les arrière-plans primaires                                    | `text-primary-foreground`    |
+| `--color-muted-foreground`   | Texte atténué (placeholders, jours de la semaine, boutons de navigation) | `text-muted-foreground`      |
+| `--color-accent`             | Arrière-plans au survol pour les jours et les boutons                    | `bg-accent`                  |
+| `--color-accent-foreground`  | Texte sur les arrière-plans d'accentuation                               | `text-accent-foreground`     |
+| `--color-destructive`        | Texte du bouton effacer/danger                                           | `text-destructive`           |
+| `--color-border`             | Bordures générales (pied de page, préréglages, popup)                    | `border-border`              |
+| `--color-input`              | Bordure de l'entrée/déclencheur                                          | `border-input`               |
+| `--color-ring`               | Couleur de l'anneau de focus                                             | `ring-ring`                  |
+
+## Comment les Jetons s'Appliquent aux Composants
+
+Voici comment les jetons sont appliqués à travers le sélecteur :
+
+### Déclencheur
+
+- Arrière-plan : `bg-background`
+- Bordure : `border-input`
+- Texte : hérité de `text-foreground` sur la racine
+- Placeholder : `text-muted-foreground`
+- Anneau de focus : `ring-ring`
+
+### Popup
+
+- Arrière-plan : `bg-popover`
+- Texte : `text-popover-foreground`
+- Bordure : `border-border`
+
+### Jours du Calendrier
+
+- Survol par défaut : `bg-accent` / `text-accent-foreground`
+- Sélectionné : `bg-primary` / `text-primary-foreground`
+- Aujourd'hui : `text-primary`
+- Dans la plage : `bg-primary/10`
+- Début/fin de la plage : `bg-primary` / `text-primary-foreground`
+- Désactivé : `text-muted-foreground` avec opacité réduite
+
+### Pied de page
+
+- Bordure : `border-border`
+- Bouton Annuler : `border-input`, survol `bg-accent`
+- Bouton Confirmer : `bg-primary` / `text-primary-foreground`
+- Bouton Effacer : `text-destructive`
+
+## Personnalisation des Jetons
+
+### Changer la Couleur Primaire
+
+Modifiez `--color-primary` et `--color-primary-foreground` pour personnaliser l'apparence du sélecteur :
+
+```css
+@theme {
+  /* Primaire violet */
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+}
+```
+
+### Thème de Couleurs Chaudes
+
+```css
+@theme {
+  --color-background: oklch(0.99 0.005 80);
+  --color-foreground: oklch(0.2 0.02 60);
+
+  --color-popover: oklch(0.99 0.005 80);
+  --color-popover-foreground: oklch(0.2 0.02 60);
+
+  --color-primary: oklch(0.6 0.2 40);
+  --color-primary-foreground: oklch(0.98 0.005 80);
+
+  --color-accent: oklch(0.95 0.02 80);
+  --color-accent-foreground: oklch(0.2 0.02 60);
+
+  --color-border: oklch(0.9 0.01 80);
+  --color-input: oklch(0.9 0.01 80);
+  --color-ring: oklch(0.85 0.02 80);
+}
+```
+
+### Jetons pour le Mode Sombre
+
+Pour le mode sombre, surchargez les jetons sous un sélecteur `.dark` ou une requête média `@media (prefers-color-scheme: dark)` :
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... valeurs du mode clair */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+Consultez [Mode Sombre](/docs/tailwind4/customization/dark-mode) pour plus de détails.
+
+## Projets shadcn/ui Existants
+
+Si votre projet a déjà des jetons shadcn/ui définis, le sélecteur les utilisera automatiquement sans configuration supplémentaire. Les noms des jetons sont intentionnellement compatibles. Consultez [Registre shadcn](/docs/tailwind4/customization/shadcn-registry) pour en savoir plus.

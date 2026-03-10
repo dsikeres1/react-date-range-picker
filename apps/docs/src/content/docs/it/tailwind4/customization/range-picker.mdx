@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: Range Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/tailwind4/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/tailwind4/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/tailwind4/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/tailwind4/Customization/CompoundRangeInline.tsx?raw";
+
+# Selettore di Intervallo
+
+Costruisci un `DateRangePicker` completamente personalizzato con i componenti composti. Questo esempio combina un trigger personalizzato, una barra laterale con preimpostazioni, griglie a doppio calendario e un piè di pagina -- tutti composti da parti individuali.
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## In linea con Preimpostazioni
+
+Visualizza il selettore di intervallo in linea con una barra laterale di preimpostazioni:
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

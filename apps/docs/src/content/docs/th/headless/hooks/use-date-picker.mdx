@@ -1,0 +1,67 @@
+---
+sidebar_position: 1
+title: useDatePicker
+---
+
+# useDatePicker
+
+Hook หลักสำหรับการเลือกวันที่เดียว จัดการสถานะปฏิทิน, พฤติกรรมการเปิด/ปิด, การนำทางด้วยคีย์บอร์ด, และการจัดรูปแบบวันที่
+
+## Import
+
+```tsx
+import { useDatePicker } from "react-date-range-picker-headless";
+```
+
+## การใช้งาน
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  const picker = useDatePicker({
+    value: date,
+    onChange: setDate,
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.placeholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* ส่วนหัวของปฏิทิน */}
+          <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+          <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+          <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+
+          {/* ตารางปฏิทิน */}
+          {picker.calendar.weeks.flat().map((day, i) => {
+            if (!day) return <span key={i} />;
+            const dp = picker.getDayProps(day);
+            return (
+              <button key={i} onClick={() => picker.handleDateClick(day)} disabled={dp.isDisabled}>
+                {dp.day}
+              </button>
+            );
+          })}
+
+          {/* ส่วนท้าย */}
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## ตัวเลือก
+
+| ตัวเลือก   | ประเภท                         | ค่าเริ่มต้น | คำอธิบาย                                          |
+| ---------- | ------------------------------ | ----------- | ------------------------------------------------- |
+| `value`    | `Date \| null`                 | --          | **จำเป็น** วันที่ที่ถูกเลือกในปัจจุบัน            |
+| `onChange` | `(date: Date \| null) => void` | --          | **จำเป็น** ถูกเรียกเมื่อการเลือกวันที่เปลี่ยนแปลง |

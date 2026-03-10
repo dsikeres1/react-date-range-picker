@@ -1,0 +1,81 @@
+---
+sidebar_position: 3
+title: Browser Compatibility
+description: Obsługiwane przeglądarki, używane funkcje CSS i API JavaScript.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Kompatybilność z Przeglądarkami
+
+## Macierz Wsparcia
+
+| Przeglądarka     | Minimalna Wersja |
+| ---------------- | ---------------- |
+| Chrome           | 88+              |
+| Edge             | 88+ (Chromium)   |
+| Firefox          | 85+              |
+| Safari           | 15.4+            |
+| iOS Safari       | 15.4+            |
+| Samsung Internet | 15+              |
+
+**IE 11 nie jest wspierany.** Biblioteka opiera się na niestandardowych właściwościach CSS, nowoczesnych API JavaScript oraz React 18+.
+
+Minimalna wersja Safari 15.4 jest podyktowana wsparciem dla `:focus-visible`, używanym w stylach wskaźnika fokusu w pakiecie Styled.
+
+## Funkcje CSS
+
+| Funkcja                  | Używane w                                   | Pierwsze Wsparcie                      |
+| ------------------------ | ------------------------------------------- | -------------------------------------- |
+| CSS Custom Properties    | Wszystkie pakiety `styled` (motywy)         | Chrome 49, Firefox 31, Safari 9.1      |
+| `:focus-visible`         | Wskaźniki fokusu (Styled)                   | Chrome 86, Firefox 85, **Safari 15.4** |
+| `color-scheme`           | Natywne kontrolki w trybie ciemnym (Styled) | Chrome 81, Firefox 96, Safari 12.1     |
+| `prefers-color-scheme`   | Automatyczny tryb ciemny (Styled)           | Chrome 76, Firefox 67, Safari 12.1     |
+| `prefers-reduced-motion` | Redukcja ruchu (Styled)                     | Chrome 74, Firefox 63, Safari 10.1     |
+| `scroll-snap-type`       | Przewijanie w time pickerze (Styled)        | Chrome 69, Firefox 68, Safari 11       |
+| Flexbox                  | Układ                                       | Uniwersalne                            |
+| CSS Grid                 | Siatka kalendarza                           | Chrome 57, Firefox 52, Safari 10.1     |
+
+## API JavaScript
+
+| API                                 | Używane przez                                             | Pierwsze Wsparcie                  |
+| ----------------------------------- | --------------------------------------------------------- | ---------------------------------- |
+| `Intl.DateTimeFormat`               | Generowanie lokalizacji `createLocale()`                  | Wszystkie nowoczesne przeglądarki  |
+| `Intl.DateTimeFormat.formatToParts` | Ekstrakcja etykiet AM/PM                                  | Chrome 57, Firefox 51, Safari 11   |
+| `ResizeObserver`                    | Pozycjonowanie wyskakujących okienek `@floating-ui/react` | Chrome 64, Firefox 69, Safari 13.1 |
+| React 18+ hooks                     | Wszystkie hooki i komponenty                              | React 18.0+                        |
+
+## Uwagi Dotyczące Pakietów
+
+### Headless
+
+Brak zależności CSS. Wymaga jedynie React 18+ i standardowych API JavaScript. Kompatybilny z każdym środowiskiem, które wspiera React.
+
+### Styled
+
+Używa niestandardowych właściwości CSS, `:focus-visible`, `color-scheme` oraz `scroll-snap-type`. Wąskim gardłem we wsparciu przeglądarek jest **Safari 15.4+** (dla `:focus-visible`).
+
+Time picker oparty na przewijaniu używa `scroll-snap-type: y mandatory` z ukrytymi paskami przewijania. Zachowanie przewijania może być nieco inne na różnych platformach z powodu różnic w implementacji bezwładności/pędu.
+
+### Tailwind v3
+
+Wymaga Tailwind CSS v3. Taka sama kompatybilność JavaScript jak w przypadku Headless. Wsparcie CSS zależy od wyników generowanych przez Tailwind v3 (szeroko kompatybilne).
+
+### Tailwind v4
+
+Wymaga Tailwind CSS v4, który sam w sobie używa nowoczesnych funkcji CSS (`@layer`, `@property`, zagnieżdżanie CSS). Szczegóły można znaleźć w dokumentacji [wsparcia przeglądarek dla Tailwind CSS v4](https://tailwindcss.com/docs/compatibility).
+
+## Polyfills
+
+Dla projektów, które muszą wspierać przeglądarki w wersjach nieco niższych niż minimalne:
+
+| Funkcja               | Polyfill                                                                                                                     |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `:focus-visible`      | [`focus-visible`](https://github.com/WICG/focus-visible)                                                                     |
+| `ResizeObserver`      | [`resize-observer-polyfill`](https://github.com/que-etc/resize-observer-polyfill)                                            |
+| `Intl.DateTimeFormat` | [`@formatjs/intl-datetimeformat`](https://formatjs.github.io/docs/polyfills/intl-datetimeformat/) (tylko przypadki brzegowe) |
+
+<Admonition type="tip">
+  Większość projektów celujących w nowoczesne przeglądarki (wydane po 2022 roku) nie będzie
+  potrzebować żadnych polyfilli.
+</Admonition>

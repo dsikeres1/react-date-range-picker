@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+sidebar_label: Props
+---
+
+# Props
+
+| プロパティ      | 型                             | デフォルト | 説明                                       |
+| --------------- | ------------------------------ | ---------- | ------------------------------------------ |
+| `value`         | `Date \| null`                 | --         | 選択された時間の値（時間部分のみ使用）     |
+| `onChange`      | `(date: Date \| null) => void` | --         | 値が変更されたときのコールバック           |
+| `time`          | `TimeConfig`                   | --         | 時間パネルの設定                           |
+| `locale`        | `Partial<Locale>`              | --         | カスタムロケール設定                       |
+| `displayFormat` | `string`                       | --         | トリガーのカスタム表示フォーマット         |
+| `placeholder`   | `string`                       | --         | トリガーのプレースホルダーテキスト         |
+| `open`          | `boolean`                      | --         | 制御されたオープン状態                     |
+| `initialOpen`   | `boolean`                      | `false`    | 初期のオープン状態（非制御）               |
+| `onOpenChange`  | `(open: boolean) => void`      | --         | オープン状態が変更されたときのコールバック |
+| `required`      | `boolean`                      | `false`    | 値のクリアを無効化                         |
+| `inline`        | `boolean`                      | `false`    | トリガー/ポップアップなしでインライン描画  |
+| `hideFooter`    | `boolean`                      | --         | アクションフッターを非表示                 |
+| `name`          | `string`                       | --         | フォーム送信用の隠しinputのname            |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** 時間表示の精度。デフォルトは "minute" です。 */
+  precision?: "hour" | "minute" | "second";
+  /** 12時間形式または24時間形式。デフォルトは "24" です。 */
+  hourFormat?: "12" | "24";
+  /** 分の増分ステップ。デフォルトは 5 です。 */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** 秒の増分ステップ。デフォルトは 1 です。 */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** 各スクロールホイール項目の高さ（px単位）。デフォルトは 32 です。 */
+  itemHeight?: number;
+}
+```

@@ -1,0 +1,54 @@
+---
+sidebar_position: 4
+sidebar_label: Custom Footer
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/tailwind3/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/tailwind3/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/tailwind3/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNoFooter.tsx?raw";
+
+# 커스텀 푸터
+
+## 재배치된 푸터
+
+푸터 버튼을 재배치하고 "오늘" 버튼 같은 추가 액션을 넣을 수 있습니다. 컴파운드 컴포넌트를 사용하면 어떤 버튼이 어떤 순서로 나타날지 정확하게 제어할 수 있습니다.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 최소 레이아웃
+
+필요 없는 부분은 제거할 수 있습니다. 여기서는 달력만 있는 최소한의 레이아웃을 위해 푸터를 완전히 생략했습니다:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 클래스 오버라이딩
+
+모든 컴파운드 파트는 `className` prop을 허용합니다. Tailwind v3 패키지는 `cn()`(`clsx` + `twMerge` 유틸리티)을 사용하여 기본 클래스와 여러분의 클래스를 병합하므로, 충돌하는 유틸리티가 올바르게 해결됩니다:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger className="min-w-[300px] px-4 py-3" />
+  <DatePicker.Content className="rounded-2xl shadow-xl">
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title className="text-lg" />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>;
+```

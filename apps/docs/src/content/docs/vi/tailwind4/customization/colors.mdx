@@ -1,0 +1,34 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind4/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind4/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind4/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind4/Customization/CompoundColorThemePopup.tsx?raw";
+
+# Màu sắc
+
+Chuyển đổi chủ đề màu sắc trong thời gian chạy bằng cách ghi đè các thuộc tính tùy chỉnh CSS trên một phần tử bao bọc. Vì gói Tailwind v4 đọc tất cả các màu từ các token ngữ nghĩa, việc thay đổi các biến CSS cơ bản sẽ ngay lập tức thay đổi thương hiệu của toàn bộ bộ chọn.
+
+Gói Tailwind v4 sử dụng định dạng **oklch** cho các token ngữ nghĩa. Ghi đè `--color-primary` và `--color-primary-foreground` để thay đổi thương hiệu của bộ chọn:
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Chế độ Popup
+
+Kỹ thuật tương tự cũng hoạt động với các bộ chọn dạng popup:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

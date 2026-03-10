@@ -1,0 +1,148 @@
+---
+sidebar_position: 4
+title: Contexts
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ContextExample from "@examples/headless/ContextExample";
+import ContextExampleSource from "@examples/headless/ContextExample.tsx?raw";
+
+# Contextes
+
+Le package headless fournit des fournisseurs de Contexte qui encapsulent les hooks et exposent leur état via React Context. Cela permet le **modèle de composant composé** -- divisez votre UI en sous-composants petits et ciblés qui lisent l'état depuis le contexte au lieu de passer des props.
+
+## Pourquoi les Contextes ?
+
+Sans contexte, vous devriez faire passer chaque élément d'état à travers les props :
+
+```tsx
+// Sans contexte -- prop drilling
+function MyDatePicker() {
+  const picker = useDatePicker({ value, onChange });
+  return (
+    <MyTrigger displayValue={picker.displayValue} onToggle={picker.handleToggle} />
+    <MyCalendar calendar={picker.calendar} getDayProps={picker.getDayProps} ... />
+    <MyFooter onConfirm={picker.handleConfirm} onCancel={picker.handleCancel} ... />
+  );
+}
+```
+
+Avec le contexte, les sous-composants consomment ce dont ils ont besoin directement :
+
+```tsx
+// Avec contexte -- composants composés
+function MyDatePicker() {
+  return (
+    <DatePickerProvider value={value} onChange={onChange}>
+      <ExampleWrapper variant="headless" client:load>
+        <MyTrigger client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyCalendar client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyFooter client:load />
+      </ExampleWrapper>
+    </DatePickerProvider>
+  );
+}
+
+function MyTrigger() {
+  const { displayValue, handleToggle } = useDatePickerContext();
+  return <button onClick={handleToggle}>{displayValue}</button>;
+}
+```
+
+## Providers Disponibles
+
+| Provider                      | Hook Utilisé en Interne  | Hook Consommateur                 |
+| ----------------------------- | ------------------------ | --------------------------------- |
+| `DatePickerProvider`          | `useDatePicker`          | `useDatePickerContext()`          |
+| `DateRangePickerProvider`     | `useDateRangePicker`     | `useDateRangePickerContext()`     |
+| `DateTimePickerProvider`      | `useDateTimePicker`      | `useDateTimePickerContext()`      |
+| `DateRangeTimePickerProvider` | `useDateRangeTimePicker` | `useDateRangeTimePickerContext()` |
+
+Chaque fournisseur rend à la fois un **contexte typé** (spécifique à ce type de sélecteur) et le **PickerContext unifié** (partagé entre tous les types).
+
+```tsx
+import {
+  DatePickerProvider,
+  DateRangePickerProvider,
+  DateTimePickerProvider,
+  DateRangeTimePickerProvider,
+} from "react-date-range-picker-headless";
+```
+
+### DatePickerProvider
+
+Encapsule `useDatePicker`. Fournit `DatePickerContext` + `PickerContext`.
+
+```tsx
+import type { DatePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop          | Type                           | Description                                                  |
+| ------------- | ------------------------------ | ------------------------------------------------------------ |
+| `children`    | `ReactNode`                    | **Requis.** Composants enfants.                              |
+| `value`       | `Date \| null`                 | **Requis.** Date actuelle.                                   |
+| `onChange`    | `(date: Date \| null) => void` | **Requis.** Gestionnaire de changement.                      |
+| `inline`      | `boolean`                      | Rendu en ligne (pas de popup).                               |
+| `size`        | `DatePickerSize`               | Variante de taille.                                          |
+| `placeholder` | `string`                       | Placeholder du déclencheur.                                  |
+| `name`        | `string`                       | Nom du champ de formulaire.                                  |
+| _...rest_     | `BaseDatePickerOptions`        | Toutes les options de base (minDate, maxDate, locale, etc.). |
+
+**Hook consommateur :** `useDatePickerContext()` retourne `UseDatePickerReturn`.
+
+### DateRangePickerProvider
+
+Encapsule `useDateRangePicker`. Fournit `DateRangePickerContext` + `PickerContext`.
+
+```tsx
+import type { DateRangePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop                     | Type                                                          | Description                             |
+| ------------------------ | ------------------------------------------------------------- | --------------------------------------- |
+| `children`               | `ReactNode`                                                   | **Requis.** Composants enfants.         |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | **Requis.** Plage actuelle.             |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | **Requis.** Gestionnaire de changement. |
+| `inline`                 | `boolean`                                                     | Rendu en ligne.                         |
+| `size`                   | `DatePickerSize`                                              | Variante de taille.                     |
+| `placeholder`            | `string`                                                      | Placeholder du déclencheur.             |
+| `name`                   | `string`                                                      | Nom du champ de formulaire.             |
+| `maxDays`                | `number`                                                      | Jours max dans la plage.                |
+| `minDays`                | `number`                                                      | Jours min dans la plage.                |
+| `presets`                | `DateRangePreset[]`                                           | Préréglages de plage.                   |
+| `allowSingleDateInRange` | `boolean`                                                     | Autoriser une plage d'un seul jour.     |
+| _...rest_                | `BaseDatePickerOptions`                                       | Toutes les options de base.             |
+
+**Hook consommateur :** `useDateRangePickerContext()` retourne `UseDateRangePickerReturn`.
+
+### DateTimePickerProvider
+
+Encapsule `useDateTimePicker`. Fournit `DateTimePickerContext` + `PickerContext`.
+
+```tsx
+import type { DateTimePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop          | Type                               | Description                             |
+| ------------- | ---------------------------------- | --------------------------------------- |
+| `children`    | `ReactNode`                        | **Requis.** Composants enfants.         |
+| `value`       | `Date \| null`                     | **Requis.** Date et heure actuelles.    |
+| `onChange`    | `(dateTime: Date \| null) => void` | **Requis.** Gestionnaire de changement. |
+| `time`        | `TimeConfig`                       | Configuration de l'heure.               |
+| `inline`      | `boolean`                          | Rendu en ligne.                         |
+| `size`        | `DatePickerSize`                   | Variante de taille.                     |
+| `placeholder` | `string`                           | Placeholder du déclencheur.             |
+| `name`        | `string`                           | Nom du champ de formulaire.             |
+| _...rest_     | `BaseDatePickerOptions`            | Toutes les options de base.             |
+
+**Hook consommateur :** `useDateTimePickerContext()` retourne `UseDateTimePickerReturn`.
+
+### DateRangeTimePickerProvider
+
+Encapsule `useDateRangeTimePicker`. Fournit `DateRangeTimePickerContext` + `PickerContext

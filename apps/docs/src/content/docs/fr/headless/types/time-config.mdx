@@ -1,0 +1,61 @@
+---
+sidebar_position: 2
+title: TimeConfig
+---
+
+# TimeConfig
+
+Objet de configuration pour les sélecteurs liés au temps. Partagé entre `useDateTimePicker`, `useDateRangeTimePicker`, et `useStandaloneTimePicker`.
+
+```tsx
+import type { TimeConfig } from "react-date-range-picker-headless";
+```
+
+## Champs
+
+| Champ        | Type            | Défaut     | Description                                                             |
+| ------------ | --------------- | ---------- | ----------------------------------------------------------------------- |
+| `precision`  | `TimePrecision` | `"minute"` | Précision d'affichage de l'heure : `"hour"`, `"minute"`, ou `"second"`. |
+| `hourFormat` | `HourFormat`    | `"24"`     | Format 12 heures ou 24 heures : `"12"` ou `"24"`.                       |
+| `minuteStep` | `MinuteStep`    | `5`        | Pas d'incrémentation des minutes.                                       |
+| `secondStep` | `SecondStep`    | `1`        | Pas d'incrémentation des secondes.                                      |
+| `itemHeight` | `number`        | `32`       | Hauteur (en px) de chaque élément de la molette de défilement.          |
+
+## Définition TypeScript
+
+```tsx
+interface TimeConfig {
+  precision?: TimePrecision;
+  hourFormat?: HourFormat;
+  minuteStep?: MinuteStep;
+  secondStep?: SecondStep;
+  itemHeight?: number;
+}
+```
+
+## Types Connexes
+
+```tsx
+type TimePrecision = "hour" | "minute" | "second";
+type HourFormat = "12" | "24";
+type MinuteStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+type SecondStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## Configuration Résolue
+
+Les hooks qui acceptent `TimeConfig` retournent un `resolvedTimeConfig` avec toutes les valeurs par défaut renseignées :
+
+```tsx
+type Required<TimeConfig>
+// { precision: TimePrecision; hourFormat: HourFormat; minuteStep: MinuteStep; secondStep: SecondStep; itemHeight: number }
+```
+
+Utilisez l'utilitaire `resolveTimeConfig()` pour résoudre les valeurs par défaut manuellement :
+
+```tsx
+import { resolveTimeConfig } from "react-date-range-picker-headless";
+
+const resolved = resolveTimeConfig({ precision: "second" });
+// { precision: "second", hourFormat: "24", minuteStep: 5, secondStep: 1, itemHeight: 32 }
+```

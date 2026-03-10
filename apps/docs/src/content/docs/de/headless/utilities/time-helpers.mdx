@@ -1,0 +1,71 @@
+---
+sidebar_position: 4
+title: Time Helpers
+---
+
+# Zeit-Helfer
+
+Funktionen zum Generieren von Zeitwerten, Konvertieren zwischen 12/24-Stunden-Formaten, Einrasten auf Schritte und Auflösen der Zeitkonfiguration.
+
+```tsx
+import {
+  generateHours,
+  generateHours12,
+  generateMinutes,
+  generateSeconds,
+  adjustMinuteToStep,
+  adjustSecondToStep,
+  to12Hour,
+  to24Hour,
+  resolveTimeConfig,
+} from "react-date-range-picker-headless";
+```
+
+## generateHours
+
+Generiert ein Array mit 24-Stunden-Werten.
+
+|             |                             |
+| ----------- | --------------------------- |
+| Signatur    | `generateHours(): number[]` |
+| Gibt zurück | `[0, 1, 2, ..., 23]`        |
+
+## generateHours12
+
+Generiert ein Array mit 12-Stunden-Werten.
+
+|             |                               |
+| ----------- | ----------------------------- |
+| Signatur    | `generateHours12(): number[]` |
+| Gibt zurück | `[1, 2, 3, ..., 12]`          |
+
+## generateMinutes
+
+Generiert ein nach Schritten gefiltertes Minuten-Array.
+
+|          |                                                      |
+| -------- | ---------------------------------------------------- |
+| Signatur | `generateMinutes(minuteStep?: MinuteStep): number[]` |
+| Standard | `5`                                                  |
+
+```tsx
+generateMinutes(); // [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
+generateMinutes(15); // [0, 15, 30, 45]
+generateMinutes(1); // [0, 1, 2, ..., 59]
+```
+
+## generateSeconds
+
+Generiert ein nach Schritten gefiltertes Sekunden-Array.
+
+|          |                                                      |
+| -------- | ---------------------------------------------------- |
+| Signatur | `generateSeconds(secondStep?: SecondStep): number[]` |
+| Standard | `1`                                                  |
+
+```tsx
+generateSeconds(); // [0, 1, 2, ..., 59]
+generateSeconds(15); // [0, 15, 30, 45]
+```
+
+## adjustMinuteTo

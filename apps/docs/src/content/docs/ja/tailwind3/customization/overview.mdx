@@ -1,0 +1,48 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Compoundコンポーネント
+
+`Tailwind v3`パッケージは、各ピッカーの内部構造とレンダリングを完全に制御できるCompound Component APIを公開しています。単一のモノリシックなコンポーネントの代わりに、個々のパーツからピッカーを構成します。
+
+## 仕組み
+
+すべてのピッカー（例：`DatePicker`）は、シンプルなコンポーネントでありながら、Compoundパーツの名前空間でもあります：
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+// シンプルな使用法 — デフォルトのレイアウトをレンダリング
+<DatePicker value={value} onChange={setValue} />
+
+// Compound使用法 — 構造を完全に制御
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## 利用可能なパーツ
+
+### DatePicker
+
+| パーツ               | 説明                                                                                               |
+| -------------------- | -------------------------------------------------------------------------------------------------- |
+| `DatePicker.Root`    | Provider + コンテナ。すべてのピッカーのprops（`value`、`onChange`、`minDate`など）を受け入れます。 |
+| `DatePicker.Trigger` | ポップアップを開閉するボタン。選択された値を表示します。                                           |
+
+|

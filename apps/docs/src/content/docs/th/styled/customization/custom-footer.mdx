@@ -1,0 +1,79 @@
+---
+sidebar_position: 4
+sidebar_label: "Custom Footer"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/styled/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/styled/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/styled/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/styled/Customization/CompoundNoFooter.tsx?raw";
+
+# ส่วนท้ายแบบกำหนดเอง
+
+สร้างส่วนท้ายแบบกำหนดเองทั้งหมดด้วยปุ่มและเลย์เอาต์ของคุณเอง หรือลบส่วนต่างๆ ทั้งหมดเพื่อสร้างตัวเลือกแบบมินิมอล
+
+## ส่วนท้ายที่จัดเรียงใหม่
+
+จัดเรียงปุ่มส่วนท้ายใหม่หรือเพิ่มปุ่มใหม่ๆ เช่น `TodayButton` คอมโพเนนต์ประกอบ `DateTimePicker` ประกอบด้วย `TimeSection` พร้อม `TimePanel` สำหรับการเลือกเวลา และ `Footer` ทำหน้าที่เป็นคอนเท이너สำหรับปุ่มดำเนินการ
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+คุณยังสามารถข้ามปุ่มดำเนินการในตัวทั้งหมดและใช้องค์ประกอบของคุณเองภายใน `Footer` ได้:
+
+```tsx
+<DatePicker.Footer>
+  <button onClick={() => setValue(new Date())}>Set Today</button>
+  <button onClick={() => setValue(null)}>Clear</button>
+</DatePicker.Footer>
+```
+
+## เลย์เอาต์แบบมินิมอล
+
+ละเว้นส่วนที่คุณไม่ต้องการ ตัวอย่างเช่น ปฏิทินอินไลน์ที่ไม่มีส่วนหัว ไม่มีส่วนท้าย หรือทริกเกอร์:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+หรือตัวเลือกที่ไม่มีส่วนท้าย:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## การเพิ่มชื่อคลาสแบบกำหนดเอง
+
+ทุกส่วนประกอบยอมรับพร็อพ `className` ที่จะรวมเข้ากับคลาส CSS ที่จัดรูปแบบไว้ล่วงหน้า:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} className="my-picker">
+  <DatePicker.Trigger className="my-trigger" />
+  <DatePicker.Content className="my-content">
+    <DatePicker.Header className="my-header">
+      <DatePicker.PrevButton className="my-nav" />
+      <DatePicker.Title className="my-title" />
+      <DatePicker.NextButton className="my-nav" />
+    </DatePicker.Header>
+    <DatePicker.Grid className="my-grid" />
+  </DatePicker.Content>
+</DatePicker.Root>
+```

@@ -1,0 +1,36 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import SecondPrecision from "@examples/styled/DateRangeTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/styled/DateRangeTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/styled/DateRangeTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/styled/DateRangeTimePicker/TwelveHour.tsx?raw";
+
+# 時間オプション
+
+`time` propを介して、時間パネルの動作を設定します。
+
+## 秒単位の精度
+
+開始時刻と終了時刻の両方のパネルに秒の列を表示します。
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 12時間形式
+
+開始時刻と終了時刻の両方のパネルで、AM/PMトグル付きの12時間形式に切り替えます。
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

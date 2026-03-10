@@ -1,0 +1,46 @@
+---
+sidebar_position: 7
+sidebar_label: "Colors"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/styled/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/styled/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/styled/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/styled/Customization/CompoundColorThemePopup.tsx?raw";
+import CSSCustomColors from "@examples/styled/Customization/CSSCustomColors";
+import CSSCustomColorsSource from "@examples/styled/Customization/CSSCustomColors.tsx?raw";
+
+# Colors
+
+Switch the color theme at runtime by overriding CSS custom properties on a wrapper element. The styled package uses `--rdrp-color-primary`, `--rdrp-color-primary-hover`, `--rdrp-color-primary-light`, and `--rdrp-color-primary-lighter` for all primary accent colors.
+
+## Inline Theme Switcher
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Popup Theme Switcher
+
+The same approach works with popup pickers:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## CSS Variable Inline Style
+
+You can also override colors directly via the `style` attribute on a wrapper element:
+
+<CodeDemo source={CSSCustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CSSCustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>

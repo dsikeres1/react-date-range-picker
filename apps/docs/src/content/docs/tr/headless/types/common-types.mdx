@@ -1,0 +1,124 @@
+---
+sidebar_position: 5
+title: Common Types
+---
+
+# Ortak Tipler
+
+Headless paketinde kullanılan paylaşılan tip takma adları.
+
+```tsx
+import type {
+  DatePickerSize,
+  WeekDay,
+  CaptionLayout,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  MinuteStep,
+  SecondStep,
+  CalendarMonth,
+  DateUnit,
+} from "react-date-range-picker-headless";
+```
+
+## DatePickerSize
+
+UI boyut varyantı. Headless hook'ları bunu kullanmadan geçirir. Styled component'ler bunu görsel boyutlandırma için kullanır.
+
+```tsx
+type DatePickerSize = "x-large" | "large" | "medium" | "small";
+```
+
+## WeekDay
+
+Haftanın gününü bir dize olarak belirtir. `weekStartsOn` seçeneğinde kullanılır.
+
+```tsx
+type WeekDay = "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday";
+```
+
+## CaptionLayout
+
+Takvim başlığı düzen modu.
+
+```tsx
+type CaptionLayout = "buttons" | "dropdown";
+```
+
+| Değer        | Açıklama                                          |
+| ------------ | ------------------------------------------------- |
+| `"buttons"`  | Önceki/sonraki ay gezinme düğmeleri (varsayılan). |
+| `"dropdown"` | Yıl ve ay seçim açılır menüleri.                  |
+
+## TimePrecision
+
+Hangi zaman sütunlarının gösterileceğini kontrol eder.
+
+```tsx
+type TimePrecision = "hour" | "minute" | "second";
+```
+
+| Değer      | Gösterilen Sütunlar     |
+| ---------- | ----------------------- |
+| `"hour"`   | Sadece saat.            |
+| `"minute"` | Saat + dakika.          |
+| `"second"` | Saat + dakika + saniye. |
+
+## HourFormat
+
+12 saatlik veya 24 saatlik zaman gösterimi.
+
+```tsx
+type HourFormat = "12" | "24";
+```
+
+## TimePeriod
+
+12 saatlik format için AM/PM göstergesi.
+
+```tsx
+type TimePeriod = "AM" | "PM";
+```
+
+## MinuteStep
+
+Adım tabanlı dakika seçimi için geçerli dakika artış değerleri.
+
+```tsx
+type MinuteStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## SecondStep
+
+Adım tabanlı saniye seçimi için geçerli saniye artış değerleri.
+
+```tsx
+type SecondStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## CalendarMonth
+
+Tek bir ay için oluşturulan takvim verileri.
+
+```tsx
+interface CalendarMonth {
+  month: Date;
+  days: (Date | null)[];
+  weeks: (Date | null)[][];
+}
+```
+
+| Alan    | Tip                  | Açıklama                                                              |
+| ------- | -------------------- | --------------------------------------------------------------------- |
+| `month` | `Date`               | Bu takvimin temsil ettiği ay.                                         |
+| `days`  | `(Date \| null)[]`   | 42 hücrelik düz bir dizi (6 hafta x 7 gün). Boş hücreler için `null`. |
+| `weeks` | `(Date \| null)[][]` | Her biri 7 gün hücresi içeren 6 haftalık 2D dizi.                     |
+
+## DateUnit
+
+Tarih yardımcı fonksiyonları (`startOf`, `endOf`, `add`, `subtract`, `isSame`, `isBefore`, `isAfter`, `diff`) için zaman birimi.
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```

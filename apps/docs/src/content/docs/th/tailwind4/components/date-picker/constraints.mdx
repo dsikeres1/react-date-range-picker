@@ -1,0 +1,82 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Required from "@examples/tailwind4/DatePicker/Required";
+import RequiredSource from "@examples/tailwind4/DatePicker/Required.tsx?raw";
+import MinMaxDate from "@examples/tailwind4/DatePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/tailwind4/DatePicker/MinMaxDate.tsx?raw";
+import DisabledDates from "@examples/tailwind4/DatePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind4/DatePicker/DisabledDates.tsx?raw";
+import DisablePastFuture from "@examples/tailwind4/DatePicker/DisablePastFuture";
+import DisablePastFutureSource from "@examples/tailwind4/DatePicker/DisablePastFuture.tsx?raw";
+import HighlightDates from "@examples/tailwind4/DatePicker/HighlightDates";
+import HighlightDatesSource from "@examples/tailwind4/DatePicker/HighlightDates.tsx?raw";
+import InitialMonth from "@examples/tailwind4/DatePicker/InitialMonth";
+import InitialMonthSource from "@examples/tailwind4/DatePicker/InitialMonth.tsx?raw";
+
+# ข้อจำกัด
+
+## จำเป็น
+
+เมื่อตั้งค่า `required` ปุ่มล้างค่าจะถูกปิดใช้งานและค่าจะไม่สามารถทำให้ว่างได้
+
+<CodeDemo source={RequiredSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Required client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## วันที่ต่ำสุดและสูงสุด
+
+จำกัดวันที่ที่สามารถเลือกได้ให้อยู่ในช่วงที่กำหนดโดยใช้ `minDate` และ `maxDate`
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## วันที่ปิดใช้งาน
+
+ใช้ `isDateUnavailable` เพื่อปิดใช้งานวันที่ที่ระบุแบบไดนามิก
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## ปิดใช้งานอดีต / อนาคต
+
+ใช้ `disablePast` หรือ `disableFuture` เพื่อปิดใช้งานวันที่ก่อน/หลังวันนี้อย่างรวดเร็ว
+
+<CodeDemo source={DisablePastFutureSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisablePastFuture client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## เน้นวันที่
+
+เน้นวันที่ที่ระบุด้วยสายตา (เช่น วันหยุด, กิจกรรม) โดยใช้ prop `highlightDates`
+
+<CodeDemo source={HighlightDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <HighlightDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## เดือนเริ่มต้น
+
+ตั้งค่าเดือนที่แสดงเริ่มต้นเมื่อตัวเลือกเปิดขึ้นเป็นครั้งแรก
+
+<CodeDemo source={InitialMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <InitialMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>

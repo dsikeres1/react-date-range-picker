@@ -1,0 +1,106 @@
+---
+sidebar_position: 1
+title: Overview
+---
+
+import PackageInstall from "@/components/PackageInstall.astro";
+
+# Headless
+
+Gói headless (`react-date-range-picker-headless`) cung cấp các hook và context provider không có style. Nó chứa tất cả logic quản lý trạng thái, lịch, điều hướng bàn phím, và các tính năng trợ năng -- nhưng hoàn toàn không có CSS hay định kiến về markup.
+
+Bạn tự cung cấp giao diện người dùng của mình.
+
+## Cài đặt
+
+<PackageInstall pkg="react-date-range-picker-headless" />
+
+## Khi nào nên dùng Headless
+
+- Bạn có một hệ thống thiết kế với thư viện component của riêng mình
+- Bạn muốn kiểm soát từng pixel của mọi phần tử
+- Bạn đang xây dựng một bộ chọn ngày tùy chỉnh cho một trường hợp sử dụng cụ thể
+- Bạn muốn tích hợp với một framework CSS không được các gói định kiểu hỗ trợ
+
+Nếu bạn muốn các component đã được định kiểu sẵn sàng sử dụng, hãy xem [Styled](/docs/styled/getting-started), [Tailwind v4](/docs/tailwind4/getting-started), hoặc [Tailwind v3](/docs/tailwind3/getting-started).
+
+## Cách hoạt động
+
+1. Chọn một hook dựa trên trường hợp sử dụng của bạn
+2. Truyền các tùy chọn (value, onChange, config)
+3. Nhận lại trạng thái và các trình xử lý
+4. Tạo giao diện người dùng của riêng bạn bằng các giá trị trả về
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  const {
+    isOpen,
+    calendar,
+    getDayProps,
+    displayValue,
+    handleToggle,
+    handleDateClick,
+    handleConfirm,
+    handlePrevMonth,
+    handleNextMonth,
+    locale,
+  } = useDatePicker({ value, onChange: setValue });
+
+  return (
+    <div>
+      <button onClick={handleToggle}>{displayValue || locale.placeholder}</button>
+      {isOpen && (
+        <div>
+          <div>
+            <button onClick={handlePrevMonth}>{locale.prevMonth}</button>
+            <span>{locale.formatMonthYear(calendar.month)}</span>
+            <button onClick={handleNextMonth}>{locale.nextMonth}</button>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}>
+            {calendar.weeks.flat().map((day, i) => {
+              if (!day) return <span key={i} />;
+              const props = getDayProps(day);
+              return (
+                <button
+                  key={i}
+                  onClick={() => handleDateClick(day)}
+                  style={{
+                    background: props.isSelected ? "#0ea5e9" : "transparent",
+                    color: props.isDisabled ? "#ccc" : props.isToday ? "#0ea5e9" : "inherit",
+                  }}
+                >
+                  {props.day}
+                </button>
+              );
+            })}
+          </div>
+          <button onClick={handleConfirm}>{locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Các Hook có sẵn
+
+| Hook                                                                         | Trường hợp sử dụng              |
+| ---------------------------------------------------------------------------- | ------------------------------- |
+| [`useDatePicker`](/docs/headless/hooks/use-date-picker)                      | Chọn một ngày duy nhất          |
+| [`useDateRangePicker`](/docs/headless/hooks/use-date-range-picker)           | Chọn khoảng ngày với lịch kép   |
+| [`useDateTimePicker`](/docs/headless/hooks/use-date-time-picker)             | Chọn ngày + giờ                 |
+| [`useDateRangeTimePicker`](/docs/headless/hooks/use-date-range-time-picker)  | Chọn khoảng ngày + giờ          |
+| [`useTimePicker`](/docs/headless/hooks/use-time-picker)                      | Bánh xe cuộn chỉ chọn giờ       |
+| [`useStandaloneTimePicker`](/docs/headless/hooks/use-standalone-time-picker) | Bộ chọn giờ với hành vi mở/đóng |
+
+## Các bước tiếp theo
+
+- [Xây dựng giao diện người dùng tùy chỉnh](/docs/headless/building-custom-ui) -- Hướng dẫn đầy đủ về mẫu headless
+- [Tham khảo Hooks](/docs/headless/hooks/use-date-picker) -- Tài liệu chi tiết về hook
+- [Contexts](/docs/headless/contexts) -- Mẫu Provider cho các component phức hợp
+- [Tiện ích ngày tháng](/docs/headless/date-utilities) -- Các hàm trợ giúp được xuất từ headless

@@ -1,0 +1,52 @@
+---
+sidebar_position: 4
+title: useDateRangeTimePicker
+---
+
+# useDateRangeTimePicker
+
+用於選擇日期範圍並結合開始和結束日期時間選擇的鉤子。將 `useDateRangePicker` 的功能和時間管理合併到一個鉤子中。
+
+## 匯入
+
+```tsx
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+```
+
+## 使用方式
+
+```tsx
+import { useState } from "react";
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+
+function MyDateRangeTimePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangeTimePicker({
+    value: range,
+    onChange: setRange,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 15 },
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangeTimePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* 雙日曆、預設選項、開始和結束的時間控制 */}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## 選項
+
+| 選項 | 類型 | 預設值 | 描述 |
+|

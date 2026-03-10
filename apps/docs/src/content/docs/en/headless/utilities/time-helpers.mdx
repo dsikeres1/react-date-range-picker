@@ -1,0 +1,150 @@
+---
+sidebar_position: 4
+title: Time Helpers
+---
+
+# Time Helpers
+
+Functions for generating time values, converting between 12/24-hour formats, snapping to steps, and resolving time configuration.
+
+```tsx
+import {
+  generateHours,
+  generateHours12,
+  generateMinutes,
+  generateSeconds,
+  adjustMinuteToStep,
+  adjustSecondToStep,
+  to12Hour,
+  to24Hour,
+  resolveTimeConfig,
+} from "react-date-range-picker-headless";
+```
+
+## generateHours
+
+Generate an array of 24-hour values.
+
+|           |                             |
+| --------- | --------------------------- |
+| Signature | `generateHours(): number[]` |
+| Returns   | `[0, 1, 2, ..., 23]`        |
+
+## generateHours12
+
+Generate an array of 12-hour values.
+
+|           |                               |
+| --------- | ----------------------------- |
+| Signature | `generateHours12(): number[]` |
+| Returns   | `[1, 2, 3, ..., 12]`          |
+
+## generateMinutes
+
+Generate minutes array filtered by step.
+
+|           |                                                      |
+| --------- | ---------------------------------------------------- |
+| Signature | `generateMinutes(minuteStep?: MinuteStep): number[]` |
+| Default   | `5`                                                  |
+
+```tsx
+generateMinutes(); // [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
+generateMinutes(15); // [0, 15, 30, 45]
+generateMinutes(1); // [0, 1, 2, ..., 59]
+```
+
+## generateSeconds
+
+Generate seconds array filtered by step.
+
+|           |                                                      |
+| --------- | ---------------------------------------------------- |
+| Signature | `generateSeconds(secondStep?: SecondStep): number[]` |
+| Default   | `1`                                                  |
+
+```tsx
+generateSeconds(); // [0, 1, 2, ..., 59]
+generateSeconds(15); // [0, 15, 30, 45]
+```
+
+## adjustMinuteToStep
+
+Snap a minute value to the nearest valid step (rounds down).
+
+|           |                                                                      |
+| --------- | -------------------------------------------------------------------- |
+| Signature | `adjustMinuteToStep(minute: number, minuteStep: MinuteStep): number` |
+
+```tsx
+adjustMinuteToStep(7, 5); // 5
+adjustMinuteToStep(13, 10); // 10
+adjustMinuteToStep(29, 15); // 15
+```
+
+## adjustSecondToStep
+
+Snap a second value to the nearest valid step (rounds down).
+
+|           |                                                                      |
+| --------- | -------------------------------------------------------------------- |
+| Signature | `adjustSecondToStep(second: number, secondStep: SecondStep): number` |
+
+```tsx
+adjustSecondToStep(7, 5); // 5
+adjustSecondToStep(14, 10); // 10
+```
+
+## to12Hour
+
+Convert a 24-hour value to 12-hour format with AM/PM.
+
+|           |                                                                  |
+| --------- | ---------------------------------------------------------------- |
+| Signature | `to12Hour(hour24: number): { hour: number; period: TimePeriod }` |
+
+```tsx
+to12Hour(0); // { hour: 12, period: "AM" }
+to12Hour(12); // { hour: 12, period: "PM" }
+to12Hour(13); // { hour: 1, period: "PM" }
+to12Hour(23); // { hour: 11, period: "PM" }
+```
+
+## to24Hour
+
+Convert a 12-hour value with AM/PM to 24-hour format.
+
+|           |                                                        |
+| --------- | ------------------------------------------------------ |
+| Signature | `to24Hour(hour12: number, period: TimePeriod): number` |
+
+```tsx
+to24Hour(12, "AM"); // 0
+to24Hour(12, "PM"); // 12
+to24Hour(1, "PM"); // 13
+to24Hour(11, "PM"); // 23
+```
+
+## resolveTimeConfig
+
+Resolve a partial `TimeConfig` with defaults.
+
+|           |                                                                |
+| --------- | -------------------------------------------------------------- |
+| Signature | `resolveTimeConfig(config?: TimeConfig): Required<TimeConfig>` |
+
+| Field        | Default    |
+| ------------ | ---------- |
+| `precision`  | `"minute"` |
+| `hourFormat` | `"24"`     |
+| `minuteStep` | `5`        |
+| `secondStep` | `1`        |
+| `itemHeight` | `32`       |
+
+```tsx
+resolveTimeConfig();
+// { precision: "minute", hourFormat: "24", minuteStep: 5, secondStep: 1, itemHeight: 32 }
+
+resolveTimeConfig({ precision: "second", hourFormat: "12" });
+// { precision: "second", hourFormat: "12", minuteStep: 5, secondStep: 1, itemHeight: 32 }
+```

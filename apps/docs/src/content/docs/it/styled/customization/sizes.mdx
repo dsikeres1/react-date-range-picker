@@ -1,0 +1,198 @@
+---
+sidebar_position: 5
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/styled/DatePicker/Sizes";
+import SizesSource from "@examples/styled/DatePicker/Sizes.tsx?raw";
+import CustomSizeViaCSS from "@examples/styled/Customization/CustomSizeViaCSS";
+import CustomSizeViaCSSSource from "@examples/styled/Customization/CustomSizeViaCSS.tsx?raw";
+
+# 크기
+
+styled 패키지에는 타이포그래피, 간격, 셀 크기, 트리거 크기를 비례적으로 조정하는 4가지 내장 크기 변형이 포함되어 있습니다.
+
+## 사용 가능한 크기
+
+| 크기      | 셀 크기 | 기본 폰트 | 트리거 최소 너비 |
+| --------- | ------- | --------- | ---------------- |
+| `small`   | 28px    | 11px      | 160px            |
+| `medium`  | 36px    | 13px      | 200px            |
+| `large`   | 44px    | 14px      | 240px            |
+| `x-large` | 52px    | 15px      | 280px            |
+
+`medium`이 기본값입니다.
+
+## 사용법
+
+`size` prop을 모든 피커 컴포넌트에 전달하세요:
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 크기별 변경 사항
+
+각 크기 변형은 클래스(예: `rdrp-size-small`)를 통해 CSS 변수 집합을 재정의합니다. 각 크기가 조정하는 내용은 다음과 같습니다:
+
+### Small
+
+```css
+.rdrp-size-small {
+  --rdrp-cell-size: 28px;
+  --rdrp-nav-btn-size: 24px;
+  --rdrp-weekday-height: 24px;
+  --rdrp-grid-min-height: 168px;
+  --rdrp-panel-min-width: 196px;
+  --rdrp-dual-gap: 16px;
+
+  --rdrp-font-size-xs: 10px;
+  --rdrp-font-size-sm: 11px;
+  --rdrp-font-size-base: 11px;
+  --rdrp-font-size-md: 12px;
+  --rdrp-font-size-lg: 13px;
+
+  --rdrp-trigger-min-width: 160px;
+  --rdrp-trigger-padding-x: 10px;
+  --rdrp-trigger-padding-y: 6px;
+  --rdrp-popup-padding: 12px;
+
+  --rdrp-btn-padding-x: 10px;
+  --rdrp-btn-padding-y: 4px;
+
+  --rdrp-spacing-lg: 8px;
+  --rdrp-spacing-xl: 12px;
+
+  --rdrp-time-item-height: 28px;
+  --rdrp-time-panel-height: 148px;
+  --rdrp-time-column-height: 132px;
+  --rdrp-time-panel-min-width: 100px;
+  --rdrp-time-picker-content-min-width: 210px;
+
+  --rdrp-preset-min-width: 110px;
+}
+```
+
+### Large
+
+```css
+.rdrp-size-large {
+  --rdrp-cell-size: 44px;
+  --rdrp-nav-btn-size: 32px;
+  --rdrp-weekday-height: 32px;
+  --rdrp-grid-min-height: 264px;
+  --rdrp-panel-min-width: 308px;
+  --rdrp-dual-gap: 28px;
+
+  --rdrp-font-size-xs: 12px;
+  --rdrp-font-size-sm: 13px;
+  --rdrp-font-size-base: 14px;
+  --rdrp-font-size-md: 15px;
+  --rdrp-font-size-lg: 16px;
+
+  --rdrp-trigger-min-width: 240px;
+  --rdrp-trigger-padding-x: 16px;
+  --rdrp-trigger-padding-y: 10px;
+  --rdrp-popup-padding: 20px;
+
+  --rdrp-btn-padding-x: 16px;
+  --rdrp-btn-padding-y: 8px;
+
+  --rdrp-spacing-lg: 16px;
+  --rdrp-spacing-xl: 20px;
+
+  --rdrp-time-item-height: 36px;
+  --rdrp-time-panel-height: 196px;
+  --rdrp-time-column-height: 180px;
+  --rdrp-time-panel-min-width: 140px;
+  --rdrp-time-picker-content-min-width: 290px;
+
+  --rdrp-preset-min-width: 160px;
+}
+```
+
+### X-Large
+
+```css
+.rdrp-size-x-large {
+  --rdrp-cell-size: 52px;
+  --rdrp-nav-btn-size: 36px;
+  --rdrp-weekday-height: 36px;
+  --rdrp-grid-min-height: 312px;
+  --rdrp-panel-min-width: 364px;
+  --rdrp-dual-gap: 32px;
+
+  --rdrp-font-size-xs: 13px;
+  --rdrp-font-size-sm: 14px;
+  --rdrp-font-size-base: 15px;
+  --rdrp-font-size-md: 16px;
+  --rdrp-font-size-lg: 18px;
+
+  --rdrp-trigger-min-width: 280px;
+  --rdrp-trigger-padding-x: 20px;
+  --rdrp-trigger-padding-y: 12px;
+  --rdrp-popup-padding: 24px;
+
+  --rdrp-btn-padding-x: 20px;
+  --rdrp-btn-padding-y: 10px;
+
+  --rdrp-spacing-lg: 20px;
+  --rdrp-spacing-xl: 24px;
+
+  --rdrp-time-item-height: 40px;
+  --rdrp-time-panel-height: 216px;
+  --rdrp-time-column-height: 200px;
+  --rdrp-time-panel-min-width: 160px;
+
+  --rdrp-preset-min-width: 180px;
+}
+```
+
+## 사용자 정의 크기
+
+크기 조정 변수를 재정의하는 CSS 클래스를 정의하여 자신만의 크기를 만들 수 있습니다:
+
+```css
+.rdrp-size-custom {
+  --rdrp-cell-size: 40px;
+  --rdrp-nav-btn-size: 30px;
+  --rdrp-font-size-base: 14px;
+  --rdrp-font-size-md: 15px;
+  --rdrp-trigger-min-width: 220px;
+  --rdrp-popup-padding: 18px;
+}
+```
+
+그런 다음 래퍼를 통해 적용합니다:
+
+```tsx
+<div className="rdrp-size-custom">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+또는 Compound Component API를 사용하여 `Root`에 클래스를 추가합니다:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} className="rdrp-size-custom">
+  {/* ... */}
+</DatePicker.Root>
+```
+
+인라인 스타일을 통해 크기 조정 변수를 재정의할 수도 있습니다:
+
+<CodeDemo source={CustomSizeViaCSSSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSizeViaCSS client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip">
+  `medium` 크기는 기본값이며 어떠한 재정의도 적용하지 않습니다. `variables.css`의 기본 변수들이
+  medium 값입니다.
+</Admonition>

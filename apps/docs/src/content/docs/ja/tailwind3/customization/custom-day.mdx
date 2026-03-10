@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: Custom Day Cell
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/tailwind3/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/tailwind3/Customization/CompoundCustomDay.tsx?raw";
+
+# 日付セルのカスタマイズ
+
+`Day` コンポーネントの `render prop` を使用して、各日付セルをカスタマイズします。これは、イベントインジケーターの追加、日付のプロパティに基づいたカスタムスタイリング、または日付のレンダリングを完全に置き換える場合に便利です。
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Day のレンダープロップ
+
+| プロップ         | 型           | 説明                                         |
+| ---------------- | ------------ | -------------------------------------------- |
+| `date`           | `Date`       | `Date` オブジェクト                          |
+| `day`            | `number`     | 月の日付 (1-31)                              |
+| `isToday`        | `boolean`    | この日が今日であるかどうか                   |
+| `isSelected`     | `boolean`    | この日が選択されているかどうか               |
+| `isDisabled`     | `boolean`    | この日が無効になっているかどうか             |
+| `isInRange`      | `boolean`    | この日が選択された範囲内にあるかどうか       |
+| `isRangeStart`   | `boolean`    | この日が範囲の開始日であるかどうか           |
+| `isRangeEnd`     | `boolean`    | この日が範囲の終了日であるかどうか           |
+| `isInHoverRange` | `boolean`    | この日がホバープレビュー範囲内にあるかどうか |
+| `isHoverTarget`  | `boolean`    | この日がホバーの終点であるかどうか           |
+| `isOutsideDay`   | `boolean`    | この日が隣接する月に属しているかどうか       |
+| `isHighlighted`  | `boolean`    | この日にハイライトドットがあるかどうか       |
+| `isFocused`      | `boolean`    | この日にキーボードフォーカスがあるかどうか   |
+| `onClick`        | `() => void` | クリックハンドラ                             |
+| `onMouseEnter`   | `() => void` | マウスエンターハンドラ                       |
+| `onMouseLeave`   | `() => void` | マウスリーブハンドラ                         |

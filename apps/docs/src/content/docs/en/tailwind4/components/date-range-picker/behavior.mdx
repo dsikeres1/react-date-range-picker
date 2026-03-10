@@ -1,0 +1,51 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/tailwind4/DateRangePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/tailwind4/DateRangePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/tailwind4/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind4/DateRangePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/tailwind4/DateRangePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind4/DateRangePicker/FormIntegration.tsx?raw";
+
+# Behavior
+
+## Close on Select
+
+When `shouldCloseOnSelect` is enabled, the picker automatically confirms and closes when the end date is selected.
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Multiple Months
+
+Display more than the default two months side by side.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Form Integration
+
+Use the `name` prop to include hidden inputs for native form submission.
+
+<Admonition type="tip">
+  The submit button styling in this example is custom — the library only provides the date picker.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

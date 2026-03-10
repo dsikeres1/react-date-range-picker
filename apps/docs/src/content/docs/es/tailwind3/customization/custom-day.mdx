@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: Custom Day Cell
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/tailwind3/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/tailwind3/Customization/CompoundCustomDay.tsx?raw";
+
+# Celda de Día Personalizada
+
+Usa la render prop del componente `Day` para personalizar cada celda de día. Esto es útil para agregar indicadores de eventos, aplicar estilos personalizados basados en las propiedades de la fecha o reemplazar por completo la renderización del día.
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render Props de Day
+
+| Prop             | Tipo         | Descripción                                                   |
+| ---------------- | ------------ | ------------------------------------------------------------- |
+| `date`           | `Date`       | El objeto de fecha                                            |
+| `day`            | `number`     | Día del mes (1-31)                                            |
+| `isToday`        | `boolean`    | Si hoy es este día                                            |
+| `isSelected`     | `boolean`    | Si este día está seleccionado                                 |
+| `isDisabled`     | `boolean`    | Si este día está deshabilitado                                |
+| `isInRange`      | `boolean`    | Si este día está dentro de un rango seleccionado              |
+| `isRangeStart`   | `boolean`    | Si este es el inicio del rango                                |
+| `isRangeEnd`     | `boolean`    | Si este es el final del rango                                 |
+| `isInHoverRange` | `boolean`    | Si este día está en el rango de vista previa flotante (hover) |
+| `isHoverTarget`  | `boolean`    | Si este es el punto final del hover                           |
+| `isOutsideDay`   | `boolean`    | Si este día pertenece a un mes adyacente                      |
+| `isHighlighted`  | `boolean`    | Si este día tiene un punto de resaltado                       |
+| `isFocused`      | `boolean`    | Si este día tiene el foco del teclado                         |
+| `onClick`        | `() => void` | Manejador de clic                                             |
+| `onMouseEnter`   | `() => void` | Manejador de entrada del ratón                                |
+| `onMouseLeave`   | `() => void` | Manejador de salida del ratón                                 |

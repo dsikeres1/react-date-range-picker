@@ -1,0 +1,48 @@
+---
+sidebar_position: 2
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import TwelveHour from "@examples/styled/TimePicker/TwelveHour";
+import TwelveHourSource from "@examples/styled/TimePicker/TwelveHour.tsx?raw";
+import MinuteStep from "@examples/styled/TimePicker/MinuteStep";
+import MinuteStepSource from "@examples/styled/TimePicker/MinuteStep.tsx?raw";
+import SecondPrecision from "@examples/styled/TimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/styled/TimePicker/SecondPrecision.tsx?raw";
+
+# Opciones de Hora
+
+Configura el comportamiento del panel de hora a través de la prop `time`.
+
+## Formato de 12 Horas
+
+Cambia al formato de 12 horas con el selector AM/PM.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Intervalo de Minutos
+
+Establece el intervalo de incremento de los minutos. Útil para programar en intervalos fijos.
+
+<CodeDemo source={MinuteStepSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinuteStep client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Precisión de Segundos
+
+Muestra la columna de segundos estableciendo `precision` en `"second"`.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>

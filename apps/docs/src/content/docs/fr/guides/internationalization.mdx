@@ -1,0 +1,163 @@
+---
+sidebar_position: 2
+title: Internationalization
+description: Personnalisation de la locale, changement de langue et remplacement du formatage.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Internationalisation
+
+La bibliothèque utilise l'API `Intl.DateTimeFormat` du navigateur pour générer les noms des mois, les étiquettes des jours de la semaine et le texte AM/PM adaptés à la locale. Aucune bibliothèque d'internationalisation externe n'est requise.
+
+## Démarrage rapide
+
+Utilisez `createLocale()` pour générer une locale à partir d'une balise de langue BCP 47, puis passez-la via la prop `locale` :
+
+```tsx
+import { createLocale } from "react-date-range-picker-headless";
+import { DatePicker } from "react-date-range-picker-styled";
+
+const fr = createLocale("fr", {
+  confirm: "Confirmer",
+  cancel: "Annuler",
+  clear: "Effacer",
+  placeholder: "Sélectionner une date",
+});
+
+function App() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} locale={fr} />;
+}
+```
+
+Cela fonctionne également avec n'importe quelle autre variante (Tailwind v3, Tailwind v4, Headless).
+
+## Ce que createLocale génère automatiquement
+
+`createLocale(localeKey, overrides?)` utilise `Intl.DateTimeFormat` pour dériver automatiquement :
+
+| Champ             | Source                                                              | Exemple (`"fr"`)              |
+| ----------------- | ------------------------------------------------------------------- | ----------------------------- |
+| `weekdays`        | `Intl.DateTimeFormat(localeKey, { weekday: "short" })`              | `["lun.", "mar.", ...]`       |
+| `months`          | `Intl.DateTimeFormat(localeKey, { month: "long" })`                 | `["janvier", "février", ...]` |
+| `am` / `pm`       | `Intl.DateTimeFormat(localeKey, { hour: "numeric", hour12: true })` | `""` / `""` (non pertinent)   |
+| `formatMonthYear` | Généré depuis Intl                                                  | `"mars 2026"`                 |
+
+Tout le reste est par défaut en anglais et doit être remplacé manuellement si nécessaire.
+
+## Champs que vous devriez remplacer
+
+Ces étiquettes d'action et textes de substitution ne sont **pas** générés automatiquement :
+
+| Champ                  | Défaut                         | Description                                                      |
+| ---------------------- | ------------------------------ | ---------------------------------------------------------------- |
+| `confirm`              | `"Confirm"`                    | Texte du bouton Confirmer                                        |
+| `cancel`               | `"Cancel"`                     | Texte du bouton Annuler                                          |
+| `clear`                | `"Clear"`                      | Texte du bouton Effacer                                          |
+| `today`                | `"Today"`                      | Texte du bouton Aller à aujourd'hui                              |
+| `placeholder`          | `"Select date"`                | Texte de substitution du sélecteur de date unique                |
+| `rangePlaceholder`     | `"Select date range"`          | Texte de substitution du sélecteur de plage de dates             |
+| `dateTimePlaceholder`  | `"Select date and time"`       | Texte de substitution du sélecteur de date et d'heure            |
+| `rangeTimePlaceholder` | `"Select date range and time"` | Texte de substitution du sélecteur de plage de dates et d'heures |
+| `timePlaceholder`      | `"Select time"`                | Texte de substitution du sélecteur d'heure                       |
+| `rangeSeparator`       | `" ~ "`                        | Séparateur entre les dates de début et de fin                    |
+| `prevMonthLabel`       | `"Previous month"`             | Étiquette Aria pour le bouton du mois précédent                  |
+| `nextMonthLabel`       | `"Next month"`                 | Étiquette Aria pour le bouton du mois suivant                    |
+| `selectYearLabel`      | `"Select year"`                | Étiquette Aria pour le menu déroulant de l'année                 |
+| `selectMonthLabel`     | `"Select month"`               | Étiquette Aria pour le menu déroulant du mois                    |
+| `hoursLabel`           | `"Hours"`                      | Étiquette Aria pour la colonne des heures                        |
+| `minutesLabel`         | `"Minutes"`                    | Étiquette Aria pour la colonne des minutes                       |
+| `secondsLabel`         | `"Seconds"`                    | Étiquette Aria pour la colonne des secondes                      |
+| `startTimeLabel`       | `"Start time"`                 | Étiquette pour la section de l'heure de début                    |
+| `endTimeLabel`         | `"End time"`                   | Étiquette pour la section de l'heure de fin                      |
+
+## Remplacements partiels (sans createLocale)
+
+Vous pouvez passer directement un objet de locale partiel. Les champs manquants se rabattent sur `DEFAULT_LOCALE` (anglais) :
+
+```tsx
+<DatePicker
+  value={value}
+  onChange={setValue}
+  locale={{
+    confirm: "OK",
+    cancel: "Retour",
+    weekdays: ["D", "L", "M", "M", "J", "V", "S"],
+    months: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Aoû", "Sep", "Oct", "Nov", "Déc"],
+  }}
+/>
+```
+
+C'est utile lorsque vous n'avez besoin de changer que quelques chaînes sans générer une locale complète.
+
+## Fonctions de formatage personnalisées
+
+La locale inclut 5 fonctions de formatage que vous pouvez remplacer :
+
+```tsx
+const custom = createLocale("fr", {
+  // Comment les en-têtes de mois sont affichés (par ex. "mars 2026")
+  formatMonthYear: (month) => month.toLocaleDateString("fr-FR", { month: "long", year: "numeric" }),
+
+  // Comment les dates apparaissent dans les boutons de déclenchement et les étiquettes aria
+  formatDate: (date) =>
+    date.toLocaleDateString("fr-FR", { month: "short", day: "numeric", year: "numeric" }),
+
+  // Comment les valeurs de date et d'heure sont affichées
+  formatDateTime: (date) =>
+    date.toLocaleString("fr-FR", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+    }),
+
+  // Comment les plages de dates sont affichées dans le déclencheur
+  formatRange: (start, end) =>
+    `${start.toLocaleDateString("fr-FR")} → ${end.toLocaleDateString("fr-FR")}`,
+
+  // Comment les valeurs d'heure sont affichées
+  formatTime: (h, m, s, period) =>
+    `${h}:${String(m).padStart(2, "0")}${period ? ` ${period}` : ""}`,
+});
+```
+
+<Admonition type="info" title="Format par défaut">
+  Par défaut, toutes les fonctions de formatage utilisent le style ISO 8601 (`2026-03-04`, `14:30`),
+  **et non** un formatage spécifique à la locale. Cela garantit un comportement cohérent entre les
+  navigateurs. Remplacez les fonctions de formatage ci-dessus si vous souhaitez un affichage
+  spécifique à la locale.
+</Admonition>
+
+## Jour de début de semaine
+
+La prop `weekStartsOn` contrôle quel jour apparaît en premier dans le calendrier. C'est indépendant de la locale :
+
+```tsx
+<DatePicker value={value} onChange={setValue} weekStartsOn="monday" />
+```
+
+Valeurs acceptées : `"sunday"` (défaut), `"monday"`, `"tuesday"`, `"wednesday"`, `"thursday"`, `"friday"`, `"saturday"`.
+
+Les étiquettes des jours de la semaine dans l'en-tête de la grille sont automatiquement réorganisées pour correspondre.
+
+## Mise en page RTL
+
+La bibliothèque n'inclut actuellement pas de prise en charge intégrée de la mise en page RTL. Pour les langues RTL (arabe, hébreu, etc.), appliquez `dir="rtl"` sur un élément conteneur et ajustez le CSS si nécessaire :
+
+```tsx
+<div dir="rtl">
+  <DatePicker value={value} onChange={setValue} locale={arLocale} />
+</div>
+```
+
+Les hooks headless eux-mêmes sont agnostiques à la mise en page — la structure de données du calendrier ne dépend pas de la direction du texte.
+
+## Référence de l'API
+
+Pour la liste complète des champs et les signatures de fonctions, voir :
+
+- [Type Locale](/docs/headless/types/locale) — l'ensemble des 30 champs de chaîne et des 5 fonctions de formatage
+- [Aides de locale](/docs/headless/utilities/locale-helpers) — `createLocale`, `mergeLocale`, `resolveLocale`, `DEFAULT_LOCALE`

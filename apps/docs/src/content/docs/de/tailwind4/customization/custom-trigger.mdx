@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind4/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind4/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind4/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind4/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Eigener Trigger
+
+Ersetzen Sie die standardmäßige Trigger-Schaltfläche durch Ihr eigenes Element, indem Sie die `Trigger` Render-Prop verwenden. Wenn Sie eine Funktion als Child an `DatePicker.Trigger` übergeben, erhalten Sie Zustand und Callbacks, um jede gewünschte Trigger-Benutzeroberfläche zu erstellen.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Trigger Render-Props
+
+| Prop           | Typ              | Beschreibung                    |
+| -------------- | ---------------- | ------------------------------- |
+| `displayValue` | `string`         | Formatiertes ausgewähltes Datum |
+| `placeholder`  | `string`         | Platzhaltertext                 |
+| `hasValue`     | `boolean`        | Ob ein Datum ausgewählt ist     |
+| `isOpen`       | `boolean`        | Ob das Popup geöffnet ist       |
+| `onToggle`     | `() => void`     | Popup öffnen/schließen          |
+| `onClear`      | `() => void`     | Auswahl löschen                 |
+| `locale`       | `Locale`         | Aktuelles Locale-Objekt         |
+| `triggerRef`   | `(node) => void` | Ref-Callback zur Positionierung |
+
+## Range-Picker-Trigger
+
+Das gleiche Muster funktioniert mit `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

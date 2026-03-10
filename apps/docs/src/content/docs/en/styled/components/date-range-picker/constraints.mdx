@@ -1,0 +1,46 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/styled/DateRangePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/styled/DateRangePicker/MinMaxDays.tsx?raw";
+import DisabledDates from "@examples/styled/DateRangePicker/DisabledDates";
+import DisabledDatesSource from "@examples/styled/DateRangePicker/DisabledDates.tsx?raw";
+import AllowSingleDate from "@examples/styled/DateRangePicker/AllowSingleDate";
+import AllowSingleDateSource from "@examples/styled/DateRangePicker/AllowSingleDate.tsx?raw";
+
+# Constraints
+
+## Min & Max Days
+
+Restrict the range length with `minDays` and `maxDays` (inclusive). Users cannot confirm a range shorter than `minDays` or longer than `maxDays`.
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Disabled Dates
+
+Use `isDateUnavailable` to dynamically disable specific dates. Disabled dates cannot be selected as start or end of a range.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Allow Single Date
+
+By default, a range where start equals end is allowed. Set `allowSingleDateInRange={false}` to require at least two distinct dates.
+
+<CodeDemo source={AllowSingleDateSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <AllowSingleDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

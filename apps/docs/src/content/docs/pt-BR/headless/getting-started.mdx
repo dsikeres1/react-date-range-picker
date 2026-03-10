@@ -1,0 +1,106 @@
+---
+sidebar_position: 1
+title: Overview
+---
+
+import PackageInstall from "@/components/PackageInstall.astro";
+
+# Headless
+
+O pacote headless (`react-date-range-picker-headless`) fornece hooks e provedores de contexto sem estilos. Ele contém todo o gerenciamento de estado, lógica de calendário, navegação por teclado e recursos de acessibilidade -- mas zero CSS, zero opiniões sobre marcação.
+
+Você traz sua própria UI.
+
+## Instalação
+
+<PackageInstall pkg="react-date-range-picker-headless" />
+
+## Quando Usar o Headless
+
+- Você tem um sistema de design com sua própria biblioteca de componentes
+- Você quer controle pixel-perfect sobre cada elemento
+- Você está construindo um seletor de datas personalizado para um caso de uso específico
+- Você quer integrar com um framework CSS não coberto pelos pacotes estilizados
+
+Se você deseja componentes estilizados prontos para uso, veja [Styled](/docs/styled/getting-started), [Tailwind v4](/docs/tailwind4/getting-started), ou [Tailwind v3](/docs/tailwind3/getting-started) em vez disso.
+
+## Como Funciona
+
+1. Escolha um hook com base no seu caso de uso
+2. Passe opções (`value`, `onChange`, `config`)
+3. Receba de volta o estado e os manipuladores
+4. Renderize sua própria UI usando os valores retornados
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  const {
+    isOpen,
+    calendar,
+    getDayProps,
+    displayValue,
+    handleToggle,
+    handleDateClick,
+    handleConfirm,
+    handlePrevMonth,
+    handleNextMonth,
+    locale,
+  } = useDatePicker({ value, onChange: setValue });
+
+  return (
+    <div>
+      <button onClick={handleToggle}>{displayValue || locale.placeholder}</button>
+      {isOpen && (
+        <div>
+          <div>
+            <button onClick={handlePrevMonth}>{locale.prevMonth}</button>
+            <span>{locale.formatMonthYear(calendar.month)}</span>
+            <button onClick={handleNextMonth}>{locale.nextMonth}</button>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}>
+            {calendar.weeks.flat().map((day, i) => {
+              if (!day) return <span key={i} />;
+              const props = getDayProps(day);
+              return (
+                <button
+                  key={i}
+                  onClick={() => handleDateClick(day)}
+                  style={{
+                    background: props.isSelected ? "#0ea5e9" : "transparent",
+                    color: props.isDisabled ? "#ccc" : props.isToday ? "#0ea5e9" : "inherit",
+                  }}
+                >
+                  {props.day}
+                </button>
+              );
+            })}
+          </div>
+          <button onClick={handleConfirm}>{locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Hooks Disponíveis
+
+| Hook                                                                         | Caso de Uso                                          |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------- |
+| [`useDatePicker`](/docs/headless/hooks/use-date-picker)                      | Seleção de data única                                |
+| [`useDateRangePicker`](/docs/headless/hooks/use-date-range-picker)           | Seleção de intervalo de datas com calendários duplos |
+| [`useDateTimePicker`](/docs/headless/hooks/use-date-time-picker)             | Seleção de data + hora                               |
+| [`useDateRangeTimePicker`](/docs/headless/hooks/use-date-range-time-picker)  | Seleção de intervalo de data + hora                  |
+| [`useTimePicker`](/docs/headless/hooks/use-time-picker)                      | Roda de rolagem apenas para hora                     |
+| [`useStandaloneTimePicker`](/docs/headless/hooks/use-standalone-time-picker) | Seletor de hora com comportamento de abrir/fechar    |
+
+## Próximos Passos
+
+- [Building Custom UI](/docs/headless/building-custom-ui) -- Tutorial completo do padrão headless
+- [Hooks Reference](/docs/headless/hooks/use-date-picker) -- Documentação detalhada dos hooks
+- [Contexts](/docs/headless/contexts) -- Padrão de provedor para componentes compostos
+- [Date Utilities](/docs/headless/date-utilities) -- Funções utilitárias exportadas do headless

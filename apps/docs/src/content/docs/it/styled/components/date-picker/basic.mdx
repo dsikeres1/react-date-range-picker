@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/styled/DatePicker/Basic";
+import BasicSource from "@examples/styled/DatePicker/Basic.tsx?raw";
+import Inline from "@examples/styled/DatePicker/Inline";
+import InlineSource from "@examples/styled/DatePicker/Inline.tsx?raw";
+
+# DatePicker
+
+Un componente per la selezione di una data singola con calendario a comparsa.
+
+## Utilizzo di Base
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Modalità Inline
+
+Visualizza il calendario in linea senza un attivatore a comparsa.
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

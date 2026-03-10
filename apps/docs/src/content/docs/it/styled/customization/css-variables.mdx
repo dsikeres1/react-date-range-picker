@@ -1,0 +1,214 @@
+---
+sidebar_position: 2
+sidebar_label: "CSS Variables"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomColors from "@examples/styled/Customization/CustomColors";
+import CustomColorsSource from "@examples/styled/Customization/CustomColors.tsx?raw";
+import CustomFont from "@examples/styled/Customization/CustomFont";
+import CustomFontSource from "@examples/styled/Customization/CustomFont.tsx?raw";
+import CustomBorderRadius from "@examples/styled/Customization/CustomBorderRadius";
+import CustomBorderRadiusSource from "@examples/styled/Customization/CustomBorderRadius.tsx?raw";
+import CustomSize from "@examples/styled/Customization/CustomSize";
+import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw";
+
+# CSS 변수
+
+styled 패키지는 모든 시각적 값에 CSS 사용자 지정 속성(변수)을 사용합니다. 컴포넌트 코드를 건드리지 않고 외형을 사용자 지정하려면 `.rdrp-root` 또는 상위 요소에서 이 변수들을 재정의하세요.
+
+## 재정의 방법
+
+모든 변수는 `.rdrp-root` 아래에 범위가 지정되어 있습니다. 사용자 지정 CSS에서 재정의할 수 있습니다:
+
+```css
+/* Your custom theme */
+.rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-border-radius-lg: 12px;
+}
+```
+
+또는 래퍼 클래스를 사용하여 특정 인스턴스에 대한 재정의 범위를 지정할 수 있습니다:
+
+```css
+.my-purple-picker .rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-color-primary-light: #ede9fe;
+  --rdrp-color-primary-lighter: #f5f3ff;
+}
+```
+
+```tsx
+<div className="my-purple-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## 변수 참조
+
+### 색상
+
+| 변수                            | 기본값 (라이트)            | 설명                                    |
+| ------------------------------- | -------------------------- | --------------------------------------- |
+| `--rdrp-color-primary`          | `#3b82f6`                  | 기본 액션 색상 (선택된 날짜, 확인 버튼) |
+| `--rdrp-color-primary-hover`    | `#2563eb`                  | 기본 호버 상태                          |
+| `--rdrp-color-primary-light`    | `#dbeafe`                  | 범위 배경, 밝은 기본 액센트             |
+| `--rdrp-color-primary-lighter`  | `#eff6ff`                  | 활성 프리셋 배경                        |
+| `--rdrp-color-primary-disabled` | `#93c5fd`                  | 비활성화된 확인 버튼                    |
+| `--rdrp-color-bg`               | `#ffffff`                  | 배경색                                  |
+| `--rdrp-color-bg-hover`         | `#f3f4f6`                  | 날짜, 버튼의 호버 배경                  |
+| `--rdrp-color-bg-subtle`        | `#f9fafb`                  | 은은한 배경                             |
+| `--rdrp-color-text`             | `#374151`                  | 기본 텍스트 색상                        |
+| `--rdrp-color-text-strong`      | `#111827`                  | 강한 텍스트 (제목, 활성 시간)           |
+| `--rdrp-color-text-muted`       | `#6b7280`                  | 음소거된 텍스트 (탐색 버튼, 라벨)       |
+| `--rdrp-color-text-placeholder` | `#6b7280`                  | 플레이스홀더 텍스트                     |
+| `--rdrp-color-text-disabled`    | `#d1d5db`                  | 비활성화된 날짜 텍스트                  |
+| `--rdrp-color-text-outside`     | `#9ca3af`                  | 현재 월 바깥의 날짜                     |
+| `--rdrp-color-text-inverse`     | `#ffffff`                  | 기본 배경 위의 텍스트                   |
+| `--rdrp-color-text-danger`      | `#ef4444`                  | 지우기/위험 버튼 텍스트                 |
+| `--rdrp-color-text-today`       | `#2563eb`                  | 오늘 표시 색상                          |
+| `--rdrp-color-border`           | `#d1d5db`                  | 기본 테두리                             |
+| `--rdrp-color-border-light`     | `#e5e7eb`                  | 밝은 테두리 (팝업, 선택)                |
+| `--rdrp-color-border-subtle`    | `#f3f4f6`                  | 은은한 테두리 (푸터, 프리셋)            |
+| `--rdrp-color-border-hover`     | `#93c5fd`                  | 테두리 호버 상태                        |
+| `--rdrp-color-highlight-dot`    | `#f59e0b`                  | 하이라이트 점 색상                      |
+| `--rdrp-highlight-dot-size`     | `4px`                      | 하이라이트 점 직경                      |
+| `--rdrp-color-range-bg`         | `#dbeafe`                  | 범위 내 날짜 배경                       |
+| `--rdrp-color-hover-range-bg`   | `#eff6ff`                  | 호버 범위 미리보기 배경                 |
+| `--rdrp-color-hover-target-bg`  | `#bfdbfe`                  | 호버 끝점 배경                          |
+| `--rdrp-color-time-highlight`   | `rgba(59, 130, 246, 0.08)` | 시간 패널 하이라이트 바                 |
+
+### 타이포그래피
+
+| 변수                          | 기본값            | 설명                                     |
+| ----------------------------- | ----------------- | ---------------------------------------- |
+| `--rdrp-font-family`          | System font stack | 글꼴                                     |
+| `--rdrp-font-size-xs`         | `11px`            | 아주 작은 크기 (작은 사이즈의 요일 헤더) |
+| `--rdrp-font-size-sm`         | `12px`            | 작은 크기 (요일 헤더, 라벨)              |
+| `--rdrp-font-size-base`       | `13px`            | 기본 크기 (날짜 셀, 버튼)                |
+| `--rdrp-font-size-md`         | `14px`            | 중간 크기 (트리거, 시간 항목)            |
+| `--rdrp-font-size-lg`         | `15px`            | 큰 크기 (헤더 제목)                      |
+| `--rdrp-font-weight-normal`   | `400`             | 보통 굵기                                |
+| `--rdrp-font-weight-medium`   | `500`             | 중간 굵기                                |
+| `--rdrp-font-weight-semibold` | `600`             | 세미볼드 굵기                            |
+| `--rdrp-font-weight-bold`     | `700`             | 굵은 굵기 (오늘 표시)                    |
+
+### 간격
+
+| 변수                 | 기본값 | 설명             |
+| -------------------- | ------ | ---------------- |
+| `--rdrp-spacing-xs`  | `2px`  | 아주 작은 간격   |
+| `--rdrp-spacing-sm`  | `4px`  | 작은 간격        |
+| `--rdrp-spacing-md`  | `8px`  | 중간 간격        |
+| `--rdrp-spacing-lg`  | `12px` | 큰 간격          |
+| `--rdrp-spacing-xl`  | `16px` | 아주 큰 간격     |
+| `--rdrp-spacing-2xl` | `24px` | 2배 아주 큰 간격 |
+
+### 테두리
+
+| 변수                        | 기본값   | 설명                      |
+| --------------------------- | -------- | ------------------------- |
+| `--rdrp-border-radius-sm`   | `4px`    | 작은 반경                 |
+| `--rdrp-border-radius-md`   | `6px`    | 중간 반경 (버튼, 선택)    |
+| `--rdrp-border-radius-lg`   | `8px`    | 큰 반경 (날짜, 트리거)    |
+| `--rdrp-border-radius-xl`   | `12px`   | 아주 큰 반경 (팝업)       |
+| `--rdrp-border-radius-full` | `9999px` | 전체 반경 (하이라이트 점) |
+| `--rdrp-border-width`       | `1px`    | 테두리 너비               |
+
+### 그림자
+
+| 변수                   | 기본값                        | 설명               |
+| ---------------------- | ----------------------------- | ------------------ |
+| `--rdrp-shadow-popup`  | `0 10px 25px rgba(0,0,0,0.1)` | 팝업 그림자        |
+| `--rdrp-shadow-inline` | `0 4px 12px rgba(0,0,0,0.06)` | 인라인 모드 그림자 |
+| `--rdrp-shadow-sm`     | `0 2px 6px rgba(0,0,0,0.04)`  | 작은 그림자        |
+
+### 크기
+
+| 변수                       | 기본값  | 설명                      |
+| -------------------------- | ------- | ------------------------- |
+| `--rdrp-cell-size`         | `36px`  | 날짜 셀 너비/높이         |
+| `--rdrp-nav-btn-size`      | `28px`  | 탐색 버튼 크기            |
+| `--rdrp-weekday-height`    | `28px`  | 요일 헤더 행 높이         |
+| `--rdrp-grid-min-height`   | `216px` | 캘린더 그리드 최소 높이   |
+| `--rdrp-panel-min-width`   | `252px` | 단일 캘린더 패널 너비     |
+| `--rdrp-dual-gap`          | `24px`  | 이중 캘린더 사이의 간격   |
+| `--rdrp-trigger-min-width` | `200px` | 트리거 버튼 최소 너비     |
+| `--rdrp-trigger-padding-x` | `14px`  | 트리거 가로 패딩          |
+| `--rdrp-trigger-padding-y` | `8px`   | 트리거 세로 패딩          |
+| `--rdrp-popup-padding`     | `16px`  | 팝업 내부 패딩            |
+| `--rdrp-popup-gap`         | `6px`   | 팝업 콘텐츠 간격          |
+| `--rdrp-btn-padding-x`     | `14px`  | 푸터 버튼 가로 패딩       |
+| `--rdrp-btn-padding-y`     | `6px`   | 푸터 버튼 세로 패딩       |
+| `--rdrp-preset-min-width`  | `140px` | 프리셋 사이드바 최소 너비 |
+
+### 시간 선택기
+
+| 변수                          | 기본값  | 설명                  |
+| ----------------------------- | ------- | --------------------- |
+| `--rdrp-time-item-height`     | `32px`  | 시간 스크롤 항목 높이 |
+| `--rdrp-time-panel-height`    | `176px` | 시간 패널 전체 높이   |
+| `--rdrp-time-column-height`   | `160px` | 스크롤 가능한 열 높이 |
+| `--rdrp-time-panel-min-width` | `120px` | 시간 패널 최소 너비   |
+| `--rdrp-time-colon-width`     | `12px`  | 콜론 구분자 너비      |
+
+### Z-index
+
+| 변수                  | 기본값 | 설명                  |
+| --------------------- | ------ | --------------------- |
+| `--rdrp-z-popup`      | `50`   | 팝업 z-index          |
+| `--rdrp-z-day-button` | `20`   | 포커스된 날짜 z-index |
+
+### 트랜지션
+
+| 변수                       | 기본값  | 설명                         |
+| -------------------------- | ------- | ---------------------------- |
+| `--rdrp-transition-fast`   | `0.1s`  | 빠른 트랜지션 (날짜 호버)    |
+| `--rdrp-transition-normal` | `0.15s` | 보통 트랜지션 (트리거, 버튼) |
+
+## 라이브 예제
+
+### 사용자 지정 색상 (보라색 테마)
+
+기본 색상 변수를 재정의하여 완전히 다른 색 구성표를 만듭니다. 이 예제는 보라색/자주색 톤의 **DatePicker**를 사용합니다.
+
+<CodeDemo source={CustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### 사용자 지정 글꼴 (세리프)
+
+글꼴은 CSS를 통해 계단식으로 적용되므로, 사용자 지정 `font-family`가 있는 div로 선택기를 감싸면 모든 텍스트에 적용됩니다. 이 예제는 Georgia 세리프 글꼴의 **DateRangePicker**를 사용합니다.
+
+<CodeDemo source={CustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### 각진 모서리 (테두리 반경 없음)
+
+모든 테두리 반경 변수를 `0px`로 설정하여 완전히 사각형 모양으로 만듭니다.
+
+<CodeDemo source={CustomBorderRadiusSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomBorderRadius client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### CSS 변수를 통한 사용자 지정 크기
+
+내장된 `size` prop 대신 개별 크기 조절 변수를 재정의하여 정밀하게 제어할 수 있습니다. 이 예제는 사용자 지정 셀 크기와 글꼴 크기를 가진 **DateRangePicker**를 사용합니다.
+
+<CodeDemo source={CustomSizeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSize client:load />
+  </ExampleWrapper>
+</CodeDemo>

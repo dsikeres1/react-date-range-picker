@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind3/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind3/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind3/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind3/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind3/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind3/Customization/CompoundWebFonts.tsx?raw";
+
+# Tipografía
+
+El paquete de Tailwind v3 utiliza la clase por defecto de Tailwind `font-sans` (`ui-sans-serif, system-ui, sans-serif, ...`). Dado que `font-family` de CSS se hereda, puedes sobrescribir la fuente del selector envolviéndolo en un contenedor con un estilo `fontFamily`. La fuente del contenedor se aplica en cascada a todos los elementos del selector.
+
+## Familia de Fuentes
+
+Envuelve el selector y establece `fontFamily` en el contenedor para cambiar de fuente:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Uso de Fuentes Web (Noto Sans)
+
+Carga una fuente web en tiempo de ejecución y aplícala a través de un contenedor. Este ejemplo carga [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) de Google Fonts:
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="Uso en producción">
+En un proyecto real, carga la fuente a través de una etiqueta `<link>` en el `<head>` de tu HTML o mediante tu empaquetador de CSS en lugar de inyectarla en tiempo de ejecución. El enfoque con `useEffect` aquí es solo para fines de demostración.
+</Admonition>
+
+## Galería de Fuentes Web
+
+Compara diferentes fuentes web para ver cómo la tipografía cambia drásticamente la apariencia del selector. Todas las fuentes a continuación admiten la representación en múltiples idiomas (latín, CJK, coreano).
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

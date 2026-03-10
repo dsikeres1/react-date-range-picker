@@ -1,0 +1,38 @@
+---
+sidebar_position: 2
+title: Internationalization
+description: Tùy chỉnh bản địa, chuyển đổi ngôn ngữ và ghi đè định dạng.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Quốc tế hóa
+
+Thư viện sử dụng API `Intl.DateTimeFormat` của trình duyệt để tạo tên tháng, nhãn ngày trong tuần và văn bản AM/PM phù hợp với bản địa. Không cần thư viện i18n bên ngoài.
+
+## Bắt đầu nhanh
+
+Sử dụng `createLocale()` để tạo một bản địa từ thẻ ngôn ngữ BCP 47, sau đó truyền nó qua prop `locale`:
+
+```tsx
+import { createLocale } from "react-date-range-picker-headless";
+import { DatePicker } from "react-date-range-picker-styled";
+
+const ko = createLocale("ko", {
+  confirm: "확인",
+  cancel: "취소",
+  clear: "초기화",
+  placeholder: "날짜 선택",
+});
+
+function App() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} locale={ko} />;
+}
+```
+
+Điều này cũng hoạt động với bất kỳ biến thể nào khác (Tailwind v3, Tailwind v4, Headless).
+
+## createLocale tự động tạo ra những gì
+
+`createLocale(localeKey, overrides?)` sử dụng `Intl.DateTimeFormat` để tự động suy ra:

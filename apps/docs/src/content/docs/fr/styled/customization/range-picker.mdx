@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: "Range Picker"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/styled/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/styled/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/styled/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/styled/Customization/CompoundRangeInline.tsx?raw";
+
+# Sélecteur de Plage
+
+Utilisez l'API composée `DateRangePicker` pour construire un sélecteur de plage entièrement personnalisé avec un déclencheur personnalisé et une barre latérale de préréglages.
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## En Ligne avec Préréglages
+
+Affichez le sélecteur de plage en ligne avec une barre latérale de préréglages :
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

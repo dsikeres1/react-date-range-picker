@@ -1,0 +1,112 @@
+---
+sidebar_position: 5
+title: Common Types
+---
+
+# ประเภททั่วไป
+
+นามแฝงของประเภทที่ใช้ร่วมกันในแพ็คเกจ Headless
+
+```tsx
+import type {
+  DatePickerSize,
+  WeekDay,
+  CaptionLayout,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  MinuteStep,
+  SecondStep,
+  CalendarMonth,
+  DateUnit,
+} from "react-date-range-picker-headless";
+```
+
+## DatePickerSize
+
+ตัวแปรขนาด UI ไลบรารี Headless hooks จะส่งผ่านค่านี้ไปโดยไม่ใช้งาน ส่วน Styled components ใช้สำหรับกำหนดขนาดภาพ
+
+```tsx
+type DatePickerSize = "x-large" | "large" | "medium" | "small";
+```
+
+## WeekDay
+
+วันในสัปดาห์ในรูปแบบสตริง ใช้ในตัวเลือก `weekStartsOn`
+
+```tsx
+type WeekDay = "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday";
+```
+
+## CaptionLayout
+
+โหมดเลย์เอาต์ส่วนหัวของปฏิทิน
+
+```tsx
+type CaptionLayout = "buttons" | "dropdown";
+```
+
+| ค่า          | คำอธิบาย                                   |
+| ------------ | ------------------------------------------ |
+| `"buttons"`  | ปุ่มนำทางเดือนก่อนหน้า/ถัดไป (ค่าเริ่มต้น) |
+| `"dropdown"` | ดรอปดาวน์สำหรับเลือกปีและเดือน             |
+
+## TimePrecision
+
+ควบคุมคอลัมน์เวลาที่จะแสดง
+
+```tsx
+type TimePrecision = "hour" | "minute" | "second";
+```
+
+| ค่า        | คอลัมน์ที่แสดง          |
+| ---------- | ----------------------- |
+| `"hour"`   | ชั่วโมงเท่านั้น         |
+| `"minute"` | ชั่วโมง + นาที          |
+| `"second"` | ชั่วโมง + นาที + วินาที |
+
+## HourFormat
+
+การแสดงเวลาแบบ 12 ชั่วโมงหรือ 24 ชั่วโมง
+
+```tsx
+type HourFormat = "12" | "24";
+```
+
+## TimePeriod
+
+ตัวบ่งชี้ AM/PM สำหรับรูปแบบ 12 ชั่วโมง
+
+```tsx
+type TimePeriod = "AM" | "PM";
+```
+
+## MinuteStep
+
+ค่าการเพิ่มนาทีที่ถูกต้องสำหรับการเลือกนาทีแบบขั้นบันได
+
+```tsx
+type MinuteStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## SecondStep
+
+ค่าการเพิ่มวินาทีที่ถูกต้องสำหรับการเลือกวินาทีแบบขั้นบันได
+
+```tsx
+type SecondStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## CalendarMonth
+
+ข้อมูลปฏิทินที่สร้างขึ้นสำหรับหนึ่งเดือน
+
+```tsx
+interface CalendarMonth {
+  month: Date;
+  days: (Date | null)[];
+  weeks: (Date | null)[][];
+}
+```
+
+| ฟิลด์ | ประเภท

@@ -1,0 +1,51 @@
+---
+sidebar_position: 10
+---
+
+# Tokens Semánticos
+
+El paquete de Tailwind v4 utiliza variables CSS semánticas (tokens de diseño) para todos los colores. Estos tokens desacoplan los estilos del componente de los valores de color específicos, facilitando la creación de temas. La convención de nomenclatura de los tokens sigue el mismo patrón utilizado por [shadcn/ui](https://ui.shadcn.com/).
+
+## Sistema de Tokens
+
+En lugar de colores fijos como `bg-sky-500`, los componentes de Tailwind v4 utilizan utilidades semánticas como `bg-primary`, `text-foreground`, y `border-border`. Estos se mapean a variables CSS que defines en tu proyecto.
+
+```
+bg-primary        → var(--color-primary)
+text-foreground   → var(--color-foreground)
+border-border     → var(--color-border)
+```
+
+## Tokens Requeridos
+
+Define estos tokens en tu CSS usando la directiva `@theme` de Tailwind v4:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+## Referencia de Tokens
+
+| Token                | Usado Para                    | Utilidades de Ejemplo |
+| -------------------- | ----------------------------- | --------------------- |
+| `--color-background` | Fondo de la página/aplicación | `bg-background`       |

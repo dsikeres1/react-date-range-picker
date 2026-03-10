@@ -1,0 +1,46 @@
+---
+sidebar_position: 7
+sidebar_label: "Colors"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/styled/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/styled/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/styled/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/styled/Customization/CompoundColorThemePopup.tsx?raw";
+import CSSCustomColors from "@examples/styled/Customization/CSSCustomColors";
+import CSSCustomColorsSource from "@examples/styled/Customization/CSSCustomColors.tsx?raw";
+
+# 색상
+
+래퍼(wrapper) 요소의 CSS 사용자 지정 속성을 재정의하여 런타임에 색상 테마를 전환합니다. styled 패키지는 모든 기본 강조 색상에 `--rdrp-color-primary`, `--rdrp-color-primary-hover`, `--rdrp-color-primary-light`, `--rdrp-color-primary-lighter`를 사용합니다.
+
+## 인라인 테마 전환기
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 팝업 테마 전환기
+
+팝업 피커에서도 동일한 방식이 작동합니다:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## CSS 변수 인라인 스타일
+
+또한 래퍼 요소의 `style` 속성을 통해 직접 색상을 재정의할 수도 있습니다:
+
+<CodeDemo source={CSSCustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CSSCustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>

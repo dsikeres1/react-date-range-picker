@@ -1,0 +1,179 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 다크 모드
+
+Tailwind v3 패키지는 CSS 사용자 정의 속성을 통한 완벽한 다크 모드 지원을 포함합니다. Tailwind 플러그인(`rdrpPlugin`)은 밝은 팔레트와 어두운 팔레트 사이를 자동으로 전환하는 색상 변수를 주입합니다.
+
+## 작동 방식
+
+Tailwind v3 플러그인(`rdrpPlugin`)은 색상 팔레트를 정의하는 CSS 사용자 정의 속성을 주입합니다. 다크 모드는 `.dark` 또는 `[data-theme="dark"]` 아래에서 이러한 변수를 재정의하여 작동합니다:
+
+- **라이트 모드** — `:root`는 기본 색상을 정의합니다 (Slate + Sky 팔레트)
+- **다크 모드** — `.dark`와 `[data-theme="dark"]`가 자동으로 색상을 재정의합니다
+
+컴포넌트 테마는 `var(--rdrp-color-*)`를 통해 이를 참조하므로, Tailwind의 `darkMode` 전략이 적절한 선택자를 트리거할 때 다크 모드가 활성화됩니다.
+
+## Tailwind 설정
+
+### 클래스 전략 (권장)
+
+Tailwind 설정에서 `darkMode: "class"`로 설정하세요. 다크 모드는 `dark` 클래스가 `<html>` 또는 부모 요소에 있을 때 활성화됩니다:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+다크 모드 토글:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+또는 `<html>`에 클래스를 적용합니다:
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### Selector 전략
+
+Tailwind v3.4+는 `darkMode: "selector"`를 지원하여 `[data-theme="dark"]` 또는 다른 커스텀 selector를 사용할 수 있게 해줍니다:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### Media 전략
+
+`darkMode: "media"`로 설정하거나 생략하여(기본값) OS 설정을 따르게 할 수 있습니다:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "media",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+추가 설정이 필요하지 않습니다. 피커는 `prefers-color-scheme`를 따릅니다.
+
+## 색상 변수
+
+라이트/다크 테밍에 사용되는 CSS 사용자 정의 속성은 다음과 같습니다:
+
+| 변수                      | 라이트    | 다크                   |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
+
+## Docusaurus와 통합
+
+Docusaurus(`<html>`에 `data-theme`를 사용하는)를 사용 중이라면 Tailwind의 selector 전략을 설정하세요:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Docusaurus는 다크 모드가 활성화되면 `<html data-theme="dark">`를 설정하며, CSS 변수가 자동으로 다크 값으로 전환됩니다.
+
+## next-themes와 통합
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes`는 `<html>`에서 `dark` 클래스를 추가/제거합니다. Tailwind 설정에 `darkMode: "class"`가 있으면 피커가 자동으로 전환됩니다.
+
+## 특정 모드 강제하기
+
+피커가 항상 라이트 또는 다크 모드를 사용하도록 강제하려면 적절한 클래스를 가진 컨테이너로 감싸주세요:
+
+```tsx
+{
+  /* 항상 라이트 — "dark" 클래스 조상 없음 */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* 항상 다크 */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+`darkMode: "class"`를 사용할 때, `dark` 클래스는 부모 요소나 `<html>`에 있어야 합니다. 피커 자체는 다크 모드 토글을 관리하지 않습니다.
+</Admonition>

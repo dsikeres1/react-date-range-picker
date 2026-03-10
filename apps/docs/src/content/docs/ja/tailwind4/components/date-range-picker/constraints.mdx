@@ -1,0 +1,46 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/tailwind4/DateRangePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/tailwind4/DateRangePicker/MinMaxDays.tsx?raw";
+import DisabledDates from "@examples/tailwind4/DateRangePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind4/DateRangePicker/DisabledDates.tsx?raw";
+import AllowSingleDate from "@examples/tailwind4/DateRangePicker/AllowSingleDate";
+import AllowSingleDateSource from "@examples/tailwind4/DateRangePicker/AllowSingleDate.tsx?raw";
+
+# 制約
+
+## 最小日数と最大日数
+
+`minDays` と `maxDays` (両端を含む) を使って、期間の長さを制限します。ユーザーは `minDays` より短い、または `maxDays` より長い期間を確定できません。
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 無効な日付
+
+`isDateUnavailable` を使って、特定の日付を動的に無効化します。無効化された日付は、期間の開始日または終了日として選択できません。
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 単一日付の許可
+
+デフォルトでは、開始日と終了日が同じ期間が許可されています。少なくとも2つの異なる日付を必須にするには、`allowSingleDateInRange={false}` を設定します。
+
+<CodeDemo source={AllowSingleDateSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <AllowSingleDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

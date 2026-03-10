@@ -1,0 +1,208 @@
+---
+sidebar_position: 10
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Ghi đè Theme
+
+Gói Tailwind v3 sử dụng các lớp tiện ích cụ thể của Tailwind (ví dụ: `sky-500`, `slate-100`) cho tất cả các kiểu. Bạn có thể tùy chỉnh giao diện bằng cách ghi đè đối tượng theme được xuất ra từ gói.
+
+## Theme Mặc định
+
+Theme được định nghĩa như một tập hợp các đối tượng được xuất ra, mỗi đối tượng chứa các chuỗi tên lớp cho một phần của thành phần. Dưới đây là tổng quan về bảng màu mặc định:
+
+| Vai trò       | Lớp Sáng    | Lớp Tối      |
+| ------------- | ----------- | ------------ |
+| Chính         | `sky-500`   | `sky-500`    |
+| Văn bản chính | `sky-500`   | `sky-400`    |
+| Nền           | `white`     | `slate-950`  |
+| Hover bề mặt  | `slate-100` | `slate-800`  |
+| Văn bản       | `slate-900` | `slate-50`   |
+| Văn bản phụ   | `slate-500` | `slate-400`  |
+| Đường viền    | `slate-200` | `slate-800`  |
+| Nền khoảng    | `sky-50`    | `sky-950/50` |
+| Nguy hiểm     | `red-500`   | `red-600`    |
+
+## Cấu trúc Đối tượng Theme
+
+Theme được chia thành nhiều export được đặt tên:
+
+```ts
+import {
+  rootClassNames,
+  triggerClassNames,
+  headerClassNames,
+  gridClassNames,
+  dayClassNames,
+  footerClassNames,
+  contentClassNames,
+  rangeClassNames,
+  dateTimeClassNames,
+  timePanelClassNames,
+} from "react-date-range-picker-tailwind3";
+```
+
+Mỗi đối tượng chứa các khóa ánh xạ tới các chuỗi lớp Tailwind đầy đủ. Ví dụ:
+
+```ts
+// dayClassNames
+{
+  day: "flex items-center justify-center w-9 h-9 mx-[1px] rounded-md transition-colors cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 ...",
+  today: "font-bold text-sky-500 dark:text-sky-400",
+  selected: "bg-sky-500 dark:bg-sky-500 text-white font-semibold ...",
+  inRange: "bg-sky-50 dark:bg-sky-950/50 text-slate-900 dark:text-slate-50 rounded-none mx-0 ...",
+  rangeStart: "bg-sky-500 dark:bg-sky-500 text-white rounded-r-none mx-0 ...",
+  rangeEnd: "bg-sky-500 dark:bg-sky-500 text-white rounded-l-none mx-0 ...",
+  // ...
+}
+```
+
+## Ghi đè bằng Compound Components
+
+Cách đơn giản nhất để tùy chỉnh theme là thông qua API Compound Component. Mỗi phần chấp nhận một prop `className` được hợp nhất với các giá trị mặc định bằng `twMerge`, do đó các tiện ích xung đột được giải quyết chính xác.
+
+### Thay đổi Màu chính
+
+Thay thế `sky` bằng `violet` cho ngày được chọn và các trạng thái liên quan:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+function VioletPicker() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  return (
+    <DatePicker.Root value={value} onChange={setValue}>
+      <DatePicker.Trigger className="hover:border-violet-500/50 focus-visible:ring-violet-500 focus-visible:border-violet-500" />
+      <DatePicker.Content>
+        <DatePicker.Header>
+          <DatePicker.PrevButton className="focus-visible:ring-violet-500" />
+          <DatePicker.Title />
+          <DatePicker.NextButton className="focus-visible:ring-violet-500" />
+        </DatePicker.Header>
+        <DatePicker.Grid
+          dayClassName="hover:bg-violet-50 dark:hover:bg-violet-950/50 focus-visible:ring-violet-500"
+          dayTodayClassName="text-violet-500 dark:text-violet-400"
+          daySelectedClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayInRangeClassName="bg-violet-50 dark:bg-violet-950/50 hover:bg-violet-100"
+          dayRangeStartClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayRangeEndClassName="bg-violet-500 dark:bg-violet-500 hover:bg-violet-500/90"
+          dayFocusedClassName="ring-violet-500"
+        />
+        <DatePicker.Footer>
+          <DatePicker.ClearButton />
+          <DatePicker.CancelButton />
+          <DatePicker.ConfirmButton className="bg-violet-500 hover:bg-violet-500/90 focus-visible:ring-violet-500" />
+        </DatePicker.Footer>
+      </DatePicker.Content>
+    </DatePicker.Root>
+  );
+}
+```
+
+### Nền Tùy chỉnh
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger className="bg-slate-50 dark:bg-slate-900" />
+  <DatePicker.Content className="bg-slate-50 dark:bg-slate-900">{/* ... */}</DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Xây dựng Đối tượng Theme Tùy chỉnh
+
+Để thay đổi thương hiệu trên toàn ứng dụng, hãy tạo một thành phần bao bọc (wrapper component) áp dụng các lớp tùy chỉnh của bạn cho tất cả các phần:
+
+```tsx
+// components/MyDatePicker.tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+const myTheme = {
+  trigger: "hover:border-emerald-500/50 focus-visible:ring-emerald-500",
+  dayToday: "text-emerald-500 dark:text-emerald-400",
+  daySelected: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  dayInRange: "bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100",
+  dayRangeStart: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  dayRangeEnd: "bg-emerald-500 dark:bg-emerald-500 hover:bg-emerald-500/90",
+  confirmButton: "bg-emerald-500 hover:bg-emerald-500/90 focus-visible:ring-emerald-500",
+  focusRing: "focus-visible:ring-emerald-500",
+};
+
+export function MyDatePicker(props) {
+  return (
+    <DatePicker.Root {...props}>
+      <DatePicker.Trigger className={myTheme.trigger} />
+      <DatePicker.Content>
+        <DatePicker.Header>
+          <DatePicker.PrevButton className={myTheme.focusRing} />
+          <DatePicker.Title />
+          <DatePicker.NextButton className={myTheme.focusRing} />
+        </DatePicker.Header>
+        <DatePicker.Grid
+          dayTodayClassName={myTheme.dayToday}
+          daySelectedClassName={myTheme.daySelected}
+          dayInRangeClassName={myTheme.dayInRange}
+          dayRangeStartClassName={myTheme.dayRangeStart}
+          dayRangeEndClassName={myTheme.dayRangeEnd}
+          dayFocusedClassName={myTheme.focusRing}
+        />
+        <DatePicker.Footer>
+          <DatePicker.ClearButton />
+          <DatePicker.CancelButton />
+          <DatePicker.ConfirmButton className={myTheme.confirmButton} />
+        </DatePicker.Footer>
+      </DatePicker.Content>
+    </DatePicker.Root>
+  );
+}
+```
+
+Sử dụng nó trong toàn bộ ứng dụng của bạn:
+
+```tsx
+<MyDatePicker value={date} onChange={setDate} />
+```
+
+## Các Prop Lớp cho Ngày trong Lưới
+
+Thành phần `Grid` truyền các prop className liên quan đến ngày xuống từng ô `Day`. Đây là các ghi đè có sẵn:
+
+| Prop                      | Mẫu Lớp Mặc định            | Mô tả                                |
+| ------------------------- | --------------------------- | ------------------------------------ |
+| `dayClassName`            | Kiểu cơ bản cho ngày        | Các lớp cơ bản cho tất cả các ô ngày |
+| `dayTodayClassName`       | `text-sky-500`              | Chỉ báo ngày hôm nay                 |
+| `daySelectedClassName`    | `bg-sky-500 text-white`     | Ngày được chọn                       |
+| `dayDisabledClassName`    | `opacity-50`                | Các ngày bị vô hiệu hóa              |
+| `dayOutsideClassName`     | `text-slate-500/50`         | Các ngày ngoài tháng                 |
+| `dayHighlightedClassName` | `after:bg-amber-500`        | Chấm nổi bật                         |
+| `dayInRangeClassName`     | `bg-sky-50`                 | Các ngày trong khoảng                |
+| `dayRangeStartClassName`  | `bg-sky-500 rounded-r-none` | Ngày bắt đầu khoảng                  |
+| `dayRangeEndClassName`    | `bg-sky-500 rounded-l-none` | Ngày kết thúc khoảng                 |
+| `dayRangeSingleClassName` | `bg-sky-500`                | Khoảng một ngày                      |
+| `dayHoverRangeClassName`  | `bg-sky-50/50`              | Xem trước khoảng khi hover           |
+| `dayHoverTargetClassName` | `bg-sky-100`                | Điểm cuối khi hover                  |
+| `dayFocusedClassName`     | `ring-sky-500`              | Vòng focus bằng bàn phím             |
+| `dayEmptyClassName`       | `invisible`                 | Placeholder ô trống                  |
+
+## Đường dẫn Nội dung Tailwind
+
+Khi ghi đè bằng các lớp màu tùy chỉnh, hãy đảm bảo chúng được bao gồm trong đường dẫn nội dung Tailwind của bạn. Các lớp được định nghĩa trong các tệp thành phần của bạn được quét theo mặc định, nhưng nếu bạn định nghĩa chúng trong một tệp cấu hình riêng, hãy thêm đường dẫn đó vào:
+
+```js
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+    // Add your theme config if it's in a separate file
+    "./src/config/date-picker-theme.ts",
+  ],
+};
+```
+
+<Admonition type="tip">
+  Nếu bạn muốn tạo theme dựa trên token ngữ nghĩa (giống như shadcn/ui) thay vì các lớp màu cụ thể,
+  hãy xem xét sử dụng [gói Tailwind v4](/docs/tailwind4/getting-started) sử dụng các token ngữ nghĩa
+  dựa trên biến CSS.
+</Admonition>

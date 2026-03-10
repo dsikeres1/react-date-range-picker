@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: Custom Day Cell
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/tailwind3/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/tailwind3/Customization/CompoundCustomDay.tsx?raw";
+
+# 自定义日期单元格
+
+使用 `Day` 组件的 render prop来自定义每个日期单元格。这对于添加事件指示器、根据日期属性应用自定义样式或完全替换日期渲染非常有用。
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Day 渲染属性
+
+| 属性             | 类型         | 描述                       |
+| ---------------- | ------------ | -------------------------- |
+| `date`           | `Date`       | 日期对象                   |
+| `day`            | `number`     | 月份中的第几天 (1-31)      |
+| `isToday`        | `boolean`    | 是否为今天                 |
+| `isSelected`     | `boolean`    | 此日期是否被选中           |
+| `isDisabled`     | `boolean`    | 此日期是否被禁用           |
+| `isInRange`      | `boolean`    | 此日期是否在选定范围内     |
+| `isRangeStart`   | `boolean`    | 是否为范围的起始点         |
+| `isRangeEnd`     | `boolean`    | 是否为范围的结束点         |
+| `isInHoverRange` | `boolean`    | 此日期是否在悬停预览范围内 |
+| `isHoverTarget`  | `boolean`    | 是否为悬停的终点           |
+| `isOutsideDay`   | `boolean`    | 此日期是否属于相邻月份     |
+| `isHighlighted`  | `boolean`    | 此日期是否有一个高亮圆点   |
+| `isFocused`      | `boolean`    | 此日期是否具有键盘焦点     |
+| `onClick`        | `() => void` | 点击处理程序               |
+| `onMouseEnter`   | `() => void` | 鼠标进入处理程序           |
+| `onMouseLeave`   | `() => void` | 鼠标离开处理程序           |

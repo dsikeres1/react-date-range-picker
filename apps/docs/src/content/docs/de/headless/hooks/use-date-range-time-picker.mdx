@@ -1,0 +1,200 @@
+---
+sidebar_position: 4
+title: useDateRangeTimePicker
+---
+
+# useDateRangeTimePicker
+
+Hook für die Auswahl eines Datumsbereichs in Kombination mit der Zeitauswahl für Start- und Enddatum. Vereint die Funktionen von `useDateRangePicker` und Zeitmanagement in einem einzigen Hook.
+
+## Importieren
+
+```tsx
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+```
+
+## Verwendung
+
+```tsx
+import { useState } from "react";
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+
+function MyDateRangeTimePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangeTimePicker({
+    value: range,
+    onChange: setRange,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 15 },
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangeTimePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Doppelkalender, Voreinstellungen, Zeitsteuerungen für Start und Ende */}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Optionen
+
+| Option                   | Typ                                                           | Standard                                                                  | Beschreibung                                                     |
+| ------------------------ | ------------------------------------------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --                                                                        | **Erforderlich.** Aktueller Bereichswert.                        |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --                                                                        | **Erforderlich.** Wird aufgerufen, wenn sich der Bereich ändert. |
+| `time`                   | `TimeConfig`                                                  | `{ precision: "minute", hourFormat: "24", minuteStep: 5, secondStep: 1 }` | Zeitpicker-Konfiguration für Start- und Endzeit.                 |
+| `maxDays`                | `number`                                                      | --                                                                        | Maximale Anzahl an Tagen im Bereich.                             |
+| `minDays`                | `number`                                                      | --                                                                        | Minimale Anzahl an Tagen im Bereich.                             |
+| `presets`                | `DateRangePreset[]`                                           | --                                                                        | Vordefinierte Bereichsvoreinstellungen.                          |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`                                                                    | Erlaube `start` === `end`.                                       |
+| `minDate`                | `Date`                                                        | --                                                                        | Frühestes auswählbares Datum.                                    |
+| `maxDate`                | `Date`                                                        | --                                                                        | Spätestes auswählbares Datum.                                    |
+| `locale`                 | `Partial<Locale>`                                             | `DEFAULT_LOCALE`                                                          | Locale-Zeichenfolgen überschreiben.                              |
+| `initialMonth`           | `Date`                                                        | --                                                                        | Anzuzeigender Anfangsmonat.                                      |
+| `size`                   | `DatePickerSize`                                              | --                                                                        | UI-Durchleitung.                                                 |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`                                                                | Erster Tag der Woche.                                            |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --                                                                        | Benutzerdefinierte Funktion zum Deaktivieren von Daten.          |
+| `displayFormat`          | `string`                                                      | --                                                                        | Benutzerdefiniertes Anzeigeformat.                               |
+| `open`                   | `boolean`                                                     | --                                                                        | Kontrollierter geöffneter Zustand.                               |
+| `initialOpen`            | `boolean`                                                     | `false`                                                                   | Initialer geöffneter Zustand.                                    |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --                                                                        | Callback für den geöffneten Zustand.                             |
+| `required`               | `boolean`                                                     | `false`                                                                   | Löschen verhindern.                                              |
+| `today`                  | `Date`                                                        | `new Date()`                                                              | „Heute“ überschreiben.                                           |
+| `onMonthChange`          | `(month: Date) => void`                                       | --                                                                        | Callback für Monatswechsel.                                      |
+| `disablePast`            | `boolean`                                                     | `false`                                                                   | Vergangene Daten deaktivieren.                                   |
+| `disableFuture`          | `boolean`                                                     | `false`                                                                   | Zukünftige Daten deaktivieren.                                   |
+| `showOutsideDays`        | `boolean`                                                     | `false`                                                                   | Tage des Vormonats/Folgemonats anzeigen.                         |
+| `highlightDates`         | `Date[]`                                                      | --                                                                        | Hervorzuhebende Daten.                                           |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`                                                                   | Automatische Bestätigung nur bei Klick auf eine Voreinstellung.  |
+| `numberOfMonths`         | `number`                                                      | `2`                                                                       | Anzahl der Kalendermonate.                                       |
+| `captionLayout`          | `CaptionLayout`                                               | `"buttons"`                                                               | Layout der Titelzeile.                                           |
+| `fromYear`               | `number`                                                      | aktuelles Jahr - 100                                                      | Startjahr für das Dropdown.                                      |
+| `toYear`                 | `number`                                                      | aktuelles Jahr + 10                                                       | Endjahr für das Dropdown.                                        |
+
+## Rückgabewerte
+
+### Datumszustand
+
+| Name            | Typ            | Beschreibung                               |
+| --------------- | -------------- | ------------------------------------------ |
+| `isOpen`        | `boolean`      | Geöffneter Zustand des Popups.             |
+| `tempStartDate` | `Date \| null` | Temporäres Startdatum.                     |
+| `tempEndDate`   | `Date \| null` | Temporäres Enddatum.                       |
+| `hoveredDate`   | `Date \| null` | Aktuell mit der Maus überstrichenes Datum. |
+| `leftMonth`     | `Date`         | Linker Kalendermonat.                      |
+| `rightMonth`    | `Date`         | Rechter Kalendermonat.                     |
+| `locale`        | `Locale`       | Aufgelöste Locale.                         |
+
+### Startzeitzustand
+
+| Name                    | Typ          | Beschreibung                                           |
+| ----------------------- | ------------ | ------------------------------------------------------ |
+| `startHour`             | `number`     | Stunde der Startzeit.                                  |
+| `startMinute`           | `number`     | Minute der Startzeit.                                  |
+| `startSecond`           | `number`     | Sekunde der Startzeit.                                 |
+| `startPeriod`           | `TimePeriod` | AM/PM der Startzeit.                                   |
+| `isStartTimePickerOpen` | `boolean`    | Geöffneter Zustand des Unter-Panels für die Startzeit. |
+
+### Endzeitzustand
+
+| Name                  | Typ          | Beschreibung                                         |
+| --------------------- | ------------ | ---------------------------------------------------- |
+| `endHour`             | `number`     | Stunde der Endzeit.                                  |
+| `endMinute`           | `number`     | Minute der Endzeit.                                  |
+| `endSecond`           | `number`     | Sekunde der Endzeit.                                 |
+| `endPeriod`           | `TimePeriod` | AM/PM der Endzeit.                                   |
+| `isEndTimePickerOpen` | `boolean`    | Geöffneter Zustand des Unter-Panels für die Endzeit. |
+
+### Datumsaktionen
+
+| Name              | Typ                            | Beschreibung                 |
+| ----------------- | ------------------------------ | ---------------------------- |
+| `handleDateClick` | `(date: Date) => void`         | Klick auf eine Tageszelle.   |
+| `handleDateHover` | `(date: Date \| null) => void` | Hovern für Bereichsvorschau. |
+| `handlePrevMonth` | `() => void`                   | Vorheriger Monat.            |
+| `handleNextMonth` | `() => void`                   | Nächster Monat.              |
+| `handleOpen`      | `() => void`                   | Popup öffnen.                |
+| `handleClose`     | `() => void`                   | Popup schließen.             |
+| `handleToggle`    | `() => void`                   | Popup umschalten.            |
+| `handleConfirm`   | `() => void`                   | Bestätigen und schließen.    |
+| `handleCancel`    | `() => void`                   | Abbrechen und zurücksetzen.  |
+| `handleClear`     | `() => void`                   | Wert löschen.                |
+| `handleGoToToday` | `() => void`                   | Zu „Heute“ navigieren.       |
+
+### Startzeitaktionen
+
+| Name                           | Typ                            | Beschreibung                              |
+| ------------------------------ | ------------------------------ | ----------------------------------------- |
+| `handleStartHourChange`        | `(hour: number) => void`       | Startstunde aktualisieren.                |
+| `handleStartMinuteChange`      | `(minute: number) => void`     | Startminute aktualisieren.                |
+| `handleStartSecondChange`      | `(second: number) => void`     | Startsekunde aktualisieren.               |
+| `handleStartPeriodChange`      | `(period: TimePeriod) => void` | Start-AM/PM umschalten.                   |
+| `handleStartTimePickerOpen`    | `() => void`                   | Unter-Panel für die Startzeit öffnen.     |
+| `handleStartTimePickerClose`   | `() => void`                   | Unter-Panel für die Startzeit schließen.  |
+| `handleStartTimePickerConfirm` | `() => void`                   | Unter-Panel für die Startzeit bestätigen. |
+| `handleStartTimePickerCancel`  | `() => void`                   | Unter-Panel für die Startzeit abbrechen.  |
+
+### Endzeitaktionen
+
+| Name                         | Typ                            | Beschreibung                            |
+| ---------------------------- | ------------------------------ | --------------------------------------- |
+| `handleEndHourChange`        | `(hour: number) => void`       | Endstunde aktualisieren.                |
+| `handleEndMinuteChange`      | `(minute: number) => void`     | Endminute aktualisieren.                |
+| `handleEndSecondChange`      | `(second: number) => void`     | Endsekunde aktualisieren.               |
+| `handleEndPeriodChange`      | `(period: TimePeriod) => void` | End-AM/PM umschalten.                   |
+| `handleEndTimePickerOpen`    | `() => void`                   | Unter-Panel für die Endzeit öffnen.     |
+| `handleEndTimePickerClose`   | `() => void`                   | Unter-Panel für die Endzeit schließen.  |
+| `handleEndTimePickerConfirm` | `() => void`                   | Unter-Panel für die Endzeit bestätigen. |
+| `handleEndTimePickerCancel`  | `() => void`                   | Unter-Panel für die Endzeit abbrechen.  |
+
+### Berechnet
+
+| Name                    | Typ                                               | Beschreibung                                 |
+| ----------------------- | ------------------------------------------------- | -------------------------------------------- |
+| `leftCalendar`          | `CalendarMonth`                                   | Kalenderdaten des linken Panels.             |
+| `rightCalendar`         | `CalendarMonth`                                   | Kalenderdaten des rechten Panels.            |
+| `calendars`             | `CalendarMonth[]`                                 | Alle Kalendermonate.                         |
+| `getDayProps`           | `(date: Date, referenceMonth?: Date) => DayProps` | Props für Tageszellen.                       |
+| `displayValue`          | `string`                                          | Formatierte Zeichenfolge für Bereich + Zeit. |
+| `startTimeDisplayValue` | `string`                                          | Formatierte Zeichenfolge für die Startzeit.  |
+| `endTimeDisplayValue`   | `string`                                          | Formatierte Zeichenfolge für die Endzeit.    |
+| `hasValue`              | `boolean`                                         | Ob ein Wert bestätigt ist.                   |
+| `canConfirm`            | `boolean`                                         | Ob die Bestätigung gültig ist.               |
+| `containerRef`          | `RefObject<HTMLDivElement \| null>`               | Container-Ref.                               |
+| `popupRef`              | `RefObject<HTMLDivElement \| null>`               | Popup-Ref.                                   |
+| `startTimePickerRef`    | `RefObject<HTMLDivElement \| null>`               | Ref des Unter-Panels für die Startzeit.      |
+| `endTimePickerRef`      | `RefObject<HTMLDivElement \| null>`               | Ref des Unter-Panels für die Endzeit.        |
+| `focusedDate`           | `Date \| null`                                    | Datum mit Tastaturfokus.                     |
+| `handleKeyDown`         | `(e: KeyboardEvent<HTMLElement>) => void`         | Tastatur-Handler.                            |
+| `resolvedTimeConfig`    | `Required<TimeConfig>`                            | Aufgelöste Zeitkonfiguration.                |
+| `presets`               | `DateRangePreset[]`                               | Durchleitung der Voreinstellungen.           |
+| `handlePresetClick`     | `(preset: DateRangePreset) => void`               | Eine Voreinstellung anwenden.                |
+| `activePresetIndex`     | `number`                                          | Index der passenden Voreinstellung.          |
+| `years`                 | `number[]`                                        | Jahre für das Dropdown.                      |
+| `months`                | `number[]`                                        | Monate für das Dropdown.                     |
+| `handleYearSelect`      | `(year: number, calendarIndex?: number) => void`  | Jahr festlegen.                              |
+| `handleMonthSelect`     | `(month: number, calendarIndex?: number) => void` | Monat festlegen.                             |
+
+## Schlüsselverhalten
+
+### Getrennte Steuerelemente für Start-/Endzeit
+
+Im Gegensatz zu `useDateTimePicker`, das nur einen Satz von Zeitsteuerungen hat, bietet dieser Hook unabhängige Zustände für Stunde/Minute/Sekunde/Periode und Handler für sowohl die Start- als auch die Endzeit. Jeder hat seinen eigenen Ablauf zum Öffnen/Schließen/Bestätigen/Abbrechen des Unter-Panels.
+
+### shouldCloseOnSelect
+
+Bei Datumsbereich-Zeit-Pickern gilt `shouldCloseOnSelect` nur für **Klicks auf Voreinstellungen**. Klicks auf Daten führen nicht zu einer automatischen Bestätigung, da der Benutzer noch die Zeit für Start und Ende konfigurieren muss.
+
+### Zeitkonfiguration
+
+Die einzelne `time`-Option gilt sowohl für den Start- als auch für den Endzeit-Picker. Beide teilen sich die gleichen Einstellungen für Präzision, Stundenformat und Schrittweite.

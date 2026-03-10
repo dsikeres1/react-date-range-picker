@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+sidebar_label: Props
+---
+
+# Proplar
+
+| Prop            | Tip                            | Varsayılan | Açıklama                                             |
+| --------------- | ------------------------------ | ---------- | ---------------------------------------------------- |
+| `value`         | `Date \| null`                 | --         | Seçilen zaman değeri (sadece zaman kısmı kullanılır) |
+| `onChange`      | `(date: Date \| null) => void` | --         | Değer değiştiğinde geri arama                        |
+| `time`          | `TimeConfig`                   | --         | Zaman paneli yapılandırması                          |
+| `locale`        | `Partial<Locale>`              | --         | Özel yerel ayar yapılandırması                       |
+| `displayFormat` | `string`                       | --         | Tetikleyici için özel görüntüleme formatı            |
+| `placeholder`   | `string`                       | --         | Tetikleyici için yer tutucu metin                    |
+| `open`          | `boolean`                      | --         | Kontrollü açık durum                                 |
+| `initialOpen`   | `boolean`                      | `false`    | Başlangıçtaki açık durum (kontrolsüz)                |
+| `onOpenChange`  | `(open: boolean) => void`      | --         | Açık durum değiştiğinde geri arama                   |
+| `required`      | `boolean`                      | `false`    | Değeri temizlemeyi devre dışı bırak                  |
+| `inline`        | `boolean`                      | `false`    | Tetikleyici/açılır pencere olmadan satır içi oluştur |
+| `hideFooter`    | `boolean`                      | --         | Eylem altbilgisini gizle                             |
+| `name`          | `string`                       | --         | Form gönderimi için gizli girdi adı                  |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Zaman görüntüleme hassasiyeti. Varsayılan "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** 12 saat veya 24 saat formatı. Varsayılan "24". */
+  hourFormat?: "12" | "24";
+  /** Dakika artış adımı. Varsayılan 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Saniye artış adımı. Varsayılan 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Her kaydırma tekerleği öğesinin yüksekliği (px olarak). Varsayılan 32. */
+  itemHeight?: number;
+}
+```

@@ -1,0 +1,136 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind4Basic from "@examples/tailwind4/DatePicker/Basic";
+import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
+
+# Tailwind CSS v4 시작하기
+
+Tailwind v4 패키지는 Tailwind CSS v4 유틸리티 클래스와 시맨틱 디자인 토큰으로 스타일링된 데이트 피커 컴포넌트를 제공합니다.
+
+## 설치
+
+<PackageInstall pkg="react-date-range-picker-tailwind4" />
+
+Importa gli stili dei componenti nel tuo file CSS principale:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+Se il tuo progetto **non** definisce ancora token di design semantici (ad esempio, i progetti shadcn/ui li hanno già), importa anche il tema predefinito:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+```
+
+### Progetti shadcn/ui
+
+shadcn/ui definisce già i token necessari. Hai bisogno solo degli stili dei componenti:
+
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### Progetti Tailwind v4 autonomi
+
+Per i progetti senza shadcn/ui, importa sia i token del tema che gli stili dei componenti:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+## Token Semantici
+
+I componenti utilizzano internamente le proprietà personalizzate CSS `--rdrp-*`, che vengono mappate ai token semantici di Tailwind v4 / shadcn tramite `var()` con valori di fallback. Se desideri personalizzare la mappatura, sovrascrivi le variabili `--rdrp-*` nel tuo CSS.
+
+Il file `rdrp-theme.css` fornisce una palette predefinita Slate + Sky con questi token:
+
+| Token                        | Utilizzo                       |
+| ---------------------------- | ------------------------------ |
+| `--color-background`         | Sfondi dei componenti          |
+| `--color-foreground`         | Colore del testo               |
+| `--color-primary`            | Date selezionate, stati attivi |
+| `--color-primary-foreground` | Testo sul colore primario      |
+| `--color-muted-foreground`   | Testo attenuato, segnaposto    |
+| `--color-accent`             | Sfondi al passaggio del mouse  |
+| `--color-border`             | Colori dei bordi               |
+| `--color-ring`               | Colore dell'anello di focus    |
+
+## 빠른 시작
+
+<CodeDemo source={Tailwind4BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Tailwind4Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 포함된 컴포넌트
+
+| 컴포넌트              | 설명                                         |
+| --------------------- | -------------------------------------------- |
+| `DatePicker`          | 팝업 캘린더를 이용한 단일 날짜 선택          |
+| `DateRangePicker`     | 듀얼 캘린더와 프리셋을 이용한 날짜 범위 선택 |
+| `DateTimePicker`      | 시간 스크롤 패널을 이용한 날짜 + 시간 선택   |
+| `DateRangeTimePicker` | 날짜 범위 + 시간 선택                        |
+
+모든 컴포넌트는 다음을 지원합니다:
+
+- `value` / `onChange`를 통한 제어 컴포넌트
+- 키보드 탐색
+- `dark:` variant를 통한 다크 모드
+- 4가지 크기: `small`, `medium`, `large`, `x-large`
+- 커스터마이зацию을 위한 Compound Component API
+
+## TypeScript 타입
+
+모든 설정 및 데이터 타입은 패키지에서 다시 내보내므로, headless 패키지를 별도로 설치할 필요가 없습니다:
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind4";
+```
+
+이 타입들은 다음과 같은 경우에 유용합니다:
+
+- **`Locale`** — 커스텀 로케일 설정 (요일 이름, 버튼 라벨, 날짜 포맷 등)
+- **`DatePickerSize`** — `size` prop의 타입 지정 (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — 타임 피커의 정밀도, 형식, 단계 설정
+- **`DateRangePreset`** — `DateRangePicker` / `DateRangeTimePicker`를 위한 프리셋 정의
+- **`CalendarMonth`**, **`DayProps`** — Compound Component를 이용한 커스텀 렌더링
+
+자세한 타입 정의는 [Headless 타입](/docs/headless/types/common-types) 문서를 참고하세요.
+
+## 다음 단계
+
+- [DatePicker](/docs/tailwind4/components/date-picker/basic) — 단일 날짜 선택
+- [DateRangePicker](/docs/tailwind4/components/date-range-picker/basic) — 프리셋을 포함한 날짜 범위 선택
+- [Compound Components](/docs/tailwind4/customization/overview) — 내부 구조 커스터마이징
+- [Semantic Tokens](/docs/tailwind4/customization/semantic-tokens) — 디자인 토큰을 이용한 테마 설정
+- [Dark Mode](/docs/tailwind4/customization/dark-mode) — 다크 모드 지원

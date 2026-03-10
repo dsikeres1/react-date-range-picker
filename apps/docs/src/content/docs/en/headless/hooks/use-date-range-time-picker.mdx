@@ -1,0 +1,200 @@
+---
+sidebar_position: 4
+title: useDateRangeTimePicker
+---
+
+# useDateRangeTimePicker
+
+Hook for date range selection combined with time selection for both start and end dates. Merges the capabilities of `useDateRangePicker` and time management into a single hook.
+
+## Import
+
+```tsx
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+
+function MyDateRangeTimePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangeTimePicker({
+    value: range,
+    onChange: setRange,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 15 },
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangeTimePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Dual calendar, presets, time controls for start and end */}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Options
+
+| Option                   | Type                                                          | Default                                                                   | Description                                             |
+| ------------------------ | ------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --                                                                        | **Required.** Current range value.                      |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --                                                                        | **Required.** Called when the range changes.            |
+| `time`                   | `TimeConfig`                                                  | `{ precision: "minute", hourFormat: "24", minuteStep: 5, secondStep: 1 }` | Time picker configuration for both start and end times. |
+| `maxDays`                | `number`                                                      | --                                                                        | Maximum days in range.                                  |
+| `minDays`                | `number`                                                      | --                                                                        | Minimum days in range.                                  |
+| `presets`                | `DateRangePreset[]`                                           | --                                                                        | Predefined range presets.                               |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`                                                                    | Allow start === end.                                    |
+| `minDate`                | `Date`                                                        | --                                                                        | Earliest selectable date.                               |
+| `maxDate`                | `Date`                                                        | --                                                                        | Latest selectable date.                                 |
+| `locale`                 | `Partial<Locale>`                                             | `DEFAULT_LOCALE`                                                          | Override locale strings.                                |
+| `initialMonth`           | `Date`                                                        | --                                                                        | Initial month to display.                               |
+| `size`                   | `DatePickerSize`                                              | --                                                                        | UI pass-through.                                        |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`                                                                | First day of the week.                                  |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --                                                                        | Custom function to disable dates.                       |
+| `displayFormat`          | `string`                                                      | --                                                                        | Custom display format.                                  |
+| `open`                   | `boolean`                                                     | --                                                                        | Controlled open state.                                  |
+| `initialOpen`            | `boolean`                                                     | `false`                                                                   | Initial open state.                                     |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --                                                                        | Open state callback.                                    |
+| `required`               | `boolean`                                                     | `false`                                                                   | Prevent clearing.                                       |
+| `today`                  | `Date`                                                        | `new Date()`                                                              | Override today.                                         |
+| `onMonthChange`          | `(month: Date) => void`                                       | --                                                                        | Month change callback.                                  |
+| `disablePast`            | `boolean`                                                     | `false`                                                                   | Disable past dates.                                     |
+| `disableFuture`          | `boolean`                                                     | `false`                                                                   | Disable future dates.                                   |
+| `showOutsideDays`        | `boolean`                                                     | `false`                                                                   | Show adjacent month days.                               |
+| `highlightDates`         | `Date[]`                                                      | --                                                                        | Dates to highlight.                                     |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`                                                                   | Auto-confirm on preset click only.                      |
+| `numberOfMonths`         | `number`                                                      | `2`                                                                       | Number of calendar months.                              |
+| `captionLayout`          | `CaptionLayout`                                               | `"buttons"`                                                               | Caption layout.                                         |
+| `fromYear`               | `number`                                                      | current year - 100                                                        | Dropdown start year.                                    |
+| `toYear`                 | `number`                                                      | current year + 10                                                         | Dropdown end year.                                      |
+
+## Return Values
+
+### Date State
+
+| Name            | Type           | Description             |
+| --------------- | -------------- | ----------------------- |
+| `isOpen`        | `boolean`      | Popup open state.       |
+| `tempStartDate` | `Date \| null` | Temporary start date.   |
+| `tempEndDate`   | `Date \| null` | Temporary end date.     |
+| `hoveredDate`   | `Date \| null` | Currently hovered date. |
+| `leftMonth`     | `Date`         | Left calendar month.    |
+| `rightMonth`    | `Date`         | Right calendar month.   |
+| `locale`        | `Locale`       | Resolved locale.        |
+
+### Start Time State
+
+| Name                    | Type         | Description                      |
+| ----------------------- | ------------ | -------------------------------- |
+| `startHour`             | `number`     | Start time hour.                 |
+| `startMinute`           | `number`     | Start time minute.               |
+| `startSecond`           | `number`     | Start time second.               |
+| `startPeriod`           | `TimePeriod` | Start time AM/PM.                |
+| `isStartTimePickerOpen` | `boolean`    | Start time sub-panel open state. |
+
+### End Time State
+
+| Name                  | Type         | Description                    |
+| --------------------- | ------------ | ------------------------------ |
+| `endHour`             | `number`     | End time hour.                 |
+| `endMinute`           | `number`     | End time minute.               |
+| `endSecond`           | `number`     | End time second.               |
+| `endPeriod`           | `TimePeriod` | End time AM/PM.                |
+| `isEndTimePickerOpen` | `boolean`    | End time sub-panel open state. |
+
+### Date Actions
+
+| Name              | Type                           | Description              |
+| ----------------- | ------------------------------ | ------------------------ |
+| `handleDateClick` | `(date: Date) => void`         | Day cell click.          |
+| `handleDateHover` | `(date: Date \| null) => void` | Hover for range preview. |
+| `handlePrevMonth` | `() => void`                   | Previous month.          |
+| `handleNextMonth` | `() => void`                   | Next month.              |
+| `handleOpen`      | `() => void`                   | Open popup.              |
+| `handleClose`     | `() => void`                   | Close popup.             |
+| `handleToggle`    | `() => void`                   | Toggle popup.            |
+| `handleConfirm`   | `() => void`                   | Confirm and close.       |
+| `handleCancel`    | `() => void`                   | Cancel and revert.       |
+| `handleClear`     | `() => void`                   | Clear value.             |
+| `handleGoToToday` | `() => void`                   | Navigate to today.       |
+
+### Start Time Actions
+
+| Name                           | Type                           | Description                   |
+| ------------------------------ | ------------------------------ | ----------------------------- |
+| `handleStartHourChange`        | `(hour: number) => void`       | Update start hour.            |
+| `handleStartMinuteChange`      | `(minute: number) => void`     | Update start minute.          |
+| `handleStartSecondChange`      | `(second: number) => void`     | Update start second.          |
+| `handleStartPeriodChange`      | `(period: TimePeriod) => void` | Toggle start AM/PM.           |
+| `handleStartTimePickerOpen`    | `() => void`                   | Open start time sub-panel.    |
+| `handleStartTimePickerClose`   | `() => void`                   | Close start time sub-panel.   |
+| `handleStartTimePickerConfirm` | `() => void`                   | Confirm start time sub-panel. |
+| `handleStartTimePickerCancel`  | `() => void`                   | Cancel start time sub-panel.  |
+
+### End Time Actions
+
+| Name                         | Type                           | Description                 |
+| ---------------------------- | ------------------------------ | --------------------------- |
+| `handleEndHourChange`        | `(hour: number) => void`       | Update end hour.            |
+| `handleEndMinuteChange`      | `(minute: number) => void`     | Update end minute.          |
+| `handleEndSecondChange`      | `(second: number) => void`     | Update end second.          |
+| `handleEndPeriodChange`      | `(period: TimePeriod) => void` | Toggle end AM/PM.           |
+| `handleEndTimePickerOpen`    | `() => void`                   | Open end time sub-panel.    |
+| `handleEndTimePickerClose`   | `() => void`                   | Close end time sub-panel.   |
+| `handleEndTimePickerConfirm` | `() => void`                   | Confirm end time sub-panel. |
+| `handleEndTimePickerCancel`  | `() => void`                   | Cancel end time sub-panel.  |
+
+### Computed
+
+| Name                    | Type                                              | Description                    |
+| ----------------------- | ------------------------------------------------- | ------------------------------ |
+| `leftCalendar`          | `CalendarMonth`                                   | Left panel calendar data.      |
+| `rightCalendar`         | `CalendarMonth`                                   | Right panel calendar data.     |
+| `calendars`             | `CalendarMonth[]`                                 | All calendar months.           |
+| `getDayProps`           | `(date: Date, referenceMonth?: Date) => DayProps` | Day cell props.                |
+| `displayValue`          | `string`                                          | Formatted range + time string. |
+| `startTimeDisplayValue` | `string`                                          | Formatted start time string.   |
+| `endTimeDisplayValue`   | `string`                                          | Formatted end time string.     |
+| `hasValue`              | `boolean`                                         | Whether a value is confirmed.  |
+| `canConfirm`            | `boolean`                                         | Whether confirmation is valid. |
+| `containerRef`          | `RefObject<HTMLDivElement \| null>`               | Container ref.                 |
+| `popupRef`              | `RefObject<HTMLDivElement \| null>`               | Popup ref.                     |
+| `startTimePickerRef`    | `RefObject<HTMLDivElement \| null>`               | Start time sub-panel ref.      |
+| `endTimePickerRef`      | `RefObject<HTMLDivElement \| null>`               | End time sub-panel ref.        |
+| `focusedDate`           | `Date \| null`                                    | Keyboard-focused date.         |
+| `handleKeyDown`         | `(e: KeyboardEvent<HTMLElement>) => void`         | Keyboard handler.              |
+| `resolvedTimeConfig`    | `Required<TimeConfig>`                            | Resolved time config.          |
+| `presets`               | `DateRangePreset[]`                               | Presets passthrough.           |
+| `handlePresetClick`     | `(preset: DateRangePreset) => void`               | Apply a preset.                |
+| `activePresetIndex`     | `number`                                          | Matching preset index.         |
+| `years`                 | `number[]`                                        | Years for dropdown.            |
+| `months`                | `number[]`                                        | Months for dropdown.           |
+| `handleYearSelect`      | `(year: number, calendarIndex?: number) => void`  | Set year.                      |
+| `handleMonthSelect`     | `(month: number, calendarIndex?: number) => void` | Set month.                     |
+
+## Key Behaviors
+
+### Separate Start/End Time Controls
+
+Unlike `useDateTimePicker` which has a single set of time controls, this hook provides independent hour/minute/second/period state and handlers for both start and end times. Each has its own sub-panel open/close/confirm/cancel flow.
+
+### shouldCloseOnSelect
+
+For date-range-time pickers, `shouldCloseOnSelect` only applies to **preset clicks**. Date clicks do not auto-confirm because the user still needs to configure the time for both start and end.
+
+### Time Configuration
+
+The single `time` option applies to both start and end time pickers. Both share the same precision, hour format, and step settings.

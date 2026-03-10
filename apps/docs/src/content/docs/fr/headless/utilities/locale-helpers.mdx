@@ -1,0 +1,58 @@
+---
+sidebar_position: 5
+title: Locale Helpers
+---
+
+# Aides de Localisation
+
+Fonctions pour créer et fusionner les configurations de locale.
+
+```tsx
+import {
+  DEFAULT_LOCALE,
+  mergeLocale,
+  createLocale,
+  resolveLocale,
+  weekdayToNumber,
+} from "react-date-range-picker-headless";
+```
+
+## DEFAULT_LOCALE
+
+L'objet de locale anglais par défaut. Tous les champs sont remplis avec des chaînes de caractères anglaises.
+
+|      |          |
+| ---- | -------- |
+| Type | `Locale` |
+
+```tsx
+DEFAULT_LOCALE.weekdays; // ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+DEFAULT_LOCALE.months; // ["January", "February", ..., "December"]
+DEFAULT_LOCALE.confirm; // "Confirm"
+DEFAULT_LOCALE.placeholder; // "Select date"
+```
+
+## mergeLocale
+
+Fusionne une locale partielle dans la locale par défaut.
+
+|           |                                                  |
+| --------- | ------------------------------------------------ |
+| Signature | `mergeLocale(partial?: Partial<Locale>): Locale` |
+
+Retourne `DEFAULT_LOCALE` si aucune locale partielle n'est fournie. Lorsque `rangeSeparator` est surchargé mais pas `formatRange`, `formatRange` est automatiquement régénéré pour utiliser le nouveau séparateur.
+
+```tsx
+mergeLocale(); // DEFAULT_LOCALE
+
+mergeLocale({
+  confirm: "OK",
+  cancel: "Back",
+  rangeSeparator: " - ",
+});
+// { ...DEFAULT_LOCALE, confirm: "OK", cancel: "Back", rangeSeparator: " - ", formatRange: (s, e) => `${s} - ${e}` }
+```
+
+## createLocale
+
+Crée une locale à partir d'une clé de locale BCP 47 en

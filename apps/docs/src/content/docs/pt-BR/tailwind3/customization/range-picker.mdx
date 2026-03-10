@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: Range Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/tailwind3/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/tailwind3/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/tailwind3/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/tailwind3/Customization/CompoundRangeInline.tsx?raw";
+
+# Seletor de Intervalo
+
+A API composta `DateRangePicker` fornece partes adicionais para calendários duplos e intervalos predefinidos. Você obtém controle total sobre o layout de predefinições, grades de calendário, cabeçalhos e ações de rodapé.
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Em Linha com Predefinições
+
+Exiba o seletor de intervalo em linha com uma barra lateral de predefinições:
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

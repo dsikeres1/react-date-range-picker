@@ -1,0 +1,46 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/tailwind4/DateRangePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/tailwind4/DateRangePicker/MinMaxDays.tsx?raw";
+import DisabledDates from "@examples/tailwind4/DateRangePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind4/DateRangePicker/DisabledDates.tsx?raw";
+import AllowSingleDate from "@examples/tailwind4/DateRangePicker/AllowSingleDate";
+import AllowSingleDateSource from "@examples/tailwind4/DateRangePicker/AllowSingleDate.tsx?raw";
+
+# Einschränkungen
+
+## Min & Max Tage
+
+Beschränken Sie die Länge des Zeitraums mit `minDays` und `maxDays` (inklusiv). Benutzer können keinen Zeitraum bestätigen, der kürzer als `minDays` oder länger als `maxDays` ist.
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Deaktivierte Daten
+
+Verwenden Sie `isDateUnavailable`, um bestimmte Daten dynamisch zu deaktivieren. Deaktivierte Daten können nicht als Anfang oder Ende eines Zeitraums ausgewählt werden.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Einzelnes Datum erlauben
+
+Standardmäßig ist ein Zeitraum erlaubt, bei dem das Startdatum dem Enddatum entspricht. Setzen Sie `allowSingleDateInRange={false}`, um mindestens zwei unterschiedliche Daten zu verlangen.
+
+<CodeDemo source={AllowSingleDateSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <AllowSingleDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

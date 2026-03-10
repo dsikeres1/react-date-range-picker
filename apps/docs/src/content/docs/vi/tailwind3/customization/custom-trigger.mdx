@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind3/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind3/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind3/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Trình kích hoạt tùy chỉnh
+
+Thay thế trình kích hoạt mặc định bằng phần tử của riêng bạn bằng cách sử dụng render prop. Thành phần `Trigger` chấp nhận một hàm con nhận trạng thái và các hàm gọi lại, cho phép bạn hiển thị bất kỳ nút hoặc đầu vào tùy chỉnh nào.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Trigger Render Props
+
+| Thuộc tính     | Kiểu             | Mô tả                                        |
+| -------------- | ---------------- | -------------------------------------------- |
+| `displayValue` | `string`         | Ngày đã chọn được định dạng                  |
+| `placeholder`  | `string`         | Văn bản giữ chỗ                              |
+| `hasValue`     | `boolean`        | Liệu một ngày có được chọn hay không         |
+| `isOpen`       | `boolean`        | Liệu cửa sổ bật lên có đang mở hay không     |
+| `onToggle`     | `() => void`     | Chuyển đổi trạng thái mở/đóng cửa sổ bật lên |
+| `onClear`      | `() => void`     | Xóa lựa chọn                                 |
+| `locale`       | `Locale`         | Đối tượng locale hiện tại                    |
+| `triggerRef`   | `(node) => void` | Ref callback để định vị                      |
+
+## Trình kích hoạt cho Range Picker
+
+Mẫu tương tự cũng hoạt động với `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

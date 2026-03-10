@@ -1,0 +1,52 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/styled/DateTimePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/styled/DateTimePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/styled/DateTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateTimePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/styled/DateTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DateTimePicker/FormIntegration.tsx?raw";
+
+# Zachowanie
+
+## Zamykanie po wybraniu
+
+Gdy opcja `shouldCloseOnSelect` jest włączona, wybierak automatycznie zatwierdza wybór i zamyka się po kliknięciu daty.
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Wiele miesięcy
+
+Wyświetlaj wiele miesięcy obok siebie.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Integracja z formularzem
+
+Użyj właściwości `name`, aby dodać ukryte pole (input) dla natywnego przesyłania formularza.
+
+<Admonition type="tip">
+  Style przycisku przesyłania w tym przykładzie są niestandardowe — biblioteka dostarcza tylko
+  wybierak dat.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

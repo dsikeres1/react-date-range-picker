@@ -1,0 +1,44 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Compound Components
+
+Tailwind v4パッケージは、各ピッカーの内部構造とレンダリングを完全に制御できるCompound Component APIを公開しています。単一のモノリシックなコンポーネントの代わりに、個々のパーツからピッカーを構成します。
+
+## 仕組み
+
+すべてのピッカー（例：`DatePicker`）は、シンプルなコンポーネントであると同時に、複合パーツの名前空間でもあります。
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+// シンプルな使用法 -- デフォルトのレイアウトをレンダリング
+<DatePicker value={value} onChange={setValue} />
+
+// 複合的な使用法 -- 構造を完全に制御
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+Compound Componentsを使用すると、次のことが可能になります。
+
+- **置換**: 任意の部分を独自のレンダリングに置き換える（例：カスタムトリガー、カスタム日付セル）
+- **再配置**: レイアウトを再配置する（例：フッターボタンの移動、今日ボタンの追加）
+- **省略**: 不要な部分を省略する（例：ミニマルなカレンダーのためにフッターを削除）
+- **クラスの上書き**: `className` propを介して任意の部分のクラスを上

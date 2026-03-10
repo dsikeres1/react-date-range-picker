@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/styled/DateRangePicker/Basic";
+import BasicSource from "@examples/styled/DateRangePicker/Basic.tsx?raw";
+import Inline from "@examples/styled/DateRangePicker/Inline";
+import InlineSource from "@examples/styled/DateRangePicker/Inline.tsx?raw";
+
+# DateRangePicker
+
+Un composant de sélection de plage de dates avec un double calendrier et des préréglages optionnels.
+
+## Utilisation de base
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Mode en ligne
+
+Affichez le calendrier en ligne sans déclencheur de popup.
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

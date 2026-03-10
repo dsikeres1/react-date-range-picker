@@ -1,0 +1,51 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# 속성
+
+| 속성                     | 타입                                                          | 기본값      | 설명                                                       |
+| ------------------------ | ------------------------------------------------------------- | ----------- | ---------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --          | 선택된 날짜 범위 값                                        |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | 값이 변경될 때 호출되는 콜백                               |
+| `presets`                | `DateRangePreset[]`                                           | --          | 미리 정의된 날짜 범위 프리셋                               |
+| `maxDays`                | `number`                                                      | --          | 범위 내에서 허용되는 최대 일수 (포함)                      |
+| `minDays`                | `number`                                                      | --          | 범위 내에서 필요한 최소 일수 (포함)                        |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`      | 시작일과 종료일이 같은 범위를 허용                         |
+| `minDate`                | `Date`                                                        | --          | 선택 가능한 최소 날짜                                      |
+| `maxDate`                | `Date`                                                        | --          | 선택 가능한 최대 날짜                                      |
+| `locale`                 | `Partial<Locale>`                                             | --          | 사용자 정의 로케일 설정                                    |
+| `initialMonth`           | `Date`                                                        | --          | 초기에 표시될 월                                           |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`  | 컴포넌트 크기                                              |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`  | 한 주의 시작 요일                                          |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --          | 날짜를 비활성화로 표시                                     |
+| `displayFormat`          | `string`                                                      | --          | 사용자 정의 표시 형식 (예: `"YYYY/MM/DD"`)                 |
+| `open`                   | `boolean`                                                     | --          | 제어되는 열림 상태                                         |
+| `initialOpen`            | `boolean`                                                     | --          | 초기 열림 상태 (비제어)                                    |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --          | 열림 상태가 변경될 때 호출되는 콜백                        |
+| `required`               | `boolean`                                                     | `false`     | 값 지우기 비활성화                                         |
+| `showOutsideDays`        | `boolean`                                                     | `false`     | 인접한 달의 날짜 표시                                      |
+| `highlightDates`         | `Date[]`                                                      | --          | 강조할 날짜                                                |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`     | 종료일 선택 시 자동 확인                                   |
+| `numberOfMonths`         | `number`                                                      | `2`         | 표시할 월 개수                                             |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"` | 캡션 탐색 스타일                                           |
+| `fromYear`               | `number`                                                      | --          | 드롭다운의 시작 연도                                       |
+| `toYear`                 | `number`                                                      | --          | 드롭다운의 종료 연도                                       |
+| `disablePast`            | `boolean`                                                     | `false`     | 오늘 이전 날짜 비활성화                                    |
+| `disableFuture`          | `boolean`                                                     | `false`     | 오늘 이후 날짜 비활성화                                    |
+| `inline`                 | `boolean`                                                     | `false`     | 달력을 인라인으로 표시 (팝업 없음)                         |
+| `name`                   | `string`                                                      | --          | 폼 제출을 위한 숨겨진 입력 필드의 이름 (시작일)            |
+| `endName`                | `string`                                                      | --          | 종료일을 위한 숨겨진 입력 필드의 이름 (기본값: `name-end`) |
+| `placeholder`            | `string`                                                      | --          | 트리거 플레이스홀더 텍스트                                 |
+| `hideHeader`             | `boolean`                                                     | `false`     | 탐색 헤더 숨기기                                           |
+| `hideFooter`             | `boolean`                                                     | `false`     | 액션 푸터 숨기기                                           |
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

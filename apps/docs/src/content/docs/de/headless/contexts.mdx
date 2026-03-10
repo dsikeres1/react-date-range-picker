@@ -1,0 +1,343 @@
+---
+sidebar_position: 4
+title: Contexts
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ContextExample from "@examples/headless/ContextExample";
+import ContextExampleSource from "@examples/headless/ContextExample.tsx?raw";
+
+# Kontexte
+
+Das Headless-Paket stellt Context-Provider zur Verfügung, die die Hooks umschließen und ihren Zustand über React Context verfügbar machen. Dies ermöglicht das **Compound-Component-Pattern** – teilen Sie Ihre Benutzeroberfläche in kleine, fokussierte Unterkomponenten auf, die den Zustand aus dem Kontext lesen, anstatt Props weiterzugeben.
+
+## Warum Kontexte?
+
+Ohne Kontext müssten Sie jeden Teil des Zustands über Props durchreichen:
+
+```tsx
+// Ohne Kontext – Prop Drilling
+function MyDatePicker() {
+  const picker = useDatePicker({ value, onChange });
+  return (
+    <MyTrigger displayValue={picker.displayValue} onToggle={picker.handleToggle} />
+    <MyCalendar calendar={picker.calendar} getDayProps={picker.getDayProps} ... />
+    <MyFooter onConfirm={picker.handleConfirm} onCancel={picker.handleCancel} ... />
+  );
+}
+```
+
+Mit Kontext konsumieren Unterkomponenten direkt, was sie benötigen:
+
+```tsx
+// Mit Kontext – Compound Components
+function MyDatePicker() {
+  return (
+    <DatePickerProvider value={value} onChange={onChange}>
+      <ExampleWrapper variant="headless" client:load>
+        <MyTrigger client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyCalendar client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyFooter client:load />
+      </ExampleWrapper>
+    </DatePickerProvider>
+  );
+}
+
+function MyTrigger() {
+  const { displayValue, handleToggle } = useDatePickerContext();
+  return <button onClick={handleToggle}>{displayValue}</button>;
+}
+```
+
+## Verfügbare Provider
+
+| Provider                      | Intern verwendeter Hook  | Consumer-Hook                     |
+| ----------------------------- | ------------------------ | --------------------------------- |
+| `DatePickerProvider`          | `useDatePicker`          | `useDatePickerContext()`          |
+| `DateRangePickerProvider`     | `useDateRangePicker`     | `useDateRangePickerContext()`     |
+| `DateTimePickerProvider`      | `useDateTimePicker`      | `useDateTimePickerContext()`      |
+| `DateRangeTimePickerProvider` | `useDateRangeTimePicker` | `useDateRangeTimePickerContext()` |
+
+Jeder Provider rendert sowohl einen **typisierten Kontext** (spezifisch für diesen Picker-Typ) als auch den **vereinheitlichten PickerContext** (für alle Typen gemeinsam).
+
+```tsx
+import {
+  DatePickerProvider,
+  DateRangePickerProvider,
+  DateTimePickerProvider,
+  DateRangeTimePickerProvider,
+} from "react-date-range-picker-headless";
+```
+
+### DatePickerProvider
+
+Umschließt `useDatePicker`. Stellt `DatePickerContext` + `PickerContext` zur Verfügung.
+
+```tsx
+import type { DatePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop          | Typ                            | Beschreibung                                         |
+| ------------- | ------------------------------ | ---------------------------------------------------- |
+| `children`    | `ReactNode`                    | **Erforderlich.** Kindkomponenten.                   |
+| `value`       | `Date \| null`                 | **Erforderlich.** Aktuelles Datum.                   |
+| `onChange`    | `(date: Date \| null) => void` | **Erforderlich.** Change-Handler.                    |
+| `inline`      | `boolean`                      | Inline rendern (kein Popup).                         |
+| `size`        | `DatePickerSize`               | Größenvariante.                                      |
+| `placeholder` | `string`                       | Platzhalter für den Trigger.                         |
+| `name`        | `string`                       | Name des Formularfelds.                              |
+| _...rest_     | `BaseDatePickerOptions`        | Alle Basisoptionen (minDate, maxDate, locale, etc.). |
+
+**Consumer-Hook:** `useDatePickerContext()` gibt `UseDatePickerReturn` zurück.
+
+### DateRangePickerProvider
+
+Umschließt `useDateRangePicker`. Stellt `DateRangePickerContext` + `PickerContext` zur Verfügung.
+
+```tsx
+import type { DateRangePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop                     | Typ                                                           | Beschreibung                         |
+| ------------------------ | ------------------------------------------------------------- | ------------------------------------ |
+| `children`               | `ReactNode`                                                   | **Erforderlich.** Kindkomponenten.   |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | **Erforderlich.** Aktueller Bereich. |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | **Erforderlich.** Change-Handler.    |
+| `inline`                 | `boolean`                                                     | Inline rendern.                      |
+| `size`                   | `DatePickerSize`                                              | Größenvariante.                      |
+| `placeholder`            | `string`                                                      | Platzhalter für den Trigger.         |
+| `name`                   | `string`                                                      | Name des Formularfelds.              |
+| `maxDays`                | `number`                                                      | Maximale Tage im Bereich.            |
+| `minDays`                | `number`                                                      | Minimale Tage im Bereich.            |
+| `presets`                | `DateRangePreset[]`                                           | Bereichsvoreinstellungen.            |
+| `allowSingleDateInRange` | `boolean`                                                     | Einzelnen Tag im Bereich erlauben.   |
+| _...rest_                | `BaseDatePickerOptions`                                       | Alle Basisoptionen.                  |
+
+**Consumer-Hook:** `useDateRangePickerContext()` gibt `UseDateRangePickerReturn` zurück.
+
+### DateTimePickerProvider
+
+Umschließt `useDateTimePicker`. Stellt `DateTimePickerContext` + `PickerContext` zur Verfügung.
+
+```tsx
+import type { DateTimePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop          | Typ                                | Beschreibung                                   |
+| ------------- | ---------------------------------- | ---------------------------------------------- |
+| `children`    | `ReactNode`                        | **Erforderlich.** Kindkomponenten.             |
+| `value`       | `Date \| null`                     | **Erforderlich.** Aktuelles Datum und Uhrzeit. |
+| `onChange`    | `(dateTime: Date \| null) => void` | **Erforderlich.** Change-Handler.              |
+| `time`        | `TimeConfig`                       | Zeitkonfiguration.                             |
+| `inline`      | `boolean`                          | Inline rendern.                                |
+| `size`        | `DatePickerSize`                   | Größenvariante.                                |
+| `placeholder` | `string`                           | Platzhalter für den Trigger.                   |
+| `name`        | `string`                           | Name des Formularfelds.                        |
+| _...rest_     | `BaseDatePickerOptions`            | Alle Basisoptionen.                            |
+
+**Consumer-Hook:** `useDateTimePickerContext()` gibt `UseDateTimePickerReturn` zurück.
+
+### DateRangeTimePickerProvider
+
+Umschließt `useDateRangeTimePicker`. Stellt `DateRangeTimePickerContext` + `PickerContext` zur Verfügung.
+
+```tsx
+import type { DateRangeTimePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop                     | Typ                                                           | Beschreibung                         |
+| ------------------------ | ------------------------------------------------------------- | ------------------------------------ |
+| `children`               | `ReactNode`                                                   | **Erforderlich.** Kindkomponenten.   |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | **Erforderlich.** Aktueller Bereich. |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | **Erforderlich.** Change-Handler.    |
+| `time`                   | `TimeConfig`                                                  | Zeitkonfiguration.                   |
+| `inline`                 | `boolean`                                                     | Inline rendern.                      |
+| `size`                   | `DatePickerSize`                                              | Größenvariante.                      |
+| `placeholder`            | `string`                                                      | Platzhalter für den Trigger.         |
+| `name`                   | `string`                                                      | Name des Formularfelds.              |
+| `maxDays`                | `number`                                                      | Maximale Tage im Bereich.            |
+| `minDays`                | `number`                                                      | Minimale Tage im Bereich.            |
+| `presets`                | `DateRangePreset[]`                                           | Bereichsvoreinstellungen.            |
+| `allowSingleDateInRange` | `boolean`                                                     | Einzelnen Tag im Bereich erlauben.   |
+| _...rest_                | `BaseDatePickerOptions`                                       | Alle Basisoptionen.                  |
+
+**Consumer-Hook:** `useDateRangeTimePickerContext()` gibt `UseDateRangeTimePickerReturn` zurück.
+
+## PickerContext (Vereinheitlicht)
+
+Jeder Provider injiziert auch einen **vereinheitlichten `PickerContext`**. Dies ist ein Superset-Kontext, der alle Felder von jedem Picker-Typ enthält, mit optionalen Feldern für picker-spezifische Werte.
+
+```tsx
+import { usePickerContext } from "react-date-range-picker-headless";
+
+function MyGenericHeader() {
+  const { locale, handlePrevMonth, handleNextMonth, calendars } = usePickerContext();
+  return (
+    <div>
+      <button onClick={handlePrevMonth}>{locale.prevMonth}</button>
+      <span>{locale.formatMonthYear(calendars[0].month)}</span>
+      <button onClick={handleNextMonth}>{locale.nextMonth}</button>
+    </div>
+  );
+}
+```
+
+Der vereinheitlichte Kontext ermöglicht es Ihnen, **gemeinsame Unterkomponenten** zu erstellen, die für alle Picker-Typen funktionieren. Die Styled-Pakete (`styled`, `tailwind3`, `tailwind4`) verwenden dieses Muster intern – ihre `Header`, `Grid`, `Footer` usw. Komponenten konsumieren alle den `PickerContext`.
+
+### PickerContext-Felder
+
+```tsx
+import { PickerContext, usePickerContext } from "react-date-range-picker-headless";
+import type { PickerContextValue } from "react-date-range-picker-headless";
+```
+
+```tsx
+function usePickerContext(): PickerContextValue;
+```
+
+Wirft einen Fehler, wenn es außerhalb eines Picker-Providers verwendet wird.
+
+#### Kernfelder (immer vorhanden)
+
+| Feld                | Typ                                               |
+| ------------------- | ------------------------------------------------- |
+| `isOpen`            | `boolean`                                         |
+| `locale`            | `Locale`                                          |
+| `focusedDate`       | `Date \| null`                                    |
+| `displayValue`      | `string`                                          |
+| `hasValue`          | `boolean`                                         |
+| `canConfirm`        | `boolean`                                         |
+| `calendars`         | `CalendarMonth[]`                                 |
+| `getDayProps`       | `(date: Date, referenceMonth?: Date) => DayProps` |
+| `handleToggle`      | `() => void`                                      |
+| `handleOpen`        | `() => void`                                      |
+| `handleClose`       | `() => void`                                      |
+| `handleConfirm`     | `() => void`                                      |
+| `handleCancel`      | `() => void`                                      |
+| `handleClear`       | `() => void`                                      |
+| `handleGoToToday`   | `() => void`                                      |
+| `handlePrevMonth`   | `() => void`                                      |
+| `handleNextMonth`   | `() => void`                                      |
+| `handleKeyDown`     | `(e: KeyboardEvent<HTMLElement>) => void`         |
+| `handleDateClick`   | `(date: Date) => void`                            |
+| `containerRef`      | `RefObject<HTMLDivElement \| null>`               |
+| `popupRef`          | `RefObject<HTMLDivElement \| null>`               |
+| `years`             | `number[]`                                        |
+| `months`            | `number[]`                                        |
+| `handleYearSelect`  | `(year: number, calendarIndex?: number) => void`  |
+| `handleMonthSelect` | `(month: number, calendarIndex?: number) => void` |
+
+#### UI-Durchgangsfelder
+
+| Feld              | Typ                           |
+| ----------------- | ----------------------------- |
+| `value`           | `unknown`                     |
+| `endName`         | `string \| undefined`         |
+| `required`        | `boolean \| undefined`        |
+| `inline`          | `boolean \| undefined`        |
+| `showOutsideDays` | `boolean \| undefined`        |
+| `size`            | `DatePickerSize \| undefined` |
+| `placeholder`     | `string \| undefined`         |
+| `name`            | `string \| undefined`         |
+| `captionLayout`   | `CaptionLayout \| undefined`  |
+
+#### Bereichsspezifische Felder (optional)
+
+| Feld                | Typ                                                |
+| ------------------- | -------------------------------------------------- |
+| `handleDateHover`   | `((date: Date \| null) => void) \| undefined`      |
+| `presets`           | `DateRangePreset[] \| undefined`                   |
+| `handlePresetClick` | `((preset: DateRangePreset) => void) \| undefined` |
+| `activePresetIndex` | `number \| undefined`                              |
+
+#### Einzelne Zeitfelder (optional, DateTimePicker)
+
+| Feld                      | Typ                                              |
+| ------------------------- | ------------------------------------------------ |
+| `resolvedTimeConfig`      | `Required<TimeConfig> \| undefined`              |
+| `tempHour`                | `number \| undefined`                            |
+| `tempMinute`              | `number \| undefined`                            |
+| `tempSecond`              | `number \| undefined`                            |
+| `tempPeriod`              | `TimePeriod \| undefined`                        |
+| `handleHourChange`        | `((hour: number) => void) \| undefined`          |
+| `handleMinuteChange`      | `((minute: number) => void) \| undefined`        |
+| `handleSecondChange`      | `((second: number) => void) \| undefined`        |
+| `handlePeriodChange`      | `((period: TimePeriod) => void) \| undefined`    |
+| `isTimePickerOpen`        | `boolean \| undefined`                           |
+| `handleTimePickerOpen`    | `(() => void) \| undefined`                      |
+| `handleTimePickerClose`   | `(() => void) \| undefined`                      |
+| `handleTimePickerConfirm` | `(() => void) \| undefined`                      |
+| `handleTimePickerCancel`  | `(() => void) \| undefined`                      |
+| `timePickerRef`           | `RefObject<HTMLDivElement \| null> \| undefined` |
+| `timeDisplayValue`        | `string \| undefined`                            |
+
+#### Bereichs-Zeitfelder (optional, DateRangeTimePicker)
+
+| Feld                           | Typ                                              |
+| ------------------------------ | ------------------------------------------------ |
+| `startHour`                    | `number \| undefined`                            |
+| `startMinute`                  | `number \| undefined`                            |
+| `startSecond`                  | `number \| undefined`                            |
+| `startPeriod`                  | `TimePeriod \| undefined`                        |
+| `endHour`                      | `number \| undefined`                            |
+| `endMinute`                    | `number \| undefined`                            |
+| `endSecond`                    | `number \| undefined`                            |
+| `endPeriod`                    | `TimePeriod \| undefined`                        |
+| `handleStartHourChange`        | `((hour: number) => void) \| undefined`          |
+| `handleStartMinuteChange`      | `((minute: number) => void) \| undefined`        |
+| `handleStartSecondChange`      | `((second: number) => void) \| undefined`        |
+| `handleStartPeriodChange`      | `((period: TimePeriod) => void) \| undefined`    |
+| `handleEndHourChange`          | `((hour: number) => void) \| undefined`          |
+| `handleEndMinuteChange`        | `((minute: number) => void) \| undefined`        |
+| `handleEndSecondChange`        | `((second: number) => void) \| undefined`        |
+| `handleEndPeriodChange`        | `((period: TimePeriod) => void) \| undefined`    |
+| `isStartTimePickerOpen`        | `boolean \| undefined`                           |
+| `isEndTimePickerOpen`          | `boolean \| undefined`                           |
+| `handleStartTimePickerOpen`    | `(() => void) \| undefined`                      |
+| `handleStartTimePickerClose`   | `(() => void) \| undefined`                      |
+| `handleStartTimePickerConfirm` | `(() => void) \| undefined`                      |
+| `handleStartTimePickerCancel`  | `(() => void) \| undefined`                      |
+| `handleEndTimePickerOpen`      | `(() => void) \| undefined`                      |
+| `handleEndTimePickerClose`     | `(() => void) \| undefined`                      |
+| `handleEndTimePickerConfirm`   | `(() => void) \| undefined`                      |
+| `handleEndTimePickerCancel`    | `(() => void) \| undefined`                      |
+| `startTimePickerRef`           | `RefObject<HTMLDivElement \| null> \| undefined` |
+| `endTimePickerRef`             | `RefObject<HTMLDivElement \| null> \| undefined` |
+| `startTimeDisplayValue`        | `string \| undefined`                            |
+| `endTimeDisplayValue`          | `string \| undefined`                            |
+
+## Typisierte vs. Vereinheitlichte Kontexte
+
+| Anwendungsfall                                                                            | Welcher Kontext                                               |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Erstellen einer gemeinsamen Komponente, die für alle Picker-Typen funktioniert            | `usePickerContext()`                                          |
+| Erstellen einer Komponente, die spezifisch für einen Picker ist, mit voller Typsicherheit | `useDatePickerContext()`, `useDateRangePickerContext()`, etc. |
+
+Die typisierten Kontexte geben den exakten Rückgabetyp des Hooks zurück, sodass Sie eine vollständige TypeScript-Inferenz erhalten. Der vereinheitlichte Kontext verwendet optionale Felder für picker-spezifische Werte.
+
+## Dual-Kontext-Muster
+
+Jeder Provider rendert zwei verschachtelte Kontexte:
+
+```tsx
+<SpecificPickerContext.Provider value={hookReturn}>
+  <PickerContext.Provider value={unifiedValue}>{children}</PickerContext.Provider>
+</SpecificPickerContext.Provider>
+```
+
+- Verwenden Sie `usePickerContext()` für gemeinsame Unterkomponenten (funktioniert mit jedem Picker)
+- Verwenden Sie den typisierten Consumer-Hook für picker-spezifische Logik (volle Typsicherheit)
+
+## Beispiel: Zusammengesetzter Date Picker
+
+<CodeDemo source={ContextExampleSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <ContextExample client:load />
+  </ExampleWrapper>
+</CodeDemo>

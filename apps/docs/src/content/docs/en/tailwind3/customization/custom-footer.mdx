@@ -1,0 +1,54 @@
+---
+sidebar_position: 4
+sidebar_label: Custom Footer
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/tailwind3/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/tailwind3/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/tailwind3/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNoFooter.tsx?raw";
+
+# Custom Footer
+
+## Rearranged Footer
+
+Rearrange footer buttons and add extra actions like a "Today" button. With compound components, you control exactly which buttons appear and in what order.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Minimal Layout
+
+Remove any part you don't need. Here the footer is omitted entirely for a minimal calendar-only layout:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Overriding Classes
+
+Every compound part accepts a `className` prop. The Tailwind v3 package uses `cn()` (a `clsx` + `twMerge` utility) to merge your classes with the defaults, so conflicting utilities are resolved correctly:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger className="min-w-[300px] px-4 py-3" />
+  <DatePicker.Content className="rounded-2xl shadow-xl">
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title className="text-lg" />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>;
+```

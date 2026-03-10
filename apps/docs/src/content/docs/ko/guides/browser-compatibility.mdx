@@ -1,0 +1,70 @@
+---
+sidebar_position: 3
+title: Browser Compatibility
+description: 지원되는 브라우저, 사용된 CSS 기능 및 JavaScript API입니다.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 브라우저 호환성
+
+## 지원 매트릭스
+
+| 브라우저         | 최소 버전      |
+| ---------------- | -------------- |
+| Chrome           | 88+            |
+| Edge             | 88+ (Chromium) |
+| Firefox          | 85+            |
+| Safari           | 15.4+          |
+| iOS Safari       | 15.4+          |
+| Samsung Internet | 15+            |
+
+**IE 11은 지원되지 않습니다.** 이 라이브러리는 CSS custom properties, 최신 JavaScript API 및 React 18+에 의존합니다.
+
+최소 버전인 Safari 15.4는 Styled 패키지의 포커스 표시기 스타일에 사용된 `:focus-visible` 지원 여부에 따라 결정되었습니다.
+
+## CSS 기능
+
+| 기능                     | 사용처                           | 최초 지원                              |
+| ------------------------ | -------------------------------- | -------------------------------------- |
+| CSS Custom Properties    | 모든 Styled 패키지 (테마)        | Chrome 49, Firefox 31, Safari 9.1      |
+| `:focus-visible`         | 포커스 표시기 (Styled)           | Chrome 86, Firefox 85, **Safari 15.4** |
+| `color-scheme`           | 다크 모드 네이티브 입력 (Styled) | Chrome 81, Firefox 96, Safari 12.1     |
+| `prefers-color-scheme`   | 자동 다크 모드 (Styled)          | Chrome 76, Firefox 67, Safari 12.1     |
+| `prefers-reduced-motion` | 모션 축소 (Styled)               | Chrome 74, Firefox 63, Safari 10.1     |
+| `scroll-snap-type`       | 타임 피커 스크롤 (Styled)        | Chrome 69, Firefox 68, Safari 11       |
+| Flexbox                  | 레이아웃                         | 보편적                                 |
+| CSS Grid                 | 캘린더 그리드                    | Chrome 57, Firefox 52, Safari 10.1     |
+
+## JavaScript API
+
+| API                                 | 사용처                             | 최초 지원                          |
+| ----------------------------------- | ---------------------------------- | ---------------------------------- |
+| `Intl.DateTimeFormat`               | `createLocale()` 로캘 생성         | 모든 최신 브라우저                 |
+| `Intl.DateTimeFormat.formatToParts` | AM/PM 레이블 추출                  | Chrome 57, Firefox 51, Safari 11   |
+| `ResizeObserver`                    | `@floating-ui/react` 팝업 포지셔닝 | Chrome 64, Firefox 69, Safari 13.1 |
+| React 18+ hooks                     | 모든 훅 및 컴포넌트                | React 18.0+                        |
+
+## 패키지별 참고 사항
+
+### Headless
+
+CSS 종속성이 없습니다. React 18+ 및 표준 JavaScript API만 필요합니다. React를 지원하는 모든 환경과 호환됩니다.
+
+### Styled
+
+CSS custom properties, `:focus-visible`, `color-scheme`, 그리고 `scroll-snap-type`을 사용합니다. 브라우저 지원의 병목은 (`:focus-visible`을 위한) **Safari 15.4+**입니다.
+
+스크롤 기반 타임 피커는 숨겨진 스크롤바와 함께 `scroll-snap-type: y mandatory`를 사용합니다. 관성/모멘텀 구현이 플랫폼마다 다르기 때문에 스크롤 동작이 플랫폼별로 약간 다르게 느껴질 수 있습니다.
+
+### Tailwind v3
+
+Tailwind CSS v3가 필요합니다. Headless와 동일한 JavaScript 호환성을 갖습니다. CSS 지원은 Tailwind v3 출력에 따라 달라집니다(널리 호환됨).
+
+### Tailwind v4
+
+Tailwind CSS v4가 필요하며, 이는 그 자체로 최신 CSS 기능(`@layer`, `@property`, CSS nesting)을 사용합니다. 자세한 내용은 [Tailwind CSS v4 브라우저 지원](https://tailwindcss.com/docs/compatibility)을 참조하세요.
+
+## 폴리필
+
+최소 버전보다 약간 낮은 브라우저를 지원해야 하는 프로젝트의 경우:

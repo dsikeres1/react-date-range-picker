@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: "Range Picker"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/styled/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/styled/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/styled/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/styled/Customization/CompoundRangeInline.tsx?raw";
+
+# Bereichsauswahl
+
+Verwenden Sie die `DateRangePicker` Compound-API, um eine vollständig benutzerdefinierte Bereichsauswahl mit einem benutzerdefinierten Auslöser und einer voreingestellten Seitenleiste zu erstellen.
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Inline mit Voreinstellungen
+
+Zeigen Sie die Bereichsauswahl inline mit einer Seitenleiste für Voreinstellungen an:
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

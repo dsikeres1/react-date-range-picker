@@ -1,0 +1,230 @@
+---
+sidebar_position: 1
+title: Date Helpers
+---
+
+# 日付ユーティリティ
+
+`headless` パッケージは、ネイティブの `Date` ヘルパー関数のセットをエクスポートします。これらは dayjs や date-fns のようなライブラリの必要性を置き換えます -- このライブラリは外部の日付関連の依存関係がゼロです。
+
+すべての関数は純粋です（入力された Date オブジェクトを変更するのではなく、新しい Date オブジェクトを返します）。
+
+## インポート
+
+```tsx
+import {
+  today,
+  parseDate,
+  startOf,
+  endOf,
+  add,
+  subtract,
+  isSame,
+  isBefore,
+  isAfter,
+  diff,
+  daysInMonth,
+  setYear,
+  setMonth,
+  setDate,
+  setHour,
+  setMinute,
+  setSecond,
+  formatBasic,
+} from "react-date-range-picker-headless";
+```
+
+## DateUnit 型
+
+ほとんどの関数は `DateUnit` パラメータを受け入れます:
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```
+
+## 関数
+
+### today
+
+現在の日時を返します。
+
+```tsx
+const now = today(); // new Date()
+```
+
+### parseDate
+
+値を Date オブジェクトにパースします。入力が falsy な場合は `new Date()` を返します。
+
+```tsx
+parseDate("2026-03-01"); // Date
+parseDate(1709251200000); // Date from timestamp
+parseDate(existingDate); // Clone
+parseDate(null); // new Date() (fallback)
+```
+
+**Signature:** `parseDate(date?: Date | string | number | null): Date`
+
+### startOf
+
+時間単位の開始を取得します。
+
+```tsx
+startOf(date, "day"); // 2026-03-01 00:00:00.000
+startOf(date, "month"); // 2026-03-01 00:00:00.000
+startOf(date, "year"); // 2026-01-01 00:00:00.000
+startOf(date, "week"); // Start of week (default Sunday)
+startOf(date, "week", 1); // Start of week (Monday)
+```
+
+**Signature:** `startOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### endOf
+
+時間単位の終了を取得します。
+
+```tsx
+endOf(date, "day"); // 2026-03-01 23:59:59.999
+endOf(date, "month"); // 2026-03-31 23:59:59.999
+endOf(date, "year"); // 2026-12-31 23:59:59.999
+```
+
+**Signature:** `endOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### add
+
+日付に時間を加算します。
+
+```tsx
+add(date, 1, "day"); // Tomorrow
+add(date, 3, "month"); // 3 months later
+add(date, -1, "year"); // 1 year ago
+add(date, 2, "hour"); // 2 hours later
+```
+
+月のオーバーフローを処理します（例：1月31日 + 1ヶ月 = 2月28日、3月3日ではない）。
+
+**Signature:** `add(date: Date, amount: number, unit: DateUnit): Date`
+
+### subtract
+
+日付から時間を減算します。`add(date, -amount, unit)` と同等です。
+
+```tsx
+subtract(date, 7, "day"); // 7 days ago
+subtract(date, 1, "month"); // 1 month ago
+```
+
+**Signature:** `subtract(date: Date, amount: number, unit: DateUnit): Date`
+
+### isSame
+
+指定された精度の単位で2つの日付が同じかどうかを確認します。
+
+```tsx
+isSame(date1, date2, "day"); // Same calendar day?
+isSame(date1, date2, "month"); // Same month?
+isSame(date1, date2, "year"); // Same year?
+isSame(null, date2, "day"); // false (null-safe)
+```
+
+**Signature:** `isSame(date1: Date | null | undefined, date2: Date | null | undefined, unit?: DateUnit): boolean`
+
+### isBefore
+
+指定された精度で最初の日付が2番目の日付より前かどうかを確認します。
+
+```tsx
+isBefore(date1, date2, "day"); // Is date1 on an earlier day?
+isBefore(date1, date2); // Millisecond comparison
+```
+
+**Signature:** `isBefore(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### isAfter
+
+指定された精度で最初の日付が2番目の日付より後かどうかを確認します。
+
+```tsx
+isAfter(date1, date2, "day"); // Is date1 on a later day?
+```
+
+**Signature:** `isAfter(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### diff
+
+指定された単位で2つの日付の差を取得します。
+
+```tsx
+diff(date1, date2, "day"); // Number of days between
+diff(date1, date2, "month"); // Number of months between
+diff(date1, date2, "year"); // Number of years between
+```
+
+**Signature:** `diff(date1: Date, date2: Date, unit: DateUnit): number`
+
+### daysInMonth
+
+日付の月の日数を取得します。
+
+```tsx
+daysInMonth(new Date(2026, 1)); // 28 (February 2026)
+daysInMonth(new Date(2026, 0)); // 31 (January 2026)
+```
+
+**Signature:** `daysInMonth(date: Date): number`
+
+### setYear / setMonth / setDate / setHour / setMinute / setSecond
+
+日付の特定の部分を設定し、新しい Date を返します。
+
+```tsx
+setYear(date, 2027); // Change year to 2027
+setMonth(date, 5); // Change to June (0-indexed)
+setDate(date, 15); // Change to 15th
+setHour(date, 14); // Change to 2 PM
+setMinute(date, 30); // Change to :30
+setSecond(date, 0); // Change to :00
+```
+
+`setYear` と `setMonth` はオーバーフローを処理します（例：うるう年の2月29日を平年に設定すると、2月28日に丸められます）。
+
+**Signatures:**
+
+- `setYear(date: Date, year: number): Date`
+- `setMonth(date: Date, month: number): Date`
+- `setDate(date: Date, day: number): Date`
+- `setHour(date: Date, hour: number): Date`
+- `setMinute(date: Date, minute: number): Date`
+- `setSecond(date: Date, second: number): Date`
+
+### formatBasic
+
+テンプレート文字列を使用して日付をフォーマットします。
+
+```tsx
+formatBasic(date, "YYYY-MM-DD"); // "2026-03-01"
+formatBasic(date, "YYYY/MM/DD HH:mm:ss"); // "2026/03/01 14:30:00"
+formatBasic(date, "M/D"); // "3/1"
+formatBasic(date, "hh:mm A"); // Note: A token not supported, use period from hook
+```
+
+**サポートされているトークン:**
+
+| トークン | 出力                           | 例     |
+| -------- | ------------------------------ | ------ |
+| `YYYY`   | 4桁の年                        | `2026` |
+| `MM`     | 2桁の月                        | `03`   |
+| `M`      | 月（パディングなし）           | `3`    |
+| `DD`     | 2桁の日                        | `01`   |
+| `D`      | 日（パディングなし）           | `1`    |
+| `HH`     | 2桁の時（24時間制）            | `14`   |
+| `H`      | 時（24時間制、パディングなし） | `14`   |
+| `hh`     | 2桁の時（12時間制）            | `02`   |
+| `h`      | 時（12時間制、パディングなし） | `2`    |
+| `mm`     | 2桁の分                        | `30`   |
+| `m`      | 分（パディングなし）           | `30`   |
+| `ss`     | 2桁の秒                        | `05`   |
+| `s`      | 秒（パディングなし）           | `5`    |
+
+**Signature:** `formatBasic(date: Date, format: string): string`

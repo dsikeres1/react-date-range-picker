@@ -1,0 +1,123 @@
+---
+sidebar_position: 2
+title: useDateRangePicker
+---
+
+# useDateRangePicker
+
+用于日期范围选择的 Hook，支持双月日历、悬停预览和预设范围。
+
+## 导入
+
+```tsx
+import { useDateRangePicker } from "react-date-range-picker-headless";
+```
+
+## 用法
+
+```tsx
+import { useState } from "react";
+import { useDateRangePicker } from "react-date-range-picker-headless";
+
+function MyDateRangePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangePicker({
+    value: range,
+    onChange: setRange,
+    presets: [
+      {
+        label: "Last 7 days",
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setDate(start.getDate() - 6);
+          return { start, end };
+        },
+      },
+    ],
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* 并排显示两个日历 */}
+          {[picker.leftCalendar, picker.rightCalendar].map((cal, calIdx) => (
+            <div key={calIdx}>
+              <span>{picker.locale.formatMonthYear(cal.month)}</span>
+              {cal.weeks.flat().map((day, i) => {
+                if (!day) return <span key={i} />;
+                const dp = picker.getDayProps(day, cal.month);
+                return (
+                  <button
+                    key={i}
+                    onClick={() => picker.handleDateClick(day)}
+                    onMouseEnter={() => picker.handleDateHover(day)}
+                    onMouseLeave={() => picker.handleDateHover(null)}
+                  >
+                    {dp.day}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+
+          {/* 预设 */}
+          {picker.presets.map((preset, i) => (
+            <button
+              key={i}
+              onClick={() => picker.handlePresetClick(preset)}
+              style={{ fontWeight: i === picker.activePresetIndex ? "bold" : "normal" }}
+            >
+              {preset.label}
+            </button>
+          ))}
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## 选项
+
+| 选项                     | 类型                                                          | 默认值             | 描述                                                  |
+| ------------------------ | ------------------------------------------------------------- | ------------------ | ----------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --                 | **必需。** 当前的范围值。                             |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --                 | **必需。** 当范围更改时调用。                         |
+| `maxDays`                | `number`                                                      | --                 | 一个范围内允许的最大天数（含）。                      |
+| `minDays`                | `number`                                                      | --                 | 一个范围内要求的最小天数（含）。                      |
+| `presets`                | `DateRangePreset[]`                                           | --                 | 预定义的日期范围预设（例如“过去 7 天”，“本月”）。     |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`             | 当为 `false` 时，阻止选择开始日期等于结束日期的范围。 |
+| `minDate`                | `Date`                                                        | --                 | 可选择的最早日期。                                    |
+| `maxDate`                | `Date`                                                        | --                 | 可选择的最晚日期。                                    |
+| `locale`                 | `Partial<Locale>`                                             | `DEFAULT_LOCALE`   | 覆盖本地化字符串。                                    |
+| `initialMonth`           | `Date`                                                        | --                 | 初始显示的月份。                                      |
+| `size`                   | `DatePickerSize`                                              | --                 | UI 穿透。                                             |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`         | 每周的第一天。                                        |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --                 | 用于禁用特定日期的自定义函数。                        |
+| `displayFormat`          | `string`                                                      | --                 | 用于显示值的自定义格式字符串。                        |
+| `open`                   | `boolean`                                                     | --                 | 受控的打开状态。                                      |
+| `initialOpen`            | `boolean`                                                     | `false`            | 初始打开状态（非受控）。                              |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --                 | 当打开状态更改时的回调。                              |
+| `required`               | `boolean`                                                     | `false`            | 当为 true 时，`handleClear` 无效。                    |
+| `today`                  | `Date`                                                        | `new Date()`       | 覆盖今天的日期。                                      |
+| `onMonthChange`          | `(month: Date) => void`                                       | --                 | 当显示的月份更改时的回调。                            |
+| `disablePast`            | `boolean`                                                     | `false`            | 禁用今天之前的所有日期。                              |
+| `disableFuture`          | `boolean`                                                     | `false`            | 禁用今天之后的所有日期。                              |
+| `showOutsideDays`        | `boolean`                                                     | `false`            | 显示相邻月份的日期。                                  |
+| `highlightDates`         | `Date[]`                                                      | --                 | 要高亮的日期数组。                                    |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`            | 选择结束日期时自动确认。                              |
+| `numberOfMonths`         | `number`                                                      | `2`                | 要显示的日历月份数量。                                |
+| `captionLayout`          | `CaptionLayout`                                               | `"buttons"`        | 标题布局模式。                                        |
+| `fromYear`               | `number`                                                      | current year - 100 | 下拉菜单的起始年份。                                  |
+| `toYear`                 | `number`                                                      | current year + 10  | 下拉菜单的结束                                        |

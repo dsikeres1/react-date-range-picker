@@ -1,0 +1,34 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind4/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind4/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind4/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind4/Customization/CompoundColorThemePopup.tsx?raw";
+
+# カラー
+
+ラッパー要素の CSS カスタムプロパティを上書きすることで、実行時にカラーテーマを切り替えることができます。Tailwind v4 パッケージはすべてのカラーをセマンティックトークンから読み取るため、基になる CSS 変数を変更すると、ピッカー全体が即座にリブランドされます。
+
+Tailwind v4 パッケージは、セマンティックトークンに **oklch** フォーマットを使用します。`--color-primary` と `--color-primary-foreground` を上書きしてピッカーをリブランドします:
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## ポップアップモード
+
+同じテクニックはポップアップピッカーでも機能します:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

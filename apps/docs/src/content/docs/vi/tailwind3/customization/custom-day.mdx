@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: Custom Day Cell
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/tailwind3/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/tailwind3/Customization/CompoundCustomDay.tsx?raw";
+
+# Tuỳ chỉnh Ô Ngày
+
+Sử dụng render prop của component `Day` để tuỳ chỉnh từng ô ngày. Điều này hữu ích để thêm chỉ báo sự kiện, áp dụng kiểu dáng tuỳ chỉnh dựa trên thuộc tính ngày, hoặc thay thế hoàn toàn cách hiển thị ngày.
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Day Render Props
+
+| Prop             | Type         | Mô tả                                                          |
+| ---------------- | ------------ | -------------------------------------------------------------- |
+| `date`           | `Date`       | Đối tượng ngày tháng                                           |
+| `day`            | `number`     | Ngày trong tháng (1-31)                                        |
+| `isToday`        | `boolean`    | Liệu đây có phải là ngày hôm nay                               |
+| `isSelected`     | `boolean`    | Liệu ngày này có được chọn hay không                           |
+| `isDisabled`     | `boolean`    | Liệu ngày này có bị vô hiệu hoá hay không                      |
+| `isInRange`      | `boolean`    | Liệu ngày này có nằm trong khoảng đã chọn không                |
+| `isRangeStart`   | `boolean`    | Liệu đây có phải là ngày bắt đầu khoảng                        |
+| `isRangeEnd`     | `boolean`    | Liệu đây có phải là ngày kết thúc khoảng                       |
+| `isInHoverRange` | `boolean`    | Liệu ngày này có nằm trong khoảng xem trước khi di chuột không |
+| `isHoverTarget`  | `boolean`    | Liệu đây có phải là điểm cuối của việc di chuột                |
+| `isOutsideDay`   | `boolean`    | Liệu ngày này có thuộc về một tháng liền kề                    |
+| `isHighlighted`  | `boolean`    | Liệu ngày này có dấu chấm nổi bật hay không                    |
+| `isFocused`      | `boolean`    | Liệu ngày này có đang được tập trung bằng bàn phím             |
+| `onClick`        | `() => void` | Trình xử lý sự kiện click                                      |
+| `onMouseEnter`   | `() => void` | Trình xử lý sự kiện di chuột vào                               |
+| `onMouseLeave`   | `() => void` | Trình xử lý sự kiện di chuột ra                                |

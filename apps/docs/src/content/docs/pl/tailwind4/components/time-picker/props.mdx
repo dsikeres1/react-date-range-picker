@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+sidebar_label: Props
+---
+
+# Props
+
+| Właściwość      | Typ                            | Domyślnie | Opis                                                      |
+| --------------- | ------------------------------ | --------- | --------------------------------------------------------- |
+| `value`         | `Date \| null`                 | --        | Wybrana wartość czasu (używana jest tylko część czasowa)  |
+| `onChange`      | `(date: Date \| null) => void` | --        | Callback wywoływany przy zmianie wartości                 |
+| `time`          | `TimeConfig`                   | --        | Konfiguracja panelu czasu                                 |
+| `locale`        | `Partial<Locale>`              | --        | Niestandardowa konfiguracja lokalizacji                   |
+| `displayFormat` | `string`                       | --        | Niestandardowy format wyświetlania dla wyzwalacza         |
+| `placeholder`   | `string`                       | --        | Tekst zastępczy dla wyzwalacza                            |
+| `open`          | `boolean`                      | --        | Kontrolowany stan otwarcia                                |
+| `initialOpen`   | `boolean`                      | `false`   | Początkowy stan otwarcia (niekontrolowany)                |
+| `onOpenChange`  | `(open: boolean) => void`      | --        | Callback wywoływany przy zmianie stanu otwarcia           |
+| `required`      | `boolean`                      | `false`   | Wyłącz czyszczenie wartości                               |
+| `inline`        | `boolean`                      | `false`   | Renderuj w linii bez wyzwalacza/wyskakującego okienka     |
+| `hideFooter`    | `boolean`                      | --        | Ukryj stopkę z akcjami                                    |
+| `name`          | `string`                       | --        | Nazwa ukrytego pola wejściowego do przesyłania formularza |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Precyzja wyświetlania czasu. Domyślnie "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** Format 12-godzinny lub 24-godzinny. Domyślnie "24". */
+  hourFormat?: "12" | "24";
+  /** Krok inkrementacji minut. Domyślnie 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Krok inkrementacji sekund. Domyślnie 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Wysokość (w px) każdego elementu kółka przewijania. Domyślnie 32. */
+  itemHeight?: number;
+}
+```

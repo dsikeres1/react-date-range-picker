@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/tailwind4/DatePicker/Basic";
+import BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
+import Inline from "@examples/tailwind4/DatePicker/Inline";
+import InlineSource from "@examples/tailwind4/DatePicker/Inline.tsx?raw";
+
+# DatePicker
+
+คอมโพเนนต์สำหรับเลือกวันที่เดียวพร้อมปฏิทินแบบป๊อปอัป
+
+## การใช้งานพื้นฐาน
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## โหมดอินไลน์
+
+แสดงปฏิทินแบบอินไลน์โดยไม่มีทริกเกอร์ป๊อปอัป
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

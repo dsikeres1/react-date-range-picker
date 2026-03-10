@@ -1,0 +1,82 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/tailwind3/DatePicker/Sizes";
+import SizesSource from "@examples/tailwind3/DatePicker/Sizes.tsx?raw";
+import CustomFormat from "@examples/tailwind3/DatePicker/CustomFormat";
+import CustomFormatSource from "@examples/tailwind3/DatePicker/CustomFormat.tsx?raw";
+import CustomLocale from "@examples/tailwind3/DatePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind3/DatePicker/CustomLocale.tsx?raw";
+import WeekStartsOn from "@examples/tailwind3/DatePicker/WeekStartsOn";
+import WeekStartsOnSource from "@examples/tailwind3/DatePicker/WeekStartsOn.tsx?raw";
+import ShowOutsideDays from "@examples/tailwind3/DatePicker/ShowOutsideDays";
+import ShowOutsideDaysSource from "@examples/tailwind3/DatePicker/ShowOutsideDays.tsx?raw";
+import CaptionDropdown from "@examples/tailwind3/DatePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind3/DatePicker/CaptionDropdown.tsx?raw";
+
+# 外観
+
+## サイズ
+
+4つの組み込みサイズ: `small`、`medium`、`large`、`x-large`。
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## カスタムフォーマット
+
+表示フォーマット文字列をカスタマイズします。
+
+<CodeDemo source={CustomFormatSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CustomFormat client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## カスタムロケール
+
+headlessパッケージの`createLocale`を使用して、国際化のためのカスタムロケールを提供します。
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 週の始まり
+
+週の最初の曜日を変更します。デフォルトは`"sunday"`です。
+
+<CodeDemo source={WeekStartsOnSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <WeekStartsOn client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 月外の日付を表示
+
+カレンダーグリッドを埋めるために、隣接する月の日付を表示します。デフォルトは`false`です。
+
+<CodeDemo source={ShowOutsideDaysSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <ShowOutsideDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## キャプションのドロップダウン
+
+`captionLayout="dropdown"`を使用して、月/年のナビゲーションを矢印からドロップダウンに切り替えます。`fromYear`と`toYear`を使用して年の範囲を設定します。
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

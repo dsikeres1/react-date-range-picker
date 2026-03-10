@@ -1,0 +1,214 @@
+---
+sidebar_position: 2
+sidebar_label: "CSS Variables"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomColors from "@examples/styled/Customization/CustomColors";
+import CustomColorsSource from "@examples/styled/Customization/CustomColors.tsx?raw";
+import CustomFont from "@examples/styled/Customization/CustomFont";
+import CustomFontSource from "@examples/styled/Customization/CustomFont.tsx?raw";
+import CustomBorderRadius from "@examples/styled/Customization/CustomBorderRadius";
+import CustomBorderRadiusSource from "@examples/styled/Customization/CustomBorderRadius.tsx?raw";
+import CustomSize from "@examples/styled/Customization/CustomSize";
+import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw";
+
+# CSS-переменные
+
+Пакет `styled` использует пользовательские свойства CSS (переменные) для всех визуальных значений. Переопределите их в `.rdrp-root` или любом родительском элементе, чтобы настроить внешний вид, не затрагивая код компонента.
+
+## Как переопределить
+
+Все переменные находятся в области видимости `.rdrp-root`. Переопределите их в своем собственном CSS:
+
+```css
+/* Ваша пользовательская тема */
+.rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-border-radius-lg: 12px;
+}
+```
+
+Или ограничьте переопределения конкретным экземпляром, используя класс-оболочку:
+
+```css
+.my-purple-picker .rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-color-primary-light: #ede9fe;
+  --rdrp-color-primary-lighter: #f5f3ff;
+}
+```
+
+```tsx
+<div className="my-purple-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## Справочник по переменным
+
+### Цвета
+
+| Переменная                      | По умолчанию (Светлая)     | Описание                                                      |
+| ------------------------------- | -------------------------- | ------------------------------------------------------------- |
+| `--rdrp-color-primary`          | `#3b82f6`                  | Основной цвет действия (выбранный день, кнопка подтверждения) |
+| `--rdrp-color-primary-hover`    | `#2563eb`                  | Основное состояние при наведении                              |
+| `--rdrp-color-primary-light`    | `#dbeafe`                  | Фон диапазона, светлый основной акцент                        |
+| `--rdrp-color-primary-lighter`  | `#eff6ff`                  | Фон активного пресета                                         |
+| `--rdrp-color-primary-disabled` | `#93c5fd`                  | Отключенная кнопка подтверждения                              |
+| `--rdrp-color-bg`               | `#ffffff`                  | Цвет фона                                                     |
+| `--rdrp-color-bg-hover`         | `#f3f4f6`                  | Фон при наведении для дней, кнопок                            |
+| `--rdrp-color-bg-subtle`        | `#f9fafb`                  | Неброский фон                                                 |
+| `--rdrp-color-text`             | `#374151`                  | Цвет текста по умолчанию                                      |
+| `--rdrp-color-text-strong`      | `#111827`                  | Жирный текст (заголовки, активное время)                      |
+| `--rdrp-color-text-muted`       | `#6b7280`                  | Приглушенный текст (кнопки навигации, метки)                  |
+| `--rdrp-color-text-placeholder` | `#6b7280`                  | Текст-заполнитель                                             |
+| `--rdrp-color-text-disabled`    | `#d1d5db`                  | Текст отключенного дня                                        |
+| `--rdrp-color-text-outside`     | `#9ca3af`                  | Дни за пределами месяца                                       |
+| `--rdrp-color-text-inverse`     | `#ffffff`                  | Текст на основных фонах                                       |
+| `--rdrp-color-text-danger`      | `#ef4444`                  | Текст кнопки очистки/опасности                                |
+| `--rdrp-color-text-today`       | `#2563eb`                  | Цвет индикатора "сегодня"                                     |
+| `--rdrp-color-border`           | `#d1d5db`                  | Граница по умолчанию                                          |
+| `--rdrp-color-border-light`     | `#e5e7eb`                  | Светлая граница (всплывающее окно, селекты)                   |
+| `--rdrp-color-border-subtle`    | `#f3f4f6`                  | Неброская граница (подвал, пресеты)                           |
+| `--rdrp-color-border-hover`     | `#93c5fd`                  | Состояние границы при наведении                               |
+| `--rdrp-color-highlight-dot`    | `#f59e0b`                  | Цвет точки подсветки                                          |
+| `--rdrp-highlight-dot-size`     | `4px`                      | Диаметр точки подсветки                                       |
+| `--rdrp-color-range-bg`         | `#dbeafe`                  | Фон дня в диапазоне                                           |
+| `--rdrp-color-hover-range-bg`   | `#eff6ff`                  | Фон предпросмотра диапазона при наведении                     |
+| `--rdrp-color-hover-target-bg`  | `#bfdbfe`                  | Фон конечной точки при наведении                              |
+| `--rdrp-color-time-highlight`   | `rgba(59, 130, 246, 0.08)` | Полоса подсветки на панели времени                            |
+
+### Типографика
+
+| Переменная                    | По умолчанию           | Описание                                                   |
+| ----------------------------- | ---------------------- | ---------------------------------------------------------- |
+| `--rdrp-font-family`          | Системный стек шрифтов | Семейство шрифтов                                          |
+| `--rdrp-font-size-xs`         | `11px`                 | Очень маленький (заголовок дня недели в маленьком размере) |
+| `--rdrp-font-size-sm`         | `12px`                 | Маленький (заголовки дней недели, метки)                   |
+| `--rdrp-font-size-base`       | `13px`                 | Базовый (ячейки дней, кнопки)                              |
+| `--rdrp-font-size-md`         | `14px`                 | Средний (триггер, элементы времени)                        |
+| `--rdrp-font-size-lg`         | `15px`                 | Большой (заголовок)                                        |
+| `--rdrp-font-weight-normal`   | `400`                  | Нормальная жирность                                        |
+| `--rdrp-font-weight-medium`   | `500`                  | Средняя жирность                                           |
+| `--rdrp-font-weight-semibold` | `600`                  | Полужирная жирность                                        |
+| `--rdrp-font-weight-bold`     | `700`                  | Жирный (индикатор "сегодня")                               |
+
+### Отступы
+
+| Переменная           | По умолчанию | Описание                |
+| -------------------- | ------------ | ----------------------- |
+| `--rdrp-spacing-xs`  | `2px`        | Очень маленький отступ  |
+| `--rdrp-spacing-sm`  | `4px`        | Маленький отступ        |
+| `--rdrp-spacing-md`  | `8px`        | Средний отступ          |
+| `--rdrp-spacing-lg`  | `12px`       | Большой отступ          |
+| `--rdrp-spacing-xl`  | `16px`       | Очень большой отступ    |
+| `--rdrp-spacing-2xl` | `24px`       | 2x очень большой отступ |
+
+### Границы
+
+| Переменная                  | По умолчанию | Описание                                |
+| --------------------------- | ------------ | --------------------------------------- |
+| `--rdrp-border-radius-sm`   | `4px`        | Маленький радиус                        |
+| `--rdrp-border-radius-md`   | `6px`        | Средний радиус (кнопки, селекты)        |
+| `--rdrp-border-radius-lg`   | `8px`        | Большой радиус (дни, триггер)           |
+| `--rdrp-border-radius-xl`   | `12px`       | Очень большой радиус (всплывающее окно) |
+| `--rdrp-border-radius-full` | `9999px`     | Полный радиус (точка подсветки)         |
+| `--rdrp-border-width`       | `1px`        | Ширина границы                          |
+
+### Тени
+
+| Переменная             | По умолчанию                  | Описание               |
+| ---------------------- | ----------------------------- | ---------------------- |
+| `--rdrp-shadow-popup`  | `0 10px 25px rgba(0,0,0,0.1)` | Тень всплывающего окна |
+| `--rdrp-shadow-inline` | `0 4px 12px rgba(0,0,0,0.06)` | Тень в инлайн-режиме   |
+| `--rdrp-shadow-sm`     | `0 2px 6px rgba(0,0,0,0.04)`  | Маленькая тень         |
+
+### Размеры
+
+| Переменная                 | По умолчанию | Описание                                   |
+| -------------------------- | ------------ | ------------------------------------------ |
+| `--rdrp-cell-size`         | `36px`       | Ширина/высота ячейки дня                   |
+| `--rdrp-nav-btn-size`      | `28px`       | Размер кнопки навигации                    |
+| `--rdrp-weekday-height`    | `28px`       | Высота строки заголовка дня недели         |
+| `--rdrp-grid-min-height`   | `216px`      | Минимальная высота сетки календаря         |
+| `--rdrp-panel-min-width`   | `252px`      | Ширина одной панели календаря              |
+| `--rdrp-dual-gap`          | `24px`       | Промежуток между двойными календарями      |
+| `--rdrp-trigger-min-width` | `200px`      | Минимальная ширина кнопки-триггера         |
+| `--rdrp-trigger-padding-x` | `14px`       | Горизонтальный отступ триггера             |
+| `--rdrp-trigger-padding-y` | `8px`        | Вертикальный отступ триггера               |
+| `--rdrp-popup-padding`     | `16px`       | Внутренний отступ всплывающего окна        |
+| `--rdrp-popup-gap`         | `6px`        | Промежуток в контенте всплывающего окна    |
+| `--rdrp-btn-padding-x`     | `14px`       | Горизонтальный отступ кнопки в подвале     |
+| `--rdrp-btn-padding-y`     | `6px`        | Вертикальный отступ кнопки в подвале       |
+| `--rdrp-preset-min-width`  | `140px`      | Минимальная ширина боковой панели пресетов |
+
+### Выбор времени
+
+| Переменная                    | По умолчанию | Описание                          |
+| ----------------------------- | ------------ | --------------------------------- |
+| `--rdrp-time-item-height`     | `32px`       | Высота элемента прокрутки времени |
+| `--rdrp-time-panel-height`    | `176px`      | Общая высота панели времени       |
+| `--rdrp-time-column-height`   | `160px`      | Высота прокручиваемой колонки     |
+| `--rdrp-time-panel-min-width` | `120px`      | Минимальная ширина панели времени |
+| `--rdrp-time-colon-width`     | `12px`       | Ширина разделителя-двоеточия      |
+
+### Z-index
+
+| Переменная            | По умолчанию | Описание                     |
+| --------------------- | ------------ | ---------------------------- |
+| `--rdrp-z-popup`      | `50`         | Z-index всплывающего окна    |
+| `--rdrp-z-day-button` | `20`         | Z-index сфокусированного дня |
+
+### Переходы
+
+| Переменная                 | По умолчанию | Описание                             |
+| -------------------------- | ------------ | ------------------------------------ |
+| `--rdrp-transition-fast`   | `0.1s`       | Быстрые переходы (наведение на день) |
+| `--rdrp-transition-normal` | `0.15s`      | Обычные переходы (триггер, кнопки)   |
+
+## Живые примеры
+
+### Пользовательские цвета (Фиолетовая тема)
+
+Переопределите переменные основного цвета, чтобы создать совершенно другую цветовую схему. В этом примере используется **DatePicker** с фиолетовыми/пурпурными тонами.
+
+<CodeDemo source={CustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Пользовательский шрифт (с засечками)
+
+Шрифты каскадируются через CSS, поэтому обертывание средства выбора в div с пользовательским `font-family` применяется ко всему тексту. В этом примере используется **DateRangePicker** со шрифтом Georgia с засечками.
+
+<CodeDemo source={CustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Острые углы (без радиуса границы)
+
+Установите все переменные радиуса границы на `0px` для получения полностью квадратного вида.
+
+<CodeDemo source={CustomBorderRadiusSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomBorderRadius client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Пользовательский размер через CSS-переменные
+
+Вместо использования встроенного пропа `size`, переопределите отдельные переменные размеров для точного контроля. В этом примере используется **DateRangePicker** с пользовательским размером ячейки и размерами шрифтов.
+
+<CodeDemo source={CustomSizeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSize client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,51 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Реквизит
+
+| Опора                    | Тип                                                           | По умолчанию | Описание                                                |
+| ------------------------ | ------------------------------------------------------------- | ------------ | ------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --           | Selected date range value                               |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --           | Callback when value changes                             |
+| `presets`                | `DateRangePreset[]`                                           | --           | Predefined date range presets                           |
+| `maxDays`                | `number`                                                      | --           | Maximum days allowed in range (inclusive)               |
+| `minDays`                | `number`                                                      | --           | Minimum days required in range (inclusive)              |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`       | Разрешить диапазон, в котором начало равно концу        |
+| `minDate`                | `Date`                                                        | --           | Minimum selectable date                                 |
+| `maxDate`                | `Date`                                                        | --           | Maximum selectable date                                 |
+| `locale`                 | `Partial<Locale>`                                             | --           | Custom locale configuration                             |
+| `initialMonth`           | `Date`                                                        | --           | Initial displayed month                                 |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`   | Component size                                          |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`   | Воскресенье                                             |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --           | Mark dates as disabled                                  |
+| `displayFormat`          | `string`                                                      | --           | Custom display format (e.g. `"YYYY/MM/DD"`)             |
+| `open`                   | `boolean`                                                     | --           | Controlled open state                                   |
+| `initialOpen`            | `boolean`                                                     | --           | Initial open state (uncontrolled)                       |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --           | Callback when open state changes                        |
+| `required`               | `boolean`                                                     | `false`      | Запретить очистку значения                              |
+| `showOutsideDays`        | `boolean`                                                     | `false`      | Показать дни из соседних месяцев                        |
+| `highlightDates`         | `Date[]`                                                      | --           | Dates to highlight                                      |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`      | Автоподтверждение при выборе даты окончания             |
+| `numberOfMonths`         | `number`                                                      | `2`          | Количество месяцев для отображения                      |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"`  | Caption navigation style                                |
+| `fromYear`               | `number`                                                      | --           | Start year for dropdown                                 |
+| `toYear`                 | `number`                                                      | --           | End year for dropdown                                   |
+| `disablePast`            | `boolean`                                                     | `false`      | Отключить даты до сегодняшнего дня                      |
+| `disableFuture`          | `boolean`                                                     | `false`      | Отключить даты после сегодняшнего дня                   |
+| `inline`                 | `boolean`                                                     | `false`      | Показывать встроенный календарь (без всплывающего окна) |
+| `name`                   | `string`                                                      | --           | Hidden input name for form submission (start date)      |
+| `endName`                | `string`                                                      | --           | Hidden input name for end date (defaults to `name-end`) |
+| `placeholder`            | `string`                                                      | --           | Trigger placeholder text                                |
+| `hideHeader`             | `boolean`                                                     | `false`      | Скрыть заголовок навигации                              |
+| `hideFooter`             | `boolean`                                                     | `false`      | Скрыть нижний колонтитул действия                       |
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

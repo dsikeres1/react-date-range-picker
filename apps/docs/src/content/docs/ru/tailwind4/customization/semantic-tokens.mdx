@@ -1,0 +1,167 @@
+---
+sidebar_position: 10
+---
+
+# Семантические токены
+
+Пакет для Tailwind v4 использует семантические CSS-переменные (дизайн-токены) для всех цветов. Эти токены отделяют стили компонентов от конкретных значений цветов, что упрощает создание тем. Соглашение об именовании токенов следует тому же шаблону, что и в [shadcn/ui](https://ui.shadcn.com/).
+
+## Система токенов
+
+Вместо жестко закодированных цветов, таких как `bg-sky-500`, компоненты для Tailwind v4 используют семантические утилиты, такие как `bg-primary`, `text-foreground` и `border-border`. Они сопоставляются с CSS-переменными, которые вы определяете в своем проекте.
+
+```
+bg-primary        → var(--color-primary)
+text-foreground   → var(--color-foreground)
+border-border     → var(--color-border)
+```
+
+## Обязательные токены
+
+Определите эти токены в вашем CSS, используя директиву `@theme` из Tailwind v4:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+## Справочник по токенам
+
+| Токен                        | Используется для                                                | Примеры утилит               |
+| ---------------------------- | --------------------------------------------------------------- | ---------------------------- |
+| `--color-background`         | Фон страницы/приложения                                         | `bg-background`              |
+| `--color-foreground`         | Цвет текста по умолчанию                                        | `text-foreground`            |
+| `--color-popover`            | Фон всплывающего окна                                           | `bg-popover`                 |
+| `--color-popover-foreground` | Текст всплывающего окна                                         | `text-popover-foreground`    |
+| `--color-primary`            | Выбранный день, кнопка подтверждения, конечные точки диапазона  | `bg-primary`, `text-primary` |
+| `--color-primary-foreground` | Текст на основном фоне                                          | `text-primary-foreground`    |
+| `--color-muted-foreground`   | Приглушенный текст (плейсхолдеры, дни недели, кнопки навигации) | `text-muted-foreground`      |
+| `--color-accent`             | Фон при наведении для дней и кнопок                             | `bg-accent`                  |
+| `--color-accent-foreground`  | Текст на акцентном фоне                                         | `text-accent-foreground`     |
+| `--color-destructive`        | Текст кнопки очистки/опасности                                  | `text-destructive`           |
+| `--color-border`             | Общие границы (подвал, пресеты, всплывающее окно)               | `border-border`              |
+| `--color-input`              | Граница поля ввода/триггера                                     | `border-input`               |
+| `--color-ring`               | Цвет кольца фокуса                                              | `ring-ring`                  |
+
+## Как токены сопоставляются с компонентами
+
+Вот как токены применяются в компоненте выбора даты:
+
+### Триггер
+
+- Фон: `bg-background`
+- Граница: `border-input`
+- Текст: наследуется от `text-foreground` в корневом элементе
+- Плейсхолдер: `text-muted-foreground`
+- Кольцо фокуса: `ring-ring`
+
+### Всплывающее окно
+
+- Фон: `bg-popover`
+- Текст: `text-popover-foreground`
+- Граница: `border-border`
+
+### Дни календаря
+
+- Наведение по умолчанию: `bg-accent` / `text-accent-foreground`
+- Выбранный: `bg-primary` / `text-primary-foreground`
+- Сегодня: `text-primary`
+- В диапазоне: `bg-primary/10`
+- Начало/конец диапазона: `bg-primary` / `text-primary-foreground`
+- Отключенный: `text-muted-foreground` с уменьшенной непрозрачностью
+
+### Подвал
+
+- Граница: `border-border`
+- Кнопка отмены: `border-input`, при наведении `bg-accent`
+- Кнопка подтверждения: `bg-primary` / `text-primary-foreground`
+- Кнопка очистки: `text-destructive`
+
+## Настройка токенов
+
+### Изменение основного цвета
+
+Измените `--color-primary` и `--color-primary-foreground`, чтобы изменить бренд компонента выбора даты:
+
+```css
+@theme {
+  /* Фиолетовый основной */
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+}
+```
+
+### Теплая цветовая схема
+
+```css
+@theme {
+  --color-background: oklch(0.99 0.005 80);
+  --color-foreground: oklch(0.2 0.02 60);
+
+  --color-popover: oklch(0.99 0.005 80);
+  --color-popover-foreground: oklch(0.2 0.02 60);
+
+  --color-primary: oklch(0.6 0.2 40);
+  --color-primary-foreground: oklch(0.98 0.005 80);
+
+  --color-accent: oklch(0.95 0.02 80);
+  --color-accent-foreground: oklch(0.2 0.02 60);
+
+  --color-border: oklch(0.9 0.01 80);
+  --color-input: oklch(0.9 0.01 80);
+  --color-ring: oklch(0.85 0.02 80);
+}
+```
+
+### Токены для темного режима
+
+Для темного режима переопределите токены с помощью селектора `.dark` или медиа-запроса `@media (prefers-color-scheme: dark)`:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... значения для светлой темы */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+См. [Темный режим](/docs/tailwind4/customization/dark-mode) для получения дополнительной информации.
+
+## Существующие проекты на shadcn/ui
+
+Если в вашем проекте уже определены токены shadcn/ui, компонент выбора даты будет использовать их автоматически без дополнительной настройки. Имена токенов намеренно сделаны совместимыми. См. [Реестр shadcn](/docs/tailwind4/customization/shadcn-registry) для получения дополнительной информации.

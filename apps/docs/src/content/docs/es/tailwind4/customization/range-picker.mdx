@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: Range Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/tailwind4/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/tailwind4/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/tailwind4/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/tailwind4/Customization/CompoundRangeInline.tsx?raw";
+
+# Selector de Rango
+
+Construye un `DateRangePicker` totalmente personalizado con componentes compuestos. Este ejemplo combina un disparador personalizado, una barra lateral de preajustes, dos cuadrículas de calendario y un pie de página, todo compuesto a partir de partes individuales.
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## En Línea con Preajustes
+
+Muestra el selector de rango en línea con una barra lateral de preajustes:
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

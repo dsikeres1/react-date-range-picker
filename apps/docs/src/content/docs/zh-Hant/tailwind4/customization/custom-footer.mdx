@@ -1,0 +1,55 @@
+---
+sidebar_position: 4
+sidebar_label: Custom Footer
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/tailwind4/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/tailwind4/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/tailwind4/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/tailwind4/Customization/CompoundNoFooter.tsx?raw";
+
+# 自訂頁腳
+
+## 重排頁腳
+
+您可以重排頁腳按鈕，或加入像 `TodayButton` 這樣的新按鈕。由於每個按鈕都是一個獨立的複合部分，您可以完全控制其順序和佈局。
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 最小化佈局
+
+您可以省略任何不需要的部分。例如，完全移除頁腳以建立一個最小化的彈出式日曆：
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 覆寫樣式類別
+
+每個複合部分都接受一個 `className` prop。Tailwind v4 套件使用 `cn()` (一個 `clsx` + `twMerge` 的實用工具) 來將您的樣式類別與預設值合併，因此衝突的樣式可以被正確解析：
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+<DatePicker.Root value={value} onChange={setValue}>
+  {/* 覆寫觸發器的寬度和內距 */}
+  <DatePicker.Trigger className="min-w-[300px] px-4 py-3" />
+  <DatePicker.Content className="rounded-2xl shadow-xl">
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title className="text-lg" />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>;
+```

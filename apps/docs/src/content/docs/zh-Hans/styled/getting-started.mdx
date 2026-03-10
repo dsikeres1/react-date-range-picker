@@ -1,0 +1,90 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import StyledBasic from "@examples/styled/DatePicker/Basic";
+import StyledBasicSource from "@examples/styled/DatePicker/Basic.tsx?raw";
+
+# Styled 入门
+
+`styled` 包提供了带有内置 CSS 的预设样式日期选择器组件。无需 CSS 框架。
+
+## 安装
+
+<PackageInstall pkg="react-date-range-picker-styled" />
+
+安装后，在你的应用入口点导入 CSS：
+
+```tsx
+import "react-date-range-picker-styled/rdrp-styles.css";
+```
+
+## 快速开始
+
+<CodeDemo source={StyledBasicSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <StyledBasic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 包含内容
+
+| 组件                  | 描述                          |
+| --------------------- | ----------------------------- |
+| `DatePicker`          | 带弹出日历的单个日期选择      |
+| `DateRangePicker`     | 带双日历和预设的日期范围选择  |
+| `DateTimePicker`      | 带时间滚动面板的日期+时间选择 |
+| `DateRangeTimePicker` | 日期范围+时间选择             |
+
+所有组件都支持：
+
+- 通过 `value` / `onChange` 控制值
+- 键盘导航
+- 通过 CSS 变量实现暗黑模式
+- 4 种尺寸：`small`、`medium`、`large`、`x-large`
+- 用于自定义的复合组件 API
+
+## TypeScript 类型
+
+所有配置和数据类型都从包中重新导出 — 无需单独安装 headless 包：
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-styled";
+```
+
+这些类型可用于：
+
+- **`Locale`** — 自定义区域设置覆盖（星期名称、按钮标签、日期格式）
+- **`DatePickerSize`** — 为 `size` 属性提供类型（`"small"` | `"medium"` | `"large"` | `"x-large"`）
+- **`TimeConfig`** — 配置时间选择器的精度、格式和步长
+- **`DateRangePreset`** — 为 `DateRangePicker` / `DateRangeTimePicker` 定义预设
+- **`CalendarMonth`**、**`DayProps`** — 使用复合组件进行自定义渲染
+
+有关详细的类型定义，请参阅 [Headless 类型](/docs/headless/types/common-types)。
+
+## 后续步骤
+
+- [DatePicker](/docs/styled/components/date-picker/basic) — 单个日期选择
+- [DateRangePicker](/docs/styled/components/date-range-picker/basic) — 带预设的日期范围
+- [Compound Components](/docs/styled/customization/overview) — 自定义内部结构
+- [CSS Variables](/docs/styled/customization/css-variables) — 使用 CSS 变量定制主题
+- [Dark Mode](/docs/styled/customization/dark-mode) — 暗黑模式支持

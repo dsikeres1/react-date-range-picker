@@ -1,0 +1,69 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Thuộc tính
+
+| Thuộc tính               | Kiểu                                                          | Mặc định    | Mô tả                                                                   |
+| ------------------------ | ------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --          | Giá trị khoảng ngày giờ đã chọn                                         |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | Hàm gọi lại khi giá trị thay đổi                                        |
+| `time`                   | `TimeConfig`                                                  | --          | Cấu hình bảng điều khiển thời gian (áp dụng cho cả bắt đầu và kết thúc) |
+| `presets`                | `DateRangePreset[]`                                           | --          | Các bộ cài đặt khoảng ngày được xác định trước                          |
+| `maxDays`                | `number`                                                      | --          | Số ngày tối đa cho phép trong khoảng (bao gồm)                          |
+| `minDays`                | `number`                                                      | --          | Số ngày tối thiểu yêu cầu trong khoảng (bao gồm)                        |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`      | Cho phép khoảng mà ngày bắt đầu bằng ngày kết thúc                      |
+| `minDate`                | `Date`                                                        | --          | Ngày tối thiểu có thể chọn                                              |
+| `maxDate`                | `Date`                                                        | --          | Ngày tối đa có thể chọn                                                 |
+| `locale`                 | `Partial<Locale>`                                             | --          | Cấu hình ngôn ngữ tùy chỉnh                                             |
+| `initialMonth`           | `Date`                                                        | --          | Tháng hiển thị ban đầu                                                  |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`  | Kích thước thành phần                                                   |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`  | Ngày đầu tiên trong tuần                                                |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --          | Đánh dấu ngày là bị vô hiệu hóa                                         |
+| `displayFormat`          | `string`                                                      | --          | Định dạng hiển thị tùy chỉnh                                            |
+| `open`                   | `boolean`                                                     | --          | Trạng thái mở được kiểm soát                                            |
+| `initialOpen`            | `boolean`                                                     | --          | Trạng thái mở ban đầu (không kiểm soát)                                 |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --          | Hàm gọi lại khi trạng thái mở thay đổi                                  |
+| `required`               | `boolean`                                                     | `false`     | Vô hiệu hóa việc xóa giá trị                                            |
+| `showOutsideDays`        | `boolean`                                                     | `false`     | Hiển thị các ngày từ các tháng liền kề                                  |
+| `highlightDates`         | `Date[]`                                                      | --          | Các ngày cần làm nổi bật                                                |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`     | Tự động xác nhận khi nhấp vào bộ cài đặt trước                          |
+| `numberOfMonths`         | `number`                                                      | `2`         | Số tháng để hiển thị                                                    |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"` | Kiểu điều hướng tiêu đề                                                 |
+| `fromYear`               | `number`                                                      | --          | Năm bắt đầu cho danh sách thả xuống                                     |
+| `toYear`                 | `number`                                                      | --          | Năm kết thúc cho danh sách thả xuống                                    |
+| `disablePast`            | `boolean`                                                     | `false`     | Vô hiệu hóa các ngày trước hôm nay                                      |
+| `disableFuture`          | `boolean`                                                     | `false`     | Vô hiệu hóa các ngày sau hôm nay                                        |
+| `inline`                 | `boolean`                                                     | `false`     | Hiển thị lịch nội tuyến (không có cửa sổ bật lên)                       |
+| `name`                   | `string`                                                      | --          | Tên đầu vào ẩn để gửi biểu mẫu (ngày giờ bắt đầu)                       |
+| `endName`                | `string`                                                      | --          | Tên đầu vào ẩn cho ngày giờ kết thúc (mặc định là `name-end`)           |
+| `placeholder`            | `string`                                                      | --          | Văn bản giữ chỗ của trình kích hoạt                                     |
+| `hideHeader`             | `boolean`                                                     | `false`     | Ẩn tiêu đề điều hướng                                                   |
+| `hideFooter`             | `boolean`                                                     | `false`     | Ẩn chân trang hành động                                                 |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Độ chính xác hiển thị thời gian. Mặc định là "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** Định dạng 12 giờ hoặc 24 giờ. Mặc định là "24". */
+  hourFormat?: "12" | "24";
+  /** Bước tăng phút. Mặc định là 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Bước tăng giây. Mặc định là 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Chiều cao (tính bằng px) của mỗi mục bánh xe cuộn. Mặc định là 32. */
+  itemHeight?: number;
+}
+```
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

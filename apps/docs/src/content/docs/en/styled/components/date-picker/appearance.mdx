@@ -1,0 +1,82 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/styled/DatePicker/Sizes";
+import SizesSource from "@examples/styled/DatePicker/Sizes.tsx?raw";
+import CustomFormat from "@examples/styled/DatePicker/CustomFormat";
+import CustomFormatSource from "@examples/styled/DatePicker/CustomFormat.tsx?raw";
+import CustomLocale from "@examples/styled/DatePicker/CustomLocale";
+import CustomLocaleSource from "@examples/styled/DatePicker/CustomLocale.tsx?raw";
+import WeekStartsOn from "@examples/styled/DatePicker/WeekStartsOn";
+import WeekStartsOnSource from "@examples/styled/DatePicker/WeekStartsOn.tsx?raw";
+import ShowOutsideDays from "@examples/styled/DatePicker/ShowOutsideDays";
+import ShowOutsideDaysSource from "@examples/styled/DatePicker/ShowOutsideDays.tsx?raw";
+import CaptionDropdown from "@examples/styled/DatePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/styled/DatePicker/CaptionDropdown.tsx?raw";
+
+# Appearance
+
+## Sizes
+
+Four built-in sizes: `small`, `medium`, `large`, and `x-large`.
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Custom Format
+
+Customize the display format string.
+
+<CodeDemo source={CustomFormatSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFormat client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Custom Locale
+
+Provide a custom locale for internationalization using `createLocale` from the headless package.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Week Starts On
+
+Change the first day of the week. Defaults to `"sunday"`.
+
+<CodeDemo source={WeekStartsOnSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <WeekStartsOn client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Show Outside Days
+
+Display days from adjacent months to fill the calendar grid. Defaults to `false`.
+
+<CodeDemo source={ShowOutsideDaysSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShowOutsideDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Caption Dropdown
+
+Switch the month/year navigation from arrows to dropdowns with `captionLayout="dropdown"`. Use `fromYear` and `toYear` to set the year range.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

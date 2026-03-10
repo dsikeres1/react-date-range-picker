@@ -1,0 +1,79 @@
+---
+sidebar_position: 4
+sidebar_label: "Custom Footer"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/styled/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/styled/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/styled/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/styled/Customization/CompoundNoFooter.tsx?raw";
+
+# Pie de Página Personalizado
+
+Construye un pie de página completamente personalizado con tus propios botones y diseño, o elimina partes por completo para un selector minimalista.
+
+## Pie de Página Reorganizado
+
+Reorganiza los botones del pie de página o añade nuevos como `TodayButton`. El componente compuesto `DateTimePicker` incluye una `TimeSection` con un `TimePanel` para la selección de la hora, y el `Footer` actúa como un contenedor para los botones de acción.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+También puedes omitir por completo los botones de acción incorporados y usar tus propios elementos dentro de `Footer`:
+
+```tsx
+<DatePicker.Footer>
+  <button onClick={() => setValue(new Date())}>Establecer Hoy</button>
+  <button onClick={() => setValue(null)}>Limpiar</button>
+</DatePicker.Footer>
+```
+
+## Diseño Minimalista
+
+Omite cualquier parte que no necesites. Por ejemplo, un calendario en línea sin encabezado, pie de página ni disparador:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+O un selector sin el pie de página:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Añadir Nombres de Clase Personalizados
+
+Cada parte del componente compuesto acepta una prop `className` que se fusiona con las clases CSS estilizadas por defecto:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} className="my-picker">
+  <DatePicker.Trigger className="my-trigger" />
+  <DatePicker.Content className="my-content">
+    <DatePicker.Header className="my-header">
+      <DatePicker.PrevButton className="my-nav" />
+      <DatePicker.Title className="my-title" />
+      <DatePicker.NextButton className="my-nav" />
+    </DatePicker.Header>
+    <DatePicker.Grid className="my-grid" />
+  </DatePicker.Content>
+</DatePicker.Root>
+```

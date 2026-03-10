@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind4/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind4/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind4/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind4/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Пользовательский триггер
+
+Замените стандартную кнопку-триггер своим собственным элементом, используя рендер-проп `Trigger`. Когда вы передаете функцию в качестве дочернего элемента в `DatePicker.Trigger`, вы получаете состояние и колбэки для создания любого желаемого интерфейса триггера.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Рендер-пропы триггера
+
+| Проп           | Тип              | Описание                                        |
+| -------------- | ---------------- | ----------------------------------------------- |
+| `displayValue` | `string`         | Отформатированная выбранная дата                |
+| `placeholder`  | `string`         | Текст-заполнитель                               |
+| `hasValue`     | `boolean`        | Выбрана ли дата                                 |
+| `isOpen`       | `boolean`        | Открыто ли всплывающее окно                     |
+| `onToggle`     | `() => void`     | Переключить открытие/закрытие всплывающего окна |
+| `onClear`      | `() => void`     | Очистить выбор                                  |
+| `locale`       | `Locale`         | Текущий объект локали                           |
+| `triggerRef`   | `(node) => void` | Ref-колбэк для позиционирования                 |
+
+## Триггер для выбора диапазона
+
+Тот же паттерн работает и с `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

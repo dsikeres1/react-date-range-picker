@@ -1,0 +1,73 @@
+---
+sidebar_position: 1
+sidebar_label: "Overview"
+---
+
+# Compound 컴포넌트
+
+`styled` 패키지는 각 피커의 내부 구조와 렌더링을 완벽하게 제어할 수 있는 Compound Component API를 제공합니다. 단일 모놀리식 컴포넌트 대신, 개별 파트(part)를 조합하여 피커를 구성합니다.
+
+## 작동 방식
+
+모든 피커(예: `DatePicker`)는 간단한 컴포넌트이면서 동시에 Compound 파트의 네임스페이스입니다:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/rdrp-styles.css";
+
+// 간단한 사용법 — 기본 레이아웃 렌더링
+<DatePicker value={value} onChange={setValue} />
+
+// Compound 사용법 — 구조를 완전히 제어
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## 사용 가능한 파트
+
+### DatePicker
+
+| 파트                       | 설명                                                                               |
+| -------------------------- | ---------------------------------------------------------------------------------- |
+| `DatePicker.Root`          | Provider + 컨테이너. 모든 피커 prop(`value`, `onChange`, `minDate` 등)을 받습니다. |
+| `DatePicker.Trigger`       | 팝업을 열고 닫는 버튼. 선택된 값을 표시합니다.                                     |
+| `DatePicker.Content`       | 팝업 컨테이너 (Root에 `inline`이 설정된 경우 인라인 컨테이너)                      |
+| `DatePicker.Header`        | 월 탐색 행                                                                         |
+| `DatePicker.PrevButton`    | 이전 달로 이동                                                                     |
+| `DatePicker.NextButton`    | 다음 달로 이동                                                                     |
+| `DatePicker.Title`         | 현재 월/연도 표시 (드롭다운 선택 지원)                                             |
+| `DatePicker.Grid`          | 요일 헤더와 날짜 셀이 있는 캘린더 그리드                                           |
+| `DatePicker.Day`           | 개별 날짜 셀 (Grid의 render prop 내부에서 사용)                                    |
+| `DatePicker.Footer`        | 액션 버튼 컨테이너                                                                 |
+| `DatePicker.ClearButton`   | 선택된 값을 지웁니다                                                               |
+| `DatePicker.CancelButton`  | 취소하고 닫습니다                                                                  |
+| `DatePicker.ConfirmButton` | 선택을 확정합니다                                                                  |
+| `DatePicker.TodayButton`   | 오늘 날짜로 이동합니다                                                             |
+
+### DateRangePicker
+
+위의 모든 파트를 포함하며, 다음 파트가 추가됩니다:
+
+| 파트                         | 설명                          |
+| ---------------------------- | ----------------------------- |
+| `DateRangePicker.Calendars`  | 듀얼 캘린더 컨테이너          |
+| `DateRangePicker.Presets`    | 프리셋 범위 사이드바 컨테이너 |
+| `DateRangePicker.PresetItem` | 개별 프리셋 버튼              |
+
+### DateTimePicker / DateRangeTimePicker
+
+각각의 기본 파트와 함께 간단한 API를 통한 시간 패널 통합을 포함합니다. 시간 기능이 활성화된 피커에서 Compound 파트를 사용하면 시간 패널이 자동으로 렌더링됩니다.

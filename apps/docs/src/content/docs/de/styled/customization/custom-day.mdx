@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: "Custom Day Cell"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/styled/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/styled/Customization/CompoundCustomDay.tsx?raw";
+
+# Benutzerdefinierte Tageszelle
+
+Verwenden Sie die Render-Prop der `Day`-Komponente, um das Aussehen jeder Tageszelle anzupassen. Dies ist nützlich, um Ereignisanzeigen, Tooltips oder ein vollständig benutzerdefiniertes Styling für einzelne Tage hinzuzufügen.
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Day Render-Props
+
+| Prop             | Typ          | Beschreibung                                              |
+| ---------------- | ------------ | --------------------------------------------------------- |
+| `date`           | `Date`       | Das Datumsobjekt                                          |
+| `day`            | `number`     | Tag des Monats (1-31)                                     |
+| `isToday`        | `boolean`    | Ob dies der heutige Tag ist                               |
+| `isSelected`     | `boolean`    | Ob dieser Tag ausgewählt ist                              |
+| `isDisabled`     | `boolean`    | Ob dieser Tag deaktiviert ist                             |
+| `isInRange`      | `boolean`    | Ob dieser Tag innerhalb eines ausgewählten Bereichs liegt |
+| `isRangeStart`   | `boolean`    | Ob dies der Anfang des Bereichs ist                       |
+| `isRangeEnd`     | `boolean`    | Ob dies das Ende des Bereichs ist                         |
+| `isInHoverRange` | `boolean`    | Ob sich dieser Tag im Hover-Vorschaubereich befindet      |
+| `isHoverTarget`  | `boolean`    | Ob dies der Endpunkt des Hovers ist                       |
+| `isOutsideDay`   | `boolean`    | Ob dieser Tag zu einem benachbarten Monat gehört          |
+| `isHighlighted`  | `boolean`    | Ob dieser Tag einen Hervorhebungspunkt hat                |
+| `isFocused`      | `boolean`    | Ob dieser Tag den Tastaturfokus hat                       |
+| `onClick`        | `() => void` | Klick-Handler                                             |
+| `onMouseEnter`   | `() => void` | Mouse-Enter-Handler                                       |
+| `onMouseLeave`   | `() => void` | Mouse-Leave-Handler                                       |

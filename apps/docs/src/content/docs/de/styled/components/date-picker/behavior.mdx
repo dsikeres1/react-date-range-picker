@@ -1,0 +1,52 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/styled/DatePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/styled/DatePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/styled/DatePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DatePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/styled/DatePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DatePicker/FormIntegration.tsx?raw";
+
+# Verhalten
+
+## Bei Auswahl schließen
+
+Wenn `shouldCloseOnSelect` aktiviert ist, bestätigt und schließt der Picker automatisch, wenn ein Datum angeklickt wird.
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Mehrere Monate
+
+Zeigen Sie mehrere Monate nebeneinander an.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Formularintegration
+
+Verwenden Sie die `name`-Prop, um ein verstecktes Eingabefeld für die native Formularübermittlung einzufügen.
+
+<Admonition type="tip">
+  Das Styling des Senden-Buttons in diesem Beispiel ist benutzerdefiniert – die Bibliothek stellt
+  nur den Datumswähler zur Verfügung.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

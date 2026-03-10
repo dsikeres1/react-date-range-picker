@@ -1,0 +1,72 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Compound Components
+
+The Tailwind v3 package exposes a Compound Component API that gives you full control over the internal structure and rendering of each picker. Instead of a single monolithic component, you compose the picker from individual parts.
+
+## How It Works
+
+Every picker (e.g. `DatePicker`) is both a simple component and a namespace of compound parts:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+// Simple usage — renders default layout
+<DatePicker value={value} onChange={setValue} />
+
+// Compound usage — full control over structure
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Available Parts
+
+### DatePicker
+
+| Part                       | Description                                                                           |
+| -------------------------- | ------------------------------------------------------------------------------------- |
+| `DatePicker.Root`          | Provider + container. Accepts all picker props (`value`, `onChange`, `minDate`, etc.) |
+| `DatePicker.Trigger`       | Button that opens/closes the popup. Displays selected value.                          |
+| `DatePicker.Content`       | Popup container (or inline container when `inline` is set on Root)                    |
+| `DatePicker.Header`        | Month navigation row                                                                  |
+| `DatePicker.PrevButton`    | Navigate to previous month                                                            |
+| `DatePicker.NextButton`    | Navigate to next month                                                                |
+| `DatePicker.Title`         | Current month/year display (supports dropdown selects)                                |
+| `DatePicker.Grid`          | Calendar grid with weekday headers and day cells                                      |
+| `DatePicker.Day`           | Individual day cell (used inside Grid's render prop)                                  |
+| `DatePicker.Footer`        | Action button container                                                               |
+| `DatePicker.ClearButton`   | Clears the selected value                                                             |
+| `DatePicker.CancelButton`  | Cancels and closes                                                                    |
+| `DatePicker.ConfirmButton` | Confirms selection                                                                    |
+| `DatePicker.TodayButton`   | Navigates to today                                                                    |
+
+### DateRangePicker
+
+Includes all the parts above plus:
+
+| Part                         | Description                    |
+| ---------------------------- | ------------------------------ |
+| `DateRangePicker.Calendars`  | Dual calendar container        |
+| `DateRangePicker.Presets`    | Preset range sidebar container |
+| `DateRangePicker.PresetItem` | Individual preset button       |
+
+### DateTimePicker / DateRangeTimePicker
+
+Include their respective base parts plus time panel integration via the simple API. Time panels are rendered automatically when using compound parts with time-enabled pickers.

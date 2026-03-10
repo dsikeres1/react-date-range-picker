@@ -1,0 +1,82 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Required from "@examples/tailwind3/DatePicker/Required";
+import RequiredSource from "@examples/tailwind3/DatePicker/Required.tsx?raw";
+import MinMaxDate from "@examples/tailwind3/DatePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/tailwind3/DatePicker/MinMaxDate.tsx?raw";
+import DisabledDates from "@examples/tailwind3/DatePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind3/DatePicker/DisabledDates.tsx?raw";
+import DisablePastFuture from "@examples/tailwind3/DatePicker/DisablePastFuture";
+import DisablePastFutureSource from "@examples/tailwind3/DatePicker/DisablePastFuture.tsx?raw";
+import HighlightDates from "@examples/tailwind3/DatePicker/HighlightDates";
+import HighlightDatesSource from "@examples/tailwind3/DatePicker/HighlightDates.tsx?raw";
+import InitialMonth from "@examples/tailwind3/DatePicker/InitialMonth";
+import InitialMonthSource from "@examples/tailwind3/DatePicker/InitialMonth.tsx?raw";
+
+# 约束
+
+## 必填
+
+当设置 `required` 后，清除按钮将被禁用，且值不能为空。
+
+<CodeDemo source={RequiredSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Required client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 最小和最大日期
+
+使用 `minDate` 和 `maxDate` 将可选日期限制在特定范围内。
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 禁用日期
+
+使用 `isDateUnavailable` 动态禁用特定日期。
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 禁用过去/未来
+
+使用 `disablePast` 或 `disableFuture` 快速禁用今天之前/之后的日期。
+
+<CodeDemo source={DisablePastFutureSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <DisablePastFuture client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 高亮日期
+
+使用 `highlightDates` 属性在视觉上高亮特定日期（例如节假日、活动）。
+
+<CodeDemo source={HighlightDatesSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <HighlightDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 初始月份
+
+设置选择器首次打开时初始显示的月份。
+
+<CodeDemo source={InitialMonthSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <InitialMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>

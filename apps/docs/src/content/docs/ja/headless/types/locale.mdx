@@ -1,0 +1,94 @@
+---
+sidebar_position: 3
+title: Locale
+---
+
+# Locale
+
+すべてのユーザー向け文字列のインターフェースです。任意のフックに `Partial<Locale>` を渡すことで特定の文字列を上書きできます。指定されていないフィールドは `DEFAULT_LOCALE` にフォールバックします。
+
+```tsx
+import type { Locale } from "react-date-range-picker-headless";
+```
+
+## Fields
+
+| フィールド             | 型                                                                           | 説明                                                                    |
+| ---------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `weekdays`             | `string[]`                                                                   | 日曜日から始まる 7 つの曜日の略称。例: `["日", "月", ...]`.             |
+| `months`               | `string[]`                                                                   | 12 ヶ月の名前。例: `["1月", "2月", ...]`.                               |
+| `confirm`              | `string`                                                                     | 確認ボタンのラベル。デフォルト: `"Confirm"`.                            |
+| `cancel`               | `string`                                                                     | キャンセルボタンのラベル。デフォルト: `"Cancel"`.                       |
+| `clear`                | `string`                                                                     | クリアボタンのラベル。デフォルト: `"Clear"`.                            |
+| `today`                | `string`                                                                     | 今日ボタンのラベル。デフォルト: `"Today"`.                              |
+| `placeholder`          | `string`                                                                     | 単一日付のプレースホルダー。デフォルト: `"Select date"`.                |
+| `rangePlaceholder`     | `string`                                                                     | 日付範囲のプレースホルダー。デフォルト: `"Select date range"`.          |
+| `dateTimePlaceholder`  | `string`                                                                     | 日時プレースホルダー。デフォルト: `"Select date and time"`.             |
+| `rangeTimePlaceholder` | `string`                                                                     | 範囲時間プレースホルダー。デフォルト: `"Select date range and time"`.   |
+| `timePlaceholder`      | `string`                                                                     | 時間のみのプレースホルダー。デフォルト: `"Select time"`.                |
+| `am`                   | `string`                                                                     | AM ラベル。デフォルト: `"AM"`.                                          |
+| `pm`                   | `string`                                                                     | PM ラベル。デフォルト: `"PM"`.                                          |
+| `yearLabel`            | `string`                                                                     | 年の列のヘッダー。デフォルト: `""`.                                     |
+| `monthLabel`           | `string`                                                                     | 月の列のヘッダー。デフォルト: `""`.                                     |
+| `hourLabel`            | `string`                                                                     | 時間の列の aria-label。デフォルト: `"Hours"`.                           |
+| `minuteLabel`          | `string`                                                                     | 分の列の aria-label。デフォルト: `"Minutes"`.                           |
+| `secondLabel`          | `string`                                                                     | 秒の列の aria-label。デフォルト: `"Seconds"`.                           |
+| `hoursLabel`           | `string`                                                                     | 時間のアクセシブルなラベル。デフォルト: `"Hours"`.                      |
+| `minutesLabel`         | `string`                                                                     | 分のアクセシブルなラベル。デフォルト: `"Minutes"`.                      |
+| `secondsLabel`         | `string`                                                                     | 秒のアクセシブルなラベル。デフォルト: `"Seconds"`.                      |
+| `startTimeLabel`       | `string`                                                                     | 開始時間ラベル。デフォルト: `"Start time"`.                             |
+| `endTimeLabel`         | `string`                                                                     | 終了時間ラベル。デフォルト: `"End time"`.                               |
+| `rangeSeparator`       | `string`                                                                     | 表示の範囲開始/終了間の区切り文字。デフォルト: `" ~ "`.                 |
+| `prevMonth`            | `string`                                                                     | 前の月ボタンのテキスト。デフォルト: `"\u2039"` (左山括弧)。             |
+| `nextMonth`            | `string`                                                                     | 次の月ボタンのテキスト。デフォルト: `"\u203A"` (右山括弧)。             |
+| `prevMonthLabel`       | `string`                                                                     | 前の月のアクセシブルなラベル。デフォルト: `"Previous month"`.           |
+| `nextMonthLabel`       | `string`                                                                     | 次の月のアクセシブルなラベル。デフォルト: `"Next month"`.               |
+| `selectYearLabel`      | `string`                                                                     | 年のドロップダウンのアクセシブルなラベル。デフォルト: `"Select year"`.  |
+| `selectMonthLabel`     | `string`                                                                     | 月のドロップダウンのアクセシブルなラベル。デフォルト: `"Select month"`. |
+| `formatMonthYear`      | `(month: Date) => string`                                                    | 月のヘッダーのフォーマット。デフォルト: `"January 2026"`.               |
+| `formatDate`           | `(date: Date) => string`                                                     | 単一日付表示のフォーマット。デフォルト: `"2026-01-15"`.                 |
+| `formatDateTime`       | `(date: Date, precision?: TimePrecision, hourFormat?: HourFormat) => string` | 日時表示のフォーマット。デフォルト: `"2026-01-15 14:30"`.               |
+| `formatTime`           | `(hour, minute, second, period?) => string`                                  | 時間表示のフォーマット。デフォルト: `"14:30:00"`.                       |
+| `formatRange`          | `(start: string, end: string) => string`                                     | 範囲表示のフォーマット。デフォルト: `"start ~ end"`.                    |
+
+## TypeScript Definition
+
+```tsx
+interface Locale {
+  weekdays: string[];
+  months: string[];
+  confirm: string;
+  cancel: string;
+  clear: string;
+  today: string;
+  placeholder: string;
+  rangePlaceholder: string;
+  dateTimePlaceholder: string;
+  rangeTimePlaceholder: string;
+  timePlaceholder: string;
+  am: string;
+  pm: string;
+  yearLabel: string;
+  monthLabel: string;
+  hourLabel: string;
+  minuteLabel: string;
+  secondLabel: string;
+  hoursLabel: string;
+  minutesLabel: string;
+  secondsLabel: string;
+  startTimeLabel: string;
+  endTimeLabel: string;
+  rangeSeparator: string;
+  prevMonth: string;
+  nextMonth: string;
+  prevMonthLabel: string;
+  nextMonthLabel: string;
+  selectYearLabel: string;
+  selectMonthLabel: string;
+  formatMonthYear: (month: Date) => string;
+  formatDate: (date: Date) => string;
+  formatDateTime: (date: Date, precision?: TimePrecision, hourFormat?: HourFormat) => string;
+  formatTime: (hour: number, minute: number, second: number, period?: TimePeriod) => string;
+  formatRange: (start: string, end: string) => string;
+}
+```

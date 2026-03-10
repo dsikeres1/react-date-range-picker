@@ -1,0 +1,54 @@
+---
+sidebar_position: 4
+sidebar_label: Custom Footer
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/tailwind3/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/tailwind3/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/tailwind3/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNoFooter.tsx?raw";
+
+# Benutzerdefinierte Fußzeile
+
+## Neu angeordnete Fußzeile
+
+Ordnen Sie die Schaltflächen in der Fußzeile neu an und fügen Sie zusätzliche Aktionen wie eine „Heute“-Schaltfläche hinzu. Mit Compound-Komponenten steuern Sie genau, welche Schaltflächen in welcher Reihenfolge erscheinen.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Minimales Layout
+
+Entfernen Sie alle Teile, die Sie nicht benötigen. Hier wird die Fußzeile für ein minimales, nur aus dem Kalender bestehendes Layout vollständig weggelassen:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Klassen überschreiben
+
+Jeder Compound-Teil akzeptiert eine `className`-Prop. Das Tailwind v3-Paket verwendet `cn()` (ein `clsx` + `twMerge`-Dienstprogramm), um Ihre Klassen mit den Standardwerten zusammenzuführen, sodass widersprüchliche Dienstprogramme korrekt aufgelöst werden:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger className="min-w-[300px] px-4 py-3" />
+  <DatePicker.Content className="rounded-2xl shadow-xl">
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title className="text-lg" />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>;
+```

@@ -1,0 +1,185 @@
+---
+sidebar_position: 9
+---
+
+# 다크 모드
+
+Tailwind v4 패키지는 시맨틱 토큰 시스템을 통해 다크 모드를 지원합니다. 모든 색상이 CSS 변수를 참조하므로, 다크 모드로의 전환은 단순히 해당 변수들을 재정의하는 것만으로 가능합니다.
+
+## 작동 방식
+
+컴포넌트는 `bg-primary`, `text-foreground`, `border-border`와 같은 시맨틱 유틸리티 클래스를 사용합니다. 이들은 프로젝트의 CSS에 정의된 CSS 변수(`--color-primary`, `--color-foreground` 등)로 해석됩니다. 다크 모드는 다크 선택자 하위에서 이 변수들에 대한 대체 값을 제공하는 방식으로 작동합니다.
+
+## 설정
+
+### `data-theme` 속성 사용하기
+
+`data-theme` 선택자를 사용하여 라이트 및 다크 토큰 값을 정의합니다:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+
+[data-theme="dark"] {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+속성을 설정하여 다크 모드를 전환합니다:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div data-theme={dark ? "dark" : "light"}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+### `.dark` 클래스 사용하기
+
+프레임워크가 `.dark` 클래스를 사용하는 경우(예: `next-themes`를 사용하는 Next.js), 해당 클래스 하위에 토큰을 정의합니다:
+
+```css
+@theme {
+  /* Light tokens */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  /* ... */
+}
+```
+
+### 시스템 환경설정 사용하기
+
+운영 체제 설정을 따르려면 `@media (prefers-color-scheme: dark)`를 사용합니다:
+
+```css
+@theme {
+  /* Light tokens */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: oklch(0.145 0.004 285.823);
+    --color-foreground: oklch(0.985 0.001 285.823);
+    /* ... */
+  }
+}
+```
+
+## next-themes 연동
+
+Next.js와 `next-themes`를 함께 사용하는 일반적인 패턴입니다:
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+```css
+/* globals.css */
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  /* ... all light tokens */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  /* ... all dark tokens */
+}
+```
+
+테마가 변경됨에 따라 피커는 올바른 토큰 값을 자동으로 적용합니다.
+
+## 다크 모드에서의 강조 점 (Highlight Dot)
+
+강조 점(Highlight dot)은 두 모드 모두에서 좋은 가시성을 확보하기 위해 `after:bg-amber-500 dark:after:bg-amber-400`(토큰이 아닌 구체적인 Tailwind 색상)을 사용합니다. 이것은 컴포넌트에서 유일하게 시맨틱하지 않은 색상입니다. 이를 변경해야 하는 경우, 커스텀 `Day` 렌더링과 함께 Compound Component API를 사용하세요:
+
+```tsx
+<DatePicker.Day date={date}>
+  {(props) => (
+    <button /* ... */>
+      {props.day}
+      {props.isHighlighted && (
+        <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+      )}
+    </button>
+  )}
+</DatePicker.Day>
+```
+
+## 특정 모드 강제하기
+
+시스템 환경설정에 관계없이 라이트 또는 다크 모드를 강제하려면, 테마를 명시적으로 설정하세요:
+
+```tsx
+{
+  /* Always light */
+}
+<div data-theme="light">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Always dark */
+}
+<div data-theme="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```

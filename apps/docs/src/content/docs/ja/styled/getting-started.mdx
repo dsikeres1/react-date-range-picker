@@ -1,0 +1,90 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import StyledBasic from "@examples/styled/DatePicker/Basic";
+import StyledBasicSource from "@examples/styled/DatePicker/Basic.tsx?raw";
+
+# Styled パッケージの始め方
+
+styled パッケージは、CSSが組み込まれたスタイル付きのデートピッカーコンポーネントを提供します。CSSフレームワークは必要ありません。
+
+## インストール
+
+<PackageInstall pkg="react-date-range-picker-styled" />
+
+インストール後、アプリのエントリーポイントでCSSをインポートしてください:
+
+```tsx
+import "react-date-range-picker-styled/rdrp-styles.css";
+```
+
+## クイックスタート
+
+<CodeDemo source={StyledBasicSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <StyledBasic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 含まれるもの
+
+| Component             | Description                                      |
+| --------------------- | ------------------------------------------------ |
+| `DatePicker`          | ポップアップカレンダーによる単一日付選択         |
+| `DateRangePicker`     | デュアルカレンダーとプリセットによる日付範囲選択 |
+| `DateTimePicker`      | タイムスクロールパネルによる日付＋時刻選択       |
+| `DateRangeTimePicker` | 日付範囲＋時刻選択                               |
+
+すべてのコンポーネントは以下をサポートしています:
+
+- `value` / `onChange` による制御された値
+- キーボードナビゲーション
+- CSS変数によるダークモード
+- 4つのサイズ: `small`、`medium`、`large`、`x-large`
+- カスタマイズのための Compound Component API
+
+## TypeScript の型
+
+すべての設定およびデータ型はパッケージから再エクスポートされるため、headless パッケージを別途インストールする必要はありません:
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-styled";
+```
+
+これらの型は以下の用途に役立ちます:
+
+- **`Locale`** — カスタムロケールの上書き（曜日の名前、ボタンのラベル、日付の書式設定）
+- **`DatePickerSize`** — `size` プロパティの型付け (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — タイムピッカーの精度、フォーマット、ステップの設定
+- **`DateRangePreset`** — `DateRangePicker` / `DateRangeTimePicker` のプリセット定義
+- **`CalendarMonth`**, **`DayProps`** — Compound Components を使用したカスタムレンダリング
+
+詳細な型定義については、[Headless の型](/docs/headless/types/common-types) を参照してください。
+
+## 次のステップ
+
+- [DatePicker](/docs/styled/components/date-picker/basic) — 単一日付選択
+- [DateRangePicker](/docs/styled/components/date-range-picker/basic) — プリセット付きの日付範囲選択
+- [Compound Components](/docs/styled/customization/overview) — 内部構造のカスタマイズ
+- [CSS Variables](/docs/styled/customization/css-variables) — CSS変数によるテーマ設定
+- [Dark Mode](/docs/styled/customization/dark-mode) — ダークテーマのサポート

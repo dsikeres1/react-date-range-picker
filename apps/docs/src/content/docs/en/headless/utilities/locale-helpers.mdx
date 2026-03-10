@@ -1,0 +1,115 @@
+---
+sidebar_position: 5
+title: Locale Helpers
+---
+
+# Locale Helpers
+
+Functions for creating and merging locale configurations.
+
+```tsx
+import {
+  DEFAULT_LOCALE,
+  mergeLocale,
+  createLocale,
+  resolveLocale,
+  weekdayToNumber,
+} from "react-date-range-picker-headless";
+```
+
+## DEFAULT_LOCALE
+
+The default English locale object. All fields are populated with English strings.
+
+|      |          |
+| ---- | -------- |
+| Type | `Locale` |
+
+```tsx
+DEFAULT_LOCALE.weekdays; // ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+DEFAULT_LOCALE.months; // ["January", "February", ..., "December"]
+DEFAULT_LOCALE.confirm; // "Confirm"
+DEFAULT_LOCALE.placeholder; // "Select date"
+```
+
+## mergeLocale
+
+Merge a partial locale into the default locale.
+
+|           |                                                  |
+| --------- | ------------------------------------------------ |
+| Signature | `mergeLocale(partial?: Partial<Locale>): Locale` |
+
+Returns `DEFAULT_LOCALE` if no partial is provided. When `rangeSeparator` is overridden but `formatRange` is not, `formatRange` is automatically regenerated to use the new separator.
+
+```tsx
+mergeLocale(); // DEFAULT_LOCALE
+
+mergeLocale({
+  confirm: "OK",
+  cancel: "Back",
+  rangeSeparator: " - ",
+});
+// { ...DEFAULT_LOCALE, confirm: "OK", cancel: "Back", rangeSeparator: " - ", formatRange: (s, e) => `${s} - ${e}` }
+```
+
+## createLocale
+
+Create a locale from a BCP 47 locale key using `Intl.DateTimeFormat`.
+
+|           |                                                                        |
+| --------- | ---------------------------------------------------------------------- |
+| Signature | `createLocale(localeKey: string, overrides?: Partial<Locale>): Locale` |
+
+| Parameter   | Type              | Description                                                           |
+| ----------- | ----------------- | --------------------------------------------------------------------- |
+| `localeKey` | `string`          | BCP 47 locale identifier (e.g. `"ko"`, `"ja"`, `"zh-CN"`, `"pt-BR"`). |
+| `overrides` | `Partial<Locale>` | Additional overrides applied after Intl generation.                   |
+
+Generates weekday names, month names, AM/PM labels, and formatting functions from `Intl.DateTimeFormat`. Non-Intl fields (confirm, cancel, placeholder, etc.) fall back to `DEFAULT_LOCALE` unless overridden.
+
+```tsx
+const koLocale = createLocale("ko", {
+  confirm: "확인",
+  cancel: "취소",
+  clear: "초기화",
+  placeholder: "날짜 선택",
+});
+// koLocale.weekdays -> ["일", "월", "화", "수", "목", "금", "토"]
+// koLocale.months -> ["1월", "2월", ...]
+// koLocale.formatDate(new Date(2026, 2, 1)) -> "2026. 03. 01."
+```
+
+## resolveLocale
+
+Merge a partial locale and rotate weekday headers to match `weekStartsOn`.
+
+|           |                                                                              |
+| --------- | ---------------------------------------------------------------------------- |
+| Signature | `resolveLocale(partial?: Partial<Locale>, weekStartsOnNum?: number): Locale` |
+
+| Parameter         | Type              | Default | Description                     |
+| ----------------- | ----------------- | ------- | ------------------------------- |
+| `partial`         | `Partial<Locale>` | --      | Locale overrides.               |
+| `weekStartsOnNum` | `number`          | `0`     | First day of week (0 = Sunday). |
+
+When `weekStartsOnNum` is not `0`, the `weekdays` array is rotated so the header starts on the correct day.
+
+```tsx
+resolveLocale(undefined, 1).weekdays;
+// ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
+```
+
+## weekdayToNumber
+
+Convert a `WeekDay` string to its numeric value.
+
+|           |                                         |
+| --------- | --------------------------------------- |
+| Signature | `weekdayToNumber(day: WeekDay): number` |
+
+```tsx
+weekdayToNumber("sunday"); // 0
+weekdayToNumber("monday"); // 1
+weekdayToNumber("saturday"); // 6
+```

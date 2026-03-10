@@ -1,0 +1,82 @@
+---
+sidebar_position: 3
+title: Calendar
+---
+
+# Calendar Utilities
+
+Functions for generating calendar grid data.
+
+```tsx
+import {
+  generateCalendarDays,
+  daysToWeeks,
+  buildCalendarMonth,
+} from "react-date-range-picker-headless";
+```
+
+## generateCalendarDays
+
+Generate a flat array of 42 cells (6 weeks x 7 days) for a given month.
+
+|           |                                                                                                         |
+| --------- | ------------------------------------------------------------------------------------------------------- |
+| Signature | `generateCalendarDays(month: Date, weekStartsOn?: number, showOutsideDays?: boolean): (Date \| null)[]` |
+
+| Parameter         | Type      | Default | Description                                                                           |
+| ----------------- | --------- | ------- | ------------------------------------------------------------------------------------- |
+| `month`           | `Date`    | --      | The month to generate days for.                                                       |
+| `weekStartsOn`    | `number`  | `0`     | First day of week (0 = Sunday, 1 = Monday, ...).                                      |
+| `showOutsideDays` | `boolean` | `false` | When `true`, fill leading/trailing cells with adjacent month dates instead of `null`. |
+
+Returns an array of 42 elements. `null` entries represent empty cells (when `showOutsideDays` is `false`).
+
+```tsx
+const days = generateCalendarDays(new Date(2026, 2), 0, false);
+// [null, null, null, Date(Mar 1), Date(Mar 2), ..., Date(Mar 31), null, ...]
+```
+
+## daysToWeeks
+
+Convert a flat 42-element array into 6 arrays of 7 (weeks).
+
+|           |                                                           |
+| --------- | --------------------------------------------------------- |
+| Signature | `daysToWeeks(days: (Date \| null)[]): (Date \| null)[][]` |
+
+```tsx
+const weeks = daysToWeeks(days);
+// [[null, null, null, Date, Date, Date, Date], [Date, ...], ...]
+// weeks.length === 6, each inner array length === 7
+```
+
+## buildCalendarMonth
+
+Build a complete `CalendarMonth` object for a given month. Combines `generateCalendarDays` and `daysToWeeks`.
+
+|           |                                                                                                    |
+| --------- | -------------------------------------------------------------------------------------------------- |
+| Signature | `buildCalendarMonth(month: Date, weekStartsOn?: number, showOutsideDays?: boolean): CalendarMonth` |
+
+| Parameter         | Type      | Default | Description                    |
+| ----------------- | --------- | ------- | ------------------------------ |
+| `month`           | `Date`    | --      | The month to build.            |
+| `weekStartsOn`    | `number`  | `0`     | First day of week.             |
+| `showOutsideDays` | `boolean` | `false` | Fill with adjacent month days. |
+
+Returns:
+
+```tsx
+interface CalendarMonth {
+  month: Date;
+  days: (Date | null)[]; // Flat 42-element array
+  weeks: (Date | null)[][]; // 6 arrays of 7
+}
+```
+
+```tsx
+const cal = buildCalendarMonth(new Date(2026, 2));
+// cal.month  -> Date representing March 2026
+// cal.days   -> 42-element array
+// cal.weeks  -> 6 weeks of 7 days each
+```

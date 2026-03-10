@@ -1,0 +1,58 @@
+---
+sidebar_position: 5
+title: Locale Helpers
+---
+
+# Localeヘルパー
+
+ロケール設定を作成およびマージするための関数。
+
+```tsx
+import {
+  DEFAULT_LOCALE,
+  mergeLocale,
+  createLocale,
+  resolveLocale,
+  weekdayToNumber,
+} from "react-date-range-picker-headless";
+```
+
+## DEFAULT_LOCALE
+
+デフォルトの英語ロケールオブジェクト。すべてのフィールドには英語の文字列が設定されています。
+
+|        |          |
+| ------ | -------- |
+| タイプ | `Locale` |
+
+```tsx
+DEFAULT_LOCALE.weekdays; // ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+DEFAULT_LOCALE.months; // ["January", "February", ..., "December"]
+DEFAULT_LOCALE.confirm; // "Confirm"
+DEFAULT_LOCALE.placeholder; // "Select date"
+```
+
+## mergeLocale
+
+部分的なロケールをデフォルトのロケールにマージします。
+
+|            |                                                  |
+| ---------- | ------------------------------------------------ |
+| シグネチャ | `mergeLocale(partial?: Partial<Locale>): Locale` |
+
+partialが提供されない場合、`DEFAULT_LOCALE`を返します。`rangeSeparator`がオーバーライドされても`formatRange`がオーバーライドされない場合、`formatRange`は新しいセパレータを使用するように自動的に再生成されます。
+
+```tsx
+mergeLocale(); // DEFAULT_LOCALE
+
+mergeLocale({
+  confirm: "OK",
+  cancel: "Back",
+  rangeSeparator: " - ",
+});
+// { ...DEFAULT_LOCALE, confirm: "OK", cancel: "Back", rangeSeparator: " - ", formatRange: (s, e) => `${s} - ${e}` }
+```
+
+## createLocale
+
+`Intl.DateTimeFormat`を使用して、BCP 47ロケールキー

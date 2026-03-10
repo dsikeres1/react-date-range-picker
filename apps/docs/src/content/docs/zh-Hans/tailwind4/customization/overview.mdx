@@ -1,0 +1,43 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# 复合组件
+
+Tailwind v4 包提供了一个复合组件 API，让您可以完全控制每个选择器的内部结构和渲染。您不再使用单个整体式组件，而是由各个部分组合成选择器。
+
+## 工作原理
+
+每个选择器（例如 `DatePicker`）既是一个简单组件，也是一个复合部件的命名空间：
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+// 简单用法 -- 渲染默认布局
+<DatePicker value={value} onChange={setValue} />
+
+// 复合用法 -- 完全控制结构
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+通过复合组件，您可以：
+
+- **替换** 任何部分为您自己的渲染（例如自定义触发器、自定义日期单元格）
+- **重新排列** 布局（例如移动页脚按钮、添加“今天”按钮）
+- **省略**

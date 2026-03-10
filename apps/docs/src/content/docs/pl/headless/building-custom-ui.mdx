@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# Budowanie niestandardowego interfejsu użytkownika
+
+Ten przewodnik opisuje wzorzec budowania własnego interfejsu użytkownika wyboru daty na bazie bezgłowych (headless) haków.
+
+## Wzorzec
+
+Każdy bezgłowy hak (headless hook) działa według tego samego wzorca:
+
+1.  **Wywołaj hak** z opcjami (value, onChange, configuration)
+2.  **Zdestrukturyzuj zwróconą wartość**, aby uzyskać stan, wartości obliczone i handlery
+3.  **Wyrenderuj własny kod HTML** używając zwróconych wartości
+4.  **Podłącz interakcje**, wywołując dostarczone handlery
+
+Hak zarządza całą złożonością -- generowaniem kalendarza, matematyką dat, stanem otwarcia/zamknięcia, nawigacją klawiaturą, logiką zakresu -- a Ty skupiasz się wyłącznie na prezentacji.
+
+## Przykład: Niestandardowy Date Picker
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Kluczowe koncepcje
+
+### getDayProps
+
+Funkcja `getDayProps` jest rdzeniem renderowania kalendarza. Dla każdej komórki daty zwraca obiekt `DayProps` z 18 flagami typu boolean/number, które opisują stan komórki:
+
+```tsx
+const dp = getDayProps(day);
+
+// Stan zaznaczenia
+dp.isSelected; // Aktualnie wybrana data
+dp.isToday; // Dzisiejsza data
+
+// Stan zakresu (dla wyborów zakresu)
+dp.isInRange; // Między datą początkową a końcową
+dp.isRangeStart; // Pierwsza data zakresu
+dp.isRangeEnd; // Ostatnia data zakresu
+dp.isInHoverRange; // W zakresie podglądu po najechaniu myszą
+dp.isHoverTarget; // Sama data, na którą najechano myszą
+dp.isRangeSingle; // Zarówno początek, jak i koniec zakresu (zakres jednodniowy)
+
+// Pomocnicy wizualnego połączenia
+dp.hasLeftConnection; // Połączony z poprzednim dniem (dla tła zakresu)
+dp.hasRightConnection; // Połączony z następnym dniem
+dp.isConsecutiveRange; // Część wielodniowego zakresu
+
+// Stan
+dp.isDisabled; // Wyłączony przez minDate/maxDate/isDateUnavailable
+dp.isFocused; // Ma fokus klawiatury
+dp.isOutsideDay; // Należy do sąsiedniego miesiąca (gdy włączone jest showOutsideDays)
+dp.isHighlighted; // W tablicy highlightDates
+
+// Dane
+dp.date; // Obiekt Date
+dp.day; // Numer dnia miesiąca
+dp.dayOfWeek; // 0-6 (Niedziela-Sobota)
+```
+
+### Refy do wykrywania kliknięć na zewnątrz
+
+Haki zwracają `containerRef` i `popupRef`. Dołącz je do swoich elementów otaczających i wyskakującego okienka -- hak używa ich do wykrywania kliknięć na zewnątrz i automatycznego zamykania okienka.
+
+### Nawigacja klawiaturą
+
+Handler `handleKeyDown` obsługuje klawisze strzałek, Enter, Escape i Tab, zapewniając pełną nawigację za pomocą klawiatury. Dołącz go do kontenera wyskakującego okienka.
+
+### Lokalizacja
+
+Wszystkie ciągi znaków widoczne для użytkownika pochodzą z obiektu `locale`. Możesz dostosować dowolny ciąg znaków, przekazując częściową opcję `locale`:
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "OK",
+    cancel: "Wróć",
+    placeholder: "Wybierz datę...",
+  },
+});
+```
+
+## Następne kroki
+
+- [Dokumentacja haków](/docs/headless/hooks/use-date-picker) -- Pełne opcje i zwracane wartości dla każdego haka
+- [Konteksty](/docs/headless/contexts) -- Użyj dostawców (providers) dla wzorców komponentów złożonych
+- [Narzędzia do dat](/docs/headless/date-utilities) -- Funkcje pomocnicze do manipulacji datami

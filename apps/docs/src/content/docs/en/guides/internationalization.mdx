@@ -1,0 +1,161 @@
+---
+sidebar_position: 2
+title: Internationalization
+description: Locale customization, language switching, and formatting overrides.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Internationalization
+
+The library uses the browser's `Intl.DateTimeFormat` API to generate locale-aware month names, weekday labels, and AM/PM text. No external i18n library is required.
+
+## Quick Start
+
+Use `createLocale()` to generate a locale from a BCP 47 language tag, then pass it via the `locale` prop:
+
+```tsx
+import { createLocale } from "react-date-range-picker-headless";
+import { DatePicker } from "react-date-range-picker-styled";
+
+const ko = createLocale("ko", {
+  confirm: "확인",
+  cancel: "취소",
+  clear: "초기화",
+  placeholder: "날짜 선택",
+});
+
+function App() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} locale={ko} />;
+}
+```
+
+This also works with any other variant (Tailwind v3, Tailwind v4, Headless).
+
+## What createLocale Auto-Generates
+
+`createLocale(localeKey, overrides?)` uses `Intl.DateTimeFormat` to automatically derive:
+
+| Field             | Source                                                              | Example (`"ko"`)          |
+| ----------------- | ------------------------------------------------------------------- | ------------------------- |
+| `weekdays`        | `Intl.DateTimeFormat(localeKey, { weekday: "short" })`              | `["일", "월", "화", ...]` |
+| `months`          | `Intl.DateTimeFormat(localeKey, { month: "long" })`                 | `["1월", "2월", ...]`     |
+| `am` / `pm`       | `Intl.DateTimeFormat(localeKey, { hour: "numeric", hour12: true })` | `"오전"` / `"오후"`       |
+| `formatMonthYear` | Generated from Intl                                                 | `"2026년 3월"`            |
+
+Everything else defaults to English and must be overridden manually if needed.
+
+## Fields You Should Override
+
+These action labels and placeholders are **not** auto-generated:
+
+| Field                  | Default                        | Description                           |
+| ---------------------- | ------------------------------ | ------------------------------------- |
+| `confirm`              | `"Confirm"`                    | Confirm button text                   |
+| `cancel`               | `"Cancel"`                     | Cancel button text                    |
+| `clear`                | `"Clear"`                      | Clear button text                     |
+| `today`                | `"Today"`                      | Go-to-today button text               |
+| `placeholder`          | `"Select date"`                | Single date picker placeholder        |
+| `rangePlaceholder`     | `"Select date range"`          | Date range picker placeholder         |
+| `dateTimePlaceholder`  | `"Select date and time"`       | Date time picker placeholder          |
+| `rangeTimePlaceholder` | `"Select date range and time"` | Date range time picker placeholder    |
+| `timePlaceholder`      | `"Select time"`                | Time picker placeholder               |
+| `rangeSeparator`       | `" ~ "`                        | Separator between start and end dates |
+| `prevMonthLabel`       | `"Previous month"`             | Aria label for previous month button  |
+| `nextMonthLabel`       | `"Next month"`                 | Aria label for next month button      |
+| `selectYearLabel`      | `"Select year"`                | Aria label for year dropdown          |
+| `selectMonthLabel`     | `"Select month"`               | Aria label for month dropdown         |
+| `hoursLabel`           | `"Hours"`                      | Aria label for hours column           |
+| `minutesLabel`         | `"Minutes"`                    | Aria label for minutes column         |
+| `secondsLabel`         | `"Seconds"`                    | Aria label for seconds column         |
+| `startTimeLabel`       | `"Start time"`                 | Label for start time section          |
+| `endTimeLabel`         | `"End time"`                   | Label for end time section            |
+
+## Partial Overrides (Without createLocale)
+
+You can pass a partial locale object directly. Missing fields fall back to `DEFAULT_LOCALE` (English):
+
+```tsx
+<DatePicker
+  value={value}
+  onChange={setValue}
+  locale={{
+    confirm: "OK",
+    cancel: "Back",
+    weekdays: ["D", "L", "M", "X", "J", "V", "S"],
+    months: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+  }}
+/>
+```
+
+This is useful when you only need to change a few strings without generating a full locale.
+
+## Custom Formatting Functions
+
+The locale includes 5 formatting functions you can override:
+
+```tsx
+const custom = createLocale("en", {
+  // How month headers are displayed (e.g. "March 2026")
+  formatMonthYear: (month) => month.toLocaleDateString("en-US", { month: "long", year: "numeric" }),
+
+  // How dates appear in trigger buttons and aria-labels
+  formatDate: (date) =>
+    date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+
+  // How date+time values are displayed
+  formatDateTime: (date) =>
+    date.toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+    }),
+
+  // How date ranges are displayed in the trigger
+  formatRange: (start, end) => `${start} → ${end}`,
+
+  // How time values are displayed
+  formatTime: (h, m, s, period) =>
+    `${h}:${String(m).padStart(2, "0")}${period ? ` ${period}` : ""}`,
+});
+```
+
+<Admonition type="info" title="Default format">
+  By default, all formatting functions use ISO 8601 style (`2026-03-04`, `14:30`), **not**
+  locale-specific formatting. This ensures consistent behavior across browsers. Override the format
+  functions above if you want locale-specific display.
+</Admonition>
+
+## Week Start Day
+
+The `weekStartsOn` prop controls which day appears first in the calendar. This is independent of the locale:
+
+```tsx
+<DatePicker value={value} onChange={setValue} weekStartsOn="monday" />
+```
+
+Accepted values: `"sunday"` (default), `"monday"`, `"tuesday"`, `"wednesday"`, `"thursday"`, `"friday"`, `"saturday"`.
+
+The weekday labels in the grid header are automatically reordered to match.
+
+## RTL Layout
+
+The library does not currently include built-in RTL layout support. For RTL languages (Arabic, Hebrew, etc.), apply `dir="rtl"` on a wrapper element and adjust CSS as needed:
+
+```tsx
+<div dir="rtl">
+  <DatePicker value={value} onChange={setValue} locale={arLocale} />
+</div>
+```
+
+The headless hooks themselves are layout-agnostic — the calendar data structure doesn't depend on text direction.
+
+## API Reference
+
+For the complete field list and function signatures, see:
+
+- [Locale type](/docs/headless/types/locale) — all 30 string fields and 5 formatting functions
+- [Locale helpers](/docs/headless/utilities/locale-helpers) — `createLocale`, `mergeLocale`, `resolveLocale`, `DEFAULT_LOCALE`

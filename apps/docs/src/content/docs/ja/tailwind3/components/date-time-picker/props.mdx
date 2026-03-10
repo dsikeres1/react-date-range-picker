@@ -1,0 +1,55 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Props
+
+| プロップ              | 型                                            | デフォルト  | 説明                                           |
+| --------------------- | --------------------------------------------- | ----------- | ---------------------------------------------- |
+| `value`               | `Date \| null`                                | --          | 選択された日時値                               |
+| `onChange`            | `(dateTime: Date \| null) => void`            | --          | 値が変更されたときのコールバック               |
+| `time`                | `TimeConfig`                                  | --          | 時刻パネルの設定                               |
+| `minDate`             | `Date`                                        | --          | 選択可能な最小日付                             |
+| `maxDate`             | `Date`                                        | --          | 選択可能な最大日付                             |
+| `locale`              | `Partial<Locale>`                             | --          | カスタムロケールの設定                         |
+| `initialMonth`        | `Date`                                        | --          | 初期表示月                                     |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | コンポーネントのサイズ                         |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | 週の開始曜日                                   |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | 日付を無効としてマークする                     |
+| `displayFormat`       | `string`                                      | --          | カスタム表示フォーマット                       |
+| `open`                | `boolean`                                     | --          | 制御されたオープン状態                         |
+| `initialOpen`         | `boolean`                                     | --          | 初期オープン状態（非制御）                     |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | オープン状態が変更されたときのコールバック     |
+| `required`            | `boolean`                                     | `false`     | 値のクリアを無効にする                         |
+| `showOutsideDays`     | `boolean`                                     | `false`     | 隣接する月の日付を表示する                     |
+| `highlightDates`      | `Date[]`                                      | --          | ハイライトする日付                             |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | プリセットクリック時に自動確定する             |
+| `numberOfMonths`      | `number`                                      | `1`         | 表示する月数                                   |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | キャプションのナビゲーションスタイル           |
+| `fromYear`            | `number`                                      | --          | ドロップダウンの開始年                         |
+| `toYear`              | `number`                                      | --          | ドロップダウンの終了年                         |
+| `disablePast`         | `boolean`                                     | `false`     | 今日より前の日付を無効にする                   |
+| `disableFuture`       | `boolean`                                     | `false`     | 今日より後の日付を無効にする                   |
+| `inline`              | `boolean`                                     | `false`     | カレンダーをインライン表示（ポップアップなし） |
+| `name`                | `string`                                      | --          | フォーム送信用の隠しinputのname                |
+| `placeholder`         | `string`                                      | --          | トリガーのプレースホルダーテキスト             |
+| `hideHeader`          | `boolean`                                     | `false`     | ナビゲーションヘッダーを非表示にする           |
+| `hideFooter`          | `boolean`                                     | `false`     | アクションフッターを非表示にする               |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** 時刻表示の精度。デフォルトは "minute" です。 */
+  precision?: "hour" | "minute" | "second";
+  /** 12時間形式または24時間形式。デフォルトは "24" です。 */
+  hourFormat?: "12" | "24";
+  /** 分の増減ステップ。デフォルトは 5 です。 */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** 秒の増減ステップ。デフォルトは 1 です。 */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** 各スクロールホイール項目の高さ（px）。デフォルトは 32 です。 */
+  itemHeight?: number;
+}
+```

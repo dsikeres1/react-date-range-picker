@@ -1,0 +1,102 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind3Basic from "@examples/tailwind3/DatePicker/Basic";
+import Tailwind3BasicSource from "@examples/tailwind3/DatePicker/Basic.tsx?raw";
+
+# เริ่มต้นใช้งาน Tailwind CSS v3
+
+แพ็คเกจ Tailwind v3 มีคอมโพเนนต์ตัวเลือกวันที่ซึ่งจัดรูปแบบด้วยคลาสยูทิลิตี้ของ Tailwind CSS v3
+
+## การติดตั้ง
+
+<PackageInstall pkg="react-date-range-picker-tailwind3" />
+
+## การกำหนดค่า Tailwind
+
+เพิ่มปลั๊กอินและ content path ลงในการกำหนดค่า Tailwind ของคุณ:
+
+```js
+// tailwind.config.js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  darkMode: "class",
+  plugins: [rdrpPlugin],
+};
+```
+
+## เริ่มต้นอย่างรวดเร็ว
+
+<CodeDemo source={Tailwind3BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Tailwind3Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## มีอะไรบ้าง
+
+| คอมโพเนนต์            | คำอธิบาย                                                 |
+| --------------------- | -------------------------------------------------------- |
+| `DatePicker`          | การเลือกวันที่เดียวพร้อมปฏิทินป๊อปอัป                    |
+| `DateRangePicker`     | การเลือกช่วงวันที่พร้อมปฏิทินคู่และค่าที่ตั้งไว้ล่วงหน้า |
+| `DateTimePicker`      | การเลือกวันที่ + เวลา พร้อมแผงเลื่อนเวลา                 |
+| `DateRangeTimePicker` | การเลือกช่วงวันที่ + เวลา                                |
+
+คอมโพเนนต์ทั้งหมดรองรับ:
+
+- ควบคุมค่าด้วย `value` / `onChange`
+- การนำทางด้วยคีย์บอร์ด
+- โหมดมืดผ่าน `dark:` variant
+- 4 ขนาด: `small`, `medium`, `large`, `x-large`
+- Compound Component API สำหรับการปรับแต่ง
+
+## ประเภทของ TypeScript
+
+ประเภทการกำหนดค่าและข้อมูลทั้งหมดจะถูก re-export จากแพ็คเกจ — ไม่จำเป็นต้องติดตั้งแพ็คเกจ headless แยกต่างหาก:
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind3";
+```
+
+ประเภทเหล่านี้มีประโยชน์สำหรับ:
+
+- **`Locale`** — การตั้งค่า locale แบบกำหนดเอง (ชื่อวันในสัปดาห์, ป้ายกำกับปุ่ม, รูปแบบวันที่)
+- **`DatePickerSize`** — การกำหนดประเภทของ `size` prop (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — การกำหนดค่าความแม่นยำ, รูปแบบ, และขั้นตอนของตัวเลือกเวลา
+- **`DateRangePreset`** — การกำหนดค่าที่ตั้งไว้ล่วงหน้าสำหรับ `DateRangePicker` / `DateRangeTimePicker`
+- **`CalendarMonth`**, **`DayProps`** — การเรนเดอร์แบบกำหนดเองด้วย Compound Components
+
+ดูคำจำกัดความประเภทโดยละเอียดได้ที่ [Headless Types](/docs/headless/types/common-types)
+
+## ขั้นตอนถัดไป
+
+- [DatePicker](/docs/tailwind3/components/date-picker/basic) — การเลือกวันที่เดียว
+- [DateRangePicker](/docs/tailwind3/components/date-range-picker/basic) — ช่วงวันที่พร้อมค่าที่ตั้งไว้ล่วงหน้า
+- [Compound Components](/docs/tailwind3/customization/overview) — ปรับแต่งโครงสร้างภายใน
+- [Theme Override](/docs/tailwind3/customization/theme-override) — ปรับแต่งสีของธีม
+- [Dark Mode](/docs/tailwind3/customization/dark-mode) — รองรับธีมมืด

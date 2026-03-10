@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind4/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind4/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind4/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind4/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# 커스텀 트리거
+
+기본 트리거 버튼을 `Trigger` 렌더 prop을 사용하여 자신만의 엘리먼트로 교체하세요. `DatePicker.Trigger`의 자식으로 함수를 전달하면, 원하는 어떤 트리거 UI든 구축할 수 있는 상태와 콜백을 받게 됩니다.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 트리거 렌더 Props
+
+| Prop           | 타입             | 설명                     |
+| -------------- | ---------------- | ------------------------ |
+| `displayValue` | `string`         | 포맷된 선택된 날짜       |
+| `placeholder`  | `string`         | 플레이스홀더 텍스트      |
+| `hasValue`     | `boolean`        | 날짜가 선택되었는지 여부 |
+| `isOpen`       | `boolean`        | 팝업이 열려있는지 여부   |
+| `onToggle`     | `() => void`     | 팝업 열기/닫기 토글      |
+| `onClear`      | `() => void`     | 선택 항목 지우기         |
+| `locale`       | `Locale`         | 현재 로케일 객체         |
+| `triggerRef`   | `(node) => void` | 포지셔닝을 위한 ref 콜백 |
+
+## 레인지 피커 트리거
+
+동일한 패턴이 `DateRangePicker`에서도 작동합니다:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

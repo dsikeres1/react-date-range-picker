@@ -1,0 +1,179 @@
+---
+sidebar_position: 3
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDarkMode from "@examples/styled/Customization/CustomDarkMode";
+import CustomDarkModeSource from "@examples/styled/Customization/CustomDarkMode.tsx?raw";
+import DarkModeToggle from "@examples/styled/Customization/CompoundDarkMode";
+import DarkModeToggleSource from "@examples/styled/Customization/CompoundDarkMode.tsx?raw";
+
+# Tryb Ciemny
+
+Pakiet `styled` zawiera pełne wsparcie dla trybu ciemnego. Wartości dla trybu ciemnego są zdefiniowane dla każdej zmiennej CSS, dzięki czemu cały picker automatycznie się dostosowuje.
+
+## Jak to działa
+
+Tryb ciemny jest aktywowany za pomocą dwóch mechanizmów:
+
+1.  **Preferencje systemowe** — zapytanie mediów `prefers-color-scheme: dark`
+2.  **Ręczne przełączanie** — atrybut `data-theme="dark"` na `.rdrp-root` lub elemencie nadrzędnym
+
+Preferencje systemowe są stosowane domyślnie. Jeśli jawnie ustawisz `data-theme="light"` lub `data-theme="dark"`, zastąpi to preferencje systemowe.
+
+## Automatyczny (Preferencje systemowe)
+
+Nie jest wymagana żadna konfiguracja. Picker respektuje ustawienia systemu operacyjnego użytkownika:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/rdrp-styles.css";
+
+// Automatycznie podąża za systemowym trybem ciemnym/jasnym
+<DatePicker value={value} onChange={setValue} />;
+```
+
+CSS używa `@media (prefers-color-scheme: dark)`, aby przełączyć wszystkie zmienne `--rdrp-*` na ich wartości dla trybu ciemnego.
+
+## Ręczne przełączanie
+
+Ustaw `data-theme` na elemencie głównym pickera lub dowolnym elemencie nadrzędnym:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div data-theme={dark ? "dark" : "light"}>
+      <button onClick={() => setDark(!dark)}>Przełącz {dark ? "Jasny" : "Ciemny"}</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+Lub zastosuj go bezpośrednio na pickerze:
+
+```tsx
+<DatePicker value={value} onChange={setValue} data-theme="dark" />
+```
+
+Podczas korzystania z Compound Component API, ustaw go na `Root`:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} data-theme="dark">
+  <DatePicker.Trigger />
+  <DatePicker.Content>{/* ... */}</DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Wartości kolorów w trybie ciemnym
+
+Wszystkie zmienne kolorów przełączają się automatycznie. Oto kluczowe różnice:
+
+| Zmienna                    | Jasny             | Ciemny            |
+| -------------------------- | ----------------- | ----------------- |
+| `--rdrp-color-primary`     | `#3b82f6`         | `#60a5fa`         |
+| `--rdrp-color-bg`          | `#ffffff`         | `#1f2937`         |
+| `--rdrp-color-bg-hover`    | `#f3f4f6`         | `#374151`         |
+| `--rdrp-color-text`        | `#374151`         | `#e5e7eb`         |
+| `--rdrp-color-text-strong` | `#111827`         | `#f9fafb`         |
+| `--rdrp-color-text-muted`  | `#6b7280`         | `#9ca3af`         |
+| `--rdrp-color-border`      | `#d1d5db`         | `#4b5563`         |
+| `--rdrp-color-range-bg`    | `#dbeafe`         | `#1e3a5f`         |
+| `--rdrp-color-text-today`  | `#2563eb`         | `#60a5fa`         |
+| `--rdrp-shadow-popup`      | `rgba(0,0,0,0.1)` | `rgba(0,0,0,0.3)` |
+
+Zobacz pełną listę w [CSS Variables](/docs/styled/customization/css-variables).
+
+## Dostosowywanie kolorów trybu ciemnego
+
+Nadpisz zmienne dla trybu ciemnego wewnątrz selektora `data-theme="dark"` lub zapytania mediów `prefers-color-scheme`:
+
+```css
+/* Nadpisz główny kolor trybu ciemnego */
+@media (prefers-color-scheme: dark) {
+  .rdrp-root {
+    --rdrp-color-primary: #a78bfa;
+    --rdrp-color-primary-hover: #8b5cf6;
+    --rdrp-color-primary-light: #2e1065;
+    --rdrp-color-range-bg: #2e1065;
+    --rdrp-color-text-today: #a78bfa;
+  }
+}
+
+/* Zastosuj również przy ręcznym przełączeniu na tryb ciemny */
+.rdrp-root[data-theme="dark"] {
+  --rdrp-color-primary: #a78bfa;
+  --rdrp-color-primary-hover: #8b5cf6;
+  --rdrp-color-primary-light: #2e1065;
+  --rdrp-color-range-bg: #2e1065;
+  --rdrp-color-text-today: #a78bfa;
+}
+```
+
+## Wymuszanie trybu jasnego
+
+Jeśli Twoja aplikacja nie obsługuje trybu ciemnego, wymuś tryb jasny, aby zapobiec przełączaniu się pickera na podstawie preferencji systemowych:
+
+```tsx
+<div data-theme="light">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## Integracja z motywem aplikacji
+
+Jeśli Twoja aplikacja już zarządza przełącznikiem trybu ciemnego (np. za pomocą klasy `dark` na `<html>`), zmapuj go do `data-theme`:
+
+```tsx
+// Synchronizuj ze stanem trybu ciemnego Twojej aplikacji
+function ThemeSyncedPicker({ value, onChange }) {
+  const isDark = useAppTheme(); // Twój hook do motywu
+
+  return (
+    <div data-theme={isDark ? "dark" : "light"}>
+      <DatePicker value={value} onChange={onChange} />
+    </div>
+  );
+}
+```
+
+Dla frameworków, które używają `<html class="dark">` (jak Next.js z next-themes), możesz dodać regułę CSS, aby połączyć te dwa systemy:
+
+```css
+html.dark .rdrp-root {
+  /* Skopiuj tutaj wartości zmiennych trybu ciemnego lub użyj podejścia z data-theme */
+}
+```
+
+Lub ustaw `data-theme` na elemencie `html` obok klasy:
+
+```tsx
+// W Twoim dostawcy motywu
+document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+```
+
+## Przykłady na żywo
+
+### Przełącznik trybu ciemnego
+
+Interaktywny przykład pokazujący **DatePicker** (inline) z przyciskiem do przełączania między trybem jasnym i ciemnym.
+
+<CodeDemo source={DarkModeToggleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DarkModeToggle client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Wymuszony tryb ciemny
+
+**DateTimePicker** renderowany w trybie ciemnym przy użyciu `data-theme="dark"` na ciemnym tle.
+
+<CodeDemo source={CustomDarkModeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomDarkMode client:load />
+  </ExampleWrapper>
+</CodeDemo>

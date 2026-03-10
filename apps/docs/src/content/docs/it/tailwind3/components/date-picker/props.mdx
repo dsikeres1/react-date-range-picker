@@ -1,0 +1,37 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# 속성
+
+| 속성                  | 타입                                          | 기본값      | 설명                                       |
+| --------------------- | --------------------------------------------- | ----------- | ------------------------------------------ |
+| `value`               | `Date \| null`                                | --          | 선택된 날짜 값                             |
+| `onChange`            | `(date: Date \| null) => void`                | --          | 값이 변경될 때 호출되는 콜백               |
+| `minDate`             | `Date`                                        | --          | 선택 가능한 최소 날짜                      |
+| `maxDate`             | `Date`                                        | --          | 선택 가능한 최대 날짜                      |
+| `locale`              | `Partial<Locale>`                             | --          | 사용자 정의 로케일 설정                    |
+| `initialMonth`        | `Date`                                        | --          | 초기에 표시될 월                           |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | 컴포넌트 크기                              |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | 한 주의 시작 요일                          |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | 특정 날짜를 비활성화                       |
+| `displayFormat`       | `string`                                      | --          | 사용자 정의 표시 형식 (예: `"YYYY/MM/DD"`) |
+| `open`                | `boolean`                                     | --          | 팝업 열림 상태 제어 (제어 컴포넌트)        |
+| `initialOpen`         | `boolean`                                     | --          | 초기 열림 상태 (비제어 컴포넌트)           |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | 열림 상태 변경 시 호출되는 콜백            |
+| `required`            | `boolean`                                     | `false`     | 값 비우기 비활성화                         |
+| `showOutsideDays`     | `boolean`                                     | `false`     | 인접한 달의 날짜 표시                      |
+| `highlightDates`      | `Date[]`                                      | --          | 강조할 날짜 배열                           |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | 날짜 클릭 시 자동 선택 완료                |
+| `numberOfMonths`      | `number`                                      | `1`         | 표시할 월의 수                             |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | 월 이동 UI 스타일                          |
+| `fromYear`            | `number`                                      | --          | 드롭다운 시작 연도                         |
+| `toYear`              | `number`                                      | --          | 드롭다운 종료 연도                         |
+| `disablePast`         | `boolean`                                     | `false`     | 오늘 이전 날짜 비활성화                    |
+| `disableFuture`       | `boolean`                                     | `false`     | 오늘 이후 날짜 비활성화                    |
+| `inline`              | `boolean`                                     | `false`     | 팝업 없이 캘린더를 인라인으로 표시         |
+| `name`                | `string`                                      | --          | 폼 제출을 위한 숨겨진 input의 name         |
+| `placeholder`         | `string`                                      | --          | 트리거에 표시될 플레이스홀더 텍스트        |
+| `hideHeader`          | `boolean`                                     | `false`     | 월 이동 헤더 숨기기                        |
+| `hideFooter`          | `boolean`                                     | `false`     | 액션 푸터 숨기기                           |

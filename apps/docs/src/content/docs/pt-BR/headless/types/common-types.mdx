@@ -1,0 +1,102 @@
+---
+sidebar_position: 5
+title: Common Types
+---
+
+# Tipos Comuns
+
+Aliases de tipos compartilhados usados em todo o pacote headless.
+
+```tsx
+import type {
+  DatePickerSize,
+  WeekDay,
+  CaptionLayout,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  MinuteStep,
+  SecondStep,
+  CalendarMonth,
+  DateUnit,
+} from "react-date-range-picker-headless";
+```
+
+## DatePickerSize
+
+Variante de tamanho da UI. Os hooks headless passam isso adiante sem usá-lo. Componentes estilizados o usam para dimensionamento visual.
+
+```tsx
+type DatePickerSize = "x-large" | "large" | "medium" | "small";
+```
+
+## WeekDay
+
+Dia da semana como uma string. Usado na opção `weekStartsOn`.
+
+```tsx
+type WeekDay = "sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday";
+```
+
+## CaptionLayout
+
+Modo de layout do cabeçalho do calendário.
+
+```tsx
+type CaptionLayout = "buttons" | "dropdown";
+```
+
+| Valor        | Descrição                                                  |
+| ------------ | ---------------------------------------------------------- |
+| `"buttons"`  | Botões de navegação para o mês anterior/seguinte (padrão). |
+| `"dropdown"` | Menus suspensos de seleção de ano e mês.                   |
+
+## TimePrecision
+
+Controla quais colunas de tempo são exibidas.
+
+```tsx
+type TimePrecision = "hour" | "minute" | "second";
+```
+
+| Valor      | Colunas Exibidas         |
+| ---------- | ------------------------ |
+| `"hour"`   | Apenas hora.             |
+| `"minute"` | Hora + minuto.           |
+| `"second"` | Hora + minuto + segundo. |
+
+## HourFormat
+
+Exibição de tempo no formato de 12 ou 24 horas.
+
+```tsx
+type HourFormat = "12" | "24";
+```
+
+## TimePeriod
+
+Indicador AM/PM para o formato de 12 horas.
+
+```tsx
+type TimePeriod = "AM" | "PM";
+```
+
+## MinuteStep
+
+Valores de incremento de minuto válidos para seleção de minutos baseada em passos.
+
+```tsx
+type MinuteStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## SecondStep
+
+Valores de incremento de segundo válidos para seleção de segundos baseada em passos.
+
+```tsx
+type SecondStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## CalendarMonth
+
+Dados de calendário gerados

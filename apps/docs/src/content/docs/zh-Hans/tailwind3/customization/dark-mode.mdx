@@ -1,0 +1,179 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 深色模式
+
+Tailwind v3 包通过 CSS 自定义属性提供完整的深色模式支持。Tailwind 插件（`rdrpPlugin`）注入颜色变量，自动在浅色和深色调色板之间切换。
+
+## 工作原理
+
+Tailwind v3 插件（`rdrpPlugin`）注入定义颜色调色板的 CSS 自定义属性。深色模式通过在 `.dark` 或 `[data-theme="dark"]` 下覆盖这些变量来工作：
+
+- **浅色模式** — `:root` 定义默认颜色（Slate + Sky 调色板）
+- **深色模式** — `.dark` 和 `[data-theme="dark"]` 自动覆盖颜色
+
+组件主题通过 `var(--rdrp-color-*)` 引用这些值，因此当你的 Tailwind `darkMode` 策略触发相应的选择器时，深色模式就会激活。
+
+## Tailwind 配置
+
+### 类策略 (推荐)
+
+在你的 Tailwind 配置中设置 `darkMode: "class"`。当 `<html>` 或父元素上存在 `dark` 类时，深色模式会激活：
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+切换深色模式：
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+或在 `<html>` 上应用该类：
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### 选择器策略
+
+Tailwind v3.4+ 支持 `darkMode: "selector"`，它允许使用 `[data-theme="dark"]` 或任何自定义选择器：
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### 媒体查询策略
+
+设置 `darkMode: "media"` (或省略——这是默认设置) 以跟随操作系统的偏好：
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "media",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+无需额外设置。选择器将遵循 `prefers-color-scheme`。
+
+## 颜色变量
+
+以下是用于浅色/深色主题的 CSS 自定义属性：
+
+| 变量                      | 浅色      | 深色                   |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
+
+## 与 Docusaurus 集成
+
+如果你正在使用 Docusaurus (它在 `<html>` 上使用 `data-theme`)，请配置 Tailwind 的选择器策略：
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+当深色模式激活时，Docusaurus 会设置 `<html data-theme="dark">`，CSS 变量将自动切换为深色值。
+
+## 与 next-themes 集成
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes` 会在 `<html>` 上添加/移除 `dark` 类。在你的 Tailwind 配置中设置 `darkMode: "class"` 后，选择器会自动切换。
+
+## 强制特定模式
+
+要强制选择器始终使用浅色或深色模式，请将其包装在具有相应类的容器中：
+
+```tsx
+{
+  /* 始终为浅色 — 没有 "dark" 类祖先 */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* 始终为深色 */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+使用 `darkMode: "class"` 时, `dark` 类必须位于父元素或 `<html>` 上。选择器本身不管理深色模式的切换。
+</Admonition>

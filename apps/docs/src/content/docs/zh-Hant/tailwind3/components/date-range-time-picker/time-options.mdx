@@ -1,0 +1,36 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import SecondPrecision from "@examples/tailwind3/DateRangeTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/tailwind3/DateRangeTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/tailwind3/DateRangeTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/tailwind3/DateRangeTimePicker/TwelveHour.tsx?raw";
+
+# 時間選項
+
+透過 `time` 屬性設定時間面板的行為。
+
+## 秒級精確度
+
+為開始和結束時間面板顯示秒數欄位。
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 12 小時制
+
+為開始和結束時間面板切換至帶有 AM/PM 開關的 12 小時制。
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

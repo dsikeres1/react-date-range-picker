@@ -1,0 +1,47 @@
+---
+sidebar_position: 1
+sidebar_label: "Overview"
+---
+
+# Componentes Compostos
+
+O pacote `styled` expõe uma API de Componentes Compostos que lhe dá controle total sobre a estrutura interna e a renderização de cada seletor. Em vez de um único componente monolítico, você compõe o seletor a partir de partes individuais.
+
+## Como Funciona
+
+Cada seletor (por exemplo, `DatePicker`) é tanto um componente simples quanto um namespace de partes compostas:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/rdrp-styles.css";
+
+// Uso simples — renderiza o layout padrão
+<DatePicker value={value} onChange={setValue} />
+
+// Uso composto — controle total sobre a estrutura
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Partes Disponíveis
+
+### DatePicker
+
+| Parte                | Descrição                                                                                     |
+| -------------------- | --------------------------------------------------------------------------------------------- |
+| `DatePicker.Root`    | Provedor + contêiner. Aceita todas as props do seletor (`value`, `onChange`, `minDate`, etc.) |
+| `DatePicker.Trigger` | Botão que abre/fecha o popup. Exibe o valor selecionado.                                      |

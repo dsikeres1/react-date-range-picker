@@ -1,0 +1,56 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/styled/DateRangeTimePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/styled/DateRangeTimePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/styled/DateRangeTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangeTimePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/styled/DateRangeTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DateRangeTimePicker/FormIntegration.tsx?raw";
+
+# 挙動
+
+## 選択時に閉じる
+
+`shouldCloseOnSelect`が有効な場合、プリセットをクリックするとピッカーが自動的に確定し、閉じます。
+
+<Admonition type="info">
+  時間入力が有効なピッカーの場合、`shouldCloseOnSelect`はプリセットのクリックにのみ適用されます —
+  ユーザーはまだ時間を設定する必要があるため、日付のクリックには適用されません。
+</Admonition>
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 複数月の表示
+
+デフォルトの2ヶ月以上を並べて表示します。
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## フォームとの連携
+
+`name` propを使用して、ネイティブのフォーム送信用の非表示入力を含めます。
+
+<Admonition type="tip">
+  この例の送信ボタンのスタイルはカスタムです — ライブラリは日付ピッカーのみを提供します。
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

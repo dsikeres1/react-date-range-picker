@@ -1,0 +1,37 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Proplar
+
+| Prop                  | Tür                                           | Varsayılan  | Açıklama                                      |
+| --------------------- | --------------------------------------------- | ----------- | --------------------------------------------- |
+| `value`               | `Date \| null`                                | --          | Seçili tarih değeri                           |
+| `onChange`            | `(date: Date \| null) => void`                | --          | Değer değiştiğinde geri arama                 |
+| `minDate`             | `Date`                                        | --          | Minimum seçilebilir tarih                     |
+| `maxDate`             | `Date`                                        | --          | Maksimum seçilebilir tarih                    |
+| `locale`              | `Partial<Locale>`                             | --          | Özel yerel ayar yapılandırması                |
+| `initialMonth`        | `Date`                                        | --          | Başlangıçta görüntülenen ay                   |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | Bileşen boyutu                                |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | Haftanın ilk günü                             |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | Tarihleri devre dışı olarak işaretle          |
+| `displayFormat`       | `string`                                      | --          | Özel görüntüleme formatı (ör. `"GG/AA/YYYY"`) |
+| `open`                | `boolean`                                     | --          | Kontrollü açık durumu                         |
+| `initialOpen`         | `boolean`                                     | --          | Başlangıçtaki açık durumu (kontrolsüz)        |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | Açık durumu değiştiğinde geri arama           |
+| `required`            | `boolean`                                     | `false`     | Değeri temizlemeyi devre dışı bırak           |
+| `showOutsideDays`     | `boolean`                                     | `false`     | Bitişik aylardaki günleri göster              |
+| `highlightDates`      | `Date[]`                                      | --          | Vurgulanacak tarihler                         |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | Tarihe tıklandığında otomatik onayla          |
+| `numberOfMonths`      | `number`                                      | `1`         | Görüntülenecek ay sayısı                      |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | Başlık gezinme stili                          |
+| `fromYear`            | `number`                                      | --          | Açılır menü için başlangıç yılı               |
+| `toYear`              | `number`                                      | --          | Açılır menü için bitiş yılı                   |
+| `disablePast`         | `boolean`                                     | `false`     | Bugünden önceki tarihleri devre dışı bırak    |
+| `disableFuture`       | `boolean`                                     | `false`     | Bugünden sonraki tarihleri devre dışı bırak   |
+| `inline`              | `boolean`                                     | `false`     | Takvimi satır içi göster (açılır pencere yok) |
+| `name`                | `string`                                      | --          | Form gönderimi için gizli girdi adı           |
+| `placeholder`         | `string`                                      | --          | Tetikleyici yer tutucu metni                  |
+| `hideHeader`          | `boolean`                                     | `false`     | Gezinme başlığını gizle                       |
+| `hideFooter`          | `boolean`                                     | `false`     | Eylem altbilgisini gizle                      |

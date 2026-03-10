@@ -1,0 +1,22 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/styled/DateRangeTimePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/styled/DateRangeTimePicker/MinMaxDays.tsx?raw";
+
+# 限制
+
+## 最小和最大天數
+
+將日期範圍限制在最小或最大天數內。
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>

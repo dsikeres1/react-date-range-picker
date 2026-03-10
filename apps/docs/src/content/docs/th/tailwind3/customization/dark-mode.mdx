@@ -1,0 +1,179 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# โหมดมืด
+
+แพ็คเกจ Tailwind v3 รองรับโหมดมืดอย่างเต็มรูปแบบผ่าน CSS custom properties ปลั๊กอิน Tailwind (`rdrpPlugin`) จะแทรกตัวแปรสีที่สลับระหว่างพาเลตสว่างและมืดโดยอัตโนมัติ
+
+## วิธีการทำงาน
+
+ปลั๊กอิน Tailwind v3 (`rdrpPlugin`) จะแทรก CSS custom properties ที่กำหนดพาเลตสี โหมดมืดทำงานโดยการแทนที่ตัวแปรเหล่านี้ภายใต้ `.dark` หรือ `[data-theme="dark"]`:
+
+- **โหมดสว่าง** — `:root` กำหนดสีเริ่มต้น (พาเลต Slate + Sky)
+- **โหมดมืด** — `.dark` และ `[data-theme="dark"]` แทนที่สีโดยอัตโนมัติ
+
+ธีมของคอมโพเนนต์อ้างอิงค่าเหล่านี้ผ่าน `var(--rdrp-color-*)` ดังนั้นโหมดมืดจะทำงานเมื่อกลยุทธ์ `darkMode` ของ Tailwind กระตุ้น selector ที่เหมาะสม
+
+## การตั้งค่า Tailwind
+
+### กลยุทธ์ Class (แนะนำ)
+
+ตั้งค่า `darkMode: "class"` ในไฟล์คอนฟิก Tailwind ของคุณ โหมดมืดจะทำงานเมื่อมีคลาส `dark` อยู่บน `<html>` หรือองค์ประกอบแม่:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+สลับโหมดมืด:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+หรือใช้คลาสกับ `<html>`:
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### กลยุทธ์ Selector
+
+Tailwind v3.4+ รองรับ `darkMode: "selector"` ซึ่งอนุญาตให้ใช้ `[data-theme="dark"]` หรือ selector ที่กำหนดเองได้:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### กลยุทธ์ Media
+
+ตั้งค่า `darkMode: "media"` (หรือเว้นไว้ — นี่คือค่าเริ่มต้น) เพื่อให้เป็นไปตามการตั้งค่าของระบบปฏิบัติการ:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "media",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+ไม่จำเป็นต้องตั้งค่าเพิ่มเติม ตัวเลือกวันที่จะทำงานตาม `prefers-color-scheme`
+
+## ตัวแปรสี
+
+นี่คือ CSS custom properties ที่ใช้สำหรับธีมสว่าง/มืด:
+
+| ตัวแปร                    | โหมดสว่าง | โหมดมืด                |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
+
+## การผนวกรวมกับ Docusaurus
+
+หากคุณใช้ Docusaurus (ซึ่งใช้ `data-theme` บน `<html>`) ให้ตั้งค่ากลยุทธ์ selector ของ Tailwind:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Docusaurus จะตั้งค่า `<html data-theme="dark">` เมื่อโหมดมืดทำงาน และตัวแปร CSS จะสลับเป็นค่าสำหรับโหมดมืดโดยอัตโนมัติ
+
+## การผนวกรวมกับ next-themes
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes` จะเพิ่ม/ลบคลาส `dark` บน `<html>` เมื่อตั้งค่า `darkMode: "class"` ในคอนฟิก Tailwind ของคุณ ตัวเลือกวันที่จะสลับโหมดโดยอัตโนมัติ
+
+## การบังคับใช้โหมดที่เฉพาะเจาะจง
+
+หากต้องการบังคับให้ตัวเลือกวันที่ใช้โหมดสว่างหรือมืดเสมอ ให้ครอบด้วยคอนเทนเนอร์ที่มีคลาสที่เหมาะสม:
+
+```tsx
+{
+  /* สว่างเสมอ — ไม่มี "dark" class ancestor */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* มืดเสมอ */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+เมื่อใช้ `darkMode: "class"` คลาส `dark` จะต้องอยู่บนองค์ประกอบแม่หรือ `<html>` ตัวเลือกวันที่ไม่ได้จัดการการสลับโหมดมืดด้วยตัวเอง
+</Admonition>

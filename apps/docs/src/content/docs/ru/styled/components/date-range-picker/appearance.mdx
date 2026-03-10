@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/styled/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/styled/DateRangePicker/CustomLocale";
+import CustomLocaleSource from "@examples/styled/DateRangePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/styled/DateRangePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/styled/DateRangePicker/CaptionDropdown.tsx?raw";
+
+# Внешний вид
+
+## Несколько месяцев
+
+Отображение более 2 месяцев рядом. По умолчанию `2` для выбора диапазона.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Пользовательская локаль
+
+Используйте `createLocale` из headless-пакета для настройки названий месяцев/дней и строк интерфейса.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Выпадающий список в заголовке
+
+Переключение с кнопочной навигации на выпадающие списки для выбора месяца и года. Полезно для выбора дат, далеких от текущего месяца.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

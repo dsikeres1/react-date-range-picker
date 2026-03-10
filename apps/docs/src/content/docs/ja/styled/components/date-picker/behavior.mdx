@@ -1,0 +1,51 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/styled/DatePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/styled/DatePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/styled/DatePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DatePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/styled/DatePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DatePicker/FormIntegration.tsx?raw";
+
+# 動作
+
+## 選択時に閉じる
+
+`shouldCloseOnSelect` を有効にすると、日付がクリックされたときにピッカーが自動的に確定して閉じます。
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 複数月表示
+
+複数の月を並べて表示します。
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## フォーム連携
+
+`name` propを使用して、ネイティブのフォーム送信用の隠しinputを含めます。
+
+<Admonition type="tip">
+  この例の送信ボタンのスタイルはカスタムです — ライブラリが提供するのは日付ピッカーのみです。
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,46 @@
+---
+sidebar_position: 7
+sidebar_label: "Colors"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/styled/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/styled/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/styled/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/styled/Customization/CompoundColorThemePopup.tsx?raw";
+import CSSCustomColors from "@examples/styled/Customization/CSSCustomColors";
+import CSSCustomColorsSource from "@examples/styled/Customization/CSSCustomColors.tsx?raw";
+
+# 颜色
+
+通过覆盖包装器元素上的 CSS 自定义属性，在运行时切换颜色主题。 `styled` 包使用 `--rdrp-color-primary`、`--rdrp-color-primary-hover`、`--rdrp-color-primary-light` 和 `--rdrp-color-primary-lighter` 作为所有主要强调色。
+
+## 内联主题切换器
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 弹出式主题切换器
+
+同样的方法也适用于弹出式选择器：
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## CSS 变量内联样式
+
+你也可以通过包装器元素上的 `style` 属性直接覆盖颜色：
+
+<CodeDemo source={CSSCustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CSSCustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>

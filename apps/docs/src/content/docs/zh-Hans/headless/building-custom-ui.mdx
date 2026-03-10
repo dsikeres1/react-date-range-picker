@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# 构建自定义 UI
+
+本指南将引导您了解在 headless hooks 之上构建自己的日期选择器 UI 的模式。
+
+## 模式
+
+每个 headless hook 都遵循相同的模式：
+
+1.  **调用 hook** 并传入您的选项（`value`、`onChange`、`configuration`）
+2.  **解构返回值**以获取状态、计算值和处理程序
+3.  使用返回的值**渲染您自己的标记**
+4.  通过调用提供的处理程序来**连接交互**
+
+hook 管理了所有的复杂性——日历生成、日期计算、打开/关闭状态、键盘导航、范围逻辑——而您只需专注于呈现。
+
+## 示例：自定义日期选择器
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 核心概念
+
+### getDayProps
+
+`getDayProps` 函数是日历渲染的核心。对于每个日期单元格，它返回一个 `DayProps` 对象，其中包含 18 个布尔值/数字标志，用于描述单元格的状态：
+
+```tsx
+const dp = getDayProps(day);
+
+// 选择状态
+dp.isSelected; // 当前选定的日期
+dp.isToday; // 今天的日期
+
+// 范围状态（适用于范围选择器）
+dp.isInRange; // 在开始和结束日期之间
+dp.isRangeStart; // 范围的第一个日期
+dp.isRangeEnd; // 范围的最后一个日期
+dp.isInHoverRange; // 在悬停预览范围内
+dp.isHoverTarget; // 悬停的日期本身
+dp.isRangeSingle; // 范围的开始和结束都是同一天（单日范围）
+
+// 视觉连接辅助
+dp.hasLeftConnection; // 连接到前一天（用于范围背景）
+dp.hasRightConnection; // 连接到后一天
+dp.isConsecutiveRange; // 多日范围的一部分
+
+// 状态
+dp.isDisabled; // 被 minDate/maxDate/isDateUnavailable 禁用
+dp.isFocused; // 具有键盘焦点
+dp.isOutsideDay; // 属于相邻月份（当 showOutsideDays 启用时）
+dp.isHighlighted; // 在 highlightDates 数组中
+
+// 数据
+dp.date; // Date 对象
+dp.day; // 月份中的天数
+dp.dayOfWeek; // 0-6 (周日-周六)
+```
+
+### 用于外部点击的 Refs
+
+这些 hooks 返回 `containerRef` 和 `popupRef`。将它们附加到您的包装器和弹出元素上——hook 使用它们来检测外部点击并自动关闭弹出窗口。
+
+### 键盘导航
+
+`handleKeyDown` 处理程序支持箭头键、Enter、Escape 和 Tab 键，以实现完整的键盘导航。请将其附加到弹出容器上。
+
+### 本地化
+
+所有面向用户的字符串都来自 `locale` 对象。您可以通过传递一个部分的 `locale` 选项来自定义任何字符串：
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "确定",
+    cancel: "返回",
+    placeholder: "选择一个日期...",
+  },
+});
+```
+
+## 后续步骤
+
+- [Hook 参考](/docs/headless/hooks/use-date-picker) -- 每个 hook 的完整选项和返回值
+- [Contexts](/docs/headless/contexts) -- 为复合组件模式使用 providers
+- [日期工具](/docs/headless/date-utilities) -- 用于日期操作的辅助函数

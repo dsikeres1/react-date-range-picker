@@ -1,0 +1,49 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/styled/DateRangePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/styled/DateRangePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/styled/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/styled/DateRangePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DateRangePicker/FormIntegration.tsx?raw";
+
+# 行为
+
+## 选择后关闭
+
+启用 `shouldCloseOnSelect` 后，选择结束日期时，选择器会自动确认并关闭。
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 多个月份
+
+并排显示多于默认的两个月份。
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 表单集成
+
+使用 `name` prop 可以包含用于原生表单提交的隐藏输入。
+
+<Admonition type="tip">此示例中的提交按钮样式是自定义的——该库仅提供日期选择器。</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

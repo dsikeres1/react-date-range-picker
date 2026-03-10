@@ -1,0 +1,36 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import SecondPrecision from "@examples/tailwind4/DateRangeTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/tailwind4/DateRangeTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/tailwind4/DateRangeTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/tailwind4/DateRangeTimePicker/TwelveHour.tsx?raw";
+
+# Opcje Czasu
+
+Skonfiguruj zachowanie panelu czasu za pomocą właściwości `time`.
+
+## Precyzja do sekund
+
+Pokaż kolumnę sekund dla panelu czasu początkowego i końcowego.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Format 12-godzinny
+
+Przełącz na format 12-godzinny z przełącznikiem AM/PM dla panelu czasu początkowego i końcowego.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

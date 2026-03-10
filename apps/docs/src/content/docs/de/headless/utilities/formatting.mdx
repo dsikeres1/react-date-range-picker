@@ -1,0 +1,50 @@
+---
+sidebar_position: 2
+title: Formatting
+---
+
+# Formatierungs-Dienstprogramme
+
+Funktionen zur Formatierung von Daten, Zeiten und Zahlen für die Anzeige.
+
+```tsx
+import {
+  formatDate,
+  formatDateTime,
+  formatTimeDisplay,
+  padNumber,
+} from "react-date-range-picker-headless";
+```
+
+## formatDate
+
+Formatiert ein Datum mit einer anpassbaren Formatzeichenfolge.
+
+|                |                                                   |
+| -------------- | ------------------------------------------------- |
+| Signatur       | `formatDate(date: Date, format?: string): string` |
+| Standardformat | `"YYYY.MM.DD"`                                    |
+
+```tsx
+formatDate(new Date(2026, 2, 1)); // "2026.03.01"
+formatDate(new Date(2026, 2, 1), "YYYY-MM-DD"); // "2026-03-01"
+formatDate(new Date(2026, 2, 1), "M/D"); // "3/1"
+```
+
+## formatDateTime
+
+Formatiert ein Datum mit Uhrzeit unter Verwendung einer anpassbaren Formatzeichenfolge.
+
+|                |                                                       |
+| -------------- | ----------------------------------------------------- |
+| Signatur       | `formatDateTime(date: Date, format?: string): string` |
+| Standardformat | `"YYYY.MM.DD HH:mm"`                                  |
+
+```tsx
+formatDateTime(new Date(2026, 2, 1, 14, 30)); // "2026.03.01 14:30"
+formatDateTime(new Date(2026, 2, 1, 14, 30), "YYYY-MM-DD HH:mm:ss"); // "2026-03-01 14:30:00"
+```
+
+## formatTimeDisplay
+
+Formatiert eine Zeitanzeigezeichenfolge

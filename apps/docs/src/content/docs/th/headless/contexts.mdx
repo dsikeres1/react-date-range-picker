@@ -1,0 +1,101 @@
+---
+sidebar_position: 4
+title: Contexts
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ContextExample from "@examples/headless/ContextExample";
+import ContextExampleSource from "@examples/headless/ContextExample.tsx?raw";
+
+# Contexts
+
+แพ็คเกจ headless มี Context providers ที่ครอบ hooks และเปิดเผยสถานะของมันผ่าน React Context ซึ่งช่วยให้สามารถใช้ **compound component pattern** ได้ — คือการแบ่ง UI ของคุณออกเป็นส่วนประกอบย่อยๆ ที่เล็กและเฉพาะทาง ซึ่งจะอ่านค่าสถานะจาก context แทนการส่ง props ลงไป
+
+## ทำไมต้องใช้ Contexts?
+
+หากไม่มี context คุณจะต้องส่งต่อทุกสถานะผ่าน props:
+
+```tsx
+// Without context -- prop drilling
+function MyDatePicker() {
+  const picker = useDatePicker({ value, onChange });
+  return (
+    <MyTrigger displayValue={picker.displayValue} onToggle={picker.handleToggle} />
+    <MyCalendar calendar={picker.calendar} getDayProps={picker.getDayProps} ... />
+    <MyFooter onConfirm={picker.handleConfirm} onCancel={picker.handleCancel} ... />
+  );
+}
+```
+
+เมื่อใช้ context ส่วนประกอบย่อยจะดึงข้อมูลที่ต้องการไปใช้โดยตรง:
+
+```tsx
+// With context -- compound components
+function MyDatePicker() {
+  return (
+    <DatePickerProvider value={value} onChange={onChange}>
+      <ExampleWrapper variant="headless" client:load>
+        <MyTrigger client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyCalendar client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyFooter client:load />
+      </ExampleWrapper>
+    </DatePickerProvider>
+  );
+}
+
+function MyTrigger() {
+  const { displayValue, handleToggle } = useDatePickerContext();
+  return <button onClick={handleToggle}>{displayValue}</button>;
+}
+```
+
+## Providers ที่มีให้ใช้
+
+| Provider                      | Hook ที่ใช้ภายใน         | Consumer Hook                     |
+| ----------------------------- | ------------------------ | --------------------------------- |
+| `DatePickerProvider`          | `useDatePicker`          | `useDatePickerContext()`          |
+| `DateRangePickerProvider`     | `useDateRangePicker`     | `useDateRangePickerContext()`     |
+| `DateTimePickerProvider`      | `useDateTimePicker`      | `useDateTimePickerContext()`      |
+| `DateRangeTimePickerProvider` | `useDateRangeTimePicker` | `useDateRangeTimePickerContext()` |
+
+แต่ละ provider จะเรนเดอร์ทั้ง **typed context** (เฉพาะสำหรับประเภทของ picker นั้นๆ) และ **unified PickerContext** (ใช้ร่วมกันในทุกประเภท)
+
+```tsx
+import {
+  DatePickerProvider,
+  DateRangePickerProvider,
+  DateTimePickerProvider,
+  DateRangeTimePickerProvider,
+} from "react-date-range-picker-headless";
+```
+
+### DatePickerProvider
+
+ครอบ `useDatePicker` และให้ `DatePickerContext` + `PickerContext`
+
+```tsx
+import type { DatePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop          | ประเภท                         | คำอธิบาย                                                |
+| ------------- | ------------------------------ | ------------------------------------------------------- |
+| `children`    | `ReactNode`                    | **จำเป็น** ส่วนประกอบลูก (Child components)             |
+| `value`       | `Date \| null`                 | **จำเป็น** วันที่ปัจจุบัน                               |
+| `onChange`    | `(date: Date \| null) => void` | **จำเป็น** ตัวจัดการการเปลี่ยนแปลง (Change handler)     |
+| `inline`      | `boolean`                      | เรนเดอร์แบบอินไลน์ (ไม่มีป๊อปอัป)                       |
+| `size`        | `DatePickerSize`               | รูปแบบขนาด (Size variant)                               |
+| `placeholder` | `string`                       | ข้อความ Placeholder สำหรับ Trigger                      |
+| `name`        | `string`                       | ชื่อฟิลด์ฟอร์ม (Form field name)                        |
+| _...rest_     | `BaseDatePickerOptions`        | ตัวเลือกพื้นฐานทั้งหมด (minDate, maxDate, locale, etc.) |
+
+**Consumer hook:** `useDatePickerContext()` คืนค่า `UseDatePickerReturn`
+
+### DateRangePickerProvider
+
+ครอบ `useDateRangePicker` และให้ `DateRangePicker

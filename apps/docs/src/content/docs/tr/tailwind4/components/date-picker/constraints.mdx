@@ -1,0 +1,82 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Required from "@examples/tailwind4/DatePicker/Required";
+import RequiredSource from "@examples/tailwind4/DatePicker/Required.tsx?raw";
+import MinMaxDate from "@examples/tailwind4/DatePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/tailwind4/DatePicker/MinMaxDate.tsx?raw";
+import DisabledDates from "@examples/tailwind4/DatePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind4/DatePicker/DisabledDates.tsx?raw";
+import DisablePastFuture from "@examples/tailwind4/DatePicker/DisablePastFuture";
+import DisablePastFutureSource from "@examples/tailwind4/DatePicker/DisablePastFuture.tsx?raw";
+import HighlightDates from "@examples/tailwind4/DatePicker/HighlightDates";
+import HighlightDatesSource from "@examples/tailwind4/DatePicker/HighlightDates.tsx?raw";
+import InitialMonth from "@examples/tailwind4/DatePicker/InitialMonth";
+import InitialMonthSource from "@examples/tailwind4/DatePicker/InitialMonth.tsx?raw";
+
+# Kısıtlamalar
+
+## Gerekli
+
+`required` ayarlandığında, temizle düğmesi devre dışı bırakılır ve değer boşaltılamaz.
+
+<CodeDemo source={RequiredSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Required client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Minimum ve Maksimum Tarihler
+
+`minDate` ve `maxDate` kullanarak seçilebilir tarihleri belirli bir aralıkla kısıtlayın.
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Devre Dışı Bırakılmış Tarihler
+
+Belirli tarihleri dinamik olarak devre dışı bırakmak için `isDateUnavailable` kullanın.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Geçmişi / Geleceği Devre Dışı Bırak
+
+Bugünden önceki/sonraki tarihleri hızlıca devre dışı bırakmak için `disablePast` veya `disableFuture` kullanın.
+
+<CodeDemo source={DisablePastFutureSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <DisablePastFuture client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Tarihleri Vurgula
+
+`highlightDates` prop'unu kullanarak belirli tarihleri (ör. tatiller, etkinlikler) görsel olarak vurgulayın.
+
+<CodeDemo source={HighlightDatesSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <HighlightDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Başlangıç Ayı
+
+Seçici ilk kez açıldığında başlangıçta görüntülenecek ayı ayarlayın.
+
+<CodeDemo source={InitialMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <InitialMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>

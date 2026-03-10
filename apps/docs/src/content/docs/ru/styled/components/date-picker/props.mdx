@@ -1,0 +1,37 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Свойства
+
+| Prop                  | Type                                          | Default     | Описание                                                       |
+| --------------------- | --------------------------------------------- | ----------- | -------------------------------------------------------------- |
+| `value`               | `Date \| null`                                | --          | Выбранное значение даты                                        |
+| `onChange`            | `(date: Date \| null) => void`                | --          | Функция обратного вызова при изменении значения                |
+| `minDate`             | `Date`                                        | --          | Минимальная дата для выбора                                    |
+| `maxDate`             | `Date`                                        | --          | Максимальная дата для выбора                                   |
+| `locale`              | `Partial<Locale>`                             | --          | Пользовательская конфигурация локали                           |
+| `initialMonth`        | `Date`                                        | --          | Начальный отображаемый месяц                                   |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | Размер компонента                                              |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | Первый день недели                                             |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | Отметить даты как недоступные                                  |
+| `displayFormat`       | `string`                                      | --          | Пользовательский формат отображения (например, `"YYYY/MM/DD"`) |
+| `open`                | `boolean`                                     | --          | Управляемое состояние открытия                                 |
+| `initialOpen`         | `boolean`                                     | --          | Начальное состояние открытия (неуправляемое)                   |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | Функция обратного вызова при изменении состояния открытия      |
+| `required`            | `boolean`                                     | `false`     | Запретить очистку значения                                     |
+| `showOutsideDays`     | `boolean`                                     | `false`     | Показать дни из соседних месяцев                               |
+| `highlightDates`      | `Date[]`                                      | --          | Даты для выделения                                             |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | Автоматически подтверждать выбор при клике на дату             |
+| `numberOfMonths`      | `number`                                      | `1`         | Количество отображаемых месяцев                                |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | Стиль навигации в заголовке                                    |
+| `fromYear`            | `number`                                      | --          | Начальный год для выпадающего списка                           |
+| `toYear`              | `number`                                      | --          | Конечный год для выпадающего списка                            |
+| `disablePast`         | `boolean`                                     | `false`     | Отключить даты до сегодняшнего дня                             |
+| `disableFuture`       | `boolean`                                     | `false`     | Отключить даты после сегодняшнего дня                          |
+| `inline`              | `boolean`                                     | `false`     | Показать календарь встроенным (без всплывающего окна)          |
+| `name`                | `string`                                      | --          | Имя скрытого поля для отправки формы                           |
+| `placeholder`         | `string`                                      | --          | Текст-заполнитель для триггера                                 |
+| `hideHeader`          | `boolean`                                     | `false`     | Скрыть навигационный заголовок                                 |
+| `hideFooter`          | `boolean`                                     | `false`     | Скрыть футер с действиями                                      |

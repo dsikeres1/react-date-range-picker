@@ -1,0 +1,38 @@
+---
+sidebar_position: 2
+title: Internationalization
+description: 로케일 커스터마이징, 언어 전환, 포맷 재정의.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 다국어 지원
+
+이 라이브러리는 브라우저의 `Intl.DateTimeFormat` API를 사용하여 로케일에 맞는 월 이름, 요일 레이블, AM/PM 텍스트를 생성합니다. 외부 i18n 라이브러리가 필요하지 않습니다.
+
+## 빠른 시작
+
+`createLocale()`을 사용하여 BCP 47 언어 태그로부터 로케일을 생성한 다음, `locale` prop을 통해 전달하세요:
+
+```tsx
+import { createLocale } from "react-date-range-picker-headless";
+import { DatePicker } from "react-date-range-picker-styled";
+
+const ko = createLocale("ko", {
+  confirm: "확인",
+  cancel: "취소",
+  clear: "초기화",
+  placeholder: "날짜 선택",
+});
+
+function App() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} locale={ko} />;
+}
+```
+
+이 방법은 다른 모든 버전(Tailwind v3, Tailwind v4, Headless)에서도 동일하게 작동합니다.
+
+## createLocale이 자동으로 생성하는 것
+
+`createLocale(localeKey, overrides?)`는

@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/tailwind3/DateTimePicker/Basic";
+import BasicSource from "@examples/tailwind3/DateTimePicker/Basic.tsx?raw";
+import Inline from "@examples/tailwind3/DateTimePicker/Inline";
+import InlineSource from "@examples/tailwind3/DateTimePicker/Inline.tsx?raw";
+
+# DateTimePicker
+
+カレンダーとタイムスクロールパネルを備えた日付と時刻の選択コンポーネント。
+
+## 基本的な使い方
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## インラインモード
+
+カレンダーとタイムパネルをポップアップトリガーなしでインライン表示します。
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

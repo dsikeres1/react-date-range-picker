@@ -1,0 +1,48 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Составные компоненты
+
+Пакет для Tailwind v3 предоставляет API составных компонентов, который дает вам полный контроль над внутренней структурой и рендерингом каждого элемента выбора даты. Вместо единого монолитного компонента вы собираете элемент выбора из отдельных частей.
+
+## Как это работает
+
+Каждый элемент выбора (например, `DatePicker`) является одновременно и простым компонентом, и пространством имен для составных частей:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+// Простое использование — отображает макет по умолчанию
+<DatePicker value={value} onChange={setValue} />
+
+// Составное использование — полный контроль над структурой
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Доступные части
+
+### DatePicker
+
+| Часть                | Описание                                                                                              |
+| -------------------- | ----------------------------------------------------------------------------------------------------- |
+| `DatePicker.Root`    | Провайдер + контейнер. Принимает все свойства элемента выбора (`value`, `onChange`, `minDate` и т.д.) |
+| `DatePicker.Trigger` | Кнопка, открывающая/закрывающая всплывающее окно. Отображает выбранное значение.                      |
+
+| `DatePicker.Content

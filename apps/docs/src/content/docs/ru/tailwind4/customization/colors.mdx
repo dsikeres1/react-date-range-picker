@@ -1,0 +1,34 @@
+---
+sidebar_position: 7
+sidebar_label: Colors
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundColorTheme from "@examples/tailwind4/Customization/CompoundColorTheme";
+import CompoundColorThemeSource from "@examples/tailwind4/Customization/CompoundColorTheme.tsx?raw";
+import CompoundColorThemePopup from "@examples/tailwind4/Customization/CompoundColorThemePopup";
+import CompoundColorThemePopupSource from "@examples/tailwind4/Customization/CompoundColorThemePopup.tsx?raw";
+
+# Цвета
+
+Переключайте цветовые темы во время выполнения, переопределяя пользовательские свойства CSS для элемента-обертки. Поскольку пакет Tailwind v4 считывает все цвета из семантических токенов, изменение базовых переменных CSS мгновенно меняет оформление всего компонента выбора даты.
+
+Пакет Tailwind v4 использует формат **oklch** для семантических токенов. Переопределите `--color-primary` и `--color-primary-foreground`, чтобы изменить оформление компонента:
+
+<CodeDemo source={CompoundColorThemeSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorTheme client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Всплывающий режим
+
+Тот же метод работает и для компонентов выбора даты во всплывающем окне:
+
+<CodeDemo source={CompoundColorThemePopupSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundColorThemePopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

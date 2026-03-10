@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# Xây dựng Giao diện Người dùng Tùy chỉnh
+
+Hướng dẫn này trình bày mẫu để xây dựng giao diện người dùng bộ chọn ngày của riêng bạn trên các hook headless.
+
+## Mẫu thiết kế
+
+Mọi hook headless đều tuân theo cùng một mẫu:
+
+1. **Gọi hook** với các tùy chọn của bạn (giá trị, onChange, cấu hình)
+2. **Phân rã giá trị trả về** để lấy trạng thái, các giá trị được tính toán và các trình xử lý
+3. **Kết xuất markup của riêng bạn** bằng cách sử dụng các giá trị trả về
+4. **Kết nối các tương tác** bằng cách gọi các trình xử lý được cung cấp
+
+Hook quản lý tất cả sự phức tạp -- tạo lịch, tính toán ngày, trạng thái mở/đóng, điều hướng bằng bàn phím, logic phạm vi -- và bạn chỉ tập trung hoàn toàn vào phần trình bày.
+
+## Ví dụ: Bộ chọn ngày tùy chỉnh
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Các khái niệm chính
+
+### getDayProps
+
+Hàm `getDayProps` là cốt lõi của việc kết xuất lịch. Đối với mỗi ô ngày, nó trả về một đối tượng `DayProps` với 18 cờ boolean/số mô tả trạng thái của ô:
+
+```tsx
+const dp = getDayProps(day);
+
+// Trạng thái lựa chọn
+dp.isSelected; // Ngày được chọn hiện tại
+dp.isToday; // Ngày hôm nay
+
+// Trạng thái phạm vi (cho bộ chọn phạm vi)
+dp.isInRange; // Giữa ngày bắt đầu và ngày kết thúc
+dp.isRangeStart; // Ngày đầu tiên của phạm vi
+dp.isRangeEnd; // Ngày cuối cùng của phạm vi
+dp.isInHoverRange; // Trong phạm vi xem trước khi di chuột
+dp.isHoverTarget; // Chính ngày được di chuột qua
+dp.isRangeSingle; // Cả bắt đầu và kết thúc phạm vi (phạm vi một ngày)
+
+// Các trình trợ giúp kết nối trực quan
+dp.hasLeftConnection; // Được kết nối với ngày trước đó (cho nền phạm vi)
+dp.hasRightConnection; // Được kết nối với ngày tiếp theo
+dp.isConsecutiveRange; // Một phần của phạm vi nhiều ngày
+
+// Trạng thái
+dp.isDisabled; // Bị vô hiệu hóa bởi minDate/maxDate/isDateUnavailable
+dp.isFocused; // Có tiêu điểm bàn phím
+dp.isOutsideDay; // Thuộc về tháng liền kề (khi showOutsideDays được bật)
+dp.isHighlighted; // Trong mảng highlightDates
+
+// Dữ liệu
+dp.date; // Đối tượng Date
+dp.day; // Số ngày trong tháng
+dp.dayOfWeek; // 0-6 (Chủ nhật-Thứ bảy)
+```
+
+### Refs để xử lý nhấp chuột bên ngoài
+
+Các hook trả về `containerRef` và `popupRef`. Gắn chúng vào các phần tử bao bọc và popup của bạn -- hook sử dụng chúng để phát hiện các nhấp chuột bên ngoài và tự động đóng popup.
+
+### Điều hướng bằng bàn phím
+
+Trình xử lý `handleKeyDown` hỗ trợ các phím mũi tên, Enter, Escape và Tab để điều hướng bằng bàn phím đầy đủ. Gắn nó vào vùng chứa popup.
+
+### Ngôn ngữ
+
+Tất cả các chuỗi văn bản hiển thị cho người dùng đều đến từ đối tượng `locale`. Bạn có thể tùy chỉnh bất kỳ chuỗi nào bằng cách truyền một tùy chọn `locale` một phần:
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "OK",
+    cancel: "Trở lại",
+    placeholder: "Chọn một ngày...",
+  },
+});
+```
+
+## Các bước tiếp theo
+
+- [Tham khảo Hook](/docs/headless/hooks/use-date-picker) -- Tùy chọn đầy đủ và giá trị trả về cho mỗi hook
+- [Contexts](/docs/headless/contexts) -- Sử dụng các provider cho các mẫu thành phần phức hợp
+- [Tiện ích ngày](/docs/headless/date-utilities) -- Các hàm trợ giúp để thao tác ngày tháng

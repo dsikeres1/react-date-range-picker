@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+sidebar_label: Props
+---
+
+# プロパティ
+
+| プロパティ      | 型                             | デフォルト | 説明                                               |
+| --------------- | ------------------------------ | ---------- | -------------------------------------------------- |
+| `value`         | `Date \| null`                 | --         | 選択された時間の値（時間部分のみが使用されます）   |
+| `onChange`      | `(date: Date \| null) => void` | --         | 値が変更されたときに呼び出されるコールバック       |
+| `time`          | `TimeConfig`                   | --         | 時間パネルの設定                                   |
+| `locale`        | `Partial<Locale>`              | --         | カスタムロケールの設定                             |
+| `displayFormat` | `string`                       | --         | トリガーに表示されるカスタムフォーマット           |
+| `placeholder`   | `string`                       | --         | トリガーのプレースホルダーテキスト                 |
+| `open`          | `boolean`                      | --         | 開閉状態を外部から制御します                       |
+| `initialOpen`   | `boolean`                      | `false`    | 開閉の初期状態（非制御）                           |
+| `onOpenChange`  | `(open: boolean) => void`      | --         | 開閉状態が変更されたときに呼び出されるコールバック |
+| `required`      | `boolean`                      | `false`    | 値のクリアを無効にします                           |
+| `inline`        | `boolean`                      | `false`    | トリガーやポップアップなしでインラインで描画します |
+| `hideFooter`    | `boolean`                      | --         | アクションフッターを非表示にします                 |
+| `name`          | `string`                       | --         | フォーム送信時に使用する隠しinputのname属性        |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** 時間表示の精度。デフォルトは "minute" です。 */
+  precision?: "hour" | "minute" | "second";
+  /** 12時間形式または24時間形式。デフォルトは "24" です。 */
+  hourFormat?: "12" | "24";
+  /** 分の増分ステップ。デフォルトは 5 です。 */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** 秒の増分ステップ。デフォルトは 1 です。 */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** 各スクロールホイール項目の高さ（px単位）。デフォルトは 32 です。 */
+  itemHeight?: number;
+}
+```

@@ -1,0 +1,73 @@
+---
+sidebar_position: 1
+sidebar_label: "Overview"
+---
+
+# Compoundコンポーネント
+
+`styled`パッケージは、各ピッカーの内部構造とレンダリングを完全に制御できるCompound Component APIを公開しています。単一のモノリシックなコンポーネントの代わりに、個々のパーツからピッカーを構成します。
+
+## 仕組み
+
+すべてのピッカー（例：`DatePicker`）は、シンプルなコンポーネントであると同時に、compoundパーツのネームスペースでもあります。
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/rdrp-styles.css";
+
+// シンプルな使用法 — デフォルトのレイアウトをレンダリング
+<DatePicker value={value} onChange={setValue} />
+
+// Compound使用法 — 構造を完全に制御
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## 利用可能なパーツ
+
+### DatePicker
+
+| パーツ                     | 説明                                                                                                  |
+| -------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `DatePicker.Root`          | Provider + コンテナ。すべてのピッカーのプロップ（`value`、`onChange`、`minDate`など）を受け入れます。 |
+| `DatePicker.Trigger`       | ポップアップを開閉するボタン。選択された値を表示します。                                              |
+| `DatePicker.Content`       | ポップアップコンテナ（Rootに`inline`が設定されている場合はインラインコンテナ）                        |
+| `DatePicker.Header`        | 月のナビゲーション行                                                                                  |
+| `DatePicker.PrevButton`    | 前の月に移動します                                                                                    |
+| `DatePicker.NextButton`    | 次の月に移動します                                                                                    |
+| `DatePicker.Title`         | 現在の月/年の表示（ドロップダウン選択をサポート）                                                     |
+| `DatePicker.Grid`          | 曜日のヘッダーと日付セルを持つカレンダーグリッド                                                      |
+| `DatePicker.Day`           | 個々の日付セル（Gridのrender prop内で使用）                                                           |
+| `DatePicker.Footer`        | アクションボタンのコンテナ                                                                            |
+| `DatePicker.ClearButton`   | 選択された値をクリアします                                                                            |
+| `DatePicker.CancelButton`  | キャンセルして閉じます                                                                                |
+| `DatePicker.ConfirmButton` | 選択を確定します                                                                                      |
+| `DatePicker.TodayButton`   | 今日に移動します                                                                                      |
+
+### DateRangePicker
+
+上記のすべてのパーツに加えて、以下が含まれます:
+
+| パーツ                       | 説明                               |
+| ---------------------------- | ---------------------------------- |
+| `DateRangePicker.Calendars`  | デュアルカレンダーのコンテナ       |
+| `DateRangePicker.Presets`    | プリセット範囲のサイドバーコンテナ |
+| `DateRangePicker.PresetItem` | 個々のプリセットボタン             |
+
+### DateTimePicker / DateRangeTimePicker
+
+それぞれのベースパーツに加えて、シンプルなAPIを介したタイムパネルの統合が含まれます。時間対応ピッカーでcompoundパーツを使用すると、タイムパネルは自動的にレンダリングされます。

@@ -1,0 +1,37 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# プロップ
+
+| プロップ              | 型                                            | デフォルト  | 説明                                                |
+| --------------------- | --------------------------------------------- | ----------- | --------------------------------------------------- |
+| `value`               | `Date \| null`                                | --          | 選択された日付の値                                  |
+| `onChange`            | `(date: Date \| null) => void`                | --          | 値が変更されたときのコールバック                    |
+| `minDate`             | `Date`                                        | --          | 選択可能な最小日付                                  |
+| `maxDate`             | `Date`                                        | --          | 選択可能な最大日付                                  |
+| `locale`              | `Partial<Locale>`                             | --          | カスタムロケール設定                                |
+| `initialMonth`        | `Date`                                        | --          | 最初に表示される月                                  |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | コンポーネントのサイズ                              |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | 週の最初の曜日                                      |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | 日付を無効としてマークする                          |
+| `displayFormat`       | `string`                                      | --          | カスタム表示形式 (例: `"YYYY/MM/DD"`)               |
+| `open`                | `boolean`                                     | --          | 制御されたオープン状態                              |
+| `initialOpen`         | `boolean`                                     | --          | 初期のオープン状態 (非制御)                         |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | オープン状態が変更されたときのコールバック          |
+| `required`            | `boolean`                                     | `false`     | 値のクリアを無効にする                              |
+| `showOutsideDays`     | `boolean`                                     | `false`     | 隣接する月の日付を表示する                          |
+| `highlightDates`      | `Date[]`                                      | --          | ハイライトする日付                                  |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | 日付クリック時に自動で確定する                      |
+| `numberOfMonths`      | `number`                                      | `1`         | 表示する月数                                        |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | キャプションのナビゲーションスタイル                |
+| `fromYear`            | `number`                                      | --          | ドロップダウンの開始年                              |
+| `toYear`              | `number`                                      | --          | ドロップダウンの終了年                              |
+| `disablePast`         | `boolean`                                     | `false`     | 今日より前の日付を無効にする                        |
+| `disableFuture`       | `boolean`                                     | `false`     | 今日より後の日付を無効にする                        |
+| `inline`              | `boolean`                                     | `false`     | カレンダーをインラインで表示する (ポップアップなし) |
+| `name`                | `string`                                      | --          | フォーム送信用の非表示入力フィールド名              |
+| `placeholder`         | `string`                                      | --          | トリガーのプレースホルダーテキスト                  |
+| `hideHeader`          | `boolean`                                     | `false`     | ナビゲーションヘッダーを非表示にする                |
+| `hideFooter`          | `boolean`                                     | `false`     | アクションフッターを非表示にする                    |

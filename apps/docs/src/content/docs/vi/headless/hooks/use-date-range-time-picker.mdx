@@ -1,0 +1,200 @@
+---
+sidebar_position: 4
+title: useDateRangeTimePicker
+---
+
+# useDateRangeTimePicker
+
+Hook để chọn khoảng ngày kết hợp với chọn thời gian cho cả ngày bắt đầu và ngày kết thúc. Hợp nhất các khả năng của `useDateRangePicker` và quản lý thời gian vào một hook duy nhất.
+
+## Nhập
+
+```tsx
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+```
+
+## Cách sử dụng
+
+```tsx
+import { useState } from "react";
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+
+function MyDateRangeTimePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangeTimePicker({
+    value: range,
+    onChange: setRange,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 15 },
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangeTimePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Dual calendar, presets, time controls for start and end */}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Tùy chọn
+
+| Tùy chọn                 | Kiểu                                                          | Mặc định                                                                  | Mô tả                                                            |
+| ------------------------ | ------------------------------------------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --                                                                        | **Bắt buộc.** Giá trị khoảng hiện tại.                           |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --                                                                        | **Bắt buộc.** Được gọi khi khoảng thay đổi.                      |
+| `time`                   | `TimeConfig`                                                  | `{ precision: "minute", hourFormat: "24", minuteStep: 5, secondStep: 1 }` | Cấu hình bộ chọn thời gian cho cả thời gian bắt đầu và kết thúc. |
+| `maxDays`                | `number`                                                      | --                                                                        | Số ngày tối đa trong khoảng.                                     |
+| `minDays`                | `number`                                                      | --                                                                        | Số ngày tối thiểu trong khoảng.                                  |
+| `presets`                | `DateRangePreset[]`                                           | --                                                                        | Các thiết lập khoảng được định sẵn.                              |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`                                                                    | Cho phép ngày bắt đầu === ngày kết thúc.                         |
+| `minDate`                | `Date`                                                        | --                                                                        | Ngày sớm nhất có thể chọn.                                       |
+| `maxDate`                | `Date`                                                        | --                                                                        | Ngày muộn nhất có thể chọn.                                      |
+| `locale`                 | `Partial<Locale>`                                             | `DEFAULT_LOCALE`                                                          | Ghi đè các chuỗi bản địa hóa.                                    |
+| `initialMonth`           | `Date`                                                        | --                                                                        | Tháng ban đầu để hiển thị.                                       |
+| `size`                   | `DatePickerSize`                                              | --                                                                        | Truyền qua giao diện người dùng.                                 |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`                                                                | Ngày đầu tiên của tuần.                                          |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --                                                                        | Hàm tùy chỉnh để vô hiệu hóa các ngày.                           |
+| `displayFormat`          | `string`                                                      | --                                                                        | Định dạng hiển thị tùy chỉnh.                                    |
+| `open`                   | `boolean`                                                     | --                                                                        | Trạng thái mở được kiểm soát.                                    |
+| `initialOpen`            | `boolean`                                                     | `false`                                                                   | Trạng thái mở ban đầu.                                           |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --                                                                        | Callback cho trạng thái mở.                                      |
+| `required`               | `boolean`                                                     | `false`                                                                   | Ngăn chặn việc xóa.                                              |
+| `today`                  | `Date`                                                        | `new Date()`                                                              | Ghi đè ngày hôm nay.                                             |
+| `onMonthChange`          | `(month: Date) => void`                                       | --                                                                        | Callback khi thay đổi tháng.                                     |
+| `disablePast`            | `boolean`                                                     | `false`                                                                   | Vô hiệu hóa các ngày trong quá khứ.                              |
+| `disableFuture`          | `boolean`                                                     | `false`                                                                   | Vô hiệu hóa các ngày trong tương lai.                            |
+| `showOutsideDays`        | `boolean`                                                     | `false`                                                                   | Hiển thị các ngày của tháng liền kề.                             |
+| `highlightDates`         | `Date[]`                                                      | --                                                                        | Các ngày cần làm nổi bật.                                        |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`                                                                   | Chỉ tự động xác nhận khi nhấp vào thiết lập sẵn.                 |
+| `numberOfMonths`         | `number`                                                      | `2`                                                                       | Số lượng tháng lịch.                                             |
+| `captionLayout`          | `CaptionLayout`                                               | `"buttons"`                                                               | Bố cục tiêu đề.                                                  |
+| `fromYear`               | `number`                                                      | current year - 100                                                        | Năm bắt đầu của danh sách thả xuống.                             |
+| `toYear`                 | `number`                                                      | current year + 10                                                         | Năm kết thúc của danh sách thả xuống.                            |
+
+## Giá trị trả về
+
+### Trạng thái Ngày
+
+| Tên             | Kiểu           | Mô tả                           |
+| --------------- | -------------- | ------------------------------- |
+| `isOpen`        | `boolean`      | Trạng thái mở của popup.        |
+| `tempStartDate` | `Date \| null` | Ngày bắt đầu tạm thời.          |
+| `tempEndDate`   | `Date \| null` | Ngày kết thúc tạm thời.         |
+| `hoveredDate`   | `Date \| null` | Ngày đang được di chuột qua.    |
+| `leftMonth`     | `Date`         | Tháng lịch bên trái.            |
+| `rightMonth`    | `Date`         | Tháng lịch bên phải.            |
+| `locale`        | `Locale`       | Bản địa hóa đã được giải quyết. |
+
+### Trạng thái Thời gian Bắt đầu
+
+| Tên                     | Kiểu         | Mô tả                                         |
+| ----------------------- | ------------ | --------------------------------------------- |
+| `startHour`             | `number`     | Giờ của thời gian bắt đầu.                    |
+| `startMinute`           | `number`     | Phút của thời gian bắt đầu.                   |
+| `startSecond`           | `number`     | Giây của thời gian bắt đầu.                   |
+| `startPeriod`           | `TimePeriod` | SA/CH của thời gian bắt đầu.                  |
+| `isStartTimePickerOpen` | `boolean`    | Trạng thái mở của bảng con thời gian bắt đầu. |
+
+### Trạng thái Thời gian Kết thúc
+
+| Tên                   | Kiểu         | Mô tả                                          |
+| --------------------- | ------------ | ---------------------------------------------- |
+| `endHour`             | `number`     | Giờ của thời gian kết thúc.                    |
+| `endMinute`           | `number`     | Phút của thời gian kết thúc.                   |
+| `endSecond`           | `number`     | Giây của thời gian kết thúc.                   |
+| `endPeriod`           | `TimePeriod` | SA/CH của thời gian kết thúc.                  |
+| `isEndTimePickerOpen` | `boolean`    | Trạng thái mở của bảng con thời gian kết thúc. |
+
+### Hành động Ngày
+
+| Tên               | Kiểu                           | Mô tả                             |
+| ----------------- | ------------------------------ | --------------------------------- |
+| `handleDateClick` | `(date: Date) => void`         | Nhấp vào ô ngày.                  |
+| `handleDateHover` | `(date: Date \| null) => void` | Di chuột qua để xem trước khoảng. |
+| `handlePrevMonth` | `() => void`                   | Tháng trước.                      |
+| `handleNextMonth` | `() => void`                   | Tháng sau.                        |
+| `handleOpen`      | `() => void`                   | Mở popup.                         |
+| `handleClose`     | `() => void`                   | Đóng popup.                       |
+| `handleToggle`    | `() => void`                   | Chuyển đổi popup.                 |
+| `handleConfirm`   | `() => void`                   | Xác nhận và đóng.                 |
+| `handleCancel`    | `() => void`                   | Hủy và hoàn tác.                  |
+| `handleClear`     | `() => void`                   | Xóa giá trị.                      |
+| `handleGoToToday` | `() => void`                   | Điều hướng đến hôm nay.           |
+
+### Hành động Thời gian Bắt đầu
+
+| Tên                            | Kiểu                           | Mô tả                                |
+| ------------------------------ | ------------------------------ | ------------------------------------ |
+| `handleStartHourChange`        | `(hour: number) => void`       | Cập nhật giờ bắt đầu.                |
+| `handleStartMinuteChange`      | `(minute: number) => void`     | Cập nhật phút bắt đầu.               |
+| `handleStartSecondChange`      | `(second: number) => void`     | Cập nhật giây bắt đầu.               |
+| `handleStartPeriodChange`      | `(period: TimePeriod) => void` | Chuyển đổi SA/CH bắt đầu.            |
+| `handleStartTimePickerOpen`    | `() => void`                   | Mở bảng con thời gian bắt đầu.       |
+| `handleStartTimePickerClose`   | `() => void`                   | Đóng bảng con thời gian bắt đầu.     |
+| `handleStartTimePickerConfirm` | `() => void`                   | Xác nhận bảng con thời gian bắt đầu. |
+| `handleStartTimePickerCancel`  | `() => void`                   | Hủy bảng con thời gian bắt đầu.      |
+
+### Hành động Thời gian Kết thúc
+
+| Tên                          | Kiểu                           | Mô tả                                 |
+| ---------------------------- | ------------------------------ | ------------------------------------- |
+| `handleEndHourChange`        | `(hour: number) => void`       | Cập nhật giờ kết thúc.                |
+| `handleEndMinuteChange`      | `(minute: number) => void`     | Cập nhật phút kết thúc.               |
+| `handleEndSecondChange`      | `(second: number) => void`     | Cập nhật giây kết thúc.               |
+| `handleEndPeriodChange`      | `(period: TimePeriod) => void` | Chuyển đổi SA/CH kết thúc.            |
+| `handleEndTimePickerOpen`    | `() => void`                   | Mở bảng con thời gian kết thúc.       |
+| `handleEndTimePickerClose`   | `() => void`                   | Đóng bảng con thời gian kết thúc.     |
+| `handleEndTimePickerConfirm` | `() => void`                   | Xác nhận bảng con thời gian kết thúc. |
+| `handleEndTimePickerCancel`  | `() => void`                   | Hủy bảng con thời gian kết thúc.      |
+
+### Giá trị được tính toán
+
+| Tên                     | Kiểu                                              | Mô tả                                       |
+| ----------------------- | ------------------------------------------------- | ------------------------------------------- |
+| `leftCalendar`          | `CalendarMonth`                                   | Dữ liệu lịch của bảng bên trái.             |
+| `rightCalendar`         | `CalendarMonth`                                   | Dữ liệu lịch của bảng bên phải.             |
+| `calendars`             | `CalendarMonth[]`                                 | Tất cả các tháng lịch.                      |
+| `getDayProps`           | `(date: Date, referenceMonth?: Date) => DayProps` | Props của ô ngày.                           |
+| `displayValue`          | `string`                                          | Chuỗi khoảng + thời gian đã định dạng.      |
+| `startTimeDisplayValue` | `string`                                          | Chuỗi thời gian bắt đầu đã định dạng.       |
+| `endTimeDisplayValue`   | `string`                                          | Chuỗi thời gian kết thúc đã định dạng.      |
+| `hasValue`              | `boolean`                                         | Liệu một giá trị đã được xác nhận hay chưa. |
+| `canConfirm`            | `boolean`                                         | Liệu việc xác nhận có hợp lệ hay không.     |
+| `containerRef`          | `RefObject<HTMLDivElement \| null>`               | Ref của vùng chứa.                          |
+| `popupRef`              | `RefObject<HTMLDivElement \| null>`               | Ref của popup.                              |
+| `startTimePickerRef`    | `RefObject<HTMLDivElement \| null>`               | Ref của bảng con thời gian bắt đầu.         |
+| `endTimePickerRef`      | `RefObject<HTMLDivElement \| null>`               | Ref của bảng con thời gian kết thúc.        |
+| `focusedDate`           | `Date \| null`                                    | Ngày được tập trung bằng bàn phím.          |
+| `handleKeyDown`         | `(e: KeyboardEvent<HTMLElement>) => void`         | Trình xử lý bàn phím.                       |
+| `resolvedTimeConfig`    | `Required<TimeConfig>`                            | Cấu hình thời gian đã được giải quyết.      |
+| `presets`               | `DateRangePreset[]`                               | Truyền qua các thiết lập sẵn.               |
+| `handlePresetClick`     | `(preset: DateRangePreset) => void`               | Áp dụng một thiết lập sẵn.                  |
+| `activePresetIndex`     | `number`                                          | Chỉ số của thiết lập sẵn khớp.              |
+| `years`                 | `number[]`                                        | Các năm cho danh sách thả xuống.            |
+| `months`                | `number[]`                                        | Các tháng cho danh sách thả xuống.          |
+| `handleYearSelect`      | `(year: number, calendarIndex?: number) => void`  | Đặt năm.                                    |
+| `handleMonthSelect`     | `(month: number, calendarIndex?: number) => void` | Đặt tháng.                                  |
+
+## Các hành vi chính
+
+### Các điều khiển Thời gian Bắt đầu/Kết thúc riêng biệt
+
+Không giống như `useDateTimePicker` chỉ có một bộ điều khiển thời gian duy nhất, hook này cung cấp trạng thái và trình xử lý giờ/phút/giây/giai đoạn độc lập cho cả thời gian bắt đầu và kết thúc. Mỗi cái đều có luồng mở/đóng/xác nhận/hủy của bảng con riêng.
+
+### shouldCloseOnSelect
+
+Đối với bộ chọn khoảng ngày-giờ, `shouldCloseOnSelect` chỉ áp dụng cho **các lần nhấp vào thiết lập sẵn**. Các lần nhấp vào ngày không tự động xác nhận vì người dùng vẫn cần cấu hình thời gian cho cả ngày bắt đầu và ngày kết thúc.
+
+### Cấu hình Thời gian
+
+Tùy chọn `time` duy nhất áp dụng cho cả bộ chọn thời gian bắt đầu và kết thúc. Cả hai đều chia sẻ cùng một độ chính xác, định dạng giờ và cài đặt bước.

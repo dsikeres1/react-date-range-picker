@@ -1,0 +1,25 @@
+---
+sidebar_position: 3
+sidebar_label: Custom Day Cell
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/tailwind3/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/tailwind3/Customization/CompoundCustomDay.tsx?raw";
+
+# Настройка ячейки дня
+
+Используйте рендер-проп компонента `Day`, чтобы настроить каждую ячейку дня. Это полезно для добавления индикаторов событий, применения пользовательских стилей на основе свойств даты или полной замены отображения дня.
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Рендер-пропы для Day
+
+| Проп | Тип | Описание |
+| ---- | --- | -------- |

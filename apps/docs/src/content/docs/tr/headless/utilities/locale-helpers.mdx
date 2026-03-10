@@ -1,0 +1,115 @@
+---
+sidebar_position: 5
+title: Locale Helpers
+---
+
+# Yerel Ayar Yardımcıları
+
+Yerel ayar yapılandırmaları oluşturma ve birleştirme işlevleri.
+
+```tsx
+import {
+  DEFAULT_LOCALE,
+  mergeLocale,
+  createLocale,
+  resolveLocale,
+  weekdayToNumber,
+} from "react-date-range-picker-headless";
+```
+
+## DEFAULT_LOCALE
+
+Varsayılan İngilizce yerel ayar nesnesi. Tüm alanlar İngilizce dizelerle doldurulur.
+
+|     |          |
+| --- | -------- |
+| Tür | `Locale` |
+
+```tsx
+DEFAULT_LOCALE.weekdays; // ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+DEFAULT_LOCALE.months; // ["January", "February", ..., "December"]
+DEFAULT_LOCALE.confirm; // "Confirm"
+DEFAULT_LOCALE.placeholder; // "Select date"
+```
+
+## mergeLocale
+
+Kısmi bir yerel ayarı varsayılan yerel ayarla birleştirir.
+
+|      |                                                  |
+| ---- | ------------------------------------------------ |
+| İmza | `mergeLocale(partial?: Partial<Locale>): Locale` |
+
+Kısmi bir sağlayıcı sağlanmazsa `DEFAULT_LOCALE` döndürür. `rangeSeparator` geçersiz kılındığında ancak `formatRange` geçersiz kılınmadığında, `formatRange` yeni ayırıcıyı kullanacak şekilde otomatik olarak yeniden oluşturulur.
+
+```tsx
+mergeLocale(); // DEFAULT_LOCALE
+
+mergeLocale({
+  confirm: "OK",
+  cancel: "Back",
+  rangeSeparator: " - ",
+});
+// { ...DEFAULT_LOCALE, confirm: "OK", cancel: "Back", rangeSeparator: " - ", formatRange: (s, e) => `${s} - ${e}` }
+```
+
+## createLocale
+
+`Intl.DateTimeFormat` kullanarak bir BCP 47 yerel ayar anahtarından bir yerel ayar oluşturur.
+
+|      |                                                                        |
+| ---- | ---------------------------------------------------------------------- |
+| İmza | `createLocale(localeKey: string, overrides?: Partial<Locale>): Locale` |
+
+| Parametre   | Tür               | Açıklama                                                                    |
+| ----------- | ----------------- | --------------------------------------------------------------------------- |
+| `localeKey` | `string`          | BCP 47 yerel ayar tanımlayıcısı (ör. `"ko"`, `"ja"`, `"zh-CN"`, `"pt-BR"`). |
+| `overrides` | `Partial<Locale>` | Intl oluşturulduktan sonra uygulanan ek geçersiz kılmalar.                  |
+
+`Intl.DateTimeFormat`'tan hafta içi adları, ay adları, AM/PM etiketleri ve biçimlendirme işlevleri oluşturur. Intl olmayan alanlar (confirm, cancel, placeholder, vb.) geçersiz kılınmadığı sürece `DEFAULT_LOCALE`'e geri döner.
+
+```tsx
+const koLocale = createLocale("ko", {
+  confirm: "확인",
+  cancel: "취소",
+  clear: "초기화",
+  placeholder: "날짜 선택",
+});
+// koLocale.weekdays -> ["일", "월", "화", "수", "목", "금", "토"]
+// koLocale.months -> ["1월", "2월", ...]
+// koLocale.formatDate(new Date(2026, 2, 1)) -> "2026. 03. 01."
+```
+
+## resolveLocale
+
+Kısmi bir yerel ayarı birleştirir ve hafta içi başlıklarını `weekStartsOn` ile eşleşecek şekilde döndürür.
+
+|      |                                                                              |
+| ---- | ---------------------------------------------------------------------------- |
+| İmza | `resolveLocale(partial?: Partial<Locale>, weekStartsOnNum?: number): Locale` |
+
+| Parametre         | Tür               | Varsayılan | Açıklama                       |
+| ----------------- | ----------------- | ---------- | ------------------------------ |
+| `partial`         | `Partial<Locale>` | --         | Yerel ayar geçersiz kılmaları. |
+| `weekStartsOnNum` | `number`          | `0`        | Haftanın ilk günü (0 = Pazar). |
+
+`weekStartsOnNum` `0` olmadığında, `weekdays` dizisi başlığın doğru günde başlaması için döndürülür.
+
+```tsx
+resolveLocale(undefined, 1).weekdays;
+// ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
+```
+
+## weekdayToNumber
+
+Bir `WeekDay` dizesini sayısal değerine dönüştürür.
+
+|      |                                         |
+| ---- | --------------------------------------- |
+| İmza | `weekdayToNumber(day: WeekDay): number` |
+
+```tsx
+weekdayToNumber("sunday"); // 0
+weekdayToNumber("monday"); // 1
+weekdayToNumber("saturday"); // 6
+```

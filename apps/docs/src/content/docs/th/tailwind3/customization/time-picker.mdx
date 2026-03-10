@@ -1,0 +1,32 @@
+---
+sidebar_position: 6
+sidebar_label: Time Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundTimePicker from "@examples/tailwind3/Customization/CompoundTimePicker";
+import CompoundTimePickerSource from "@examples/tailwind3/Customization/CompoundTimePicker.tsx?raw";
+import CompoundTimePickerTwelveHour from "@examples/tailwind3/Customization/CompoundTimePickerTwelveHour";
+import CompoundTimePickerTwelveHourSource from "@examples/tailwind3/Customization/CompoundTimePickerTwelveHour.tsx?raw";
+
+# ตัวเลือกเวลา
+
+API แบบผสมของ `TimePicker` ช่วยให้คุณสร้าง UI การเลือกเวลาแบบกำหนดเองได้ด้วยทริกเกอร์, แผงเวลา และการกระทำส่วนท้าย
+
+<CodeDemo source={CompoundTimePickerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundTimePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## รูปแบบ 12 ชั่วโมง
+
+กำหนดค่ารูปแบบ 12 ชั่วโมงด้วย `time`:
+
+<CodeDemo source={CompoundTimePickerTwelveHourSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundTimePickerTwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

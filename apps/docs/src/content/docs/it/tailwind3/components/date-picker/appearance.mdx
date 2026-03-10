@@ -1,0 +1,82 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/tailwind3/DatePicker/Sizes";
+import SizesSource from "@examples/tailwind3/DatePicker/Sizes.tsx?raw";
+import CustomFormat from "@examples/tailwind3/DatePicker/CustomFormat";
+import CustomFormatSource from "@examples/tailwind3/DatePicker/CustomFormat.tsx?raw";
+import CustomLocale from "@examples/tailwind3/DatePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind3/DatePicker/CustomLocale.tsx?raw";
+import WeekStartsOn from "@examples/tailwind3/DatePicker/WeekStartsOn";
+import WeekStartsOnSource from "@examples/tailwind3/DatePicker/WeekStartsOn.tsx?raw";
+import ShowOutsideDays from "@examples/tailwind3/DatePicker/ShowOutsideDays";
+import ShowOutsideDaysSource from "@examples/tailwind3/DatePicker/ShowOutsideDays.tsx?raw";
+import CaptionDropdown from "@examples/tailwind3/DatePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind3/DatePicker/CaptionDropdown.tsx?raw";
+
+# 외형
+
+## 크기
+
+네 가지 내장 크기: `small`, `medium`, `large`, `x-large`.
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 사용자 지정 형식
+
+표시 형식을 사용자 정의합니다.
+
+<CodeDemo source={CustomFormatSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CustomFormat client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 사용자 지정 로케일
+
+headless 패키지의 `createLocale`을 사용하여 국제화를 위한 사용자 지정 로케일을 제공합니다.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 주 시작일
+
+주의 첫 요일을 변경합니다. 기본값은 `"sunday"`입니다.
+
+<CodeDemo source={WeekStartsOnSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <WeekStartsOn client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 이전/다음 달 날짜 표시
+
+달력 그리드를 채우기 위해 인접한 달의 날짜를 표시합니다. 기본값은 `false`입니다.
+
+<CodeDemo source={ShowOutsideDaysSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <ShowOutsideDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 캡션 드롭다운
+
+`captionLayout="dropdown"`을 사용하여 월/연도 탐색을 화살표에서 드롭다운으로 전환합니다. `fromYear`와 `toYear`를 사용하여 연도 범위를 설정할 수 있습니다.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

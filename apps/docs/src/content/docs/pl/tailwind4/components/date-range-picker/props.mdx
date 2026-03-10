@@ -1,0 +1,51 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Rekwizyty
+
+| Rekwizyt                 | Typ                                                           | Domyślny    | Opis                                                     |
+| ------------------------ | ------------------------------------------------------------- | ----------- | -------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --          | Selected date range value                                |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --          | Callback when value changes                              |
+| `presets`                | `DateRangePreset[]`                                           | --          | Predefined date range presets                            |
+| `maxDays`                | `number`                                                      | --          | Maximum days allowed in range (inclusive)                |
+| `minDays`                | `number`                                                      | --          | Minimum days required in range (inclusive)               |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`      | Zezwalaj na zakres, w którym początek jest równy końcowi |
+| `minDate`                | `Date`                                                        | --          | Minimum selectable date                                  |
+| `maxDate`                | `Date`                                                        | --          | Maximum selectable date                                  |
+| `locale`                 | `Partial<Locale>`                                             | --          | Custom locale configuration                              |
+| `initialMonth`           | `Date`                                                        | --          | Initial displayed month                                  |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`  | Component size                                           |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`  | Pierwszy dzień tygodnia                                  |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --          | Mark dates as disabled                                   |
+| `displayFormat`          | `string`                                                      | --          | Custom display format (e.g. `"YYYY/MM/DD"`)              |
+| `open`                   | `boolean`                                                     | --          | Controlled open state                                    |
+| `initialOpen`            | `boolean`                                                     | --          | Initial open state (uncontrolled)                        |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --          | Callback when open state changes                         |
+| `required`               | `boolean`                                                     | `false`     | Wyłącz czyszczenie wartości                              |
+| `showOutsideDays`        | `boolean`                                                     | `false`     | Pokaż dni z sąsiadujących miesięcy                       |
+| `highlightDates`         | `Date[]`                                                      | --          | Dates to highlight                                       |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`     | Potwierdź automatycznie po wybraniu daty końcowej        |
+| `numberOfMonths`         | `number`                                                      | `2`         | Liczba miesięcy do wyświetlenia                          |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"` | Caption navigation style                                 |
+| `fromYear`               | `number`                                                      | --          | Start year for dropdown                                  |
+| `toYear`                 | `number`                                                      | --          | End year for dropdown                                    |
+| `disablePast`            | `boolean`                                                     | `false`     | Wyłącz daty wcześniejsze niż dzisiaj                     |
+| `disableFuture`          | `boolean`                                                     | `false`     | Wyłącz daty późniejsze niż dzisiaj                       |
+| `inline`                 | `boolean`                                                     | `false`     | Pokaż wbudowany kalendarz (bez wyskakującego okienka)    |
+| `name`                   | `string`                                                      | --          | Hidden input name for form submission (start date)       |
+| `endName`                | `string`                                                      | --          | Hidden input name for end date (defaults to `name-end`)  |
+| `placeholder`            | `string`                                                      | --          | Trigger placeholder text                                 |
+| `hideHeader`             | `boolean`                                                     | `false`     | Ukryj nagłówek nawigacji                                 |
+| `hideFooter`             | `boolean`                                                     | `false`     | Ukryj stopkę akcji                                       |
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

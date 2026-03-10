@@ -1,0 +1,52 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Các Thành phần Hợp chất (Compound Components)
+
+Gói Tailwind v4 cung cấp một API Thành phần Hợp chất (Compound Component) cho phép bạn toàn quyền kiểm soát cấu trúc bên trong và cách hiển thị của mỗi bộ chọn (picker). Thay vì một thành phần nguyên khối duy nhất, bạn sẽ cấu tạo bộ chọn từ các phần riêng lẻ.
+
+## Cách Hoạt động
+
+Mỗi bộ chọn (ví dụ: `DatePicker`) vừa là một thành phần đơn giản, vừa là một không gian tên (namespace) của các phần hợp chất:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+// Simple usage -- renders default layout
+<DatePicker value={value} onChange={setValue} />
+
+// Compound usage -- full control over structure
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+Với các thành phần hợp chất, bạn có thể:
+
+- **Thay thế** bất kỳ phần nào bằng cách hiển thị của riêng bạn (ví dụ: trigger tùy chỉnh, ô ngày tùy chỉnh)
+- **Sắp xếp lại** bố cục (ví dụ: di chuyển các nút ở chân trang, thêm nút hôm nay)
+- **Bỏ qua** các phần bạn không cần (ví dụ: loại bỏ chân trang để có một lịch tối giản)
+- **Ghi đè các lớp** trên bất kỳ phần nào thông qua prop `className`
+
+Các trang tiếp theo sẽ hướng dẫn từng mẫu tùy chỉnh với các bản demo trực tiếp.
+
+## Các Phần có sẵn
+
+### DatePicker
+
+| Phần | Mô tả

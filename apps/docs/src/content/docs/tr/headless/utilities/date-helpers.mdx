@@ -1,0 +1,230 @@
+---
+sidebar_position: 1
+title: Date Helpers
+---
+
+# Tarih Yardımcıları
+
+Headless paket, bir dizi yerel `Date` yardımcı fonksiyonu dışa aktarır. Bunlar, dayjs veya date-fns gibi kütüphanelere olan ihtiyacı ortadan kaldırır -- kütüphanenin sıfır harici tarih bağımlılığı vardır.
+
+Tüm fonksiyonlar saftır (girdiyi değiştirmek yerine yeni Tarih nesneleri döndürürler).
+
+## Import
+
+```tsx
+import {
+  today,
+  parseDate,
+  startOf,
+  endOf,
+  add,
+  subtract,
+  isSame,
+  isBefore,
+  isAfter,
+  diff,
+  daysInMonth,
+  setYear,
+  setMonth,
+  setDate,
+  setHour,
+  setMinute,
+  setSecond,
+  formatBasic,
+} from "react-date-range-picker-headless";
+```
+
+## DateUnit Tipi
+
+Çoğu fonksiyon bir `DateUnit` parametresi kabul eder:
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```
+
+## Fonksiyonlar
+
+### today
+
+Mevcut tarih/saati döndürür.
+
+```tsx
+const now = today(); // new Date()
+```
+
+### parseDate
+
+Bir değeri bir Date nesnesine ayrıştırır. Girdi hatalıysa `new Date()` döndürür.
+
+```tsx
+parseDate("2026-03-01"); // Date
+parseDate(1709251200000); // Zaman damgasından tarih
+parseDate(existingDate); // Klonla
+parseDate(null); // new Date() (varsayılan)
+```
+
+**İmza:** `parseDate(date?: Date | string | number | null): Date`
+
+### startOf
+
+Bir zaman biriminin başlangıcını alır.
+
+```tsx
+startOf(date, "day"); // 2026-03-01 00:00:00.000
+startOf(date, "month"); // 2026-03-01 00:00:00.000
+startOf(date, "year"); // 2026-01-01 00:00:00.000
+startOf(date, "week"); // Haftanın başlangıcı (varsayılan Pazar)
+startOf(date, "week", 1); // Haftanın başlangıcı (Pazartesi)
+```
+
+**İmza:** `startOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### endOf
+
+Bir zaman biriminin sonunu alır.
+
+```tsx
+endOf(date, "day"); // 2026-03-01 23:59:59.999
+endOf(date, "month"); // 2026-03-31 23:59:59.999
+endOf(date, "year"); // 2026-12-31 23:59:59.999
+```
+
+**İmza:** `endOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### add
+
+Bir tarihe bir miktar zaman ekler.
+
+```tsx
+add(date, 1, "day"); // Yarın
+add(date, 3, "month"); // 3 ay sonra
+add(date, -1, "year"); // 1 yıl önce
+add(date, 2, "hour"); // 2 saat sonra
+```
+
+Ay taşmasını yönetir (ör. 31 Ocak + 1 ay = 28 Şubat, 3 Mart değil).
+
+**İmza:** `add(date: Date, amount: number, unit: DateUnit): Date`
+
+### subtract
+
+Bir tarihten bir miktar zaman çıkarır. `add(date, -amount, unit)` ile eşdeğerdir.
+
+```tsx
+subtract(date, 7, "day"); // 7 gün önce
+subtract(date, 1, "month"); // 1 ay önce
+```
+
+**İmza:** `subtract(date: Date, amount: number, unit: DateUnit): Date`
+
+### isSame
+
+İki tarihin belirli bir hassasiyet biriminde aynı olup olmadığını kontrol eder.
+
+```tsx
+isSame(date1, date2, "day"); // Aynı takvim günü mü?
+isSame(date1, date2, "month"); // Aynı ay mı?
+isSame(date1, date2, "year"); // Aynı yıl mı?
+isSame(null, date2, "day"); // false (null kontrolü)
+```
+
+**İmza:** `isSame(date1: Date | null | undefined, date2: Date | null | undefined, unit?: DateUnit): boolean`
+
+### isBefore
+
+İlk tarihin, belirli bir hassasiyette ikincisinden önce olup olmadığını kontrol eder.
+
+```tsx
+isBefore(date1, date2, "day"); // date1 daha önceki bir günde mi?
+isBefore(date1, date2); // Milisaniye karşılaştırması
+```
+
+**İmza:** `isBefore(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### isAfter
+
+İlk tarihin, belirli bir hassasiyette ikincisinden sonra olup olmadığını kontrol eder.
+
+```tsx
+isAfter(date1, date2, "day"); // date1 daha sonraki bir günde mi?
+```
+
+**İmza:** `isAfter(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### diff
+
+İki tarih arasındaki farkı belirli bir birimde alır.
+
+```tsx
+diff(date1, date2, "day"); // Aradaki gün sayısı
+diff(date1, date2, "month"); // Aradaki ay sayısı
+diff(date1, date2, "year"); // Aradaki yıl sayısı
+```
+
+**İmza:** `diff(date1: Date, date2: Date, unit: DateUnit): number`
+
+### daysInMonth
+
+Bir tarihin ayındaki gün sayısını alır.
+
+```tsx
+daysInMonth(new Date(2026, 1)); // 28 (Şubat 2026)
+daysInMonth(new Date(2026, 0)); // 31 (Ocak 2026)
+```
+
+**İmza:** `daysInMonth(date: Date): number`
+
+### setYear / setMonth / setDate / setHour / setMinute / setSecond
+
+Bir tarihin belirli bir bölümünü ayarlar ve yeni bir Tarih döndürür.
+
+```tsx
+setYear(date, 2027); // Yılı 2027 olarak değiştir
+setMonth(date, 5); // Haziran'a değiştir (0-indeksli)
+setDate(date, 15); // 15'ine değiştir
+setHour(date, 14); // 14:00'e değiştir
+setMinute(date, 30); // :30'a değiştir
+setSecond(date, 0); // :00'a değiştir
+```
+
+`setYear` ve `setMonth` taşmayı yönetir (ör. artık bir yıldaki 29 Şubat, artık olmayan bir yıla ayarlandığında 28 Şubat'a sabitlenir).
+
+**İmzalar:**
+
+- `setYear(date: Date, year: number): Date`
+- `setMonth(date: Date, month: number): Date`
+- `setDate(date: Date, day: number): Date`
+- `setHour(date: Date, hour: number): Date`
+- `setMinute(date: Date, minute: number): Date`
+- `setSecond(date: Date, second: number): Date`
+
+### formatBasic
+
+Bir şablon dizesi kullanarak bir tarihi biçimlendirir.
+
+```tsx
+formatBasic(date, "YYYY-MM-DD"); // "2026-03-01"
+formatBasic(date, "YYYY/MM/DD HH:mm:ss"); // "2026/03/01 14:30:00"
+formatBasic(date, "M/D"); // "3/1"
+formatBasic(date, "hh:mm A"); // Not: A belirteci desteklenmiyor, hook'tan gelen periyodu kullanın
+```
+
+**Desteklenen belirteçler:**
+
+| Belirteç | Çıktı                     | Örnek  |
+| -------- | ------------------------- | ------ |
+| `YYYY`   | 4 basamaklı yıl           | `2026` |
+| `MM`     | 2 basamaklı ay            | `03`   |
+| `M`      | Ay (dolgu olmadan)        | `3`    |
+| `DD`     | 2 basamaklı gün           | `01`   |
+| `D`      | Gün (dolgu olmadan)       | `1`    |
+| `HH`     | 2 basamaklı saat (24s)    | `14`   |
+| `H`      | Saat (24s, dolgu olmadan) | `14`   |
+| `hh`     | 2 basamaklı saat (12s)    | `02`   |
+| `h`      | Saat (12s, dolgu olmadan) | `2`    |
+| `mm`     | 2 basamaklı dakika        | `30`   |
+| `m`      | Dakika (dolgu olmadan)    | `30`   |
+| `ss`     | 2 basamaklı saniye        | `05`   |
+| `s`      | Saniye (dolgu olmadan)    | `5`    |
+
+**İmza:** `formatBasic(date: Date, format: string): string`

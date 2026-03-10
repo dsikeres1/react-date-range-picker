@@ -1,0 +1,22 @@
+---
+sidebar_position: 3
+sidebar_label: "Custom Day Cell"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/styled/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/styled/Customization/CompoundCustomDay.tsx?raw";
+
+# Cellule de Jour Personnalisée
+
+Utilisez la render prop du composant `Day` pour personnaliser l'apparence de chaque cellule de jour. C'est utile pour ajouter des indicateurs d'événements, des infobulles, ou un style complètement personnalisé à des jours individuels.
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+##

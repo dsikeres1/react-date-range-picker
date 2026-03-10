@@ -1,0 +1,79 @@
+---
+sidebar_position: 4
+sidebar_label: "Custom Footer"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/styled/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/styled/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/styled/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/styled/Customization/CompoundNoFooter.tsx?raw";
+
+# Benutzerdefinierte Fußzeile
+
+Erstellen Sie eine vollständig benutzerdefinierte Fußzeile mit Ihren eigenen Schaltflächen und Ihrem eigenen Layout oder entfernen Sie Teile vollständig für einen minimalistischen Picker.
+
+## Neu angeordnete Fußzeile
+
+Ordnen Sie die Schaltflächen in der Fußzeile neu an oder fügen Sie neue hinzu, wie z.B. `TodayButton`. Die `DateTimePicker`-Verbundkomponente enthält einen `TimeSection` mit einem `TimePanel` zur Zeitauswahl, und die `Footer` dient als Container für Aktionsschaltflächen.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+Sie können auch die integrierten Aktionsschaltflächen vollständig weglassen und Ihre eigenen Elemente innerhalb von `Footer` verwenden:
+
+```tsx
+<DatePicker.Footer>
+  <button onClick={() => setValue(new Date())}>Heute setzen</button>
+  <button onClick={() => setValue(null)}>Löschen</button>
+</DatePicker.Footer>
+```
+
+## Minimalistisches Layout
+
+Lassen Sie alle Teile weg, die Sie nicht benötigen. Zum Beispiel ein kopfzeilenloser Inline-Kalender ohne Fußzeile oder Auslöser:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+Oder ein Picker ohne die Fußzeile:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Hinzufügen von benutzerdefinierten Klassennamen
+
+Jeder Verbundteil akzeptiert eine `className`-Prop, die mit den standardmäßigen gestylten CSS-Klassen zusammengeführt wird:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} className="my-picker">
+  <DatePicker.Trigger className="my-trigger" />
+  <DatePicker.Content className="my-content">
+    <DatePicker.Header className="my-header">
+      <DatePicker.PrevButton className="my-nav" />
+      <DatePicker.Title className="my-title" />
+      <DatePicker.NextButton className="my-nav" />
+    </DatePicker.Header>
+    <DatePicker.Grid className="my-grid" />
+  </DatePicker.Content>
+</DatePicker.Root>
+```

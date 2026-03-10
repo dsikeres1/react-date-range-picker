@@ -1,0 +1,105 @@
+---
+sidebar_position: 4
+title: Contexts
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ContextExample from "@examples/headless/ContextExample";
+import ContextExampleSource from "@examples/headless/ContextExample.tsx?raw";
+
+# Contexts
+
+`headless` 套件提供了包裝 (wrap) hooks 的 Context providers，並透過 React Context 公開其狀態。這啟用了**複合元件模式 (compound component pattern)** —— 將您的 UI 分割成小而專注的子元件，這些子元件從 context 中讀取狀態，而不是向下傳遞 props。
+
+## 為何使用 Contexts？
+
+若沒有 context，您需要透過 props 傳遞每一項狀態：
+
+```tsx
+// 不使用 context —— props 鑽取 (prop drilling)
+function MyDatePicker() {
+  const picker = useDatePicker({ value, onChange });
+  return (
+    <MyTrigger displayValue={picker.displayValue} onToggle={picker.handleToggle} />
+    <MyCalendar calendar={picker.calendar} getDayProps={picker.getDayProps} ... />
+    <MyFooter onConfirm={picker.handleConfirm} onCancel={picker.handleCancel} ... />
+  );
+}
+```
+
+有了 context，子元件可以直接取用它們需要的東西：
+
+```tsx
+// 使用 context —— 複合元件
+function MyDatePicker() {
+  return (
+    <DatePickerProvider value={value} onChange={onChange}>
+      <ExampleWrapper variant="headless" client:load>
+        <MyTrigger client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyCalendar client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyFooter client:load />
+      </ExampleWrapper>
+    </DatePickerProvider>
+  );
+}
+
+function MyTrigger() {
+  const { displayValue, handleToggle } = useDatePickerContext();
+  return <button onClick={handleToggle}>{displayValue}</button>;
+}
+```
+
+## 可用的 Providers
+
+| Provider                      | 內部使用的 Hook          | 消費者 (Consumer) Hook            |
+| ----------------------------- | ------------------------ | --------------------------------- |
+| `DatePickerProvider`          | `useDatePicker`          | `useDatePickerContext()`          |
+| `DateRangePickerProvider`     | `useDateRangePicker`     | `useDateRangePickerContext()`     |
+| `DateTimePickerProvider`      | `useDateTimePicker`      | `useDateTimePickerContext()`      |
+| `DateRangeTimePickerProvider` | `useDateRangeTimePicker` | `useDateRangeTimePickerContext()` |
+
+每個 provider 都會渲染一個**特定型別的 context** (針對該選擇器型別) 和一個**統一的 PickerContext** (所有型別共享)。
+
+```tsx
+import {
+  DatePickerProvider,
+  DateRangePickerProvider,
+  DateTimePickerProvider,
+  DateRangeTimePickerProvider,
+} from "react-date-range-picker-headless";
+```
+
+### DatePickerProvider
+
+包裝 `useDatePicker`。提供 `DatePickerContext` + `PickerContext`。
+
+```tsx
+import type { DatePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop          | 型別                           | 描述                                               |
+| ------------- | ------------------------------ | -------------------------------------------------- |
+| `children`    | `ReactNode`                    | **必需。** 子元件。                                |
+| `value`       | `Date \| null`                 | **必需。** 目前日期。                              |
+| `onChange`    | `(date: Date \| null) => void` | **必需。** 變更處理函式。                          |
+| `inline`      | `boolean`                      | 內聯渲染 (無彈出視窗)。                            |
+| `size`        | `DatePickerSize`               | 尺寸變體。                                         |
+| `placeholder` | `string`                       | 觸發器 (trigger) 的預留位置文字。                  |
+| `name`        | `string`                       | 表單欄位名稱。                                     |
+| _...rest_     | `BaseDatePickerOptions`        | 所有基礎選項 (`minDate`、`maxDate`、`locale` 等)。 |
+
+**消費者 hook：** `useDatePickerContext()` 回傳 `UseDatePickerReturn`。
+
+### DateRangePickerProvider
+
+包裝 `useDateRangePicker`。提供 `DateRangePickerContext` + `PickerContext`。
+
+```tsx
+import type { DateRangePickerProviderProps } from "react-date-range-picker-headless";
+```

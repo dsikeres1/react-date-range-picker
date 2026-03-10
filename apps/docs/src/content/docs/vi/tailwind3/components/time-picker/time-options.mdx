@@ -1,0 +1,48 @@
+---
+sidebar_position: 2
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import TwelveHour from "@examples/tailwind3/TimePicker/TwelveHour";
+import TwelveHourSource from "@examples/tailwind3/TimePicker/TwelveHour.tsx?raw";
+import MinuteStep from "@examples/tailwind3/TimePicker/MinuteStep";
+import MinuteStepSource from "@examples/tailwind3/TimePicker/MinuteStep.tsx?raw";
+import SecondPrecision from "@examples/tailwind3/TimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/tailwind3/TimePicker/SecondPrecision.tsx?raw";
+
+# Tùy chọn Thời gian
+
+Cấu hình hoạt động của bảng điều khiển thời gian thông qua prop `time`.
+
+## Định dạng 12 giờ
+
+Chuyển sang định dạng 12 giờ với nút bật/tắt AM/PM.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Bước phút
+
+Đặt bước tăng cho phút. Hữu ích cho việc lập lịch theo các khoảng thời gian cố định.
+
+<CodeDemo source={MinuteStepSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinuteStep client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Độ chính xác giây
+
+Hiển thị cột giây bằng cách đặt `precision` thành `"second"`.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>

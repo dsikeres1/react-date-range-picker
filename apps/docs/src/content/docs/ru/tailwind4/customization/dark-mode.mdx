@@ -1,0 +1,185 @@
+---
+sidebar_position: 9
+---
+
+# Тёмный режим
+
+Пакет Tailwind v4 поддерживает тёмный режим через свою систему семантических токенов. Поскольку все цвета ссылаются на переменные CSS, переключение на тёмный режим сводится к простому переопределению этих переменных.
+
+## Как это работает
+
+Компоненты используют семантические утилитарные классы, такие как `bg-primary`, `text-foreground` и `border-border`. Они разрешаются в переменные CSS (`--color-primary`, `--color-foreground` и т.д.), которые вы определяете в CSS вашего проекта. Тёмный режим работает, предоставляя альтернативные значения для этих переменных под тёмным селектором.
+
+## Настройка
+
+### Использование атрибута `data-theme`
+
+Определите значения токенов для светлого и тёмного режимов, используя селекторы `data-theme`:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+
+[data-theme="dark"] {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+Переключите тёмный режим, установив атрибут:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div data-theme={dark ? "dark" : "light"}>
+      <button onClick={() => setDark(!dark)}>Переключить тему</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+### Использование класса `.dark`
+
+Если ваш фреймворк использует класс `.dark` (например, Next.js с `next-themes`), определите токены под этим классом:
+
+```css
+@theme {
+  /* Токены светлой темы */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  /* ... */
+}
+```
+
+### Использование системных настроек
+
+Используйте `@media (prefers-color-scheme: dark)`, чтобы следовать настройкам ОС:
+
+```css
+@theme {
+  /* Токены светлой темы */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: oklch(0.145 0.004 285.823);
+    --color-foreground: oklch(0.985 0.001 285.823);
+    /* ... */
+  }
+}
+```
+
+## Интеграция с next-themes
+
+Распространенный паттерн с Next.js и `next-themes`:
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+```css
+/* globals.css */
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  /* ... все токены светлой темы */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  /* ... все токены тёмной темы */
+}
+```
+
+Календарь автоматически подхватит правильные значения токенов при смене темы.
+
+## Точка подсветки в тёмном режиме
+
+Точка подсветки использует `after:bg-amber-500 dark:after:bg-amber-400` (конкретный цвет Tailwind, а не токен) для обеспечения хорошей видимости в обоих режимах. Это единственный несемантический цвет в компоненте. Если вам нужно его изменить, используйте Compound Component API с пользовательским рендером `Day`:
+
+```tsx
+<DatePicker.Day date={date}>
+  {(props) => (
+    <button /* ... */>
+      {props.day}
+      {props.isHighlighted && (
+        <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+      )}
+    </button>
+  )}
+</DatePicker.Day>
+```
+
+## Принудительное включение режима
+
+Чтобы принудительно включить светлый или тёмный режим независимо от системных настроек, установите тему явно:
+
+```tsx
+{
+  /* Всегда светлый */
+}
+<div data-theme="light">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Всегда тёмный */
+}
+<div data-theme="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```

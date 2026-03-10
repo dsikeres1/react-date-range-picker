@@ -1,0 +1,179 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Темный режим
+
+Пакет Tailwind v3 включает полную поддержку темного режима через пользовательские свойства CSS. Плагин Tailwind (`rdrpPlugin`) внедряет цветовые переменные, которые автоматически переключаются между светлой и темной палитрами.
+
+## Как это работает
+
+Плагин Tailwind v3 (`rdrpPlugin`) внедряет пользовательские свойства CSS, определяющие цветовую палитру. Темный режим работает путем переопределения этих переменных под `.dark` или `[data-theme="dark"]`:
+
+- **Светлый режим** — `:root` определяет цвета по умолчанию (палитра Slate + Sky)
+- **Темный режим** — `.dark` и `[data-theme="dark"]` автоматически переопределяют цвета
+
+Тема компонента ссылается на них через `var(--rdrp-color-*)`, поэтому темный режим активируется, когда ваша стратегия `darkMode` в Tailwind запускает соответствующий селектор.
+
+## Конфигурация Tailwind
+
+### Стратегия с классом (рекомендуется)
+
+Установите `darkMode: "class"` в вашей конфигурации Tailwind. Темный режим активируется, когда класс `dark` присутствует на `<html>` или родительском элементе:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Переключение темного режима:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Переключить тему</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+Или примените класс к `<html>`:
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### Стратегия с селектором
+
+Tailwind v3.4+ поддерживает `darkMode: "selector"`, что позволяет использовать `[data-theme="dark"]` или любой другой пользовательский селектор:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### Медиа-стратегия
+
+Установите `darkMode: "media"` (или опустите — это значение по умолчанию), чтобы следовать настройкам ОС:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "media",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Дополнительная настройка не требуется. Компонент будет следовать `prefers-color-scheme`.
+
+## Цветовые переменные
+
+Вот пользовательские свойства CSS, используемые для светлой/темной темы:
+
+| Переменная                | Светлый   | Темный                 |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
+
+## Интеграция с Docusaurus
+
+Если вы используете Docusaurus (который использует `data-theme` на `<html>`), настройте стратегию селектора в Tailwind:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Docusaurus устанавливает `<html data-theme="dark">`, когда активен темный режим, и CSS-переменные автоматически переключатся на темные значения.
+
+## Интеграция с next-themes
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes` добавляет/удаляет класс `dark` на `<html>`. С `darkMode: "class"` в вашей конфигурации Tailwind, компонент переключается автоматически.
+
+## Принудительное включение режима
+
+Чтобы принудительно заставить компонент всегда использовать светлый или темный режим, оберните его в контейнер с соответствующим классом:
+
+```tsx
+{
+  /* Всегда светлый — нет родительского элемента с классом "dark" */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Всегда темный */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+При использовании `darkMode: "class"`, класс `dark` должен быть на родительском элементе или `<html>`. Сам компонент выбора даты не управляет переключением темного режима.
+</Admonition>

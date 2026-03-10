@@ -1,0 +1,54 @@
+---
+sidebar_position: 4
+sidebar_label: Custom Footer
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/tailwind3/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/tailwind3/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/tailwind3/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNoFooter.tsx?raw";
+
+# ส่วนท้ายแบบกำหนดเอง
+
+## ส่วนท้ายที่จัดเรียงใหม่
+
+จัดเรียงปุ่มส่วนท้ายใหม่และเพิ่มการกระทำพิเศษ เช่น ปุ่ม "วันนี้" ด้วย compound components คุณสามารถควบคุมได้อย่างแม่นยำว่าปุ่มใดจะปรากฏและเรียงลำดับอย่างไร
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## เลย์เอาต์แบบมินิมอล
+
+ลบส่วนใดๆ ที่คุณไม่ต้องการออกไป ที่นี่ส่วนท้ายถูกละเว้นทั้งหมดเพื่อเลย์เอาต์เฉพาะปฏิทินแบบมินิมอล:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## การแทนที่คลาส
+
+ทุกส่วนของ compound partยอมรับ prop `className` แพ็คเกจ Tailwind v3 ใช้ `cn()` (ยูทิลิตี้ `clsx` + `twMerge`) เพื่อรวมคลาสของคุณเข้ากับค่าเริ่มต้น ดังนั้นยูทิลิตี้ที่ขัดแย้งกันจะได้รับการแก้ไขอย่างถูกต้อง:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger className="min-w-[300px] px-4 py-3" />
+  <DatePicker.Content className="rounded-2xl shadow-xl">
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title className="text-lg" />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>;
+```

@@ -1,0 +1,64 @@
+---
+sidebar_position: 1
+title: useDatePicker
+---
+
+# useDatePicker
+
+단일 날짜 선택을 위한 핵심 훅입니다. 캘린더 상태, 열기/닫기 동작, 키보드 탐색, 날짜 포매팅을 관리합니다.
+
+## Import
+
+```tsx
+import { useDatePicker } from "react-date-range-picker-headless";
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  const picker = useDatePicker({
+    value: date,
+    onChange: setDate,
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.placeholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* 캘린더 헤더 */}
+          <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+          <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+          <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+
+          {/* 캘린더 그리드 */}
+          {picker.calendar.weeks.flat().map((day, i) => {
+            if (!day) return <span key={i} />;
+            const dp = picker.getDayProps(day);
+            return (
+              <button key={i} onClick={() => picker.handleDateClick(day)} disabled={dp.isDisabled}>
+                {dp.day}
+              </button>
+            );
+          })}
+
+          {/* 푸터 */}
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## 옵션
+
+| 옵션

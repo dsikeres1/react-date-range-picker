@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# Creando una UI Personalizada
+
+Esta guía recorre el patrón para construir tu propia UI de selector de fechas sobre los hooks headless.
+
+## El Patrón
+
+Cada hook headless sigue el mismo patrón:
+
+1. **Llama al hook** con tus opciones (value, onChange, configuration)
+2. **Desestructura el valor de retorno** para obtener el estado, valores computados y manejadores
+3. **Renderiza tu propio marcado** usando los valores retornados
+4. **Conecta las interacciones** llamando a los manejadores proporcionados
+
+El hook gestiona toda la complejidad -- generación del calendario, matemática de fechas, estado de abrir/cerrar, navegación por teclado, lógica de rangos -- y tú te centras puramente en la presentación.
+
+## Ejemplo: Selector de Fechas Personalizado
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Conceptos Clave
+
+### getDayProps
+
+La función `getDayProps` es el núcleo del renderizado del calendario. Para cada celda de fecha, devuelve un objeto `DayProps` con 18 indicadores booleanos/numéricos que describen el estado de la celda:
+
+```tsx
+const dp = getDayProps(day);
+
+// Estado de selección
+dp.isSelected; // Fecha actualmente seleccionada
+dp.isToday; // Fecha de hoy
+
+// Estado de rango (para selectores de rango)
+dp.isInRange; // Entre las fechas de inicio y fin
+dp.isRangeStart; // Primera fecha del rango
+dp.isRangeEnd; // Última fecha del rango
+dp.isInHoverRange; // En el rango de vista previa del hover
+dp.isHoverTarget; // La fecha sobre la que se hace hover
+dp.isRangeSingle; // Tanto inicio como fin de rango (rango de un solo día)
+
+// Ayudantes de conexión visual
+dp.hasLeftConnection; // Conectado al día anterior (para fondos de rango)
+dp.hasRightConnection; // Conectado al día siguiente
+dp.isConsecutiveRange; // Parte de un rango de varios días
+
+// Estado
+dp.isDisabled; // Deshabilitado por minDate/maxDate/isDateUnavailable
+dp.isFocused; // Tiene el foco del teclado
+dp.isOutsideDay; // Pertenece al mes adyacente (cuando showOutsideDays está habilitado)
+dp.isHighlighted; // En el array highlightDates
+
+// Datos
+dp.date; // El objeto Date
+dp.day; // Número del día del mes
+dp.dayOfWeek; // 0-6 (Domingo-Sábado)
+```
+
+### Refs para Clics Externos
+
+Los hooks devuelven `containerRef` y `popupRef`. Adjúntalos a tus elementos envolventes y de popup -- el hook los usa para detectar clics externos y cerrar el popup automáticamente.
+
+### Navegación por Teclado
+
+El manejador `handleKeyDown` soporta las teclas de flecha, Enter, Escape y Tab para una navegación por teclado completa. Adjúntalo al contenedor del popup.
+
+### Locale
+
+Todas las cadenas de texto orientadas al usuario provienen del objeto `locale`. Puedes personalizar cualquier cadena pasando una opción `locale` parcial:
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "OK",
+    cancel: "Back",
+    placeholder: "Pick a date...",
+  },
+});
+```
+
+## Próximos Pasos
+
+- [Referencia de Hooks](/docs/headless/hooks/use-date-picker) -- Opciones completas y valores de retorno para cada hook
+- [Contextos](/docs/headless/contexts) -- Usa proveedores para patrones de componentes compuestos
+- [Utilidades de Fecha](/docs/headless/date-utilities) -- Funciones de ayuda para la manipulación de fechas

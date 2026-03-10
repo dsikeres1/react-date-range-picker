@@ -1,0 +1,101 @@
+---
+sidebar_position: 4
+title: Contexts
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ContextExample from "@examples/headless/ContextExample";
+import ContextExampleSource from "@examples/headless/ContextExample.tsx?raw";
+
+# 컨텍스트
+
+headless 패키지는 훅을 감싸고 React Context를 통해 상태를 노출하는 Context 프로바이더를 제공합니다. 이는 **컴파운드 컴포넌트 패턴**을 가능하게 합니다. 즉, UI를 작고 집중된 하위 컴포넌트로 분할하여 props를 전달하는 대신 컨텍스트에서 상태를 읽도록 합니다.
+
+## 왜 컨텍스트를 사용하나요?
+
+컨텍스트가 없으면 모든 상태를 props를 통해 전달해야 합니다:
+
+```tsx
+// 컨텍스트 없음 -- prop drilling
+function MyDatePicker() {
+  const picker = useDatePicker({ value, onChange });
+  return (
+    <MyTrigger displayValue={picker.displayValue} onToggle={picker.handleToggle} />
+    <MyCalendar calendar={picker.calendar} getDayProps={picker.getDayProps} ... />
+    <MyFooter onConfirm={picker.handleConfirm} onCancel={picker.handleCancel} ... />
+  );
+}
+```
+
+컨텍스트를 사용하면 하위 컴포넌트가 필요한 것을 직접 사용합니다:
+
+```tsx
+// 컨텍스트 사용 -- 컴파운드 컴포넌트
+function MyDatePicker() {
+  return (
+    <DatePickerProvider value={value} onChange={onChange}>
+      <ExampleWrapper variant="headless" client:load>
+        <MyTrigger client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyCalendar client:load />
+      </ExampleWrapper>
+      <ExampleWrapper variant="headless" client:load>
+        <MyFooter client:load />
+      </ExampleWrapper>
+    </DatePickerProvider>
+  );
+}
+
+function MyTrigger() {
+  const { displayValue, handleToggle } = useDatePickerContext();
+  return <button onClick={handleToggle}>{displayValue}</button>;
+}
+```
+
+## 사용 가능한 프로바이더
+
+| 프로바이더                    | 내부적으로 사용되는 훅   | 소비자 훅                         |
+| ----------------------------- | ------------------------ | --------------------------------- |
+| `DatePickerProvider`          | `useDatePicker`          | `useDatePickerContext()`          |
+| `DateRangePickerProvider`     | `useDateRangePicker`     | `useDateRangePickerContext()`     |
+| `DateTimePickerProvider`      | `useDateTimePicker`      | `useDateTimePickerContext()`      |
+| `DateRangeTimePickerProvider` | `useDateRangeTimePicker` | `useDateRangeTimePickerContext()` |
+
+각 프로바이더는 **타입이 지정된 컨텍스트**(해당 피커 타입에 특화됨)와 **통합된 PickerContext**(모든 타입에서 공유됨)를 모두 렌더링합니다.
+
+```tsx
+import {
+  DatePickerProvider,
+  DateRangePickerProvider,
+  DateTimePickerProvider,
+  DateRangeTimePickerProvider,
+} from "react-date-range-picker-headless";
+```
+
+### DatePickerProvider
+
+`useDatePicker`를 감쌉니다. `DatePickerContext` + `PickerContext`를 제공합니다.
+
+```tsx
+import type { DatePickerProviderProps } from "react-date-range-picker-headless";
+```
+
+| Prop          | Type                           | 설명                                          |
+| ------------- | ------------------------------ | --------------------------------------------- |
+| `children`    | `ReactNode`                    | **필수.** 자식 컴포넌트.                      |
+| `value`       | `Date \| null`                 | **필수.** 현재 날짜.                          |
+| `onChange`    | `(date: Date \| null) => void` | **필수.** 변경 핸들러.                        |
+| `inline`      | `boolean`                      | 인라인으로 렌더링 (팝업 없음).                |
+| `size`        | `DatePickerSize`               | 크기 변형.                                    |
+| `placeholder` | `string`                       | 트리거 플레이스홀더.                          |
+| `name`        | `string`                       | 폼 필드 이름.                                 |
+| _...rest_     | `BaseDatePickerOptions`        | 모든 기본 옵션 (minDate, maxDate, locale 등). |
+
+**소비자 훅:** `useDatePickerContext()`는 `UseDatePickerReturn`을 반환합니다.
+
+### DateRangePickerProvider
+
+`useDateRangePicker`를 감쌉니다. `DateRangePickerContext

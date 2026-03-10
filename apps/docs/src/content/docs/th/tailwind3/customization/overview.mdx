@@ -1,0 +1,72 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# คอมโพเนนต์แบบผสม (Compound Components)
+
+แพ็คเกจ Tailwind v3 นำเสนอ Compound Component API ที่ให้คุณควบคุมโครงสร้างภายในและการเรนเดอร์ของ picker แต่ละตัวได้อย่างเต็มที่ แทนที่จะเป็นคอมโพเนนต์ขนาดใหญ่ชิ้นเดียว คุณสามารถประกอบ picker จากส่วนประกอบย่อยๆ ได้
+
+## วิธีการทำงาน
+
+Picker ทุกตัว (เช่น `DatePicker`) เป็นทั้งคอมโพเนนต์แบบง่ายและเป็น namespace ของส่วนประกอบย่อย:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind3";
+
+// การใช้งานแบบง่าย — เรนเดอร์เลย์เอาต์เริ่มต้น
+<DatePicker value={value} onChange={setValue} />
+
+// การใช้งานแบบผสม — ควบคุมโครงสร้างได้เต็มที่
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## ส่วนประกอบที่มีให้
+
+### DatePicker
+
+| ส่วนประกอบ                 | คำอธิบาย                                                                                     |
+| -------------------------- | -------------------------------------------------------------------------------------------- |
+| `DatePicker.Root`          | Provider + คอนเทนเนอร์. รับ props ทั้งหมดของ picker (`value`, `onChange`, `minDate` เป็นต้น) |
+| `DatePicker.Trigger`       | ปุ่มที่เปิด/ปิดป๊อปอัป. แสดงค่าที่เลือก                                                      |
+| `DatePicker.Content`       | คอนเทนเนอร์ป๊อปอัป (หรือคอนเทนเนอร์แบบอินไลน์เมื่อตั้งค่า `inline` บน Root)                  |
+| `DatePicker.Header`        | แถบนำทางสำหรับเดือน                                                                          |
+| `DatePicker.PrevButton`    | นำทางไปยังเดือนก่อนหน้า                                                                      |
+| `DatePicker.NextButton`    | นำทางไปยังเดือนถัดไป                                                                         |
+| `DatePicker.Title`         | แสดงเดือน/ปีปัจจุบัน (รองรับการเลือกแบบดรอปดาวน์)                                            |
+| `DatePicker.Grid`          | ตารางปฏิทินพร้อมหัวข้อวันในสัปดาห์และเซลล์วัน                                                |
+| `DatePicker.Day`           | เซลล์วันแต่ละวัน (ใช้ภายใน render prop ของ Grid)                                             |
+| `DatePicker.Footer`        | คอนเทนเนอร์สำหรับปุ่มดำเนินการ                                                               |
+| `DatePicker.ClearButton`   | ล้างค่าที่เลือก                                                                              |
+| `DatePicker.CancelButton`  | ยกเลิกและปิด                                                                                 |
+| `DatePicker.ConfirmButton` | ยืนยันการเลือก                                                                               |
+| `DatePicker.TodayButton`   | นำทางไปยังวันนี้                                                                             |
+
+### DateRangePicker
+
+รวมส่วนประกอบทั้งหมดข้างต้นบวกกับ:
+
+| ส่วนประกอบ                   | คำอธิบาย                                           |
+| ---------------------------- | -------------------------------------------------- |
+| `DateRangePicker.Calendars`  | คอนเทนเนอร์ปฏิทินคู่                               |
+| `DateRangePicker.Presets`    | คอนเทนเนอร์แถบด้านข้างสำหรับช่วงที่ตั้งไว้ล่วงหน้า |
+| `DateRangePicker.PresetItem` | ปุ่มสำหรับแต่ละช่วงที่ตั้งไว้ล่วงหน้า              |
+
+### DateTimePicker / DateRangeTimePicker
+
+รวมส่วนประกอบพื้นฐานของแต่ละตัวบวกกับการรวมแผงเวลาผ่าน API แบบง่าย แผงเวลาจะถูกเรนเดอร์โดยอัตโนมัติเมื่อใช้ส่วนประกอบแบบผสมกับ picker ที่เปิดใช้งานเวลา

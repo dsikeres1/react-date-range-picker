@@ -1,0 +1,127 @@
+---
+sidebar_position: 1
+title: Accessibility
+description: Navegação por teclado, atributos ARIA, gerenciamento de foco e conformidade com WCAG.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Acessibilidade
+
+Todos os componentes de seletor vêm com suporte de acessibilidade integrado. A navegação por teclado, os atributos ARIA e o gerenciamento de foco funcionam imediatamente em todas as variantes — Styled, Tailwind v3/v4 e Headless.
+
+Nenhuma configuração extra é necessária para o uso padrão. Esta página documenta o que está incluído para que você possa auditar, estender ou replicar os padrões em UIs personalizadas.
+
+## Navegação por Teclado
+
+### Seletores de Calendário
+
+| Tecla             | Ação                                                       |
+| ----------------- | ---------------------------------------------------------- |
+| `ArrowLeft`       | Move o foco para o dia anterior                            |
+| `ArrowRight`      | Move o foco para o próximo dia                             |
+| `ArrowUp`         | Move o foco para a semana anterior (mesmo dia da semana)   |
+| `ArrowDown`       | Move o foco para a próxima semana (mesmo dia da semana)    |
+| `Enter` / `Space` | Seleciona o dia em foco                                    |
+| `Escape`          | Cancela as alterações e fecha o popup                      |
+| `Tab`             | Move para o próximo elemento focável (padrão do navegador) |
+
+**Pulo de datas desabilitadas:** Ao navegar com as teclas de seta, as datas desabilitadas são puladas automaticamente. O seletor procura até 365 dias na direção do movimento para encontrar a próxima data habilitada.
+
+**Rolagem automática de mês:** Quando o foco do teclado se move para um dia em um mês diferente, a visualização do calendário é atualizada para mostrar esse mês.
+
+### Seletor de Hora
+
+| Tecla    | Ação                                  |
+| -------- | ------------------------------------- |
+| `Escape` | Cancela as alterações e fecha o popup |
+
+A seleção de hora usa uma UI de roda de rolagem com interação de clique/toque. As colunas de rolagem usam `scroll-snap` para uma seleção precisa do valor.
+
+## Atributos ARIA
+
+Todo elemento interativo possui papéis e atributos ARIA apropriados:
+
+### Popup e Contêiner
+
+| Elemento           | Atributo                | Valor                                  |
+| ------------------ | ----------------------- | -------------------------------------- |
+| Contêiner do popup | `role`                  | `"dialog"`                             |
+| Contêiner em linha | `role`                  | `"group"`                              |
+| Contêiner          | `aria-label`            | Texto do placeholder do locale         |
+| Contêiner          | `aria-activedescendant` | ID da célula do dia atualmente em foco |
+
+### Botão de Acionamento
+
+| Atributo        | Valor                             |
+| --------------- | --------------------------------- |
+| `aria-expanded` | `true` quando o popup está aberto |
+| `aria-haspopup` | `"dialog"`                        |
+
+### Grade do Calendário
+
+| Elemento                             | Atributo        | Valor                                                  |
+| ------------------------------------ | --------------- | ------------------------------------------------------ |
+| Wrapper da grade                     | `role`          | `"grid"`                                               |
+| Linha da semana                      | `role`          | `"row"`                                                |
+| Célula de cabeçalho do dia da semana | `role`          | `"columnheader"`                                       |
+| Célula do dia                        | `role`          | `"gridcell"`                                           |
+| Célula do dia                        | `aria-selected` | `true` quando selecionado                              |
+| Célula do dia                        | `aria-current`  | `"date"` quando a célula é hoje                        |
+| Célula do dia                        | `aria-label`    | String de data formatada (ex. `"2026-03-04"`)          |
+| Célula do dia                        | `disabled`      | Definido em datas desabilitadas (atributo HTML nativo) |
+
+### Navegação e Menus Suspensos
+
+| Elemento              | Atributo     | Valor                                             |
+| --------------------- | ------------ | ------------------------------------------------- |
+| Botão do mês anterior | `aria-label` | `"Mês anterior"` (de `locale.prevMonthLabel`)     |
+| Botão do próximo mês  | `aria-label` | `"Próximo mês"` (de `locale.nextMonthLabel`)      |
+| Menu suspenso de mês  | `aria-label` | `"Selecionar mês"` (de `locale.selectMonthLabel`) |
+| Menu suspenso de ano  | `aria-label` | `"Selecionar ano"` (de `locale.selectYearLabel`)  |
+
+### Colunas de Tempo
+
+| Elemento              | Atributo           | Valor                                                 |
+| --------------------- | ------------------ | ----------------------------------------------------- |
+| Coluna de hora        | `role`             | `"listbox"`                                           |
+| Coluna de hora        | `aria-orientation` | `"vertical"`                                          |
+| Coluna de hora        | `aria-label`       | `"Horas"` (de `locale.hourLabel`)                     |
+| Coluna de minuto      | `role`             | `"listbox"`                                           |
+| Coluna de minuto      | `aria-orientation` | `"vertical"`                                          |
+| Coluna de minuto      | `aria-label`       | `"Minutos"` (de `locale.minuteLabel`)                 |
+| Coluna de segundo     | `role`             | `"listbox"`                                           |
+| Coluna de segundo     | `aria-orientation` | `"vertical"`                                          |
+| Coluna de segundo     | `aria-label`       | `"Segundos"` (de `locale.secondLabel`)                |
+| Item de tempo         | `role`             | `"option"` (itens de preenchimento: `"presentation"`) |
+| Item de tempo         | `aria-selected`    | `true` quando o item é o valor atual                  |
+| Alternador de período | `aria-label`       | Período atual + ", alternar AM/PM"                    |
+| Botão limpar          | `aria-label`       | `"Limpar"` (de `locale.clear`)                        |
+
+Todas as strings de rótulo são personalizáveis através do [sistema de locale](/docs/guides/internationalization).
+
+## Gerenciamento de Foco
+
+### Roving Tabindex
+
+A grade do calendário usa o padrão **roving tabindex**:
+
+- Apenas a célula do dia atualmente em foco tem `tabIndex={0}` (tabulável).
+- Todas as outras células de dia têm `tabIndex={-1}` (não tabulável, mas focável através das teclas de seta).
+- Isso significa que `Tab` move o foco para fora da grade do calendário (para o próximo controle), e as teclas de seta movem o foco dentro da grade.
+
+### Captura de Foco no Popup
+
+O modo popup usa o `FloatingFocusManager` do `@floating-ui/react` para:
+
+- Capturar o foco dentro do popup enquanto ele está aberto.
+- Retornar o foco para o botão de acionamento quando o popup fecha.
+- Impedir a tabulação para fora do popup para o conteúdo de fundo.
+
+### Elementos Nativos
+
+A seleção de mês e ano usa elementos `<select>` nativos, que são inerentemente acessíveis por teclado. As células de dia usam elementos `<button>` nativos com os estados de desabilitado apropriados.
+
+## Conformidade com WCAG 2.1
+
+Os

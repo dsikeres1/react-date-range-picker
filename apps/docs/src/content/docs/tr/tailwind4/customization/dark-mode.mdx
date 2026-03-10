@@ -1,0 +1,185 @@
+---
+sidebar_position: 9
+---
+
+# Karanlık Mod
+
+Tailwind v4 paketi, anlamsal token sistemi aracılığıyla karanlık modu destekler. Tüm renkler CSS değişkenlerine referans verdiğinden, karanlık moda geçmek sadece bu değişkenleri yeniden tanımlamaktan ibarettir.
+
+## Nasıl Çalışır
+
+Bileşenler `bg-primary`, `text-foreground` ve `border-border` gibi anlamsal yardımcı sınıflar kullanır. Bunlar, projenizin CSS'inde tanımladığınız CSS değişkenlerine (`--color-primary`, `--color-foreground`, vb.) çözümlenir. Karanlık mod, bu değişkenler için bir karanlık seçici altında alternatif değerler sağlayarak çalışır.
+
+## Kurulum
+
+### `data-theme` Özniteliğini Kullanma
+
+`data-theme` seçicilerini kullanarak aydınlık ve karanlık token değerlerini tanımlayın:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+
+[data-theme="dark"] {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+Özniteliği ayarlayarak karanlık modu değiştirin:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div data-theme={dark ? "dark" : "light"}>
+      <button onClick={() => setDark(!dark)}>Temayı Değiştir</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+### `.dark` Sınıfını Kullanma
+
+Eğer çatınız `.dark` sınıfını kullanıyorsa (örneğin, Next.js ile `next-themes`), tokenları o sınıf altında tanımlayın:
+
+```css
+@theme {
+  /* Light tokens */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  /* ... */
+}
+```
+
+### Sistem Tercihini Kullanma
+
+İşletim sistemi ayarını takip etmek için `@media (prefers-color-scheme: dark)` kullanın:
+
+```css
+@theme {
+  /* Light tokens */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: oklch(0.145 0.004 285.823);
+    --color-foreground: oklch(0.985 0.001 285.823);
+    /* ... */
+  }
+}
+```
+
+## next-themes ile Entegrasyon
+
+Next.js ve `next-themes` ile yaygın bir kullanım şekli:
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+```css
+/* globals.css */
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  /* ... all light tokens */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  /* ... all dark tokens */
+}
+```
+
+Seçici, tema değiştikçe doğru token değerlerini otomatik olarak alacaktır.
+
+## Karanlık Modda Vurgu Noktası
+
+Vurgu noktası, her iki modda da iyi görünürlük sağlamak için `after:bg-amber-500 dark:after:bg-amber-400` (bir token değil, somut bir Tailwind rengi) kullanır. Bu, bileşendeki tek anlamsal olmayan renktir. Değiştirmeniz gerekirse, özel bir `Day` render ile Bileşik Bileşen API'sini kullanın:
+
+```tsx
+<DatePicker.Day date={date}>
+  {(props) => (
+    <button /* ... */>
+      {props.day}
+      {props.isHighlighted && (
+        <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+      )}
+    </button>
+  )}
+</DatePicker.Day>
+```
+
+## Belirli Bir Modu Zorlama
+
+Sistem tercihinden bağımsız olarak aydınlık veya karanlık modu zorlamak için temayı açıkça ayarlayın:
+
+```tsx
+{
+  /* Her zaman aydınlık */
+}
+<div data-theme="light">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Her zaman karanlık */
+}
+<div data-theme="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```

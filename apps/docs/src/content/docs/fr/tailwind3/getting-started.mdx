@@ -1,0 +1,102 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind3Basic from "@examples/tailwind3/DatePicker/Basic";
+import Tailwind3BasicSource from "@examples/tailwind3/DatePicker/Basic.tsx?raw";
+
+# Premiers pas avec Tailwind CSS v3
+
+Le package Tailwind v3 fournit des composants de sélecteur de date stylisés avec les classes utilitaires Tailwind CSS v3.
+
+## Installation
+
+<PackageInstall pkg="react-date-range-picker-tailwind3" />
+
+## Configuration de Tailwind
+
+Ajoutez le plugin et le chemin de contenu à votre configuration Tailwind :
+
+```js
+// tailwind.config.js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  darkMode: "class",
+  plugins: [rdrpPlugin],
+};
+```
+
+## Démarrage rapide
+
+<CodeDemo source={Tailwind3BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Tailwind3Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Ce qui est inclus
+
+| Component             | Description                                         |
+| --------------------- | --------------------------------------------------- |
+| `DatePicker`          | Single date selection with popup calendar           |
+| `DateRangePicker`     | Date range selection with dual calendar and presets |
+| `DateTimePicker`      | Date + time selection with time scroll panel        |
+| `DateRangeTimePicker` | Date range + time selection                         |
+
+Tous les composants prennent en charge :
+
+- Valeur contrôlée avec `value` / `onChange`
+- Navigation au clavier
+- Mode sombre via la variante `dark:`
+- 4 tailles : "petit", "moyen", "grand", "x-large"
+- API de composant composé pour la personnalisation
+
+## Types de scripts dactylographiés
+
+Tous les types de configuration et de données sont réexportés à partir du package — pas besoin d'installer le package sans tête séparément :
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind3";
+```
+
+Ces types sont utiles pour :
+
+- **`Locale`** — Remplacements de paramètres régionaux personnalisés (noms des jours de la semaine, étiquettes des boutons, formatage de la date)
+- **`DatePickerSize`** — Saisie de l'accessoire `size` ("small"`|`"medium"`|`"large"`|`"x-large"`)
+- **`TimeConfig`** — Configuration de la précision, du format et des étapes du sélecteur de temps
+- **`DateRangePreset`** — Définition des préréglages pour `DateRangePicker` / `DateRangeTimePicker`
+- **`CalendarMonth`**, **`DayProps`** — Rendu personnalisé avec des composants composés
+
+Voir [Types sans tête](/docs/headless/types/common-types) pour des définitions de types détaillées.
+
+## Prochaines étapes
+
+- [DatePicker](/docs/tailwind3/components/date-picker/basic) — Sélection de date unique
+- [DateRangePicker](/docs/tailwind3/components/date-range-picker/basic) — Plage de dates avec préréglages
+- [Composants composés](/docs/tailwind3/customization/overview) — Personnaliser la structure interne
+- [Theme Override](/docs/tailwind3/customization/theme-override) — Personnaliser les couleurs du thème
+- [Mode sombre](/docs/tailwind3/customization/dark-mode) — Prise en charge du thème sombre

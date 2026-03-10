@@ -1,0 +1,36 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import SecondPrecision from "@examples/styled/DateRangeTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/styled/DateRangeTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/styled/DateRangeTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/styled/DateRangeTimePicker/TwelveHour.tsx?raw";
+
+# Zeitoptionen
+
+Konfigurieren Sie das Verhalten des Zeitbereichs über die `time`-Prop.
+
+## Sekundengenaue Präzision
+
+Zeigen Sie die Sekundenspalte für die Start- und Endzeitbereiche an.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 12-Stunden-Format
+
+Wechseln Sie zum 12-Stunden-Format mit AM/PM-Umschalter für die Start- und Endzeitbereiche.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

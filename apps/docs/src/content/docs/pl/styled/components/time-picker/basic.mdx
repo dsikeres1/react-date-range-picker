@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/styled/TimePicker/Basic";
+import BasicSource from "@examples/styled/TimePicker/Basic.tsx?raw";
+import Inline from "@examples/styled/TimePicker/Inline";
+import InlineSource from "@examples/styled/TimePicker/Inline.tsx?raw";
+
+# TimePicker
+
+Selektor czasu z wyzwalaczem w postaci pola wejściowego i panelem wyskakującym. Kliknij pole wejściowe, aby otworzyć listę rozwijaną z przewijanymi kolumnami czasu.
+
+## Podstawowe użycie
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Wbudowany
+
+Renderuj panel czasu wbudowany, bez wyzwalacza i wyskakującego okienka.
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

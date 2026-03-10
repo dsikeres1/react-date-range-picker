@@ -1,0 +1,179 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Tryb Ciemny
+
+Pakiet dla Tailwind v3 zawiera pełne wsparcie dla trybu ciemnego poprzez niestandardowe właściwości CSS. Plugin Tailwind (`rdrpPlugin`) wstrzykuje zmienne kolorów, które automatycznie przełączają się między jasnymi i ciemnymi paletami.
+
+## Jak to działa
+
+Plugin Tailwind v3 (`rdrpPlugin`) wstrzykuje niestandardowe właściwości CSS definiujące paletę kolorów. Tryb ciemny działa poprzez nadpisywanie tych zmiennych pod `.dark` lub `[data-theme="dark"]`:
+
+- **Tryb jasny** — `:root` definiuje domyślne kolory (paleta Slate + Sky)
+- **Tryb ciemny** — `.dark` i `[data-theme="dark"]` nadpisują kolory automatycznie
+
+Motyw komponentu odwołuje się do nich przez `var(--rdrp-color-*)`, więc tryb ciemny aktywuje się, gdy strategia `darkMode` Tailwinda uruchomi odpowiedni selektor.
+
+## Konfiguracja Tailwinda
+
+### Strategia Class (Zalecane)
+
+Ustaw `darkMode: "class"` w swojej konfiguracji Tailwinda. Tryb ciemny aktywuje się, gdy klasa `dark` znajduje się na elemencie `<html>` lub na elemencie nadrzędnym:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Przełącz tryb ciemny:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+Lub zastosuj klasę na `<html>`:
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### Strategia Selector
+
+Tailwind v3.4+ wspiera `darkMode: "selector"`, co pozwala na użycie `[data-theme="dark"]` lub dowolnego innego selektora:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### Strategia Media
+
+Ustaw `darkMode: "media"` (lub pomiń — jest to ustawienie domyślne), aby podążać za preferencjami systemu operacyjnego:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "media",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Nie jest wymagana żadna dodatkowa konfiguracja. Komponent będzie podążał za `prefers-color-scheme`.
+
+## Zmienne kolorów
+
+Oto niestandardowe właściwości CSS używane do motywu jasnego/ciemnego:
+
+| Zmienna                   | Jasny     | Ciemny                 |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
+
+## Integracja z Docusaurus
+
+Jeśli używasz Docusaurusa (który używa `data-theme` na `<html>`), skonfiguruj strategię selektora Tailwinda:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Docusaurus ustawia `<html data-theme="dark">`, gdy tryb ciemny jest aktywny, a zmienne CSS automatycznie przełączą się na ciemne wartości.
+
+## Integracja z next-themes
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes` dodaje/usuwa klasę `dark` na `<html>`. Z `darkMode: "class"` w konfiguracji Tailwinda, komponent przełącza się automatycznie.
+
+## Wymuszanie określonego trybu
+
+Aby wymusić na komponencie stałe używanie trybu jasnego lub ciemnego, opakuj go w kontener z odpowiednią klasą:
+
+```tsx
+{
+  /* Zawsze jasny — brak nadrzędnej klasy "dark" */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Zawsze ciemny */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+Używając `darkMode: "class"`, klasa `dark` musi znajdować się na elemencie nadrzędnym lub na `<html>`. Sam komponent nie zarządza przełączaniem trybu ciemnego.
+</Admonition>

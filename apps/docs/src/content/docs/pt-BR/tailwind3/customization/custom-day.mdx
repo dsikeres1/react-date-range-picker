@@ -1,0 +1,25 @@
+---
+sidebar_position: 3
+sidebar_label: Custom Day Cell
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/tailwind3/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/tailwind3/Customization/CompoundCustomDay.tsx?raw";
+
+# Célula de Dia Personalizada
+
+Use a render prop do componente `Day` para personalizar cada célula de dia. Isso é útil para adicionar indicadores de eventos, estilização personalizada com base nas propriedades da data, ou para substituir completamente a renderização do dia.
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render Props do Dia
+
+| Prop | Tipo | Descrição |
+| ---- | ---- | --------- |

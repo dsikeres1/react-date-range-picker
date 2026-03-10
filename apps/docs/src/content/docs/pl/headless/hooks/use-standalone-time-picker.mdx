@@ -1,0 +1,150 @@
+---
+sidebar_position: 7
+title: useStandaloneTimePicker
+---
+
+# useStandaloneTimePicker
+
+Zarządza stanem czasu z zachowaniem otwierania/zamykania i kliknięcia na zewnątrz.
+
+## Import
+
+```tsx
+import { useStandaloneTimePicker } from "react-date-range-picker-headless";
+```
+
+## Użycie
+
+```tsx
+import { useState } from "react";
+import { useStandaloneTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [time, setTime] = useState<Date | null>(null);
+
+  const picker = useStandaloneTimePicker({
+    value: time,
+    onChange: setTime,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 5 },
+    placeholder: "Select time",
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.hasValue ? picker.displayValue : "Select time"}
+      </button>
+
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          <div>
+            <span>{String(picker.tempHour).padStart(2, "0")}</span>
+            <span>:</span>
+            <span>{String(picker.tempMinute).padStart(2, "0")}</span>
+          </div>
+
+          {/* Hook up hour/minute controls */}
+          <input
+            type="range"
+            min={0}
+            max={23}
+            value={picker.tempHour}
+            onChange={(e) => picker.handleHourChange(Number(e.target.value))}
+          />
+          <input
+            type="range"
+            min={0}
+            max={55}
+            step={5}
+            value={picker.tempMinute}
+            onChange={(e) => picker.handleMinuteChange(Number(e.target.value))}
+          />
+
+          <div>
+            <button onClick={picker.handleClear}>Clear</button>
+            <button onClick={picker.handleCancel}>Cancel</button>
+            <button onClick={picker.handleConfirm}>Confirm</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Opcje
+
+| Opcja           | Typ                            | Domyślnie                                                                 | Opis                                                                             |
+| --------------- | ------------------------------ | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `value`         | `Date \| null`                 | --                                                                        | **Wymagane.** Aktualny czas jako obiekt Date (używana jest tylko część czasowa). |
+| `onChange`      | `(date: Date \| null) => void` | --                                                                        | **Wymagane.** Wywoływane po zatwierdzeniu czasu.                                 |
+| `time`          | `TimeConfig`                   | `{ precision: "minute", hourFormat: "24", minuteStep: 5, secondStep: 1 }` | Konfiguracja wyboru czasu.                                                       |
+| `locale`        | `Partial<Locale>`              | `DEFAULT_LOCALE`                                                          | Zastąp ciągi znaków lokalizacji.                                                 |
+| `displayFormat` | `string`                       | --                                                                        | Niestandardowy ciąg formatujący dla wyświetlania w przycisku.                    |
+| `placeholder`   | `string`                       | --                                                                        | Tekst zastępczy, gdy nie wybrano żadnej wartości.                                |
+| `open`          | `boolean`                      | --                                                                        | Kontrolowany stan otwarcia.                                                      |
+| `initialOpen`   | `boolean`                      | `false`                                                                   | Początkowy stan otwarcia (niekontrolowany).                                      |
+| `onOpenChange`  | `(open: boolean) => void`      | --                                                                        | Callback wywoływany przy zmianie stanu otwarcia.                                 |
+| `required`      | `boolean`                      | `false`                                                                   | Gdy `true`, `handleClear` nie wykonuje żadnej operacji.                          |
+| `inline`        | `boolean`                      | `false`                                                                   | Zawsze pokazuj panel bez przycisku/wyskakującego okienka.                        |
+| `name`          | `string`                       | --                                                                        | Nazwa ukrytego pola wejściowego do przesyłania formularza.                       |
+
+## Zwracane wartości
+
+| Nazwa                | Typ                                 | Opis                                                                                   |
+| -------------------- | ----------------------------------- | -------------------------------------------------------------------------------------- |
+| `isOpen`             | `boolean`                           | Czy wyskakujące okienko jest aktualnie otwarte.                                        |
+| `handleOpen`         | `() => void`                        | Otwórz wyskakujące okienko.                                                            |
+| `handleClose`        | `() => void`                        | Zamknij wyskakujące okienko.                                                           |
+| `handleToggle`       | `() => void`                        | Przełącz wyskakujące okienko.                                                          |
+| `tempHour`           | `number`                            | Aktualna tymczasowa wartość godziny.                                                   |
+| `tempMinute`         | `number`                            | Aktualna tymczasowa wartość minuty.                                                    |
+| `tempSecond`         | `number`                            | Aktualna tymczasowa wartość sekundy.                                                   |
+| `tempPeriod`         | `TimePeriod`                        | Aktualny okres AM/PM.                                                                  |
+| `handleHourChange`   | `(hour: number) => void`            | Zaktualizuj tymczasową godzinę.                                                        |
+| `handleMinuteChange` | `(minute: number) => void`          | Zaktualizuj tymczasową minutę.                                                         |
+| `handleSecondChange` | `(second: number) => void`          | Zaktualizuj tymczasową sekundę.                                                        |
+| `handlePeriodChange` | `(period: TimePeriod) => void`      | Zaktualizuj okres AM/PM.                                                               |
+| `handleConfirm`      | `() => void`                        | Zatwierdź tymczasowy czas, wywołaj `onChange` i zamknij wyskakujące okienko.           |
+| `handleCancel`       | `() => void`                        | Przywróć oryginalną wartość i zamknij wyskakujące okienko.                             |
+| `handleClear`        | `() => void`                        | Wyczyść wartość i zamknij. Nie wykonuje operacji, jeśli `required`.                    |
+| `displayValue`       | `string`                            | Sformatowany ciąg czasu dla przycisku (zatwierdzona wartość).                          |
+| `timeDisplayValue`   | `string`                            | Sformatowany ciąg czasu dla panelu (tymczasowa wartość).                               |
+| `hasValue`           | `boolean`                           | Czy wartość czasu jest aktualnie ustawiona.                                            |
+| `canConfirm`         | `boolean`                           | Czy przycisk zatwierdzania powinien być włączony.                                      |
+| `locale`             | `Locale`                            | Rozwiązany obiekt lokalizacji.                                                         |
+| `resolvedTimeConfig` | `Required<TimeConfig>`              | W pełni rozwiązana konfiguracja czasu.                                                 |
+| `containerRef`       | `RefObject<HTMLDivElement \| null>` | Ref dla zewnętrznego kontenera (używany do wykrywania kliknięcia na zewnątrz).         |
+| `popupRef`           | `RefObject<HTMLDivElement \| null>` | Ref dla elementu wyskakującego okienka (używany do wykrywania kliknięcia na zewnątrz). |
+| `handleKeyDown`      | `(e: KeyboardEvent) => void`        | Obsługa klawiatury (Escape, aby anulować).                                             |
+
+## Kluczowe zachowania
+
+### Otwieranie/Zamykanie
+
+Wyskakujące okienko może być kontrolowane lub niekontrolowane. Gdy podana jest właściwość `open`, hook używa jej jako źródła prawdy. W przeciwnym razie używany jest stan wewnętrzny z `initialOpen` jako wartością początkową.
+
+### Kliknięcie na zewnątrz
+
+Kliknięcie poza zarówno `containerRef`, jak i `popupRef` wywołuje `handleCancel`, przywracając oryginalną wartość i zamykając wyskakujące okienko.
+
+### Klawiatura
+
+Naciśnięcie klawisza `Escape`, gdy wyskakujące okienko jest otwarte, wywołuje `handleCancel`.
+
+### Tryb Inline
+
+Gdy `inline` ma wartość `true`, panel jest zawsze widoczny, a zmiany są stosowane natychmiast (automatyczna synchronizacja). Logika otwierania/zamykania jest pomijana.
+
+### Wzorzec stanu tymczasowego
+
+Ten hook utrzymuje stan tymczasowy, który jest zatwierdzany tylko po wywołaniu `handleConfirm`:
+
+- `handleConfirm` -- zapisuje stan tymczasowy do `onChange` i zamyka wyskakujące okienko
+- `handleCancel` -- przywraca stan tymczasowy do bieżącej wartości `value` i zamyka
+- `handleClear` -- wywołuje `onChange(null)` i zamyka
+
+### Wyświetlane wartości
+
+- `displayValue` -- sformatowany ciąg znaków zatwierdzonej wartości `value` (dla przycisku)
+- `timeDisplayValue` -- sformatowany ciąg znaków wartości tymczasowych (dla panelu)

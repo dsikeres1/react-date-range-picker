@@ -1,0 +1,88 @@
+---
+sidebar_position: 2
+title: Formatting
+---
+
+# Утилиты форматирования
+
+Функции для форматирования дат, времени и чисел для отображения.
+
+```tsx
+import {
+  formatDate,
+  formatDateTime,
+  formatTimeDisplay,
+  padNumber,
+} from "react-date-range-picker-headless";
+```
+
+## formatDate
+
+Форматирует дату с помощью настраиваемой строки формата.
+
+|                     |                                                   |
+| ------------------- | ------------------------------------------------- |
+| Сигнатура           | `formatDate(date: Date, format?: string): string` |
+| Формат по умолчанию | `"YYYY.MM.DD"`                                    |
+
+```tsx
+formatDate(new Date(2026, 2, 1)); // "2026.03.01"
+formatDate(new Date(2026, 2, 1), "YYYY-MM-DD"); // "2026-03-01"
+formatDate(new Date(2026, 2, 1), "M/D"); // "3/1"
+```
+
+## formatDateTime
+
+Форматирует дату и время с помощью настраиваемой строки формата.
+
+|                     |                                                       |
+| ------------------- | ----------------------------------------------------- |
+| Сигнатура           | `formatDateTime(date: Date, format?: string): string` |
+| Формат по умолчанию | `"YYYY.MM.DD HH:mm"`                                  |
+
+```tsx
+formatDateTime(new Date(2026, 2, 1, 14, 30)); // "2026.03.01 14:30"
+formatDateTime(new Date(2026, 2, 1, 14, 30), "YYYY-MM-DD HH:mm:ss"); // "2026-03-01 14:30:00"
+```
+
+## formatTimeDisplay
+
+Форматирует строку отображения времени на основе разрешенного `TimeConfig`.
+
+|           |                                                                                                                                                                 |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Сигнатура | `formatTimeDisplay(hour: number, minute: number, second: number, period: TimePeriod, config: Required<TimeConfig>, amLabel?: string, pmLabel?: string): string` |
+
+| Параметр  | Тип                    | По умолчанию | Описание                                                  |
+| --------- | ---------------------- | ------------ | --------------------------------------------------------- |
+| `hour`    | `number`               | --           | Значение часа (внутренне в 24-часовом формате).           |
+| `minute`  | `number`               | --           | Значение минуты.                                          |
+| `second`  | `number`               | --           | Значение секунды.                                         |
+| `period`  | `TimePeriod`           | --           | AM/PM (используется для отображения в 12-часовом режиме). |
+| `config`  | `Required<TimeConfig>` | --           | Разрешенная конфигурация времени.                         |
+| `amLabel` | `string`               | `"AM"`       | Метка для отображения AM.                                 |
+| `pmLabel` | `string`               | `"PM"`       | Метка для отображения PM.                                 |
+
+```tsx
+import { resolveTimeConfig, formatTimeDisplay } from "react-date-range-picker-headless";
+
+const config = resolveTimeConfig({ precision: "minute", hourFormat: "24" });
+formatTimeDisplay(14, 30, 0, "PM", config); // "14:30"
+
+const config12 = resolveTimeConfig({ precision: "second", hourFormat: "12" });
+formatTimeDisplay(14, 30, 15, "PM", config12); // "02:30:15 PM"
+```
+
+## padNumber
+
+Дополняет число до 2-значной строки.
+
+|           |                                  |
+| --------- | -------------------------------- |
+| Сигнатура | `padNumber(num: number): string` |
+
+```tsx
+padNumber(1); // "01"
+padNumber(12); // "12"
+padNumber(0); // "00"
+```

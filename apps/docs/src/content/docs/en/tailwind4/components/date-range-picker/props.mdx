@@ -1,0 +1,53 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Props
+
+| Prop                     | Type                                                          | Default      | Description                                                                                     |
+| ------------------------ | ------------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --           | Selected date range value                                                                       |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --           | Callback when value changes                                                                     |
+| `presets`                | `DateRangePreset[]`                                           | --           | Predefined date range presets                                                                   |
+| `maxDays`                | `number`                                                      | --           | Maximum days allowed in range (inclusive)                                                       |
+| `minDays`                | `number`                                                      | --           | Minimum days required in range (inclusive)                                                      |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`       | Allow range where start equals end                                                              |
+| `minDate`                | `Date`                                                        | --           | Minimum selectable date                                                                         |
+| `maxDate`                | `Date`                                                        | --           | Maximum selectable date                                                                         |
+| `locale`                 | `Partial<Locale>`                                             | --           | Custom locale configuration                                                                     |
+| `initialMonth`           | `Date`                                                        | --           | Initial displayed month                                                                         |
+| `today`                  | `Date`                                                        | `new Date()` | Override today's date for `isToday` highlighting and `disablePast`/`disableFuture` calculations |
+| `onMonthChange`          | `(month: Date) => void`                                       | --           | Callback fired when the displayed month changes                                                 |
+| `size`                   | `"small" \| "medium" \| "large" \| "x-large"`                 | `"medium"`   | Component size                                                                                  |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`   | First day of the week                                                                           |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --           | Mark dates as disabled                                                                          |
+| `displayFormat`          | `string`                                                      | --           | Custom display format (e.g. `"YYYY/MM/DD"`)                                                     |
+| `open`                   | `boolean`                                                     | --           | Controlled open state                                                                           |
+| `initialOpen`            | `boolean`                                                     | --           | Initial open state (uncontrolled)                                                               |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --           | Callback when open state changes                                                                |
+| `required`               | `boolean`                                                     | `false`      | Disable clearing the value                                                                      |
+| `showOutsideDays`        | `boolean`                                                     | `false`      | Show days from adjacent months                                                                  |
+| `highlightDates`         | `Date[]`                                                      | --           | Dates to highlight                                                                              |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`      | Auto-confirm when end date is selected                                                          |
+| `numberOfMonths`         | `number`                                                      | `2`          | Number of months to display                                                                     |
+| `captionLayout`          | `"buttons" \| "dropdown"`                                     | `"buttons"`  | Caption navigation style                                                                        |
+| `fromYear`               | `number`                                                      | --           | Start year for dropdown                                                                         |
+| `toYear`                 | `number`                                                      | --           | End year for dropdown                                                                           |
+| `disablePast`            | `boolean`                                                     | `false`      | Disable dates before today                                                                      |
+| `disableFuture`          | `boolean`                                                     | `false`      | Disable dates after today                                                                       |
+| `inline`                 | `boolean`                                                     | `false`      | Show calendar inline (no popup)                                                                 |
+| `name`                   | `string`                                                      | --           | Hidden input name for form submission (start date)                                              |
+| `endName`                | `string`                                                      | --           | Hidden input name for end date (defaults to `name-end`)                                         |
+| `placeholder`            | `string`                                                      | --           | Trigger placeholder text                                                                        |
+| `hideHeader`             | `boolean`                                                     | `false`      | Hide the navigation header                                                                      |
+| `hideFooter`             | `boolean`                                                     | `false`      | Hide the action footer                                                                          |
+
+### DateRangePreset
+
+```ts
+interface DateRangePreset {
+  label: string;
+  value: { start: Date; end: Date } | (() => { start: Date; end: Date });
+}
+```

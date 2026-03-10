@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: "Custom Day Cell"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/styled/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/styled/Customization/CompoundCustomDay.tsx?raw";
+
+# 커스텀 날짜 셀
+
+`Day` 컴포넌트의 render prop을 사용하여 각 날짜 셀의 모양을 커스텀할 수 있습니다. 이는 이벤트 표시기, 툴팁을 추가하거나 개별 날짜에 완전히 커스텀된 스타일을 적용할 때 유용합니다.
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Day Render Props
+
+| Prop             | Type         | 설명                                |
+| ---------------- | ------------ | ----------------------------------- |
+| `date`           | `Date`       | 날짜 객체                           |
+| `day`            | `number`     | 일 (1-31)                           |
+| `isToday`        | `boolean`    | 오늘인지 여부                       |
+| `isSelected`     | `boolean`    | 선택된 날짜인지 여부                |
+| `isDisabled`     | `boolean`    | 비활성화된 날짜인지 여부            |
+| `isInRange`      | `boolean`    | 선택된 범위 내에 있는지 여부        |
+| `isRangeStart`   | `boolean`    | 범위의 시작인지 여부                |
+| `isRangeEnd`     | `boolean`    | 범위의 끝인지 여부                  |
+| `isInHoverRange` | `boolean`    | 호버 미리보기 범위 내에 있는지 여부 |
+| `isHoverTarget`  | `boolean`    | 호버의 끝점인지 여부                |
+| `isOutsideDay`   | `boolean`    | 인접한 달에 속하는 날짜인지 여부    |
+| `isHighlighted`  | `boolean`    | 하이라이트 점이 있는지 여부         |
+| `isFocused`      | `boolean`    | 키보드 포커스가 있는지 여부         |
+| `onClick`        | `() => void` | 클릭 핸들러                         |
+| `onMouseEnter`   | `() => void` | 마우스 진입 핸들러                  |
+| `onMouseLeave`   | `() => void` | 마우스 이탈 핸들러                  |

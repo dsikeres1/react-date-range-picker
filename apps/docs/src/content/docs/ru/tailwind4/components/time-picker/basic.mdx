@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/tailwind4/TimePicker/Basic";
+import BasicSource from "@examples/tailwind4/TimePicker/Basic.tsx?raw";
+import Inline from "@examples/tailwind4/TimePicker/Inline";
+import InlineSource from "@examples/tailwind4/TimePicker/Inline.tsx?raw";
+
+# TimePicker
+
+Компонент для выбора времени с полем ввода и всплывающей панелью. Нажмите на поле ввода, чтобы открыть выпадающий список с прокручиваемыми колонками времени.
+
+## Базовое использование
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Встроенный
+
+Отображает панель времени непосредственно на странице, без триггера и всплывающего окна.
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

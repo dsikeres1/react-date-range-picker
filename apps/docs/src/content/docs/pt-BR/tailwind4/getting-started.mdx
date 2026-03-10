@@ -1,0 +1,83 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind4Basic from "@examples/tailwind4/DatePicker/Basic";
+import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
+
+# Primeiros Passos com Tailwind CSS v4
+
+O pacote Tailwind v4 fornece componentes de seletor de data estilizados com classes de utilitário do Tailwind CSS v4 e tokens de design semânticos.
+
+## Instalação
+
+<PackageInstall pkg="react-date-range-picker-tailwind4" />
+
+Importe os estilos dos componentes no seu arquivo CSS principal:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+Se o seu projeto ainda **não** define tokens de design semânticos (por exemplo, projetos shadcn/ui já os possuem), importe também o tema padrão:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+```
+
+### Projetos shadcn/ui
+
+shadcn/ui já define os tokens necessários. Você só precisa dos estilos dos componentes:
+
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### Projetos Tailwind v4 Independentes
+
+Para projetos sem shadcn/ui, importe tanto os tokens de tema quanto os estilos dos componentes:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+## Tokens Semânticos
+
+Os componentes utilizam propriedades personalizadas CSS `--rdrp-*` internamente, que mapeiam para tokens semânticos do Tailwind v4 / shadcn via `var()` com valores de fallback. Se você quiser personalizar o mapeamento, sobrescreva as variáveis `--rdrp-*` no seu CSS.
+
+O arquivo `rdrp-theme.css` fornece uma paleta padrão Slate + Sky com estes tokens:
+
+| Token                        | Uso                                 |
+| ---------------------------- | ----------------------------------- |
+| `--color-background`         | Fundos dos componentes              |
+| `--color-foreground`         | Cor do texto                        |
+| `--color-primary`            | Datas selecionadas, estados ativos  |
+| `--color-primary-foreground` | Texto sobre a cor primária          |
+| `--color-muted-foreground`   | Texto esmaecido, espaços reservados |
+| `--color-accent`             | Fundos ao passar o mouse            |
+| `--color-border`             | Cores de borda                      |
+| `--color-ring`               | Cor do anel de foco                 |
+
+## Guia Rápido
+
+<CodeDemo source={Tailwind4BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Tailwind4Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## O que está incluído
+
+| Componente | Descrição

@@ -1,0 +1,179 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Dark Mode
+
+The Tailwind v3 package includes full dark mode support via CSS custom properties. The Tailwind plugin (`rdrpPlugin`) injects color variables that automatically switch between light and dark palettes.
+
+## How It Works
+
+The Tailwind v3 plugin (`rdrpPlugin`) injects CSS custom properties that define the color palette. Dark mode works by overriding these variables under `.dark` or `[data-theme="dark"]`:
+
+- **Light mode** — `:root` defines default colors (Slate + Sky palette)
+- **Dark mode** — `.dark` and `[data-theme="dark"]` override colors automatically
+
+The component theme references these via `var(--rdrp-color-*)`, so dark mode activates when your Tailwind `darkMode` strategy triggers the appropriate selector.
+
+## Tailwind Configuration
+
+### Class Strategy (Recommended)
+
+Set `darkMode: "class"` in your Tailwind config. Dark mode activates when a `dark` class is on `<html>` or a parent element:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Toggle dark mode:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+Or apply the class on `<html>`:
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### Selector Strategy
+
+Tailwind v3.4+ supports `darkMode: "selector"` which allows using `[data-theme="dark"]` or any custom selector:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### Media Strategy
+
+Set `darkMode: "media"` (or omit — this is the default) to follow the OS preference:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "media",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+No additional setup required. The picker will follow `prefers-color-scheme`.
+
+## Color Variables
+
+Here are the CSS custom properties used for light/dark theming:
+
+| Variable                  | Light     | Dark                   |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
+
+## Integration with Docusaurus
+
+If you're using Docusaurus (which uses `data-theme` on `<html>`), configure Tailwind's selector strategy:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Docusaurus sets `<html data-theme="dark">` when dark mode is active, and the CSS variables will automatically switch to dark values.
+
+## Integration with next-themes
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes` adds/removes the `dark` class on `<html>`. With `darkMode: "class"` in your Tailwind config, the picker switches automatically.
+
+## Forcing a Specific Mode
+
+To force the picker to always use light or dark mode, wrap it in a container with the appropriate class:
+
+```tsx
+{
+  /* Always light — no "dark" class ancestor */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Always dark */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+When using `darkMode: "class"`, the `dark` class must be on a parent element or `<html>`. The picker itself doesn't manage the dark mode toggle.
+</Admonition>

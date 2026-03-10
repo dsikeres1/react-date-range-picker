@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+sidebar_label: Props
+---
+
+# 属性
+
+| 属性            | 类型                           | 默认值  | 描述                                |
+| --------------- | ------------------------------ | ------- | ----------------------------------- |
+| `value`         | `Date \| null`                 | --      | 选定的时间值 (仅使用时间部分)       |
+| `onChange`      | `(date: Date \| null) => void` | --      | 值更改时的回调                      |
+| `time`          | `TimeConfig`                   | --      | 时间面板配置                        |
+| `locale`        | `Partial<Locale>`              | --      | 自定义区域设置配置                  |
+| `displayFormat` | `string`                       | --      | 触发器的自定义显示格式              |
+| `placeholder`   | `string`                       | --      | 触发器的占位符文本                  |
+| `open`          | `boolean`                      | --      | 受控的打开状态                      |
+| `initialOpen`   | `boolean`                      | `false` | 初始打开状态 (非受控)               |
+| `onOpenChange`  | `(open: boolean) => void`      | --      | 打开状态更改时的回调                |
+| `required`      | `boolean`                      | `false` | 禁用清除值                          |
+| `inline`        | `boolean`                      | `false` | 以内联方式渲染，无需触发器/弹出窗口 |
+| `hideFooter`    | `boolean`                      | --      | 隐藏操作页脚                        |
+| `name`          | `string`                       | --      | 用于表单提交的隐藏输入框名称        |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** 时间显示精度。默认为 "minute"。 */
+  precision?: "hour" | "minute" | "second";
+  /** 12 小时或 24 小时格式。默认为 "24"。 */
+  hourFormat?: "12" | "24";
+  /** 分钟递增步长。默认为 5。 */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** 秒递增步长。默认为 1。 */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** 每个滚轮项的高度 (px)。默认为 32。 */
+  itemHeight?: number;
+}
+```

@@ -1,0 +1,38 @@
+---
+sidebar_position: 2
+title: Internationalization
+description: Personalización de la configuración regional, cambio de idioma y anulación de formatos.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Internacionalización
+
+La biblioteca utiliza la API `Intl.DateTimeFormat` del navegador para generar nombres de meses, etiquetas de días de la semana y texto AM/PM adaptados a la configuración regional. No se requiere ninguna biblioteca de i18n externa.
+
+## Inicio Rápido
+
+Usa `createLocale()` para generar una configuración regional a partir de una etiqueta de idioma BCP 47, y luego pásala a través de la prop `locale`:
+
+```tsx
+import { createLocale } from "react-date-range-picker-headless";
+import { DatePicker } from "react-date-range-picker-styled";
+
+const es = createLocale("es", {
+  confirm: "Confirmar",
+  cancel: "Cancelar",
+  clear: "Limpiar",
+  placeholder: "Seleccionar fecha",
+});
+
+function App() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} locale={es} />;
+}
+```
+
+Esto también funciona con cualquier otra variante (Tailwind v3, Tailwind v4, Headless).
+
+## Lo que `createLocale` Auto-Genera
+
+`createLocale(localeKey, overrides?)` utiliza `Intl.DateTimeFormat` para deriv

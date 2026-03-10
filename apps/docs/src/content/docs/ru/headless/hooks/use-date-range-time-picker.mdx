@@ -1,0 +1,52 @@
+---
+sidebar_position: 4
+title: useDateRangeTimePicker
+---
+
+# useDateRangeTimePicker
+
+Хук для выбора диапазона дат в сочетании с выбором времени для начальной и конечной дат. Объединяет возможности `useDateRangePicker` и управления временем в одном хуке.
+
+## Импорт
+
+```tsx
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+```
+
+## Использование
+
+```tsx
+import { useState } from "react";
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+
+function MyDateRangeTimePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangeTimePicker({
+    value: range,
+    onChange: setRange,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 15 },
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangeTimePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Двойной календарь, пресеты, элементы управления временем для начала и конца */}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Опции
+
+| Опция | Тип | По умолчанию | Описание |
+| ----- | --- | ------------ | -------- |

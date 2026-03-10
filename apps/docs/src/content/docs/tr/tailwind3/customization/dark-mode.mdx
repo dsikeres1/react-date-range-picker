@@ -1,0 +1,179 @@
+---
+sidebar_position: 9
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Karanlık Mod
+
+Tailwind v3 paketi, CSS özel özellikleri aracılığıyla tam karanlık mod desteği içerir. Tailwind eklentisi (`rdrpPlugin`), açık ve karanlık paletler arasında otomatik olarak geçiş yapan renk değişkenleri enjekte eder.
+
+## Nasıl Çalışır
+
+Tailwind v3 eklentisi (`rdrpPlugin`), renk paletini tanımlayan CSS özel özellikleri enjekte eder. Karanlık mod, `.dark` veya `[data-theme="dark"]` altında bu değişkenlerin üzerine yazarak çalışır:
+
+- **Açık mod** — `:root` varsayılan renkleri tanımlar (Slate + Sky paleti)
+- **Karanlık mod** — `.dark` ve `[data-theme="dark"]` renkleri otomatik olarak geçersiz kılar
+
+Bileşen teması bunlara `var(--rdrp-color-*)` aracılığıyla başvurur, bu nedenle Tailwind'in `darkMode` stratejisi uygun seçiciyi tetiklediğinde karanlık mod etkinleşir.
+
+## Tailwind Yapılandırması
+
+### Sınıf Stratejisi (Önerilen)
+
+Tailwind yapılandırmanızda `darkMode: "class"` ayarlayın. Karanlık mod, `<html>` etiketinde veya bir üst öğede `dark` sınıfı bulunduğunda etkinleşir:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Karanlık modu değiştirin:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div className={dark ? "dark" : ""}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+Veya sınıfı `<html>` etiketine uygulayın:
+
+```tsx
+document.documentElement.classList.toggle("dark", isDark);
+```
+
+### Seçici Stratejisi
+
+Tailwind v3.4 ve üzeri, `[data-theme="dark"]` veya herhangi bir özel seçici kullanmanıza olanak tanıyan `darkMode: "selector"` özelliğini destekler:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+```tsx
+<div data-theme={dark ? "dark" : "light"}>
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+### Medya Stratejisi
+
+İşletim sistemi tercihini takip etmek için `darkMode: "media"` ayarlayın (veya atlayın - bu varsayılandır):
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: "media",
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Ek bir kurulum gerekmez. Seçici, `prefers-color-scheme` özelliğini takip edecektir.
+
+## Renk Değişkenleri
+
+Açık/karanlık tema için kullanılan CSS özel özellikleri şunlardır:
+
+| Değişken                  | Açık Mod  | Karanlık Mod           |
+| ------------------------- | --------- | ---------------------- |
+| `--rdrp-color-bg`         | `#ffffff` | `#020617`              |
+| `--rdrp-color-text`       | `#0f172a` | `#f8fafc`              |
+| `--rdrp-color-text-muted` | `#64748b` | `#94a3b8`              |
+| `--rdrp-color-border`     | `#e2e8f0` | `#1e293b`              |
+| `--rdrp-color-bg-hover`   | `#f1f5f9` | `#1e293b`              |
+| `--rdrp-color-primary`    | `#0ea5e9` | `#0ea5e9`              |
+| `--rdrp-color-text-today` | `#0ea5e9` | `#38bdf8`              |
+| `--rdrp-color-range-bg`   | `#f0f9ff` | `rgba(8, 47, 73, 0.5)` |
+
+## Docusaurus ile Entegrasyon
+
+Eğer Docusaurus kullanıyorsanız (`<html>` üzerinde `data-theme` kullanan), Tailwind'in seçici stratejisini yapılandırın:
+
+```js
+import { rdrpPlugin } from "react-date-range-picker-tailwind3/plugin";
+
+export default {
+  darkMode: ["selector", '[data-theme="dark"]'],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/react-date-range-picker-tailwind3/dist/**/*.{js,mjs}",
+  ],
+  plugins: [rdrpPlugin],
+};
+```
+
+Docusaurus, karanlık mod etkin olduğunda `<html data-theme="dark">` ayarlar ve CSS değişkenleri otomatik olarak karanlık değerlere geçer.
+
+## next-themes ile Entegrasyon
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`next-themes`, `<html>` etiketine `dark` sınıfını ekler/kaldırır. Tailwind yapılandırmanızda `darkMode: "class"` ile seçici otomatik olarak değişir.
+
+## Belirli Bir Modu Zorlama
+
+Seçiciyi her zaman açık veya karanlık modu kullanmaya zorlamak için, onu uygun sınıfa sahip bir kapsayıcıya sarın:
+
+```tsx
+{
+  /* Her zaman açık — "dark" sınıfı atası yok */
+}
+<div className="">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Her zaman karanlık */
+}
+<div className="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```
+
+<Admonition type="note">
+`darkMode: "class"` kullanırken, `dark` sınıfı bir üst öğede veya `<html>` etiketinde olmalıdır. Seçicinin kendisi karanlık mod geçişini yönetmez.
+</Admonition>

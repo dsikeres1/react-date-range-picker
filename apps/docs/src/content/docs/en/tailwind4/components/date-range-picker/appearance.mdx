@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/tailwind4/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind4/DateRangePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/tailwind4/DateRangePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind4/DateRangePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/tailwind4/DateRangePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind4/DateRangePicker/CaptionDropdown.tsx?raw";
+
+# Appearance
+
+## Multiple Months
+
+Display more than 2 months side by side. Defaults to `2` for range pickers.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Custom Locale
+
+Use `createLocale` from the headless package to customize month/day names and UI strings.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Caption Dropdown
+
+Switch from button navigation to dropdown selectors for month and year. Useful for picking dates far from the current month.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

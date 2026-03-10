@@ -1,0 +1,103 @@
+---
+sidebar_position: 5
+title: useTimePicker
+---
+
+# useTimePicker
+
+Hook de baixo nível para o seletor de tempo com roda de rolagem. Gerencia a seleção de hora/minuto/segundo baseada em rolagem com comportamento de ajuste (snap). Este hook é normalmente usado internamente pela UI do painel de tempo, mas pode ser usado diretamente para implementações personalizadas de seletor de tempo.
+
+## Importação
+
+```tsx
+import { useTimePicker } from "react-date-range-picker-headless";
+```
+
+## Uso
+
+```tsx
+import { useState } from "react";
+import { useTimePicker } from "react-date-range-picker-headless";
+
+function MyTimePicker() {
+  const [hour, setHour] = useState(12);
+  const [minute, setMinute] = useState(0);
+
+  const picker = useTimePicker({
+    hour,
+    minute,
+    onHourChange: setHour,
+    onMinuteChange: setMinute,
+    precision: "minute",
+    hourFormat: "24",
+    minuteStep: 5,
+  });
+
+  return (
+    <div style={{ display: "flex", gap: 8 }}>
+      {/* Coluna de horas */}
+      <div
+        ref={picker.hourListRef}
+        onScroll={picker.handleHourScroll}
+        style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+      >
+        {picker.hours.map((h) => (
+          <div
+            key={h}
+            onClick={() => picker.handleHourClick(h)}
+            style={{
+              height: picker.itemHeight,
+              fontWeight: h === hour ? "bold" : "normal",
+            }}
+          >
+            {String(h).padStart(2, "0")}
+          </div>
+        ))}
+      </div>
+
+      {/* Coluna de minutos */}
+      {picker.showMinutes && (
+        <div
+          ref={picker.minuteListRef}
+          onScroll={picker.handleMinuteScroll}
+          style={{ height: picker.itemHeight * 5, overflow: "auto" }}
+        >
+          {picker.minutes.map((m) => (
+            <div
+              key={m}
+              onClick={() => picker.handleMinuteClick(m)}
+              style={{
+                height: picker.itemHeight,
+                fontWeight: m === minute ? "bold" : "normal",
+              }}
+            >
+              {String(m).padStart(2, "0")}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Alternador de período (modo 12 horas) */}
+      {picker.is12Hour && <button onClick={picker.handlePeriodToggle}>{picker.period}</button>}
+    </div>
+  );
+}
+```
+
+## Opções
+
+| Opção            | Tipo                           | Padrão     | Descrição                                                    |
+| ---------------- | ------------------------------ | ---------- | ------------------------------------------------------------ |
+| `hour`           | `number`                       | --         | **Obrigatório.** Hora atual. Modo 24h: 0-23, modo 12h: 1-12. |
+| `minute`         | `number`                       | --         | **Obrigatório.** Minuto atual.                               |
+| `second`         | `number`                       | --         | Segundo atual.                                               |
+| `period`         | `TimePeriod`                   | --         | Período AM/PM atual (obrigatório para o modo 12h).           |
+| `onHourChange`   | `(hour: number) => void`       | --         | **Obrigatório.** Manipulador de alteração de hora.           |
+| `onMinuteChange` | `(minute: number) => void`     | --         | **Obrigatório.** Manipulador de alteração de minuto.         |
+| `onSecondChange` | `(second: number) => void`     | --         | Manipulador de alteração de segundo.                         |
+| `onPeriodChange` | `(period: TimePeriod) => void` | --         | Manipulador de alteração de AM/PM.                           |
+| `precision`      | `TimePrecision`                | `"minute"` | Precisão de tempo: `"hour"`, `"minute"`, ou `"second"`.      |
+| `hourFormat`     | `HourFormat`                   | `"24"`     | Formato de hora `"12"` ou `"24"`.                            |
+| `minuteStep`     | `MinuteStep`                   | `5`        | Passo de incremento de minutos.                              |
+| `secondStep`     | `SecondStep`                   | `1`        | Passo de incremento de segundos.                             |
+| `itemHeight`     | `number                        |

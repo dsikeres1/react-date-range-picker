@@ -1,0 +1,46 @@
+---
+sidebar_position: 3
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDays from "@examples/tailwind3/DateRangePicker/MinMaxDays";
+import MinMaxDaysSource from "@examples/tailwind3/DateRangePicker/MinMaxDays.tsx?raw";
+import DisabledDates from "@examples/tailwind3/DateRangePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind3/DateRangePicker/DisabledDates.tsx?raw";
+import AllowSingleDate from "@examples/tailwind3/DateRangePicker/AllowSingleDate";
+import AllowSingleDateSource from "@examples/tailwind3/DateRangePicker/AllowSingleDate.tsx?raw";
+
+# Ograniczenia
+
+## Minimalna i maksymalna liczba dni
+
+Ogranicz długość zakresu za pomocą `minDays` i `maxDays` (włącznie). Użytkownicy nie mogą zatwierdzić zakresu krótszego niż `minDays` lub dłuższego niż `maxDays`.
+
+<CodeDemo source={MinMaxDaysSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinMaxDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Wyłączone daty
+
+Użyj `isDateUnavailable`, aby dynamicznie wyłączać określone daty. Wyłączone daty nie mogą być wybrane jako początek ani koniec zakresu.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Zezwalaj na pojedynczą datę
+
+Domyślnie dozwolony jest zakres, w którym data początkowa jest równa końcowej. Ustaw `allowSingleDateInRange={false}`, aby wymagać co najmniej dwóch różnych dat.
+
+<CodeDemo source={AllowSingleDateSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <AllowSingleDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

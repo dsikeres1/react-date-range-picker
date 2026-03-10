@@ -1,0 +1,136 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind4Basic from "@examples/tailwind4/DatePicker/Basic";
+import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
+
+# Tailwind CSS v4 入门
+
+Tailwind v4 软件包提供了使用 Tailwind CSS v4 功能类和语义化设计令牌设置样式的日期选择器组件。
+
+## 安装
+
+<PackageInstall pkg="react-date-range-picker-tailwind4" />
+
+在您的主 CSS 文件中导入组件样式：
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+如果您的项目**尚未**定义语义化设计令牌（例如 shadcn/ui 项目已经包含它们），还需导入默认主题：
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+```
+
+### shadcn/ui 项目
+
+shadcn/ui 已经定义了所需的令牌。您只需要组件样式：
+
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### 独立 Tailwind v4 项目
+
+对于没有 shadcn/ui 的项目，需要同时导入主题令牌和组件样式：
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+## 语义化令牌
+
+组件内部使用 `--rdrp-*` CSS 自定义属性，通过 `var()` 带回退值映射到 Tailwind v4 / shadcn 语义化令牌。如果您想自定义映射，请在 CSS 中覆盖 `--rdrp-*` 变量。
+
+`rdrp-theme.css` 文件提供了带有以下令牌的默认 Slate + Sky 调色板：
+
+| 令牌                         | 用途                 |
+| ---------------------------- | -------------------- |
+| `--color-background`         | 组件背景             |
+| `--color-foreground`         | 文本颜色             |
+| `--color-primary`            | 选中的日期、活动状态 |
+| `--color-primary-foreground` | 主色调上的文本       |
+| `--color-muted-foreground`   | 淡化文本、占位符     |
+| `--color-accent`             | 悬停背景             |
+| `--color-border`             | 边框颜色             |
+| `--color-ring`               | 聚焦环颜色           |
+
+## 快速开始
+
+<CodeDemo source={Tailwind4BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Tailwind4Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 包含内容
+
+| 组件                  | 描述                            |
+| --------------------- | ------------------------------- |
+| `DatePicker`          | 带弹出日历的单个日期选择        |
+| `DateRangePicker`     | 带双日历和预设的日期范围选择    |
+| `DateTimePicker`      | 带时间滚动面板的日期 + 时间选择 |
+| `DateRangeTimePicker` | 日期范围 + 时间选择             |
+
+所有组件都支持：
+
+- 通过 `value` / `onChange` 控制值
+- 键盘导航
+- 通过 `dark:` 变体支持暗黑模式
+- 4 种尺寸：`small`、`medium`、`large`、`x-large`
+- 用于自定义的复合组件 API
+
+## TypeScript 类型
+
+所有配置和数据类型都从软件包中重新导出 —— 无需单独安装 headless 软件包：
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind4";
+```
+
+这些类型可用于：
+
+- **`Locale`** — 自定义区域设置覆盖（星期名称、按钮标签、日期格式）
+- **`DatePickerSize`** — 为 `size` 属性指定类型（`"small"` | `"medium"` | `"large"` | `"x-large"`）
+- **`TimeConfig`** — 配置时间选择器的精度、格式和步长
+- **`DateRangePreset`** — 为 `DateRangePicker` / `DateRangeTimePicker` 定义预设
+- **`CalendarMonth`**, **`DayProps`** — 使用复合组件进行自定义渲染
+
+有关详细的类型定义，请参阅 [Headless 类型](/docs/headless/types/common-types)。
+
+## 后续步骤
+
+- [DatePicker](/docs/tailwind4/components/date-picker/basic) — 单个日期选择
+- [DateRangePicker](/docs/tailwind4/components/date-range-picker/basic) — 带预设的日期范围
+- [Compound Components](/docs/tailwind4/customization/overview) — 自定义内部结构
+- [Semantic Tokens](/docs/tailwind4/customization/semantic-tokens) — 使用设计令牌进行主题化
+- [Dark Mode](/docs/tailwind4/customization/dark-mode) — 暗黑主题支持

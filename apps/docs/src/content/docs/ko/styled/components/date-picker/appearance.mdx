@@ -1,0 +1,82 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/styled/DatePicker/Sizes";
+import SizesSource from "@examples/styled/DatePicker/Sizes.tsx?raw";
+import CustomFormat from "@examples/styled/DatePicker/CustomFormat";
+import CustomFormatSource from "@examples/styled/DatePicker/CustomFormat.tsx?raw";
+import CustomLocale from "@examples/styled/DatePicker/CustomLocale";
+import CustomLocaleSource from "@examples/styled/DatePicker/CustomLocale.tsx?raw";
+import WeekStartsOn from "@examples/styled/DatePicker/WeekStartsOn";
+import WeekStartsOnSource from "@examples/styled/DatePicker/WeekStartsOn.tsx?raw";
+import ShowOutsideDays from "@examples/styled/DatePicker/ShowOutsideDays";
+import ShowOutsideDaysSource from "@examples/styled/DatePicker/ShowOutsideDays.tsx?raw";
+import CaptionDropdown from "@examples/styled/DatePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/styled/DatePicker/CaptionDropdown.tsx?raw";
+
+# 외관
+
+## 크기
+
+4가지 내장 크기: `small`, `medium`, `large`, `x-large`.
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 사용자 지정 포맷
+
+표시 포맷 문자열을 사용자 지정합니다.
+
+<CodeDemo source={CustomFormatSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFormat client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 사용자 지정 로케일
+
+headless 패키지의 `createLocale`을 사용하여 국제화를 위한 사용자 지정 로케일을 제공합니다.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 시작 요일
+
+주의 첫 번째 요일을 변경합니다. 기본값은 `"sunday"`입니다.
+
+<CodeDemo source={WeekStartsOnSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <WeekStartsOn client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 외부 날짜 표시
+
+달력 그리드를 채우기 위해 인접한 달의 날짜를 표시합니다. 기본값은 `false`입니다.
+
+<CodeDemo source={ShowOutsideDaysSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShowOutsideDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 캡션 드롭다운
+
+`captionLayout="dropdown"`을 사용하여 월/년 탐색을 화살표에서 드롭다운으로 전환합니다. 연도 범위를 설정하려면 `fromYear`와 `toYear`를 사용하세요.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

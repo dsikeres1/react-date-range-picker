@@ -1,0 +1,82 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/styled/DatePicker/Sizes";
+import SizesSource from "@examples/styled/DatePicker/Sizes.tsx?raw";
+import CustomFormat from "@examples/styled/DatePicker/CustomFormat";
+import CustomFormatSource from "@examples/styled/DatePicker/CustomFormat.tsx?raw";
+import CustomLocale from "@examples/styled/DatePicker/CustomLocale";
+import CustomLocaleSource from "@examples/styled/DatePicker/CustomLocale.tsx?raw";
+import WeekStartsOn from "@examples/styled/DatePicker/WeekStartsOn";
+import WeekStartsOnSource from "@examples/styled/DatePicker/WeekStartsOn.tsx?raw";
+import ShowOutsideDays from "@examples/styled/DatePicker/ShowOutsideDays";
+import ShowOutsideDaysSource from "@examples/styled/DatePicker/ShowOutsideDays.tsx?raw";
+import CaptionDropdown from "@examples/styled/DatePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/styled/DatePicker/CaptionDropdown.tsx?raw";
+
+# 外観
+
+## サイズ
+
+4つの組み込みサイズ: `small`, `medium`, `large`, `x-large`。
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## カスタムフォーマット
+
+表示フォーマット文字列をカスタマイズします。
+
+<CodeDemo source={CustomFormatSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFormat client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## カスタムロケール
+
+headlessパッケージの`createLocale`を使用して、国際化のためのカスタムロケールを提供します。
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 週の開始日
+
+週の最初の曜日を変更します。デフォルトは`"sunday"`です。
+
+<CodeDemo source={WeekStartsOnSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <WeekStartsOn client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 隣接する月の日付を表示
+
+カレンダーグリッドを埋めるために、隣接する月の日付を表示します。デフォルトは`false`です。
+
+<CodeDemo source={ShowOutsideDaysSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShowOutsideDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## キャプションのドロップダウン
+
+`captionLayout="dropdown"`を使用して、月/年のナビゲーションを矢印からドロップダウンに切り替えます。`fromYear`と`toYear`を使用して年の範囲を設定します。
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

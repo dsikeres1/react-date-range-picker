@@ -1,0 +1,94 @@
+---
+sidebar_position: 3
+title: Locale
+---
+
+# 로케일
+
+사용자에게 보여지는 모든 문자열에 대한 인터페이스입니다. 특정 문자열을 재정의하려면 `Partial<Locale>`을 훅에 전달하세요. 지정되지 않은 필드는 `DEFAULT_LOCALE`로 대체됩니다.
+
+```tsx
+import type { Locale } from "react-date-range-picker-headless";
+```
+
+## 필드
+
+| 필드                   | 타입                                                                         | 설명                                                                |
+| ---------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `weekdays`             | `string[]`                                                                   | 일요일부터 시작하는 7개의 요일 약어입니다. 예: `["Su", "Mo", ...]`. |
+| `months`               | `string[]`                                                                   | 12개의 월 이름입니다. 예: `["January", "February", ...]`.           |
+| `confirm`              | `string`                                                                     | 확인 버튼 레이블. 기본값: `"Confirm"`.                              |
+| `cancel`               | `string`                                                                     | 취소 버튼 레이블. 기본값: `"Cancel"`.                               |
+| `clear`                | `string`                                                                     | 지우기 버튼 레이블. 기본값: `"Clear"`.                              |
+| `today`                | `string`                                                                     | 오늘 버튼 레이블. 기본값: `"Today"`.                                |
+| `placeholder`          | `string`                                                                     | 단일 날짜 플레이스홀더. 기본값: `"Select date"`.                    |
+| `rangePlaceholder`     | `string`                                                                     | 날짜 범위 플레이스홀더. 기본값: `"Select date range"`.              |
+| `dateTimePlaceholder`  | `string`                                                                     | 날짜-시간 플레이스홀더. 기본값: `"Select date and time"`.           |
+| `rangeTimePlaceholder` | `string`                                                                     | 범위-시간 플레이스홀더. 기본값: `"Select date range and time"`.     |
+| `timePlaceholder`      | `string`                                                                     | 시간 전용 플레이스홀더. 기본값: `"Select time"`.                    |
+| `am`                   | `string`                                                                     | 오전 레이블. 기본값: `"AM"`.                                        |
+| `pm`                   | `string`                                                                     | 오후 레이블. 기본값: `"PM"`.                                        |
+| `yearLabel`            | `string`                                                                     | 연도 열 헤더. 기본값: `""`.                                         |
+| `monthLabel`           | `string`                                                                     | 월 열 헤더. 기본값: `""`.                                           |
+| `hourLabel`            | `string`                                                                     | 시간 열 aria-label. 기본값: `"Hours"`.                              |
+| `minuteLabel`          | `string`                                                                     | 분 열 aria-label. 기본값: `"Minutes"`.                              |
+| `secondLabel`          | `string`                                                                     | 초 열 aria-label. 기본값: `"Seconds"`.                              |
+| `hoursLabel`           | `string`                                                                     | 시간 접근성 레이블. 기본값: `"Hours"`.                              |
+| `minutesLabel`         | `string`                                                                     | 분 접근성 레이블. 기본값: `"Minutes"`.                              |
+| `secondsLabel`         | `string`                                                                     | 초 접근성 레이블. 기본값: `"Seconds"`.                              |
+| `startTimeLabel`       | `string`                                                                     | 시작 시간 레이블. 기본값: `"Start time"`.                           |
+| `endTimeLabel`         | `string`                                                                     | 종료 시간 레이블. 기본값: `"End time"`.                             |
+| `rangeSeparator`       | `string`                                                                     | 날짜 범위 시작/종료 표시 구분자. 기본값: `" ~ "`.                   |
+| `prevMonth`            | `string`                                                                     | 이전 달 버튼 텍스트. 기본값: `"\u2039"` (왼쪽 홑화살괄호).          |
+| `nextMonth`            | `string`                                                                     | 다음 달 버튼 텍스트. 기본값: `"\u203A"` (오른쪽 홑화살괄호).        |
+| `prevMonthLabel`       | `string`                                                                     | 이전 달 접근성 레이블. 기본값: `"Previous month"`.                  |
+| `nextMonthLabel`       | `string`                                                                     | 다음 달 접근성 레이블. 기본값: `"Next month"`.                      |
+| `selectYearLabel`      | `string`                                                                     | 연도 드롭다운 접근성 레이블. 기본값: `"Select year"`.               |
+| `selectMonthLabel`     | `string`                                                                     | 월 드롭다운 접근성 레이블. 기본값: `"Select month"`.                |
+| `formatMonthYear`      | `(month: Date) => string`                                                    | 월 헤더 포맷. 기본값: `"January 2026"`.                             |
+| `formatDate`           | `(date: Date) => string`                                                     | 단일 날짜 표시 포맷. 기본값: `"2026-01-15"`.                        |
+| `formatDateTime`       | `(date: Date, precision?: TimePrecision, hourFormat?: HourFormat) => string` | 날짜-시간 표시 포맷. 기본값: `"2026-01-15 14:30"`.                  |
+| `formatTime`           | `(hour, minute, second, period?) => string`                                  | 시간 표시 포맷. 기본값: `"14:30:00"`.                               |
+| `formatRange`          | `(start: string, end: string) => string`                                     | 범위 표시 포맷. 기본값: `"start ~ end"`.                            |
+
+## TypeScript 정의
+
+```tsx
+interface Locale {
+  weekdays: string[];
+  months: string[];
+  confirm: string;
+  cancel: string;
+  clear: string;
+  today: string;
+  placeholder: string;
+  rangePlaceholder: string;
+  dateTimePlaceholder: string;
+  rangeTimePlaceholder: string;
+  timePlaceholder: string;
+  am: string;
+  pm: string;
+  yearLabel: string;
+  monthLabel: string;
+  hourLabel: string;
+  minuteLabel: string;
+  secondLabel: string;
+  hoursLabel: string;
+  minutesLabel: string;
+  secondsLabel: string;
+  startTimeLabel: string;
+  endTimeLabel: string;
+  rangeSeparator: string;
+  prevMonth: string;
+  nextMonth: string;
+  prevMonthLabel: string;
+  nextMonthLabel: string;
+  selectYearLabel: string;
+  selectMonthLabel: string;
+  formatMonthYear: (month: Date) => string;
+  formatDate: (date: Date) => string;
+  formatDateTime: (date: Date, precision?: TimePrecision, hourFormat?: HourFormat) => string;
+  formatTime: (hour: number, minute: number, second: number, period?: TimePeriod) => string;
+  formatRange: (start: string, end: string) => string;
+}
+```

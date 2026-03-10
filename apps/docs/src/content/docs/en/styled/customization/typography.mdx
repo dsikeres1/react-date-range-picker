@@ -1,0 +1,111 @@
+---
+sidebar_position: 8
+sidebar_label: "Typography"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/styled/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/styled/Customization/CompoundCustomFont.tsx?raw";
+import CompoundCustomFontPopup from "@examples/styled/Customization/CompoundCustomFontPopup";
+import CompoundCustomFontPopupSource from "@examples/styled/Customization/CompoundCustomFontPopup.tsx?raw";
+import CompoundNotoSans from "@examples/styled/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/styled/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/styled/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/styled/Customization/CompoundWebFonts.tsx?raw";
+import CSSCustomFont from "@examples/styled/Customization/CSSCustomFont";
+import CSSCustomFontSource from "@examples/styled/Customization/CSSCustomFont.tsx?raw";
+
+# Typography
+
+The styled package uses a **system font stack** by default:
+
+```css
+--rdrp-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+```
+
+This renders with the OS native font on each platform (San Francisco on macOS, Segoe UI on Windows, Roboto on Android). System fonts provide good multi-language support since the OS handles CJK, Arabic, and other script fallbacks automatically.
+
+To override, set `--rdrp-font-family` on any ancestor element — it cascades into the picker.
+
+## CSS Variable Inline Style
+
+Override the font via the `style` attribute on a wrapper element:
+
+<CodeDemo source={CSSCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CSSCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Font Family
+
+Switch between font families by setting `--rdrp-font-family` on a wrapper:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Using Web Fonts (Noto Sans)
+
+For consistent cross-platform rendering or i18n projects, load a web font like [Noto Sans](https://fonts.google.com/noto) and override the variable:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/rdrp-styles.css";
+
+// 1. Load Noto Sans in your HTML or CSS:
+//    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+// 2. Override the font variable:
+<div style={{ "--rdrp-font-family": '"Noto Sans", sans-serif' } as React.CSSProperties}>
+  <DatePicker value={value} onChange={setValue} inline />
+</div>;
+```
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Web Font Gallery
+
+Compare different web fonts to see how dramatically typography changes the picker's look. All fonts below support multi-language rendering (Latin, CJK, Korean).
+
+<Admonition type="warning" title="Demo only">
+  The fonts below are loaded from Google Fonts CDN for demonstration purposes. This library does
+  **not** bundle any web fonts — you need to load them in your own project.
+</Admonition>
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Font Size & Weight
+
+Fine-tune typography density by overriding size and weight variables:
+
+| Variable                      | Default | Description           |
+| ----------------------------- | ------- | --------------------- |
+| `--rdrp-font-size-xs`         | `11px`  | Smallest text         |
+| `--rdrp-font-size-sm`         | `12px`  | Weekday labels        |
+| `--rdrp-font-size-base`       | `13px`  | Day cells, buttons    |
+| `--rdrp-font-size-md`         | `14px`  | Trigger, time items   |
+| `--rdrp-font-size-lg`         | `15px`  | Month title           |
+| `--rdrp-font-weight-normal`   | `400`   | Base weight           |
+| `--rdrp-font-weight-medium`   | `500`   | Medium emphasis       |
+| `--rdrp-font-weight-semibold` | `600`   | Selected days, titles |
+| `--rdrp-font-weight-bold`     | `700`   | Today indicator       |
+
+<CodeDemo source={CompoundCustomFontPopupSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomFontPopup client:load />
+  </ExampleWrapper>
+</CodeDemo>

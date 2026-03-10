@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: Custom Day Cell
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/tailwind4/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/tailwind4/Customization/CompoundCustomDay.tsx?raw";
+
+# 日付セルのカスタマイズ
+
+`Grid` と `Day` のレンダープロップを使用して、各日付のレンダリング方法をカスタマイズします。これにより、イベントインジケーター、カスタムスタイリング、またはその他の追加コンテンツを個々の日付セルに追加できます。
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Dayレンダープロップ
+
+| プロップ         | 型           | 説明                                               |
+| ---------------- | ------------ | -------------------------------------------------- |
+| `date`           | `Date`       | `Date`オブジェクト                                 |
+| `day`            | `number`     | 月の日 (1-31)                                      |
+| `isToday`        | `boolean`    | 今日かどうか                                       |
+| `isSelected`     | `boolean`    | この日が選択されているかどうか                     |
+| `isDisabled`     | `boolean`    | この日が無効になっているかどうか                   |
+| `isInRange`      | `boolean`    | この日が選択された範囲内にあるかどうか             |
+| `isRangeStart`   | `boolean`    | これが範囲の開始日かどうか                         |
+| `isRangeEnd`     | `boolean`    | これが範囲の終了日かどうか                         |
+| `isInHoverRange` | `boolean`    | この日がホバープレビュー範囲内にあるかどうか       |
+| `isHoverTarget`  | `boolean`    | これがホバーの終点かどうか                         |
+| `isOutsideDay`   | `boolean`    | この日が隣接する月に属しているかどうか             |
+| `isHighlighted`  | `boolean`    | この日にハイライトドットが付いているかどうか       |
+| `isFocused`      | `boolean`    | この日にキーボードフォーカスが当たっているかどうか |
+| `onClick`        | `() => void` | クリックハンドラ                                   |
+| `onMouseEnter`   | `() => void` | マウスエンターハンドラ                             |
+| `onMouseLeave`   | `() => void` | マウスリーブハンドラ                               |

@@ -1,0 +1,195 @@
+---
+sidebar_position: 1
+title: Accessibility
+description: Keyboard navigation, ARIA attributes, focus management, and WCAG compliance.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# 無障礙
+
+所有選擇器組件都附帶內建的輔助功能支援。鍵盤導航、ARIA 屬性和焦點管理在每個變體中都是開箱即用的——Styled、Tailwind v3/v4 和 Headless。
+
+標準使用無需額外配置。此頁面記錄了所包含的內容，以便您可以審核、擴充或複製自訂 UI 中的模式。
+
+## 鍵盤導航
+
+### 日曆選擇器
+
+| Key               | Action                                           |
+| ----------------- | ------------------------------------------------ |
+| `ArrowLeft`       | Move focus to previous day                       |
+| `ArrowRight`      | Move focus to next day                           |
+| `ArrowUp`         | Move focus to previous week (same weekday)       |
+| `ArrowDown`       | Move focus to next week (same weekday)           |
+| `Enter` / `Space` | Select the focused day                           |
+| `Escape`          | Cancel changes and close the popup               |
+| `Tab`             | Move to next focusable element (browser default) |
+
+**停用日期跳過：** 使用箭頭鍵導覽時，會自動跳過停用日期。選擇器沿著移動方向搜尋最多 365 天，以查找下一個啟用日期。
+
+**自動月份滾動：** 當鍵盤焦點移動到不同月份的某一天時，日曆視圖會更新以顯示該月份。
+
+### 時間選擇器
+
+| Key      | Action                             |
+| -------- | ---------------------------------- |
+| `Escape` | Cancel changes and close the popup |
+
+時間選擇使用具有點擊/觸控互動的滾輪 UI。捲動列使用“scroll-snap”進行精確的值選擇。
+
+## ARIA 屬性
+
+每個互動元素都有適當的 ARIA 角色和屬性：
+
+### 彈出視窗和容器
+
+| Element          | Attribute               | Value                                |
+| ---------------- | ----------------------- | ------------------------------------ |
+| Popup container  | `role`                  | `"dialog"`                           |
+| Inline container | `role`                  | `"group"`                            |
+| Container        | `aria-label`            | Placeholder text from locale         |
+| Container        | `aria-activedescendant` | ID of the currently focused day cell |
+
+### 觸發按鈕
+
+| Attribute       | Value                     |
+| --------------- | ------------------------- |
+| `aria-expanded` | `true` when popup is open |
+| `aria-haspopup` | `"dialog"`                |
+
+### 日曆網格
+
+| Element             | Attribute       | Value                                         |
+| ------------------- | --------------- | --------------------------------------------- |
+| Grid wrapper        | `role`          | `"grid"`                                      |
+| Week row            | `role`          | `"row"`                                       |
+| Weekday header cell | `role`          | `"columnheader"`                              |
+| Day cell            | `role`          | `"gridcell"`                                  |
+| Day cell            | `aria-selected` | `true` when selected                          |
+| Day cell            | `aria-current`  | `"date"` when the cell is today               |
+| Day cell            | `aria-label`    | Formatted date string (e.g. `"2026-03-04"`)   |
+| Day cell            | `disabled`      | Set on disabled dates (native HTML attribute) |
+
+### 導航和下拉式選單
+
+| Element               | Attribute    | Value                                             |
+| --------------------- | ------------ | ------------------------------------------------- |
+| Previous month button | `aria-label` | `"Previous month"` (from `locale.prevMonthLabel`) |
+| Next month button     | `aria-label` | `"Next month"` (from `locale.nextMonthLabel`)     |
+| Month dropdown        | `aria-label` | `"Select month"` (from `locale.selectMonthLabel`) |
+| Year dropdown         | `aria-label` | `"Select year"` (from `locale.selectYearLabel`)   |
+
+### 時間欄
+
+| Element       | Attribute          | Value                                        |
+| ------------- | ------------------ | -------------------------------------------- |
+| Hour column   | `role`             | `"listbox"`                                  |
+| Hour column   | `aria-orientation` | `"vertical"`                                 |
+| Hour column   | `aria-label`       | `"Hours"` (from `locale.hourLabel`)          |
+| Minute column | `role`             | `"listbox"`                                  |
+| Minute column | `aria-orientation` | `"vertical"`                                 |
+| Minute column | `aria-label`       | `"Minutes"` (from `locale.minuteLabel`)      |
+| Second column | `role`             | `"listbox"`                                  |
+| Second column | `aria-orientation` | `"vertical"`                                 |
+| Second column | `aria-label`       | `"Seconds"` (from `locale.secondLabel`)      |
+| Time item     | `role`             | `"option"` (padding items: `"presentation"`) |
+| Time item     | `aria-selected`    | `true` when the item is the current value    |
+| Period toggle | `aria-label`       | Current period + ", toggle AM/PM"            |
+| Clear button  | `aria-label`       | `"Clear"` (from `locale.clear`)              |
+
+所有標籤字串都可以透過[區域設定係統](/docs/guides/internationalization) 進行自訂。
+
+## 焦點管理
+
+### 流動標籤索引
+
+日曆網格使用 **roving tabindex** 模式：
+
+- 只有目前對焦的日期單元格具有“tabIndex={0}”（可選項）。
+- 所有其他日期單元格都有“tabIndex={-1}”（不可選項卡，但可透過箭頭鍵聚焦）。
+- 這表示「Tab」將焦點移出日曆網格（到下一個控制項），而箭頭鍵將焦點在網格內移動。
+
+### 彈出焦點陷印
+
+彈出模式使用“@floating-ui/react”中的“FloatingFocusManager”來：
+
+- 打開時將焦點捕獲在彈出視窗內。
+- 彈出視窗關閉時，將焦點返回觸發按鈕。
+- 防止從彈出視窗切換到背景內容。
+
+### 原生元素
+
+月份和年份選擇使用本機`<select>`元素，這些元素本質上可以透過鍵盤存取。日間單元使用具有適當停用狀態的原生`<button>`元素。
+
+## WCAG 2.1 合規性
+
+符合以下 WCAG 2.1 成功標準：
+
+| Criterion                        | Level | How It's Addressed                                                              |
+| -------------------------------- | ----- | ------------------------------------------------------------------------------- |
+| **1.3.1** Info and Relationships | A     | Semantic HTML — `<button>`, `<select>`, grid/gridcell roles                     |
+| **2.1.1** Keyboard               | A     | All functionality reachable via keyboard (arrow keys, Enter, Escape)            |
+| **2.4.3** Focus Order            | A     | Logical tab order; popup uses focus manager                                     |
+| **2.4.7** Focus Visible          | AA    | `:focus-visible` outline (2px solid primary) on all interactive elements        |
+| **4.1.2** Name, Role, Value      | A     | All interactive elements have accessible names via `aria-label` or text content |
+
+<Admonition type="note">
+  預設情況下，樣式包（Styled、Tailwind v3/v4）包括可見的焦點指示器。如果你 使用 headless
+  套件建立自訂 UI，您必須提供自己的焦點樣式。
+</Admonition>
+
+## Headless：建立可存取的自訂 UI
+
+如果您直接使用無頭軟體包，請確保您的自訂 UI 包括：
+
+### 1.應用鍵盤處理程序
+
+將 `handleKeyDown` 傳遞到您的彈出容器，以便箭頭鍵導航運作：
+
+```tsx
+const { handleKeyDown, ... } = useDatePicker({ value, onChange });
+
+<div onKeyDown={handleKeyDown}>
+  {/* calendar grid */}
+</div>
+```
+
+### 2. 在日單元格上設定正確的 tabIndex
+
+使用“getDayProps()”中的“isFocused”標誌：
+
+```tsx
+const dayProps = getDayProps(date);
+
+<button
+  role="gridcell"
+  tabIndex={dayProps.isFocused ? 0 : -1}
+  aria-selected={dayProps.isSelected}
+  aria-current={dayProps.isToday ? "date" : undefined}
+  aria-label={locale.formatDate(date)}
+>
+  {dayProps.day}
+</button>;
+```
+
+### 3. 將 ARIA 角色加入您的網格中
+
+```tsx
+<div role="grid" aria-label={locale.placeholder}>
+  <div role="row">
+    {locale.weekdays.map((wd) => (
+      <div key={wd} role="columnheader">
+        {wd}
+      </div>
+    ))}
+  </div>
+  {calendar.weeks.map((week, i) => (
+    <div key={i} role="row">
+      {/* day cells with role="gridcell" */}
+    </div>
+  ))}
+</div>
+```
+
+請參閱[建立自訂 UI](/docs/headless/building-custom-ui) 以了解完整的演練。

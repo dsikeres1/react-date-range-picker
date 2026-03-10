@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# 사용자 정의 UI 빌드하기
+
+이 가이드는 헤드리스 훅 위에 자신만의 날짜 선택기 UI를 빌드하는 패턴을 안내합니다.
+
+## 패턴
+
+모든 헤드리스 훅은 동일한 패턴을 따릅니다:
+
+1.  **훅 호출**: 옵션(`value`, `onChange`, `configuration`)과 함께 훅을 호출합니다.
+2.  **반환 값 분해**: 상태, 계산된 값, 핸들러를 얻기 위해 반환 값을 구조 분해합니다.
+3.  **자체 마크업 렌더링**: 반환된 값을 사용하여 자신만의 마크업을 렌더링합니다.
+4.  **상호작용 연결**: 제공된 핸들러를 호출하여 상호작용을 연결합니다.
+
+훅은 캘린더 생성, 날짜 계산, 열기/닫기 상태, 키보드 탐색, 범위 로직 등 모든 복잡성을 관리하며, 여러분은 순수하게 표현에만 집중하면 됩니다.
+
+## 예제: 사용자 정의 날짜 선택기
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 핵심 개념
+
+### getDayProps
+
+`getDayProps` 함수는 캘린더 렌더링의 핵심입니다. 각 날짜 셀에 대해 셀의 상태를 설명하는 18개의 불리언/숫자 플래그가 포함된 `DayProps` 객체를 반환합니다:
+
+```tsx
+const dp = getDayProps(day);
+
+// 선택 상태
+dp.isSelected; // 현재 선택된 날짜
+dp.isToday; // 오늘 날짜
+
+// 범위 상태 (범위 선택기용)
+dp.isInRange; // 시작일과 종료일 사이
+dp.isRangeStart; // 범위의 첫 번째 날짜
+dp.isRangeEnd; // 범위의 마지막 날짜
+dp.isInHoverRange; // 호버 미리보기 범위 내
+dp.isHoverTarget; // 호버된 날짜 자체
+dp.isRangeSingle; // 범위 시작일과 종료일이 모두 해당 (단일 날짜 범위)
+
+// 시각적 연결 도우미
+dp.hasLeftConnection; // 이전 날짜와 연결됨 (범위 배경용)
+dp.hasRightConnection; // 다음 날짜와 연결됨
+dp.isConsecutiveRange; // 여러 날로 구성된 범위의 일부
+
+// 상태
+dp.isDisabled; // minDate/maxDate/isDateUnavailable에 의해 비활성화됨
+dp.isFocused; // 키보드 포커스를 가짐
+dp.isOutsideDay; // 인접한 달에 속함 (showOutsideDays가 활성화된 경우)
+dp.isHighlighted; // highlightDates 배열에 포함됨
+
+// 데이터
+dp.date; // Date 객체
+dp.day; // 월의 일자 번호
+dp.dayOfWeek; // 0-6 (일요일-토요일)
+```
+
+### 외부 클릭을 위한 Refs
+
+훅은 `containerRef`와 `popupRef`를 반환합니다. 이를 래퍼와 팝업 요소에 연결하세요. 훅은 이를 사용하여 외부 클릭을 감지하고 팝업을 자동으로 닫습니다.
+
+### 키보드 탐색
+
+`handleKeyDown` 핸들러는 전체 키보드 탐색을 위해 화살표 키, Enter, Escape, Tab을 지원합니다. 이를 팝업 컨테이너에 연결하세요.
+
+### 로케일
+
+사용자에게 표시되는 모든 문자열은 `locale` 객체에서 가져옵니다. 부분적인 `locale` 옵션을 전달하여 모든 문자열을 사용자 정의할 수 있습니다:
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "확인",
+    cancel: "뒤로",
+    placeholder: "날짜를 선택하세요...",
+  },
+});
+```
+
+## 다음 단계
+
+- [훅 레퍼런스](/docs/headless/hooks/use-date-picker) -- 각 훅의 전체 옵션 및 반환 값
+- [컨텍스트](/docs/headless/contexts) -- 복합 컴포넌트 패턴을 위해 프로바이더 사용하기
+- [날짜 유틸리티](/docs/headless/date-utilities) -- 날짜 조작을 위한 헬퍼 함수

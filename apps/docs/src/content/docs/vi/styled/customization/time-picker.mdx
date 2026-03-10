@@ -1,0 +1,32 @@
+---
+sidebar_position: 6
+sidebar_label: "Time Picker"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundTimePicker from "@examples/styled/Customization/CompoundTimePicker";
+import CompoundTimePickerSource from "@examples/styled/Customization/CompoundTimePicker.tsx?raw";
+import CompoundTimePickerTwelveHour from "@examples/styled/Customization/CompoundTimePickerTwelveHour";
+import CompoundTimePickerTwelveHourSource from "@examples/styled/Customization/CompoundTimePickerTwelveHour.tsx?raw";
+
+# Bộ chọn thời gian
+
+Sử dụng API phức hợp `TimePicker` để xây dựng một bộ chọn thời gian tùy chỉnh với một trình kích hoạt tùy chỉnh.
+
+<CodeDemo source={CompoundTimePickerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundTimePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Định dạng 12 giờ
+
+Cấu hình định dạng 12 giờ với `time`:
+
+<CodeDemo source={CompoundTimePickerTwelveHourSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundTimePickerTwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

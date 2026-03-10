@@ -1,0 +1,63 @@
+---
+sidebar_position: 5
+title: Locale Helpers
+---
+
+# Pomocnicy lokalizacji
+
+Funkcje do tworzenia i łączenia konfiguracji lokalizacji.
+
+```tsx
+import {
+  DEFAULT_LOCALE,
+  mergeLocale,
+  createLocale,
+  resolveLocale,
+  weekdayToNumber,
+} from "react-date-range-picker-headless";
+```
+
+## DEFAULT_LOCALE
+
+Domyślny obiekt lokalizacji angielskiej. Wszystkie pola są wypełnione angielskimi ciągami znaków.
+
+|     |          |
+| --- | -------- |
+| Typ | `Locale` |
+
+```tsx
+DEFAULT_LOCALE.weekdays; // ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+DEFAULT_LOCALE.months; // ["January", "February", ..., "December"]
+DEFAULT_LOCALE.confirm; // "Confirm"
+DEFAULT_LOCALE.placeholder; // "Select date"
+```
+
+## mergeLocale
+
+Łączy częściową lokalizację z domyślną lokalizacją.
+
+|           |                                                  |
+| --------- | ------------------------------------------------ |
+| Sygnatura | `mergeLocale(partial?: Partial<Locale>): Locale` |
+
+Zwraca `DEFAULT_LOCALE`, jeśli nie podano częściowej lokalizacji. Gdy `rangeSeparator` jest nadpisany, ale `formatRange` nie, `formatRange` jest automatycznie regenerowany, aby użyć nowego separatora.
+
+```tsx
+mergeLocale(); // DEFAULT_LOCALE
+
+mergeLocale({
+  confirm: "OK",
+  cancel: "Back",
+  rangeSeparator: " - ",
+});
+// { ...DEFAULT_LOCALE, confirm: "OK", cancel: "Back", rangeSeparator: " - ", formatRange: (s, e) => `${s} - ${e}` }
+```
+
+## createLocale
+
+Tworzy lokalizację z klucza lokalizacji BCP 47 przy użyciu `Intl.DateTimeFormat`.
+
+|     |     |
+| --- | --- |
+
+| Sygn

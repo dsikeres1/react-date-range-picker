@@ -1,0 +1,46 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Zusammengesetzte Komponenten
+
+Das Tailwind v4-Paket stellt eine Compound Component API bereit, die Ihnen die volle Kontrolle über die interne Struktur und das Rendering jedes Pickers gibt. Anstatt einer einzigen monolithischen Komponente setzen Sie den Picker aus einzelnen Teilen zusammen.
+
+## Wie es funktioniert
+
+Jeder Picker (z.B. `DatePicker`) ist sowohl eine einfache Komponente als auch ein Namespace für zusammengesetzte Teile:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+// Simple usage -- renders default layout
+<DatePicker value={value} onChange={setValue} />
+
+// Compound usage -- full control over structure
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+Mit zusammengesetzten Komponenten können Sie:
+
+- **Ersetzen** Sie jeden Teil durch Ihr eigenes Rendering (z.B. benutzerdefinierter Trigger, benutzerdefinierte Tageszelle)
+- **Ordnen** Sie das Layout neu an (z.B. Fußzeilen-Schaltflächen verschieben, eine Heute-Schaltfläche hinzufügen)
+- **Lassen** Sie Teile weg, die Sie nicht benötigen (z.B. die Fußzeile für einen minimalen Kalender entfernen)
+- **Überschreiben** Sie Klassen für jeden Teil über die `className`-Prop
+
+Die folgenden

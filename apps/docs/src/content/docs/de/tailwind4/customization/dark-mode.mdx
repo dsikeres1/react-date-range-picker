@@ -1,0 +1,185 @@
+---
+sidebar_position: 9
+---
+
+# Dark-Modus
+
+Das Tailwind v4-Paket unterstützt den Dark-Modus über sein semantisches Token-System. Da alle Farben auf CSS-Variablen verweisen, ist das Umschalten in den Dark-Modus lediglich eine Frage der Neudefinition dieser Variablen.
+
+## Wie es funktioniert
+
+Die Komponenten verwenden semantische Hilfsklassen wie `bg-primary`, `text-foreground` und `border-border`. Diese werden in CSS-Variablen (`--color-primary`, `--color-foreground` usw.) aufgelöst, die Sie im CSS Ihres Projekts definieren. Der Dark-Modus funktioniert, indem alternative Werte für diese Variablen unter einem dunklen Selektor bereitgestellt werden.
+
+## Einrichtung
+
+### Verwendung des `data-theme`-Attributs
+
+Definieren Sie helle und dunkle Token-Werte mithilfe von `data-theme`-Selektoren:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+
+[data-theme="dark"] {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+Schalten Sie den Dark-Modus um, indem Sie das Attribut festlegen:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div data-theme={dark ? "dark" : "light"}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+### Verwendung der `.dark`-Klasse
+
+Wenn Ihr Framework eine `.dark`-Klasse verwendet (z. B. Next.js mit `next-themes`), definieren Sie Tokens unter dieser Klasse:
+
+```css
+@theme {
+  /* Light tokens */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  /* ... */
+}
+```
+
+### Verwendung der Systemeinstellung
+
+Verwenden Sie `@media (prefers-color-scheme: dark)`, um der Betriebssystemeinstellung zu folgen:
+
+```css
+@theme {
+  /* Light tokens */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: oklch(0.145 0.004 285.823);
+    --color-foreground: oklch(0.985 0.001 285.823);
+    /* ... */
+  }
+}
+```
+
+## Integration mit next-themes
+
+Ein gängiges Muster bei Next.js und `next-themes`:
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "next-themes";
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+```css
+/* globals.css */
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+  /* ... all light tokens */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  /* ... all dark tokens */
+}
+```
+
+Der Picker übernimmt automatisch die korrekten Token-Werte, wenn sich das Thema ändert.
+
+## Hervorhebungspunkt im Dark-Modus
+
+Der Hervorhebungspunkt verwendet `after:bg-amber-500 dark:after:bg-amber-400` (eine konkrete Tailwind-Farbe, kein Token), um eine gute Sichtbarkeit in beiden Modi zu gewährleisten. Dies ist die einzige nicht-semantische Farbe in der Komponente. Wenn Sie sie ändern müssen, verwenden Sie die Compound Component API mit einem benutzerdefinierten `Day`-Render:
+
+```tsx
+<DatePicker.Day date={date}>
+  {(props) => (
+    <button /* ... */>
+      {props.day}
+      {props.isHighlighted && (
+        <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+      )}
+    </button>
+  )}
+</DatePicker.Day>
+```
+
+## Erzwingen eines bestimmten Modus
+
+Um den hellen oder dunklen Modus unabhängig von der Systemeinstellung zu erzwingen, legen Sie das Thema explizit fest:
+
+```tsx
+{
+  /* Immer hell */
+}
+<div data-theme="light">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+
+{
+  /* Immer dunkel */
+}
+<div data-theme="dark">
+  <DatePicker value={value} onChange={setValue} />
+</div>;
+```

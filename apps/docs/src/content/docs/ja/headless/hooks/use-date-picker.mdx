@@ -1,0 +1,91 @@
+---
+sidebar_position: 1
+title: useDatePicker
+---
+
+# useDatePicker
+
+The core hook for single date selection. It manages calendar state, open/close behavior, keyboard navigation, and date formatting.
+
+## Import
+
+```tsx
+import { useDatePicker } from "react-date-range-picker-headless";
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  const picker = useDatePicker({
+    value: date,
+    onChange: setDate,
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.placeholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Calendar header */}
+          <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+          <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+          <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+
+          {/* Calendar grid */}
+          {picker.calendar.weeks.flat().map((day, i) => {
+            if (!day) return <span key={i} />;
+            const dp = picker.getDayProps(day);
+            return (
+              <button key={i} onClick={() => picker.handleDateClick(day)} disabled={dp.isDisabled}>
+                {dp.day}
+              </button>
+            );
+          })}
+
+          {/* Footer */}
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Options
+
+| Option                | Type                                          | Default             | Description                                                                                |
+| --------------------- | --------------------------------------------- | ------------------- | ------------------------------------------------------------------------------------------ |
+| `value`               | `Date \| null`                                |                     | The selected date. (controlled)                                                            |
+| `onChange`            | `(date: Date \| null) => void`                |                     | Callback function invoked when a date is selected.                                         |
+| `minDate`             | `Date`                                        |                     | The minimum selectable date.                                                               |
+| `maxDate`             | `Date`                                        |                     | The maximum selectable date.                                                               |
+| `locale`              | `Partial<Locale>`                             | `en`                | Locale object for internationalization.                                                    |
+| `initialMonth`        | `Date`                                        | `new Date()`        | The month to display initially. If `value` is provided, it will be the month of that date. |
+| `size`                | `"x-large" \| "large" \| "medium" \| "small"` | `"medium"`          | The size of the picker. Affects the styled version.                                        |
+| `weekStartsOn`        | `"sunday"` - `"saturday"`                     | `"sunday"`          | The day the week starts on.                                                                |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     |                     | Function to disable a specific date. Returning `true` disables it.                         |
+| `displayFormat`       | `string`                                      | Depends on locale   | The format of the date string displayed in the input.                                      |
+| `open`                | `boolean`                                     |                     | Controls the open/closed state of the picker. (controlled component)                       |
+| `initialOpen`         | `boolean`                                     | `false`             | Sets the initial open/closed state of the picker. (uncontrolled component)                 |
+| `onOpenChange`        | `(open: boolean) => void`                     |                     | Callback when the open state changes.                                                      |
+| `required`            | `boolean`                                     | `false`             | If `true`, the value cannot be cleared.                                                    |
+| `today`               | `Date`                                        | `new Date()`        | Overrides the concept of "today".                                                          |
+| `onMonthChange`       | `(month: Date) => void`                       |                     | Callback when the displayed month changes.                                                 |
+| `disablePast`         | `boolean`                                     | `false`             | If `true`, all dates before `today` are disabled.                                          |
+| `disableFuture`       | `boolean`                                     | `false`             | If `true`, all dates after `today` are disabled.                                           |
+| `showOutsideDays`     | `boolean`                                     | `false`             | If `true`, shows dates from the previous and next month in the calendar.                   |
+| `highlightDates`      | `Date[]`                                      | `[]`                | Array of dates to highlight.                                                               |
+| `shouldCloseOnSelect` | `boolean`                                     | `true`              | If `true`, the picker will close after selecting a date.                                   |
+| `inline`              | `boolean`                                     | `false`             | If `true`, the calendar is always visible instead of in a popup.                           |
+| `numberOfMonths`      | `number`                                      | `1`                 | Number of months to display.                                                               |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"`         | The layout for month/year navigation.                                                      |
+| `fromYear`            | `number`                                      | `today - 100 years` | The start year for the year dropdown.                                                      |
+| `toYear`              | `number`                                      | `today + 10 years`  | The end year for the year dropdown.                                                        |

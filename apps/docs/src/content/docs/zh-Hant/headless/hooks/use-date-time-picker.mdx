@@ -1,0 +1,76 @@
+---
+sidebar_position: 3
+title: useDateTimePicker
+---
+
+# useDateTimePicker
+
+用於組合選擇日期和時間的 Hook。它擴展了 `useDatePicker`，增加了時間狀態（時、分、秒、週期）和一個巢狀的時間選擇器。
+
+## 導入
+
+```tsx
+import { useDateTimePicker } from "react-date-range-picker-headless";
+```
+
+## 用法
+
+```tsx
+import { useState } from "react";
+import { useDateTimePicker } from "react-date-range-picker-headless";
+
+function MyDateTimePicker() {
+  const [dateTime, setDateTime] = useState<Date | null>(null);
+
+  const picker = useDateTimePicker({
+    value: dateTime,
+    onChange: setDateTime,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 5 },
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.dateTimePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* 日曆 (與 useDatePicker 相同) */}
+          <div>
+            <button onClick={picker.handlePrevMonth}>{picker.locale.prevMonth}</button>
+            <span>{picker.locale.formatMonthYear(picker.calendar.month)}</span>
+            <button onClick={picker.handleNextMonth}>{picker.locale.nextMonth}</button>
+          </div>
+          {/* ...日曆網格... */}
+
+          {/* 時間顯示 */}
+          <div>
+            <span>時間: {picker.timeDisplayValue}</span>
+          </div>
+
+          {/* 時間控制 */}
+          <div>
+            <input
+              type="number"
+              value={picker.tempHour}
+              onChange={(e) => picker.handleHourChange(Number(e.target.value))}
+            />
+            <span>:</span>
+            <input
+              type="number"
+              value={picker.tempMinute}
+              onChange={(e) => picker.handleMinuteChange(Number(e.target.value))}
+            />
+          </div>
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## 選項
+
+| 選項 | 類型 | 預設值 | 說明

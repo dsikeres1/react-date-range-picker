@@ -1,0 +1,55 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Props
+
+| Propiedad             | Tipo                                          | Por defecto | Descripción                                          |
+| --------------------- | --------------------------------------------- | ----------- | ---------------------------------------------------- |
+| `value`               | `Date \| null`                                | --          | Valor de fecha y hora seleccionado                   |
+| `onChange`            | `(dateTime: Date \| null) => void`            | --          | Callback cuando el valor cambia                      |
+| `time`                | `TimeConfig`                                  | --          | Configuración del panel de tiempo                    |
+| `minDate`             | `Date`                                        | --          | Fecha mínima seleccionable                           |
+| `maxDate`             | `Date`                                        | --          | Fecha máxima seleccionable                           |
+| `locale`              | `Partial<Locale>`                             | --          | Configuración de localización personalizada          |
+| `initialMonth`        | `Date`                                        | --          | Mes inicial mostrado                                 |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | Tamaño del componente                                |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | Primer día de la semana                              |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | Marcar fechas como deshabilitadas                    |
+| `displayFormat`       | `string`                                      | --          | Formato de visualización personalizado               |
+| `open`                | `boolean`                                     | --          | Estado de apertura controlado                        |
+| `initialOpen`         | `boolean`                                     | --          | Estado de apertura inicial (no controlado)           |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | Callback cuando el estado de apertura cambia         |
+| `required`            | `boolean`                                     | `false`     | Deshabilitar la limpieza del valor                   |
+| `showOutsideDays`     | `boolean`                                     | `false`     | Mostrar días de meses adyacentes                     |
+| `highlightDates`      | `Date[]`                                      | --          | Fechas para resaltar                                 |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | Autoconfirmar al hacer clic en un preajuste          |
+| `numberOfMonths`      | `number`                                      | `1`         | Número de meses a mostrar                            |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | Estilo de navegación del encabezado                  |
+| `fromYear`            | `number`                                      | --          | Año de inicio para el desplegable                    |
+| `toYear`              | `number`                                      | --          | Año de fin para el desplegable                       |
+| `disablePast`         | `boolean`                                     | `false`     | Deshabilitar fechas anteriores a hoy                 |
+| `disableFuture`       | `boolean`                                     | `false`     | Deshabilitar fechas posteriores a hoy                |
+| `inline`              | `boolean`                                     | `false`     | Mostrar calendario en línea (sin popup)              |
+| `name`                | `string`                                      | --          | Nombre del input oculto para el envío de formularios |
+| `placeholder`         | `string`                                      | --          | Texto del placeholder del disparador                 |
+| `hideHeader`          | `boolean`                                     | `false`     | Ocultar el encabezado de navegación                  |
+| `hideFooter`          | `boolean`                                     | `false`     | Ocultar el pie de página de acciones                 |
+
+### TimeConfig
+
+```ts
+interface TimeConfig {
+  /** Precisión de la visualización de la hora. El valor por defecto es "minute". */
+  precision?: "hour" | "minute" | "second";
+  /** Formato de 12 o 24 horas. El valor por defecto es "24". */
+  hourFormat?: "12" | "24";
+  /** Paso de incremento de minutos. El valor por defecto es 5. */
+  minuteStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Paso de incremento de segundos. El valor por defecto es 1. */
+  secondStep?: 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+  /** Altura (en px) de cada elemento de la rueda de desplazamiento. El valor por defecto es 32. */
+  itemHeight?: number;
+}
+```

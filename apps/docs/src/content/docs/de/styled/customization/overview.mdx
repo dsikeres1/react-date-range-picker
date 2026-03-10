@@ -1,0 +1,45 @@
+---
+sidebar_position: 1
+sidebar_label: "Overview"
+---
+
+# Zusammengesetzte Komponenten
+
+Das `styled`-Paket stellt eine Compound-Komponenten-API bereit, die Ihnen die volle Kontrolle über die interne Struktur und das Rendern jedes Pickers gibt. Anstelle einer einzigen monolithischen Komponente setzen Sie den Picker aus einzelnen Teilen zusammen.
+
+## Wie es funktioniert
+
+Jeder Picker (z.B. `DatePicker`) ist sowohl eine einfache Komponente als auch ein Namespace von zusammengesetzten Teilen:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/rdrp-styles.css";
+
+// Simple usage — renders default layout
+<DatePicker value={value} onChange={setValue} />
+
+// Compound usage — full control over structure
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+## Verfügbare Teile
+
+### DatePicker
+
+| Teil | Beschreibung |
+| ---- | ------------ |

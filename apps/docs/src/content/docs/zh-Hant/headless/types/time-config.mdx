@@ -1,0 +1,61 @@
+---
+sidebar_position: 2
+title: TimeConfig
+---
+
+# TimeConfig
+
+用於時間相關選擇器的設定物件。在 `useDateTimePicker`、`useDateRangeTimePicker` 和 `useStandaloneTimePicker` 之間共享。
+
+```tsx
+import type { TimeConfig } from "react-date-range-picker-headless";
+```
+
+## 欄位
+
+| 欄位         | 類型            | 預設值     | 描述                                               |
+| ------------ | --------------- | ---------- | -------------------------------------------------- |
+| `precision`  | `TimePrecision` | `"minute"` | 時間顯示精度：`"hour"`、`"minute"` 或 `"second"`。 |
+| `hourFormat` | `HourFormat`    | `"24"`     | 12 小時制或 24 小時制格式：`"12"` 或 `"24"`。      |
+| `minuteStep` | `MinuteStep`    | `5`        | 分鐘遞增步長。                                     |
+| `secondStep` | `SecondStep`    | `1`        | 秒鐘遞增步長。                                     |
+| `itemHeight` | `number`        | `32`       | 每個滾輪項目的高度 (px)。                          |
+
+## TypeScript 定義
+
+```tsx
+interface TimeConfig {
+  precision?: TimePrecision;
+  hourFormat?: HourFormat;
+  minuteStep?: MinuteStep;
+  secondStep?: SecondStep;
+  itemHeight?: number;
+}
+```
+
+## 相關類型
+
+```tsx
+type TimePrecision = "hour" | "minute" | "second";
+type HourFormat = "12" | "24";
+type MinuteStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+type SecondStep = 1 | 2 | 3 | 5 | 10 | 15 | 20 | 30;
+```
+
+## 解析後的設定
+
+接受 `TimeConfig` 的掛鉤 (Hooks) 會回傳一个 `resolvedTimeConfig`，其中已填入所有預設值：
+
+```tsx
+type Required<TimeConfig>
+// { precision: TimePrecision; hourFormat: HourFormat; minuteStep: MinuteStep; secondStep: SecondStep; itemHeight: number }
+```
+
+使用 `resolveTimeConfig()` 工具程式手動解析預設值：
+
+```tsx
+import { resolveTimeConfig } from "react-date-range-picker-headless";
+
+const resolved = resolveTimeConfig({ precision: "second" });
+// { precision: "second", hourFormat: "24", minuteStep: 5, secondStep: 1, itemHeight: 32 }
+```

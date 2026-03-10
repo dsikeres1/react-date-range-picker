@@ -1,0 +1,58 @@
+---
+sidebar_position: 5
+title: Locale Helpers
+---
+
+# ตัวช่วย Locale
+
+ฟังก์ชันสำหรับสร้างและรวมการกำหนดค่า locale
+
+```tsx
+import {
+  DEFAULT_LOCALE,
+  mergeLocale,
+  createLocale,
+  resolveLocale,
+  weekdayToNumber,
+} from "react-date-range-picker-headless";
+```
+
+## DEFAULT_LOCALE
+
+อ็อบเจ็กต์ locale ภาษาอังกฤษเริ่มต้น ฟิลด์ทั้งหมดจะถูกเติมด้วยสตริงภาษาอังกฤษ
+
+|        |          |
+| ------ | -------- |
+| ประเภท | `Locale` |
+
+```tsx
+DEFAULT_LOCALE.weekdays; // ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+DEFAULT_LOCALE.months; // ["January", "February", ..., "December"]
+DEFAULT_LOCALE.confirm; // "Confirm"
+DEFAULT_LOCALE.placeholder; // "Select date"
+```
+
+## mergeLocale
+
+รวม locale บางส่วนเข้ากับ locale เริ่มต้น
+
+|         |                                                  |
+| ------- | ------------------------------------------------ |
+| ลายเซ็น | `mergeLocale(partial?: Partial<Locale>): Locale` |
+
+คืนค่า `DEFAULT_LOCALE` หากไม่มีการระบุ locale บางส่วน เมื่อมีการแทนที่ `rangeSeparator` แต่ไม่ได้แทนที่ `formatRange` ตัว `formatRange` จะถูกสร้างขึ้นใหม่โดยอัตโนมัติเพื่อใช้ตัวคั่นใหม่
+
+```tsx
+mergeLocale(); // DEFAULT_LOCALE
+
+mergeLocale({
+  confirm: "OK",
+  cancel: "Back",
+  rangeSeparator: " - ",
+});
+// { ...DEFAULT_LOCALE, confirm: "OK", cancel: "Back", rangeSeparator: " - ", formatRange: (s, e) => `${s} - ${e}` }
+```
+
+## createLocale
+
+สร้าง locale จากค

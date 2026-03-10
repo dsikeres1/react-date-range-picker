@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/tailwind3/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind3/DateRangePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/tailwind3/DateRangePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind3/DateRangePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/tailwind3/DateRangePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind3/DateRangePicker/CaptionDropdown.tsx?raw";
+
+# 外観
+
+## 複数月表示
+
+2ヶ月以上のカレンダーを並べて表示します。レンジピッカーのデフォルトは `2` です。
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## カスタムロケール
+
+headlessパッケージの `createLocale` を使用して、月/曜日の名前やUI文字列をカスタマイズします。
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## キャプションのドロップダウン
+
+ボタンナビゲーションから、月と年を選択するドロップダウンに変更します。現在月から離れた日付を選択する場合に便利です。
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

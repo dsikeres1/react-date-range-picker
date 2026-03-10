@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind4/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind4/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind4/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind4/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind4/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind4/Customization/CompoundWebFonts.tsx?raw";
+
+# 타이포그래피
+
+Tailwind v4 패키지는 Tailwind의 기본 `font-sans` 클래스 (`ui-sans-serif, system-ui, sans-serif, ...`)를 사용합니다. CSS `font-family`는 상속되므로, `fontFamily` 스타일이 적용된 컨테이너로 피커를 감싸 폰트를 재정의할 수 있습니다. 래퍼에 적용된 폰트는 모든 피커 요소에 계단식으로 적용됩니다.
+
+## 폰트 계열
+
+피커를 감싸고 래퍼에 `fontFamily`를 설정하여 폰트를 변경하세요:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 웹 폰트 사용하기 (Noto Sans)
+
+런타임에 웹 폰트를 로드하고 래퍼를 통해 적용합니다. 이 예제는 Google Fonts에서 [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans)를 로드합니다:
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="프로덕션 사용법">
+실제 프로젝트에서는 런타임에 주입하는 대신 HTML `<head>`의 `<link>` 태그나 CSS 번들러를 통해 폰트를 로드하세요. 여기서 사용된 `useEffect` 접근 방식은 데모용입니다.
+</Admonition>
+
+## 웹 폰트 갤러리
+
+다양한 웹 폰트를 비교하여 타이포그래피가 피커의 모양을 얼마나 극적으로 바꾸는지 확인해 보세요. 아래의 모든 폰트는 다국어 렌더링(라틴어, CJK, 한국어)을 지원합니다.
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,131 @@
+---
+sidebar_position: 11
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Tương thích với shadcn/ui
+
+Gói Tailwind v4 được thiết kế để tương thích ngay lập tức với các dự án [shadcn/ui](https://ui.shadcn.com/). Nó sử dụng cùng một quy ước token ngữ nghĩa, vì vậy nếu dự án của bạn đã thiết lập shadcn/ui, bộ chọn ngày sẽ tự động khớp với chủ đề của bạn.
+
+## Tại sao nó hoạt động
+
+shadcn/ui định nghĩa các biến CSS ngữ nghĩa như:
+
+```css
+--background
+--foreground
+--primary
+--primary-foreground
+--muted-foreground
+--accent
+--accent-foreground
+--destructive
+--border
+--input
+--ring
+```
+
+Các thành phần của `react-date-range-picker-tailwind4` sử dụng cùng tên token thông qua các lớp tiện ích của Tailwind (`bg-primary`, `text-foreground`, `border-border`, v.v.). Vì cả hai hệ thống đều tham chiếu đến cùng một biến CSS, bộ chọn sẽ kế thừa chủ đề hiện có của bạn.
+
+## Thiết lập không cần cấu hình
+
+Nếu bạn có một dự án shadcn/ui, hãy cài đặt gói và sử dụng trực tiếp:
+
+```bash
+npm install react-date-range-picker-tailwind4
+```
+
+```tsx
+import { useState } from "react";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} />;
+}
+```
+
+Không cần định nghĩa token bổ sung hoặc thay đổi CSS. Bộ chọn sẽ sử dụng các biến hiện có của bạn như `--color-primary`, `--color-background`, v.v.
+
+## Ánh xạ Token
+
+Đây là cách các token của bộ chọn tương ứng với các token của shadcn/ui:
+
+| Cách dùng Picker          | Lớp Tailwind              | Token shadcn           |
+| ------------------------- | ------------------------- | ---------------------- |
+| Nền popup                 | `bg-popover`              | `--popover`            |
+| Chữ popup                 | `text-popover-foreground` | `--popover-foreground` |
+| Ngày đã chọn              | `bg-primary`              | `--primary`            |
+| Chữ ngày đã chọn          | `text-primary-foreground` | `--primary-foreground` |
+| Di chuột qua ngày         | `bg-accent`               | `--accent`             |
+| Chữ khi di chuột qua ngày | `text-accent-foreground`  | `--accent-foreground`  |
+| Chữ bị làm mờ             | `text-muted-foreground`   | `--muted-foreground`   |
+| Nút xóa                   | `text-destructive`        | `--destructive`        |
+| Viền                      | `border-border`           | `--border`             |
+| Viền của trigger          | `border-input`            | `--input`              |
+| Vòng lấy nét              | `ring-ring`               | `--ring`               |
+
+## Sử dụng cùng với các thành phần shadcn
+
+Bộ chọn ngày có thể được đặt bên cạnh các thành phần shadcn/ui khác và sẽ khớp về mặt hình ảnh:
+
+```tsx
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function DateForm() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  return (
+    <div className="flex flex-col gap-2">
+      <Label>Select a date</Label>
+      <DatePicker value={date} onChange={setDate} />
+      <Button onClick={() => console.log(date)}>Submit</Button>
+    </div>
+  );
+}
+```
+
+## Chế độ tối
+
+Nếu dự án shadcn/ui của bạn sử dụng `next-themes` với chiến lược `class`, chế độ tối sẽ hoạt động tự động. Cả shadcn và bộ chọn ngày đều đọc từ cùng một biến CSS, và bộ chọn `.dark` của bạn sẽ chuyển đổi cả hai.
+
+```tsx
+// Hoạt động ngay lập tức với thiết lập chế độ tối của shadcn
+<ThemeProvider attribute="class" defaultTheme="system">
+  <DatePicker value={value} onChange={setValue} />
+</ThemeProvider>
+```
+
+## Registry của shadcn
+
+<Admonition type="info" title="Sắp có">
+Việc tích hợp đầy đủ với [registry của shadcn/ui](https://ui.shadcn.com/docs/registry) đang được lên kế hoạch. Điều này sẽ cho phép cài đặt bộ chọn ngày thông qua:
+
+```bash
+npx shadcn@latest add react-date-range-picker
+```
+
+Trong thời gian chờ đợi, hãy cài đặt gói npm trực tiếp và sử dụng Compound Component API cho bất kỳ tùy chỉnh cấu trúc nào.
+
+</Admonition>
+
+## Tùy chỉnh ngoài các giá trị mặc định của shadcn
+
+Nếu bạn muốn bộ chọn trông khác với phần còn lại của chủ đề shadcn, hãy giới hạn phạm vi ghi đè token vào một trình bao bọc:
+
+```css
+.custom-picker {
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+  --color-accent: oklch(0.95 0.05 300);
+}
+```
+
+```tsx
+<div className="custom-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```

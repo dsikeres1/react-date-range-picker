@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: "Custom Trigger"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/styled/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/styled/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/styled/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/styled/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Trigger Personalizado
+
+Reemplaza el disparador predeterminado con tu propio botón o entrada. El componente `Trigger` acepta una render prop que te da control total sobre la apariencia y el comportamiento del disparador.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render Props del Trigger
+
+| Prop           | Tipo             | Descripción                          |
+| -------------- | ---------------- | ------------------------------------ |
+| `displayValue` | `string`         | Fecha seleccionada formateada        |
+| `placeholder`  | `string`         | Texto del placeholder                |
+| `hasValue`     | `boolean`        | Si se ha seleccionado una fecha      |
+| `isOpen`       | `boolean`        | Si el popup está abierto             |
+| `onToggle`     | `() => void`     | Alterna abrir/cerrar el popup        |
+| `onClear`      | `() => void`     | Limpia la selección                  |
+| `locale`       | `Locale`         | Objeto de localización actual        |
+| `triggerRef`   | `(node) => void` | Callback de ref para posicionamiento |
+
+## Trigger del Selector de Rango
+
+El mismo patrón funciona con `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,179 @@
+---
+sidebar_position: 3
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDarkMode from "@examples/styled/Customization/CustomDarkMode";
+import CustomDarkModeSource from "@examples/styled/Customization/CustomDarkMode.tsx?raw";
+import DarkModeToggle from "@examples/styled/Customization/CompoundDarkMode";
+import DarkModeToggleSource from "@examples/styled/Customization/CompoundDarkMode.tsx?raw";
+
+# 다크 모드
+
+styled 패키지는 완벽한 다크 모드 지원을 포함합니다. 모든 CSS 변수에 다크 모드 값이 정의되어 있어 전체 피커가 자동으로 적응합니다.
+
+## 작동 방식
+
+다크 모드는 두 가지 메커니즘을 통해 활성화됩니다:
+
+1. **시스템 환경설정** — `prefers-color-scheme: dark` 미디어 쿼리
+2. **수동 토글** — `.rdrp-root` 또는 부모 요소의 `data-theme="dark"` 속성
+
+시스템 환경설정이 기본으로 적용됩니다. `data-theme="light"` 또는 `data-theme="dark"`를 명시적으로 설정하면 시스템 환경설정을 무시합니다.
+
+## 자동 (시스템 환경설정)
+
+별도 설정이 필요하지 않습니다. 피커는 사용자의 OS 설정을 따릅니다:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-styled";
+import "react-date-range-picker-styled/rdrp-styles.css";
+
+// Automatically follows system dark/light mode
+<DatePicker value={value} onChange={setValue} />;
+```
+
+CSS는 `@media (prefers-color-scheme: dark)`를 사용하여 모든 `--rdrp-*` 변수를 다크 모드 값으로 전환합니다.
+
+## 수동 토글
+
+피커 루트 또는 모든 조상 요소에 `data-theme`을 설정하세요:
+
+```tsx
+function App() {
+  const [dark, setDark] = useState(false);
+
+  return (
+    <div data-theme={dark ? "dark" : "light"}>
+      <button onClick={() => setDark(!dark)}>Toggle {dark ? "Light" : "Dark"}</button>
+      <DatePicker value={value} onChange={setValue} />
+    </div>
+  );
+}
+```
+
+또는 피커에 직접 적용하세요:
+
+```tsx
+<DatePicker value={value} onChange={setValue} data-theme="dark" />
+```
+
+Compound Component API를 사용할 때는 `Root`에 설정하세요:
+
+```tsx
+<DatePicker.Root value={value} onChange={setValue} data-theme="dark">
+  <DatePicker.Trigger />
+  <DatePicker.Content>{/* ... */}</DatePicker.Content>
+</DatePicker.Root>
+```
+
+## 다크 모드 색상 값
+
+모든 색상 변수는 자동으로 전환됩니다. 주요 차이점은 다음과 같습니다:
+
+| 변수                       | 라이트            | 다크              |
+| -------------------------- | ----------------- | ----------------- |
+| `--rdrp-color-primary`     | `#3b82f6`         | `#60a5fa`         |
+| `--rdrp-color-bg`          | `#ffffff`         | `#1f2937`         |
+| `--rdrp-color-bg-hover`    | `#f3f4f6`         | `#374151`         |
+| `--rdrp-color-text`        | `#374151`         | `#e5e7eb`         |
+| `--rdrp-color-text-strong` | `#111827`         | `#f9fafb`         |
+| `--rdrp-color-text-muted`  | `#6b7280`         | `#9ca3af`         |
+| `--rdrp-color-border`      | `#d1d5db`         | `#4b5563`         |
+| `--rdrp-color-range-bg`    | `#dbeafe`         | `#1e3a5f`         |
+| `--rdrp-color-text-today`  | `#2563eb`         | `#60a5fa`         |
+| `--rdrp-shadow-popup`      | `rgba(0,0,0,0.1)` | `rgba(0,0,0,0.3)` |
+
+전체 목록은 [CSS 변수](/docs/styled/customization/css-variables)에서 확인하세요.
+
+## 다크 모드 색상 커스터마이징
+
+`data-theme="dark"` 선택자 또는 `prefers-color-scheme` 미디어 쿼리 내에서 다크 모드 변수를 오버라이드하세요:
+
+```css
+/* Override dark mode primary color */
+@media (prefers-color-scheme: dark) {
+  .rdrp-root {
+    --rdrp-color-primary: #a78bfa;
+    --rdrp-color-primary-hover: #8b5cf6;
+    --rdrp-color-primary-light: #2e1065;
+    --rdrp-color-range-bg: #2e1065;
+    --rdrp-color-text-today: #a78bfa;
+  }
+}
+
+/* Also apply when manually toggled to dark */
+.rdrp-root[data-theme="dark"] {
+  --rdrp-color-primary: #a78bfa;
+  --rdrp-color-primary-hover: #8b5cf6;
+  --rdrp-color-primary-light: #2e1065;
+  --rdrp-color-range-bg: #2e1065;
+  --rdrp-color-text-today: #a78bfa;
+}
+```
+
+## 라이트 모드 강제 적용
+
+앱이 다크 모드를 지원하지 않는 경우, 피커가 시스템 환경설정에 따라 전환되는 것을 방지하기 위해 라이트 모드를 강제로 적용하세요:
+
+```tsx
+<div data-theme="light">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## 앱 테마와 통합
+
+앱이 이미 다크 모드 토글을 관리하고 있다면 (예: `<html>`의 `dark` 클래스를 통해), 이를 `data-theme`에 매핑하세요:
+
+```tsx
+// Sync with your app's dark mode state
+function ThemeSyncedPicker({ value, onChange }) {
+  const isDark = useAppTheme(); // your theme hook
+
+  return (
+    <div data-theme={isDark ? "dark" : "light"}>
+      <DatePicker value={value} onChange={onChange} />
+    </div>
+  );
+}
+```
+
+`<html class="dark">`를 사용하는 프레임워크(예: next-themes를 사용하는 Next.js)의 경우, CSS 규칙을 추가하여 두 가지를 연결할 수 있습니다:
+
+```css
+html.dark .rdrp-root {
+  /* Copy dark mode variable values here, or use data-theme approach */
+}
+```
+
+또는 클래스와 함께 html 요소에 `data-theme`을 설정하세요:
+
+```tsx
+// In your theme provider
+document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+```
+
+## 라이브 예제
+
+### 다크 모드 토글
+
+라이트 모드와 다크 모드 사이를 전환할 수 있는 토글 버튼이 있는 **DatePicker** (인라인)를 보여주는 대화형 예제입니다.
+
+<CodeDemo source={DarkModeToggleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <DarkModeToggle client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### 강제 다크 모드
+
+어두운 배경에서 `data-theme="dark"`를 사용하여 다크 모드로 렌더링된 **DateTimePicker**입니다.
+
+<CodeDemo source={CustomDarkModeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomDarkMode client:load />
+  </ExampleWrapper>
+</CodeDemo>

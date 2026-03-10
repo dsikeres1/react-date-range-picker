@@ -1,0 +1,214 @@
+---
+sidebar_position: 2
+sidebar_label: "CSS Variables"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomColors from "@examples/styled/Customization/CustomColors";
+import CustomColorsSource from "@examples/styled/Customization/CustomColors.tsx?raw";
+import CustomFont from "@examples/styled/Customization/CustomFont";
+import CustomFontSource from "@examples/styled/Customization/CustomFont.tsx?raw";
+import CustomBorderRadius from "@examples/styled/Customization/CustomBorderRadius";
+import CustomBorderRadiusSource from "@examples/styled/Customization/CustomBorderRadius.tsx?raw";
+import CustomSize from "@examples/styled/Customization/CustomSize";
+import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw";
+
+# Zmienne CSS
+
+Pakiet `styled` używa niestandardowych właściwości CSS (zmiennych) dla wszystkich wartości wizualnych. Zastąp je w `.rdrp-root` lub dowolnym elemencie nadrzędnym, aby dostosować wygląd bez dotykania kodu komponentu.
+
+## Jak nadpisywać
+
+Wszystkie zmienne są zdefiniowane w zakresie `.rdrp-root`. Nadpisz je w swoim własnym CSS:
+
+```css
+/* Twój niestandardowy motyw */
+.rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-border-radius-lg: 12px;
+}
+```
+
+Lub ogranicz nadpisania do konkretnej instancji, używając klasy otaczającej:
+
+```css
+.my-purple-picker .rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-color-primary-light: #ede9fe;
+  --rdrp-color-primary-lighter: #f5f3ff;
+}
+```
+
+```tsx
+<div className="my-purple-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## Referencja zmiennych
+
+### Kolory
+
+| Zmienna                         | Domyślnie (Jasny)          | Opis                                                       |
+| ------------------------------- | -------------------------- | ---------------------------------------------------------- |
+| `--rdrp-color-primary`          | `#3b82f6`                  | Główny kolor akcji (wybrany dzień, przycisk potwierdzenia) |
+| `--rdrp-color-primary-hover`    | `#2563eb`                  | Stan hover dla głównego koloru                             |
+| `--rdrp-color-primary-light`    | `#dbeafe`                  | Tło zakresu, jasny akcent główny                           |
+| `--rdrp-color-primary-lighter`  | `#eff6ff`                  | Tło aktywnego presetu                                      |
+| `--rdrp-color-primary-disabled` | `#93c5fd`                  | Nieaktywny przycisk potwierdzenia                          |
+| `--rdrp-color-bg`               | `#ffffff`                  | Kolor tła                                                  |
+| `--rdrp-color-bg-hover`         | `#f3f4f6`                  | Tło hover dla dni, przycisków                              |
+| `--rdrp-color-bg-subtle`        | `#f9fafb`                  | Subtelne tło                                               |
+| `--rdrp-color-text`             | `#374151`                  | Domyślny kolor tekstu                                      |
+| `--rdrp-color-text-strong`      | `#111827`                  | Mocny tekst (tytuły, aktywny czas)                         |
+| `--rdrp-color-text-muted`       | `#6b7280`                  | Wyciszony tekst (przyciski nawigacyjne, etykiety)          |
+| `--rdrp-color-text-placeholder` | `#6b7280`                  | Tekst zastępczy                                            |
+| `--rdrp-color-text-disabled`    | `#d1d5db`                  | Tekst nieaktywnego dnia                                    |
+| `--rdrp-color-text-outside`     | `#9ca3af`                  | Dni poza miesiącem                                         |
+| `--rdrp-color-text-inverse`     | `#ffffff`                  | Tekst na tłach w głównym kolorze                           |
+| `--rdrp-color-text-danger`      | `#ef4444`                  | Tekst przycisku czyszczenia/niebezpieczeństwa              |
+| `--rdrp-color-text-today`       | `#2563eb`                  | Kolor wskaźnika dzisiejszego dnia                          |
+| `--rdrp-color-border`           | `#d1d5db`                  | Domyślne obramowanie                                       |
+| `--rdrp-color-border-light`     | `#e5e7eb`                  | Jasne obramowanie (popup, selecty)                         |
+| `--rdrp-color-border-subtle`    | `#f3f4f6`                  | Subtelne obramowanie (stopka, presety)                     |
+| `--rdrp-color-border-hover`     | `#93c5fd`                  | Stan hover obramowania                                     |
+| `--rdrp-color-highlight-dot`    | `#f59e0b`                  | Kolor kropki wyróżnienia                                   |
+| `--rdrp-highlight-dot-size`     | `4px`                      | Średnica kropki wyróżnienia                                |
+| `--rdrp-color-range-bg`         | `#dbeafe`                  | Tło dnia w zakresie                                        |
+| `--rdrp-color-hover-range-bg`   | `#eff6ff`                  | Tło podglądu zakresu przy najechaniu                       |
+| `--rdrp-color-hover-target-bg`  | `#bfdbfe`                  | Tło punktu końcowego przy najechaniu                       |
+| `--rdrp-color-time-highlight`   | `rgba(59, 130, 246, 0.08)` | Pasek wyróżnienia panelu czasu                             |
+
+### Typografia
+
+| Zmienna                       | Domyślnie         | Opis                                                   |
+| ----------------------------- | ----------------- | ------------------------------------------------------ |
+| `--rdrp-font-family`          | System font stack | Rodzina czcionek                                       |
+| `--rdrp-font-size-xs`         | `11px`            | Bardzo mały (nagłówek dnia tygodnia w małym rozmiarze) |
+| `--rdrp-font-size-sm`         | `12px`            | Mały (nagłówki dni tygodnia, etykiety)                 |
+| `--rdrp-font-size-base`       | `13px`            | Podstawowy (komórki dni, przyciski)                    |
+| `--rdrp-font-size-md`         | `14px`            | Średni (wyzwalacz, elementy czasu)                     |
+| `--rdrp-font-size-lg`         | `15px`            | Duży (tytuł nagłówka)                                  |
+| `--rdrp-font-weight-normal`   | `400`             | Normalna grubość                                       |
+| `--rdrp-font-weight-medium`   | `500`             | Średnia grubość                                        |
+| `--rdrp-font-weight-semibold` | `600`             | Półgruba grubość                                       |
+| `--rdrp-font-weight-bold`     | `700`             | Gruba grubość (wskaźnik dzisiejszego dnia)             |
+
+### Odstępy
+
+| Zmienna              | Domyślnie | Opis                  |
+| -------------------- | --------- | --------------------- |
+| `--rdrp-spacing-xs`  | `2px`     | Bardzo mały odstęp    |
+| `--rdrp-spacing-sm`  | `4px`     | Mały odstęp           |
+| `--rdrp-spacing-md`  | `8px`     | Średni odstęp         |
+| `--rdrp-spacing-lg`  | `12px`    | Duży odstęp           |
+| `--rdrp-spacing-xl`  | `16px`    | Bardzo duży odstęp    |
+| `--rdrp-spacing-2xl` | `24px`    | 2x bardzo duży odstęp |
+
+### Obramowania
+
+| Zmienna                     | Domyślnie | Opis                                |
+| --------------------------- | --------- | ----------------------------------- |
+| `--rdrp-border-radius-sm`   | `4px`     | Mały promień                        |
+| `--rdrp-border-radius-md`   | `6px`     | Średni promień (przyciski, selecty) |
+| `--rdrp-border-radius-lg`   | `8px`     | Duży promień (dni, wyzwalacz)       |
+| `--rdrp-border-radius-xl`   | `12px`    | Bardzo duży promień (popup)         |
+| `--rdrp-border-radius-full` | `9999px`  | Pełny promień (kropka wyróżnienia)  |
+| `--rdrp-border-width`       | `1px`     | Szerokość obramowania               |
+
+### Cienie
+
+| Zmienna                | Domyślnie                     | Opis              |
+| ---------------------- | ----------------------------- | ----------------- |
+| `--rdrp-shadow-popup`  | `0 10px 25px rgba(0,0,0,0.1)` | Cień okna popup   |
+| `--rdrp-shadow-inline` | `0 4px 12px rgba(0,0,0,0.06)` | Cień trybu inline |
+| `--rdrp-shadow-sm`     | `0 2px 6px rgba(0,0,0,0.04)`  | Mały cień         |
+
+### Rozmiary
+
+| Zmienna                    | Domyślnie | Opis                                        |
+| -------------------------- | --------- | ------------------------------------------- |
+| `--rdrp-cell-size`         | `36px`    | Szerokość/wysokość komórki dnia             |
+| `--rdrp-nav-btn-size`      | `28px`    | Rozmiar przycisku nawigacyjnego             |
+| `--rdrp-weekday-height`    | `28px`    | Wysokość wiersza nagłówka dni tygodnia      |
+| `--rdrp-grid-min-height`   | `216px`   | Minimalna wysokość siatki kalendarza        |
+| `--rdrp-panel-min-width`   | `252px`   | Szerokość pojedynczego panelu kalendarza    |
+| `--rdrp-dual-gap`          | `24px`    | Odstęp między podwójnymi kalendarzami       |
+| `--rdrp-trigger-min-width` | `200px`   | Minimalna szerokość przycisku wyzwalającego |
+| `--rdrp-trigger-padding-x` | `14px`    | Poziomy padding wyzwalacza                  |
+| `--rdrp-trigger-padding-y` | `8px`     | Pionowy padding wyzwalacza                  |
+| `--rdrp-popup-padding`     | `16px`    | Wewnętrzny padding okna popup               |
+| `--rdrp-popup-gap`         | `6px`     | Odstęp zawartości okna popup                |
+| `--rdrp-btn-padding-x`     | `14px`    | Poziomy padding przycisku stopki            |
+| `--rdrp-btn-padding-y`     | `6px`     | Pionowy padding przycisku stopki            |
+| `--rdrp-preset-min-width`  | `140px`   | Minimalna szerokość paska bocznego presetów |
+
+### Wybór czasu
+
+| Zmienna                       | Domyślnie | Opis                                |
+| ----------------------------- | --------- | ----------------------------------- |
+| `--rdrp-time-item-height`     | `32px`    | Wysokość elementu przewijania czasu |
+| `--rdrp-time-panel-height`    | `176px`   | Całkowita wysokość panelu czasu     |
+| `--rdrp-time-column-height`   | `160px`   | Wysokość kolumny przewijalnej       |
+| `--rdrp-time-panel-min-width` | `120px`   | Minimalna szerokość panelu czasu    |
+| `--rdrp-time-colon-width`     | `12px`    | Szerokość separatora dwukropka      |
+
+### Z-index
+
+| Zmienna               | Domyślnie | Opis                   |
+| --------------------- | --------- | ---------------------- |
+| `--rdrp-z-popup`      | `50`      | z-index okna popup     |
+| `--rdrp-z-day-button` | `20`      | z-index aktywnego dnia |
+
+### Przejścia
+
+| Zmienna                    | Domyślnie | Opis                                      |
+| -------------------------- | --------- | ----------------------------------------- |
+| `--rdrp-transition-fast`   | `0.1s`    | Szybkie przejścia (najechanie na dzień)   |
+| `--rdrp-transition-normal` | `0.15s`   | Normalne przejścia (wyzwalacz, przyciski) |
+
+## Przykłady na żywo
+
+### Niestandardowe kolory (motyw fioletowy)
+
+Nadpisz zmienne kolorów podstawowych, aby stworzyć zupełnie inny schemat kolorów. Ten przykład używa **DatePicker** z odcieniami fioletu.
+
+<CodeDemo source={CustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Niestandardowa czcionka (szeryfowa)
+
+Czcionki są dziedziczone kaskadowo w CSS, więc opakowanie komponentu w `div` z niestandardową `font-family` zastosuje ją do całego tekstu. Ten przykład używa **DateRangePicker** z czcionką szeryfową Georgia.
+
+<CodeDemo source={CustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Ostre rogi (bez zaokrąglenia)
+
+Ustaw wszystkie zmienne `border-radius` na `0px`, aby uzyskać całkowicie kwadratowy wygląd.
+
+<CodeDemo source={CustomBorderRadiusSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomBorderRadius client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### Niestandardowy rozmiar za pomocą zmiennych CSS
+
+Zamiast używać wbudowanego propa `size`, nadpisz poszczególne zmienne rozmiaru, aby uzyskać precyzyjną kontrolę. Ten przykład używa **DateRangePicker** z niestandardowym rozmiarem komórek i czcionek.
+
+<CodeDemo source={CustomSizeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSize client:load />
+  </ExampleWrapper>
+</CodeDemo>

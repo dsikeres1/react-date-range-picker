@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: Range Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/tailwind3/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/tailwind3/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/tailwind3/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/tailwind3/Customization/CompoundRangeInline.tsx?raw";
+
+# Bộ chọn Phạm vi
+
+API phức hợp `DateRangePicker` cung cấp các phần bổ sung cho lịch kép và các phạm vi đặt trước. Bạn có toàn quyền kiểm soát bố cục của các cài đặt trước, lưới lịch, tiêu đề và các hành động ở chân trang.
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Nội tuyến với các Cài đặt sẵn
+
+Hiển thị bộ chọn phạm vi nội tuyến với một thanh bên cài đặt sẵn:
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

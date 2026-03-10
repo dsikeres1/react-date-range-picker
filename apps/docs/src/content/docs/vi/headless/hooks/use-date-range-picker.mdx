@@ -1,0 +1,205 @@
+---
+sidebar_position: 2
+title: useDateRangePicker
+---
+
+# useDateRangePicker
+
+Hook để chọn khoảng ngày với lịch hai tháng, xem trước khi di chuột và các khoảng đặt trước.
+
+## Import
+
+```tsx
+import { useDateRangePicker } from "react-date-range-picker-headless";
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { useDateRangePicker } from "react-date-range-picker-headless";
+
+function MyDateRangePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangePicker({
+    value: range,
+    onChange: setRange,
+    presets: [
+      {
+        label: "Last 7 days",
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setDate(start.getDate() - 6);
+          return { start, end };
+        },
+      },
+    ],
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Hai lịch cạnh nhau */}
+          {[picker.leftCalendar, picker.rightCalendar].map((cal, calIdx) => (
+            <div key={calIdx}>
+              <span>{picker.locale.formatMonthYear(cal.month)}</span>
+              {cal.weeks.flat().map((day, i) => {
+                if (!day) return <span key={i} />;
+                const dp = picker.getDayProps(day, cal.month);
+                return (
+                  <button
+                    key={i}
+                    onClick={() => picker.handleDateClick(day)}
+                    onMouseEnter={() => picker.handleDateHover(day)}
+                    onMouseLeave={() => picker.handleDateHover(null)}
+                  >
+                    {dp.day}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+
+          {/* Các khoảng đặt trước */}
+          {picker.presets.map((preset, i) => (
+            <button
+              key={i}
+              onClick={() => picker.handlePresetClick(preset)}
+              style={{ fontWeight: i === picker.activePresetIndex ? "bold" : "normal" }}
+            >
+              {preset.label}
+            </button>
+          ))}
+
+          <button onClick={picker.handleConfirm}>{picker.locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Tùy chọn
+
+| Tùy chọn                 | Kiểu                                                          | Mặc định           | Mô tả                                                                           |
+| ------------------------ | ------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------- |
+| `value`                  | `{ start: Date \| null; end: Date \| null }`                  | --                 | **Bắt buộc.** Giá trị khoảng hiện tại.                                          |
+| `onChange`               | `(value: { start: Date \| null; end: Date \| null }) => void` | --                 | **Bắt buộc.** Được gọi khi khoảng ngày thay đổi.                                |
+| `maxDays`                | `number`                                                      | --                 | Số ngày tối đa được phép trong một khoảng (tính cả hai đầu).                    |
+| `minDays`                | `number`                                                      | --                 | Số ngày tối thiểu yêu cầu trong một khoảng (tính cả hai đầu).                   |
+| `presets`                | `DateRangePreset[]`                                           | --                 | Các khoảng ngày đặt trước (ví dụ: "7 ngày qua", "Tháng này").                   |
+| `allowSingleDateInRange` | `boolean`                                                     | `true`             | Khi `false`, ngăn không cho chọn một khoảng mà ngày bắt đầu bằng ngày kết thúc. |
+| `minDate`                | `Date`                                                        | --                 | Ngày sớm nhất có thể chọn.                                                      |
+| `maxDate`                | `Date`                                                        | --                 | Ngày muộn nhất có thể chọn.                                                     |
+| `locale`                 | `Partial<Locale>`                                             | `DEFAULT_LOCALE`   | Ghi đè các chuỗi bản địa hóa.                                                   |
+| `initialMonth`           | `Date`                                                        | --                 | Tháng ban đầu để hiển thị.                                                      |
+| `size`                   | `DatePickerSize`                                              | --                 | Truyền qua cho UI.                                                              |
+| `weekStartsOn`           | `WeekDay`                                                     | `"sunday"`         | Ngày đầu tiên của tuần.                                                         |
+| `isDateUnavailable`      | `(date: Date) => boolean`                                     | --                 | Hàm tùy chỉnh để vô hiệu hóa các ngày cụ thể.                                   |
+| `displayFormat`          | `string`                                                      | --                 | Chuỗi định dạng tùy chỉnh cho giá trị hiển thị.                                 |
+| `open`                   | `boolean`                                                     | --                 | Trạng thái mở được kiểm soát.                                                   |
+| `initialOpen`            | `boolean`                                                     | `false`            | Trạng thái mở ban đầu (không kiểm soát).                                        |
+| `onOpenChange`           | `(open: boolean) => void`                                     | --                 | Callback khi trạng thái mở thay đổi.                                            |
+| `required`               | `boolean`                                                     | `false`            | Khi true, `handleClear` không làm gì cả.                                        |
+| `today`                  | `Date`                                                        | `new Date()`       | Ghi đè ngày hôm nay.                                                            |
+| `onMonthChange`          | `(month: Date) => void`                                       | --                 | Callback khi tháng hiển thị thay đổi.                                           |
+| `disablePast`            | `boolean`                                                     | `false`            | Vô hiệu hóa tất cả các ngày trước hôm nay.                                      |
+| `disableFuture`          | `boolean`                                                     | `false`            | Vô hiệu hóa tất cả các ngày sau hôm nay.                                        |
+| `showOutsideDays`        | `boolean`                                                     | `false`            | Hiển thị các ngày của tháng liền kề.                                            |
+| `highlightDates`         | `Date[]`                                                      | --                 | Mảng các ngày cần làm nổi bật.                                                  |
+| `shouldCloseOnSelect`    | `boolean`                                                     | `false`            | Tự động xác nhận khi ngày kết thúc được chọn.                                   |
+| `numberOfMonths`         | `number`                                                      | `2`                | Số tháng lịch để hiển thị.                                                      |
+| `captionLayout`          | `CaptionLayout`                                               | `"buttons"`        | Chế độ bố cục cho tiêu đề.                                                      |
+| `fromYear`               | `number`                                                      | current year - 100 | Năm bắt đầu cho danh sách thả xuống.                                            |
+| `toYear`                 | `number`                                                      | current year + 10  | Năm kết thúc cho danh sách thả xuống.                                           |
+
+## Giá trị trả về
+
+| Tên                 | Kiểu                                              | Mô tả                                                                                                                                               |
+| ------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `isOpen`            | `boolean`                                         | Popup có đang mở hay không.                                                                                                                         |
+| `tempStartDate`     | `Date \| null`                                    | Ngày bắt đầu tạm thời (trước khi xác nhận).                                                                                                         |
+| `tempEndDate`       | `Date \| null`                                    | Ngày kết thúc tạm thời (trước khi xác nhận).                                                                                                        |
+| `hoveredDate`       | `Date \| null`                                    | Ngày đang được di chuột qua (để xem trước khoảng).                                                                                                  |
+| `leftMonth`         | `Date`                                            | Tháng hiển thị của lịch bên trái.                                                                                                                   |
+| `rightMonth`        | `Date`                                            | Tháng hiển thị của lịch bên phải.                                                                                                                   |
+| `locale`            | `Locale`                                          | Đối tượng locale đã được giải quyết.                                                                                                                |
+| `leftCalendar`      | `CalendarMonth`                                   | Dữ liệu lịch cho khung bên trái.                                                                                                                    |
+| `rightCalendar`     | `CalendarMonth`                                   | Dữ liệu lịch cho khung bên phải.                                                                                                                    |
+| `calendars`         | `CalendarMonth[]`                                 | Mảng của tất cả các tháng lịch.                                                                                                                     |
+| `getDayProps`       | `(date: Date, referenceMonth?: Date) => DayProps` | Tính toán các cờ cho một ô ngày trong lịch. Truyền `referenceMonth` để phát hiện ngày ngoài tháng hoạt động chính xác trong các bố cục nhiều tháng. |
+| `displayValue`      | `string`                                          | Chuỗi đã định dạng của khoảng đã xác nhận.                                                                                                          |
+| `hasValue`          | `boolean`                                         | Một khoảng có đang được xác nhận hay không.                                                                                                         |
+| `canConfirm`        | `boolean`                                         | Lựa chọn hiện tại có hợp lệ để xác nhận hay không.                                                                                                  |
+| `handleDateClick`   | `(date: Date) => void`                            | Xử lý một cú nhấp vào ô ngày. Cú nhấp đầu tiên đặt ngày bắt đầu, cú nhấp thứ hai đặt ngày kết thúc.                                                 |
+| `handleDateHover`   | `(date: Date \| null) => void`                    | Xử lý sự kiện di chuột qua để xem trước khoảng.                                                                                                     |
+| `handlePrevMonth`   | `() => void`                                      | Chuyển cả hai lịch về một tháng trước.                                                                                                              |
+| `handleNextMonth`   | `() => void`                                      | Chuyển cả hai lịch tới một tháng sau.                                                                                                               |
+| `handleOpen`        | `() => void`                                      | Mở popup.                                                                                                                                           |
+| `handleClose`       | `() => void`                                      | Đóng popup.                                                                                                                                         |
+| `handleToggle`      | `() => void`                                      | Bật/tắt popup.                                                                                                                                      |
+| `handleConfirm`     | `() => void`                                      | Xác nhận lựa chọn và đóng.                                                                                                                          |
+| `handleCancel`      | `() => void`                                      | Hủy và hoàn nguyên về giá trị trước đó.                                                                                                             |
+| `handleClear`       | `() => void`                                      | Xóa khoảng (không làm gì nếu `required`).                                                                                                           |
+| `handleGoToToday`   | `() => void`                                      | Chuyển đến tháng hiện tại.                                                                                                                          |
+| `containerRef`      | `RefObject<HTMLDivElement \| null>`               | Gắn vào trình bao bọc để phát hiện nhấp chuột bên ngoài.                                                                                            |
+| `popupRef`          | `RefObject<HTMLDivElement \| null>`               | Gắn vào phần tử popup.                                                                                                                              |
+| `focusedDate`       | `Date \| null`                                    | Ngày được tập trung bằng bàn phím.                                                                                                                  |
+| `handleKeyDown`     | `(e: KeyboardEvent<HTMLElement>) => void`         | Trình xử lý điều hướng bằng bàn phím.                                                                                                               |
+| `presets`           | `DateRangePreset[]`                               | Mảng các khoảng đặt trước (truyền qua để render).                                                                                                   |
+| `handlePresetClick` | `(preset: DateRangePreset) => void`               | Áp dụng một khoảng đặt trước.                                                                                                                       |
+| `activePresetIndex` | `number`                                          | Chỉ số của khoảng đặt trước hiện đang khớp (-1 nếu không có).                                                                                       |
+| `years`             | `number[]`                                        | Mảng các năm cho chế độ thả xuống.                                                                                                                  |
+| `months`            | `number[]`                                        | Chỉ số các tháng cho chế độ thả xuống.                                                                                                              |
+| `handleYearSelect`  | `(year: number, calendarIndex?: number) => void`  | Đặt năm hiển thị.                                                                                                                                   |
+| `handleMonthSelect` | `(month: number, calendarIndex?: number) => void` | Đặt tháng hiển thị.                                                                                                                                 |
+
+## Các hành vi chính
+
+### Luồng chọn khoảng
+
+1.  Lần nhấp đầu tiên đặt **ngày bắt đầu** (ngày kết thúc bị xóa)
+2.  Lần nhấp thứ hai đặt **ngày kết thúc** (tự động hoán đổi nếu trước ngày bắt đầu)
+3.  Lần nhấp thứ ba đặt lại và bắt đầu một khoảng mới
+
+### Xem trước khi di chuột
+
+Khi người dùng đã chọn ngày bắt đầu nhưng chưa chọn ngày kết thúc, `handleDateHover` sẽ cập nhật `hoveredDate`. Hàm `getDayProps` sử dụng điều này để tính toán `isInHoverRange` và `isHoverTarget`, cho phép bạn hiển thị bản xem trước của khoảng tiềm năng.
+
+### Các khoảng đặt trước
+
+Các khoảng đặt trước có thể là các đối tượng tĩnh hoặc các hàm factory:
+
+```tsx
+const presets = [
+  { label: "Today", value: { start: new Date(), end: new Date() } },
+  {
+    label: "Last 30 days",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setDate(start.getDate() - 29);
+      return { start, end };
+    },
+  },
+];
+```
+
+`activePresetIndex` trả về chỉ số của khoảng đặt trước khớp với lựa chọn hiện tại, hoặc `-1` nếu không có cái nào khớp.
+
+### maxDays / minDays
+
+Khi `maxDays` được đặt, các ngày vượt quá khoảng cho phép từ ngày bắt đầu sẽ tự động bị vô hiệu hóa. Khi `minDays` được đặt, các ngày quá gần ngày bắt đầu sẽ bị vô hiệu hóa.
+
+### shouldCloseOnSelect
+
+Đối với bộ chọn khoảng, `shouldCloseOnSelect` sẽ kích hoạt tự động xác nhận khi **ngày kết thúc** được chọn (chứ không phải ngày bắt đầu).

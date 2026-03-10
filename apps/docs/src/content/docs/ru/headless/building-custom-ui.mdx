@@ -1,0 +1,101 @@
+---
+sidebar_position: 2
+title: Building Custom UI
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomDatePicker from "@examples/headless/CustomDatePicker";
+import CustomDatePickerSource from "@examples/headless/CustomDatePicker.tsx?raw";
+
+# Создание пользовательского интерфейса
+
+Это руководство описывает паттерн для создания вашего собственного интерфейса выбора даты поверх headless-хуков.
+
+## Паттерн
+
+Каждый headless-хук следует одному и тому же паттерну:
+
+1. **Вызовите хук** с вашими опциями (value, onChange, configuration)
+2. **Деструктурируйте возвращаемое значение**, чтобы получить состояние, вычисляемые значения и обработчики
+3. **Отрендерите свою собственную разметку**, используя возвращенные значения
+4. **Настройте взаимодействия**, вызывая предоставленные обработчики
+
+Хук управляет всей сложностью — генерацией календаря, математикой дат, состоянием открытия/закрытия, навигацией с клавиатуры, логикой диапазона — а вы сосредотачиваетесь исключительно на представлении.
+
+## Пример: Пользовательский выбор даты
+
+<CodeDemo source={CustomDatePickerSource}>
+  <ExampleWrapper variant="headless" client:load>
+    <CustomDatePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Ключевые концепции
+
+### getDayProps
+
+Функция `getDayProps` является ядром рендеринга календаря. Для каждой ячейки даты она возвращает объект `DayProps` с 18 флагами типа boolean/number, которые описывают состояние ячейки:
+
+```tsx
+const dp = getDayProps(day);
+
+// Состояние выбора
+dp.isSelected; // Текущая выбранная дата
+dp.isToday; // Сегодняшняя дата
+
+// Состояние диапазона (для выбора диапазона)
+dp.isInRange; // Между начальной и конечной датами
+dp.isRangeStart; // Первая дата диапазона
+dp.isRangeEnd; // Последняя дата диапазона
+dp.isInHoverRange; // В диапазоне предварительного просмотра при наведении
+dp.isHoverTarget; // Сама дата, на которую наведен курсор
+dp.isRangeSingle; // И начало, и конец диапазона (диапазон в один день)
+
+// Вспомогательные элементы для визуального соединения
+dp.hasLeftConnection; // Соединен с предыдущим днем (для фона диапазона)
+dp.hasRightConnection; // Соединен со следующим днем
+dp.isConsecutiveRange; // Часть многодневного диапазона
+
+// Состояние
+dp.isDisabled; // Отключен из-за minDate/maxDate/isDateUnavailable
+dp.isFocused; // Имеет фокус клавиатуры
+dp.isOutsideDay; // Принадлежит соседнему месяцу (когда включено showOutsideDays)
+dp.isHighlighted; // Находится в массиве highlightDates
+
+// Данные
+dp.date; // Объект Date
+dp.day; // Номер дня месяца
+dp.dayOfWeek; // 0-6 (Воскресенье-Суббота)
+```
+
+### Ссылки (refs) для клика снаружи
+
+Хуки возвращают `containerRef` и `popupRef`. Прикрепите их к вашим элементам-оберткам и всплывающим окнам — хук использует их для обнаружения кликов снаружи и автоматического закрытия всплывающего окна.
+
+### Навигация с клавиатуры
+
+Обработчик `handleKeyDown` поддерживает клавиши со стрелками, Enter, Escape и Tab для полной навигации с клавиатуры. Прикрепите его к контейнеру всплывающего окна.
+
+### Локализация
+
+Все строки, обращенные к пользователю, поступают из объекта `locale`. Вы можете настроить любую строку, передав частичную опцию `locale`:
+
+```tsx
+const picker = useDatePicker({
+  value,
+  onChange: setValue,
+  locale: {
+    confirm: "ОК",
+    cancel: "Назад",
+    placeholder: "Выберите дату...",
+  },
+});
+```
+
+## Следующие шаги
+
+- [Hook Reference](/docs/headless/hooks/use-date-picker) — Полные опции и возвращаемые значения для каждого хука
+- [Contexts](/docs/headless/contexts) — Используйте провайдеры для паттернов составных компонентов
+- [Date Utilities](/docs/headless/date-utilities) — Вспомогательные функции для манипулирования датами

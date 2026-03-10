@@ -1,0 +1,32 @@
+---
+sidebar_position: 5
+sidebar_label: Range Picker
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundRangePicker from "@examples/tailwind3/Customization/CompoundRangePicker";
+import CompoundRangePickerSource from "@examples/tailwind3/Customization/CompoundRangePicker.tsx?raw";
+import CompoundRangeInline from "@examples/tailwind3/Customization/CompoundRangeInline";
+import CompoundRangeInlineSource from "@examples/tailwind3/Customization/CompoundRangeInline.tsx?raw";
+
+# 범위 선택기
+
+`DateRangePicker` 컴파운드 API는 이중 캘린더 및 사전 설정(preset) 범위를 위한 추가 파트를 제공합니다. 사전 설정, 캘린더 그리드, 헤더 및 푸터 액션의 레이아웃을 완벽하게 제어할 수 있습니다.
+
+<CodeDemo source={CompoundRangePickerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundRangePicker client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 사전 설정과 함께 인라인으로 표시
+
+사전 설정 사이드바와 함께 범위 선택기를 인라인으로 표시합니다:
+
+<CodeDemo source={CompoundRangeInlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundRangeInline client:load />
+  </ExampleWrapper>
+</CodeDemo>

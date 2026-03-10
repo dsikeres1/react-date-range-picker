@@ -1,0 +1,48 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinuteStep from "@examples/tailwind4/DateTimePicker/MinuteStep";
+import MinuteStepSource from "@examples/tailwind4/DateTimePicker/MinuteStep.tsx?raw";
+import SecondPrecision from "@examples/tailwind4/DateTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/tailwind4/DateTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/tailwind4/DateTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/tailwind4/DateTimePicker/TwelveHour.tsx?raw";
+
+# Time Options
+
+Configure the time panel behavior via the `time` prop.
+
+## Minute Step
+
+Set the minute increment step. Useful for scheduling in fixed intervals.
+
+<CodeDemo source={MinuteStepSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinuteStep client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Second Precision
+
+Show the seconds column by setting `precision` to `"second"`.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 12-Hour Format
+
+Switch to 12-hour format with AM/PM toggle.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

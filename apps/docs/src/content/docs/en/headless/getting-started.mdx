@@ -1,0 +1,106 @@
+---
+sidebar_position: 1
+title: Overview
+---
+
+import PackageInstall from "@/components/PackageInstall.astro";
+
+# Headless
+
+The headless package (`react-date-range-picker-headless`) provides unstyled hooks and context providers. It contains all the state management, calendar logic, keyboard navigation, and accessibility features -- but zero CSS, zero markup opinions.
+
+You bring your own UI.
+
+## Installation
+
+<PackageInstall pkg="react-date-range-picker-headless" />
+
+## When to Use Headless
+
+- You have a design system with its own component library
+- You want pixel-perfect control over every element
+- You are building a custom date picker for a specific use case
+- You want to integrate with a CSS framework not covered by the styled packages
+
+If you want ready-to-use styled components, see [Styled](/docs/styled/getting-started), [Tailwind v4](/docs/tailwind4/getting-started), or [Tailwind v3](/docs/tailwind3/getting-started) instead.
+
+## How It Works
+
+1. Pick a hook based on your use case
+2. Pass options (value, onChange, config)
+3. Get back state and handlers
+4. Render your own UI using the returned values
+
+```tsx
+import { useState } from "react";
+import { useDatePicker } from "react-date-range-picker-headless";
+
+function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  const {
+    isOpen,
+    calendar,
+    getDayProps,
+    displayValue,
+    handleToggle,
+    handleDateClick,
+    handleConfirm,
+    handlePrevMonth,
+    handleNextMonth,
+    locale,
+  } = useDatePicker({ value, onChange: setValue });
+
+  return (
+    <div>
+      <button onClick={handleToggle}>{displayValue || locale.placeholder}</button>
+      {isOpen && (
+        <div>
+          <div>
+            <button onClick={handlePrevMonth}>{locale.prevMonth}</button>
+            <span>{locale.formatMonthYear(calendar.month)}</span>
+            <button onClick={handleNextMonth}>{locale.nextMonth}</button>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}>
+            {calendar.weeks.flat().map((day, i) => {
+              if (!day) return <span key={i} />;
+              const props = getDayProps(day);
+              return (
+                <button
+                  key={i}
+                  onClick={() => handleDateClick(day)}
+                  style={{
+                    background: props.isSelected ? "#0ea5e9" : "transparent",
+                    color: props.isDisabled ? "#ccc" : props.isToday ? "#0ea5e9" : "inherit",
+                  }}
+                >
+                  {props.day}
+                </button>
+              );
+            })}
+          </div>
+          <button onClick={handleConfirm}>{locale.confirm}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Available Hooks
+
+| Hook                                                                         | Use Case                                 |
+| ---------------------------------------------------------------------------- | ---------------------------------------- |
+| [`useDatePicker`](/docs/headless/hooks/use-date-picker)                      | Single date selection                    |
+| [`useDateRangePicker`](/docs/headless/hooks/use-date-range-picker)           | Date range selection with dual calendars |
+| [`useDateTimePicker`](/docs/headless/hooks/use-date-time-picker)             | Date + time selection                    |
+| [`useDateRangeTimePicker`](/docs/headless/hooks/use-date-range-time-picker)  | Date range + time selection              |
+| [`useTimePicker`](/docs/headless/hooks/use-time-picker)                      | Time-only scroll wheel                   |
+| [`useStandaloneTimePicker`](/docs/headless/hooks/use-standalone-time-picker) | Time picker with open/close behavior     |
+
+## Next Steps
+
+- [Building Custom UI](/docs/headless/building-custom-ui) -- Full walkthrough of the headless pattern
+- [Hooks Reference](/docs/headless/hooks/use-date-picker) -- Detailed hook documentation
+- [Contexts](/docs/headless/contexts) -- Provider pattern for compound components
+- [Date Utilities](/docs/headless/utilities/date-helpers) -- Helper functions exported from headless

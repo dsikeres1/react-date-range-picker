@@ -1,0 +1,55 @@
+---
+sidebar_position: 4
+sidebar_label: Custom Footer
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/tailwind4/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/tailwind4/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/tailwind4/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/tailwind4/Customization/CompoundNoFooter.tsx?raw";
+
+# Rodapé Personalizado
+
+## Rodapé Reorganizado
+
+Reorganize os botões do rodapé ou adicione novos como `TodayButton`. Como cada botão é uma parte composta independente, você controla a ordem e o layout.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Layout Mínimo
+
+Omita as partes que você não precisa. Por exemplo, remova o rodapé inteiro para um calendário pop-up mínimo:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Sobrescrevendo Classes
+
+Cada parte composta aceita uma prop `className`. O pacote Tailwind v4 usa `cn()` (um utilitário `clsx` + `twMerge`) para mesclar suas classes com as padrões, para que os utilitários conflitantes sejam resolvidos corretamente:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+<DatePicker.Root value={value} onChange={setValue}>
+  {/* Override trigger width and padding */}
+  <DatePicker.Trigger className="min-w-[300px] px-4 py-3" />
+  <DatePicker.Content className="rounded-2xl shadow-xl">
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title className="text-lg" />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>;
+```

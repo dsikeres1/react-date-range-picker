@@ -1,0 +1,46 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# 複合元件
+
+Tailwind v4 套件提供了一個複合元件 API，讓您能完全控制每個選擇器的內部結構和渲染。您可以從各個部分組合出選擇器，而不是使用單一的巨型元件。
+
+## 運作方式
+
+每個選擇器（例如 `DatePicker`）既是一個簡單元件，也是一個包含複合部分的命名空間：
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+// Simple usage -- renders default layout
+<DatePicker value={value} onChange={setValue} />
+
+// Compound usage -- full control over structure
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+使用複合元件，您可以：
+
+- **替換** 任何部分為您自己的渲染（例如自訂觸發器、自訂日期儲存格）
+- **重排** 版面配置（例如移動頁腳按鈕、新增一個「今天」按鈕）
+- **省略** 您不需要的部分（例如移除頁腳以建立一個極簡日曆）
+- 透過 `className` prop **覆寫** 任何部分的類別
+
+接下來的頁面將

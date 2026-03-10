@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind3/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind3/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind3/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind3/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind3/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind3/Customization/CompoundWebFonts.tsx?raw";
+
+# Типографика
+
+Пакет Tailwind v3 использует стандартный класс Tailwind `font-sans` (`ui-sans-serif, system-ui, sans-serif, ...`). Поскольку CSS `font-family` наследуется, вы можете переопределить шрифт средства выбора, обернув его в контейнер со стилем `fontFamily`. Шрифт обертки каскадно применяется ко всем элементам средства выбора.
+
+## Семейство шрифтов
+
+Оберните средство выбора и установите `fontFamily` на обертке, чтобы переключить шрифты:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Использование веб-шрифтов (Noto Sans)
+
+Загрузите веб-шрифт во время выполнения и примените его через обертку. Этот пример загружает [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) из Google Fonts:
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="Использование в продакшене">
+В реальном проекте загружайте шрифт через тег `<link>` в `<head>` вашего HTML или через ваш сборщик CSS вместо того, чтобы внедрять его во время выполнения. Подход с `useEffect` здесь используется только в демонстрационных целях.
+</Admonition>
+
+## Галерея веб-шрифтов
+
+Сравните различные веб-шрифты, чтобы увидеть, как кардинально типографика меняет внешний вид средства выбора. Все шрифты ниже поддерживают многоязычный рендеринг (латиница, CJK, корейский).
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

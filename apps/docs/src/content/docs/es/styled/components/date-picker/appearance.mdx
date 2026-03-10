@@ -1,0 +1,82 @@
+---
+sidebar_position: 3
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Sizes from "@examples/styled/DatePicker/Sizes";
+import SizesSource from "@examples/styled/DatePicker/Sizes.tsx?raw";
+import CustomFormat from "@examples/styled/DatePicker/CustomFormat";
+import CustomFormatSource from "@examples/styled/DatePicker/CustomFormat.tsx?raw";
+import CustomLocale from "@examples/styled/DatePicker/CustomLocale";
+import CustomLocaleSource from "@examples/styled/DatePicker/CustomLocale.tsx?raw";
+import WeekStartsOn from "@examples/styled/DatePicker/WeekStartsOn";
+import WeekStartsOnSource from "@examples/styled/DatePicker/WeekStartsOn.tsx?raw";
+import ShowOutsideDays from "@examples/styled/DatePicker/ShowOutsideDays";
+import ShowOutsideDaysSource from "@examples/styled/DatePicker/ShowOutsideDays.tsx?raw";
+import CaptionDropdown from "@examples/styled/DatePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/styled/DatePicker/CaptionDropdown.tsx?raw";
+
+# Apariencia
+
+## Tamaños
+
+Cuatro tamaños incorporados: `small`, `medium`, `large`, y `x-large`.
+
+<CodeDemo source={SizesSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <Sizes client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Formato Personalizado
+
+Personaliza la cadena de formato de visualización.
+
+<CodeDemo source={CustomFormatSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFormat client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Localización Personalizada
+
+Proporciona una localización personalizada para internacionalización usando `createLocale` del paquete headless.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## La Semana Comienza En
+
+Cambia el primer día de la semana. El valor predeterminado es `"sunday"`.
+
+<CodeDemo source={WeekStartsOnSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <WeekStartsOn client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Mostrar Días Externos
+
+Muestra los días de los meses adyacentes para llenar la cuadrícula del calendario. El valor predeterminado es `false`.
+
+<CodeDemo source={ShowOutsideDaysSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShowOutsideDays client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Menú Desplegable de Título
+
+Cambia la navegación de mes/año de flechas a menús desplegables con `captionLayout="dropdown"`. Usa `fromYear` y `toYear` para establecer el rango de años.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

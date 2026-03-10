@@ -1,0 +1,214 @@
+---
+sidebar_position: 2
+sidebar_label: "CSS Variables"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CustomColors from "@examples/styled/Customization/CustomColors";
+import CustomColorsSource from "@examples/styled/Customization/CustomColors.tsx?raw";
+import CustomFont from "@examples/styled/Customization/CustomFont";
+import CustomFontSource from "@examples/styled/Customization/CustomFont.tsx?raw";
+import CustomBorderRadius from "@examples/styled/Customization/CustomBorderRadius";
+import CustomBorderRadiusSource from "@examples/styled/Customization/CustomBorderRadius.tsx?raw";
+import CustomSize from "@examples/styled/Customization/CustomSize";
+import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw";
+
+# CSS 變數
+
+styled 套件使用 CSS 自訂屬性 (變數) 來控制所有視覺值。您可以在 `.rdrp-root` 或任何父層元素上覆寫它們，以自訂外觀，而無需修改元件程式碼。
+
+## 如何覆寫
+
+所有變數都作用於 `.rdrp-root` 之下。在您自己的 CSS 中覆寫它們：
+
+```css
+/* 您的自訂主題 */
+.rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-border-radius-lg: 12px;
+}
+```
+
+或者使用一個包裝類別將覆寫範圍限定在特定實例上：
+
+```css
+.my-purple-picker .rdrp-root {
+  --rdrp-color-primary: #8b5cf6;
+  --rdrp-color-primary-hover: #7c3aed;
+  --rdrp-color-primary-light: #ede9fe;
+  --rdrp-color-primary-lighter: #f5f3ff;
+}
+```
+
+```tsx
+<div className="my-purple-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```
+
+## 變數參考
+
+### 顏色
+
+| 變數                            | 預設值 (淺色)              | 描述                                |
+| ------------------------------- | -------------------------- | ----------------------------------- |
+| `--rdrp-color-primary`          | `#3b82f6`                  | 主要操作顏色 (選定的日期、確認按鈕) |
+| `--rdrp-color-primary-hover`    | `#2563eb`                  | 主要懸停狀態                        |
+| `--rdrp-color-primary-light`    | `#dbeafe`                  | 範圍背景、淺色主要強調              |
+| `--rdrp-color-primary-lighter`  | `#eff6ff`                  | 啟用預設項目的背景                  |
+| `--rdrp-color-primary-disabled` | `#93c5fd`                  | 已停用確認按鈕                      |
+| `--rdrp-color-bg`               | `#ffffff`                  | 背景顏色                            |
+| `--rdrp-color-bg-hover`         | `#f3f4f6`                  | 日期、按鈕的懸停背景                |
+| `--rdrp-color-bg-subtle`        | `#f9fafb`                  | 細緻背景                            |
+| `--rdrp-color-text`             | `#374151`                  | 預設文字顏色                        |
+| `--rdrp-color-text-strong`      | `#111827`                  | 強調文字 (標題、啟用時間)           |
+| `--rdrp-color-text-muted`       | `#6b7280`                  | 靜音文字 (導航按鈕、標籤)           |
+| `--rdrp-color-text-placeholder` | `#6b7280`                  | 預留位置文字                        |
+| `--rdrp-color-text-disabled`    | `#d1d5db`                  | 已停用日期的文字                    |
+| `--rdrp-color-text-outside`     | `#9ca3af`                  | 非本月日期                          |
+| `--rdrp-color-text-inverse`     | `#ffffff`                  | 主要背景上的文字                    |
+| `--rdrp-color-text-danger`      | `#ef4444`                  | 清除/危險按鈕文字                   |
+| `--rdrp-color-text-today`       | `#2563eb`                  | 今日指示器顏色                      |
+| `--rdrp-color-border`           | `#d1d5db`                  | 預設邊框                            |
+| `--rdrp-color-border-light`     | `#e5e7eb`                  | 淺色邊框 (彈出視窗、選擇器)         |
+| `--rdrp-color-border-subtle`    | `#f3f4f6`                  | 細緻邊框 (頁尾、預設項目)           |
+| `--rdrp-color-border-hover`     | `#93c5fd`                  | 邊框懸停狀態                        |
+| `--rdrp-color-highlight-dot`    | `#f59e0b`                  | 高亮點顏色                          |
+| `--rdrp-highlight-dot-size`     | `4px`                      | 高亮點直徑                          |
+| `--rdrp-color-range-bg`         | `#dbeafe`                  | 範圍內日期的背景                    |
+| `--rdrp-color-hover-range-bg`   | `#eff6ff`                  | 懸停範圍預覽背景                    |
+| `--rdrp-color-hover-target-bg`  | `#bfdbfe`                  | 懸停端點背景                        |
+| `--rdrp-color-time-highlight`   | `rgba(59, 130, 246, 0.08)` | 時間面板高亮條                      |
+
+### 字體排印
+
+| 變數                          | 預設值            | 描述                      |
+| ----------------------------- | ----------------- | ------------------------- |
+| `--rdrp-font-family`          | System font stack | 字體家族                  |
+| `--rdrp-font-size-xs`         | `11px`            | 特小 (小尺寸下的星期標頭) |
+| `--rdrp-font-size-sm`         | `12px`            | 小 (星期標頭、標籤)       |
+| `--rdrp-font-size-base`       | `13px`            | 基礎 (日期儲存格、按鈕)   |
+| `--rdrp-font-size-md`         | `14px`            | 中 (觸發器、時間項目)     |
+| `--rdrp-font-size-lg`         | `15px`            | 大 (標頭標題)             |
+| `--rdrp-font-weight-normal`   | `400`             | 正常字重                  |
+| `--rdrp-font-weight-medium`   | `500`             | 中等字重                  |
+| `--rdrp-font-weight-semibold` | `600`             | 半粗體字重                |
+| `--rdrp-font-weight-bold`     | `700`             | 粗體字重 (今日指示器)     |
+
+### 間距
+
+| 變數                 | 預設值 | 描述        |
+| -------------------- | ------ | ----------- |
+| `--rdrp-spacing-xs`  | `2px`  | 特小間距    |
+| `--rdrp-spacing-sm`  | `4px`  | 小間距      |
+| `--rdrp-spacing-md`  | `8px`  | 中間距      |
+| `--rdrp-spacing-lg`  | `12px` | 大間距      |
+| `--rdrp-spacing-xl`  | `16px` | 特大間距    |
+| `--rdrp-spacing-2xl` | `24px` | 2倍特大間距 |
+
+### 邊框
+
+| 變數                        | 預設值   | 描述                  |
+| --------------------------- | -------- | --------------------- |
+| `--rdrp-border-radius-sm`   | `4px`    | 小圓角                |
+| `--rdrp-border-radius-md`   | `6px`    | 中圓角 (按鈕、選擇器) |
+| `--rdrp-border-radius-lg`   | `8px`    | 大圓角 (日期、觸發器) |
+| `--rdrp-border-radius-xl`   | `12px`   | 特大圓角 (彈出視窗)   |
+| `--rdrp-border-radius-full` | `9999px` | 全圓角 (高亮點)       |
+| `--rdrp-border-width`       | `1px`    | 邊框寬度              |
+
+### 陰影
+
+| 變數                   | 預設值                        | 描述         |
+| ---------------------- | ----------------------------- | ------------ |
+| `--rdrp-shadow-popup`  | `0 10px 25px rgba(0,0,0,0.1)` | 彈出視窗陰影 |
+| `--rdrp-shadow-inline` | `0 4px 12px rgba(0,0,0,0.06)` | 內嵌模式陰影 |
+| `--rdrp-shadow-sm`     | `0 2px 6px rgba(0,0,0,0.04)`  | 小陰影       |
+
+### 尺寸
+
+| 變數                       | 預設值  | 描述                   |
+| -------------------------- | ------- | ---------------------- |
+| `--rdrp-cell-size`         | `36px`  | 日期儲存格寬度/高度    |
+| `--rdrp-nav-btn-size`      | `28px`  | 導航按鈕尺寸           |
+| `--rdrp-weekday-height`    | `28px`  | 星期標頭列高度         |
+| `--rdrp-grid-min-height`   | `216px` | 日曆網格最小高度       |
+| `--rdrp-panel-min-width`   | `252px` | 單一日曆面板寬度       |
+| `--rdrp-dual-gap`          | `24px`  | 雙日曆之間的間隙       |
+| `--rdrp-trigger-min-width` | `200px` | 觸發按鈕最小寬度       |
+| `--rdrp-trigger-padding-x` | `14px`  | 觸發器水平內距         |
+| `--rdrp-trigger-padding-y` | `8px`   | 觸發器垂直內距         |
+| `--rdrp-popup-padding`     | `16px`  | 彈出視窗內部內距       |
+| `--rdrp-popup-gap`         | `6px`   | 彈出視窗內容間隙       |
+| `--rdrp-btn-padding-x`     | `14px`  | 頁尾按鈕水平內距       |
+| `--rdrp-btn-padding-y`     | `6px`   | 頁尾按鈕垂直內距       |
+| `--rdrp-preset-min-width`  | `140px` | 預設項目側邊欄最小寬度 |
+
+### 時間選擇器
+
+| 變數                          | 預設值  | 描述             |
+| ----------------------------- | ------- | ---------------- |
+| `--rdrp-time-item-height`     | `32px`  | 時間滾動項目高度 |
+| `--rdrp-time-panel-height`    | `176px` | 時間面板總高度   |
+| `--rdrp-time-column-height`   | `160px` | 可滾動欄位高度   |
+| `--rdrp-time-panel-min-width` | `120px` | 時間面板最小寬度 |
+| `--rdrp-time-colon-width`     | `12px`  | 冒號分隔符寬度   |
+
+### Z-index
+
+| 變數                  | 預設值 | 描述             |
+| --------------------- | ------ | ---------------- |
+| `--rdrp-z-popup`      | `50`   | 彈出視窗 z-index |
+| `--rdrp-z-day-button` | `20`   | 焦點日期 z-index |
+
+### 過渡效果
+
+| 變數                       | 預設值  | 描述                    |
+| -------------------------- | ------- | ----------------------- |
+| `--rdrp-transition-fast`   | `0.1s`  | 快速過渡 (日期懸停)     |
+| `--rdrp-transition-normal` | `0.15s` | 正常過渡 (觸發器、按鈕) |
+
+## 即時範例
+
+### 自訂顏色 (紫色主題)
+
+覆寫主要顏色變數以建立完全不同的配色方案。此範例使用帶有紫羅蘭/紫色色調的 **DatePicker**。
+
+<CodeDemo source={CustomColorsSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomColors client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### 自訂字體 (襯線體)
+
+字體透過 CSS 層疊，因此將選擇器包裝在具有自訂 `font-family` 的 div 中會套用到所有文字。此範例使用帶有 Georgia 襯線體的 **DateRangePicker**。
+
+<CodeDemo source={CustomFontSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### 銳利邊角 (無邊框圓角)
+
+將所有邊框圓角變數設定為 `0px` 以獲得完全方正的外觀。
+
+<CodeDemo source={CustomBorderRadiusSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomBorderRadius client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+### 透過 CSS 變數自訂尺寸
+
+您可以覆寫個別的尺寸變數以進行精確控制，而不是使用內建的 `size` 屬性。此範例使用具有自訂儲存格尺寸和字體大小的 **DateRangePicker**。
+
+<CodeDemo source={CustomSizeSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomSize client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/tailwind3/DateRangePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind3/DateRangePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/tailwind3/DateRangePicker/CustomLocale";
+import CustomLocaleSource from "@examples/tailwind3/DateRangePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/tailwind3/DateRangePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/tailwind3/DateRangePicker/CaptionDropdown.tsx?raw";
+
+# Apparence
+
+## Mois Multiples
+
+Affichez plus de 2 mois côte à côte. La valeur par défaut est `2` pour les sélecteurs de plage.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Locale Personnalisée
+
+Utilisez `createLocale` du package headless pour personnaliser les noms des mois/jours et les chaînes de l'interface utilisateur.
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Menus Déroulants de Légende
+
+Passez de la navigation par boutons à des sélecteurs déroulants pour le mois et l'année. Utile pour sélectionner des dates éloignées du mois en cours.
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

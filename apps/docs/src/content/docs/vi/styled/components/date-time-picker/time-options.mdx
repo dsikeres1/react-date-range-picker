@@ -1,0 +1,48 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinuteStep from "@examples/styled/DateTimePicker/MinuteStep";
+import MinuteStepSource from "@examples/styled/DateTimePicker/MinuteStep.tsx?raw";
+import SecondPrecision from "@examples/styled/DateTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/styled/DateTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/styled/DateTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/styled/DateTimePicker/TwelveHour.tsx?raw";
+
+# Tùy chọn Thời gian
+
+Cấu hình hành vi của bảng điều khiển thời gian thông qua prop `time`.
+
+## Bước phút
+
+Đặt bước tăng phút. Hữu ích cho việc lập lịch theo các khoảng thời gian cố định.
+
+<CodeDemo source={MinuteStepSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MinuteStep client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Độ chính xác Giây
+
+Hiển thị cột giây bằng cách đặt `precision` thành `"second"`.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Định dạng 12 giờ
+
+Chuyển sang định dạng 12 giờ với nút chuyển đổi AM/PM.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

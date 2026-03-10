@@ -1,0 +1,82 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Required from "@examples/tailwind3/DatePicker/Required";
+import RequiredSource from "@examples/tailwind3/DatePicker/Required.tsx?raw";
+import MinMaxDate from "@examples/tailwind3/DatePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/tailwind3/DatePicker/MinMaxDate.tsx?raw";
+import DisabledDates from "@examples/tailwind3/DatePicker/DisabledDates";
+import DisabledDatesSource from "@examples/tailwind3/DatePicker/DisabledDates.tsx?raw";
+import DisablePastFuture from "@examples/tailwind3/DatePicker/DisablePastFuture";
+import DisablePastFutureSource from "@examples/tailwind3/DatePicker/DisablePastFuture.tsx?raw";
+import HighlightDates from "@examples/tailwind3/DatePicker/HighlightDates";
+import HighlightDatesSource from "@examples/tailwind3/DatePicker/HighlightDates.tsx?raw";
+import InitialMonth from "@examples/tailwind3/DatePicker/InitialMonth";
+import InitialMonthSource from "@examples/tailwind3/DatePicker/InitialMonth.tsx?raw";
+
+# Einschränkungen
+
+## Erforderlich
+
+Wenn `required` gesetzt ist, ist die Löschen-Schaltfläche deaktiviert und der Wert kann nicht geleert werden.
+
+<CodeDemo source={RequiredSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Required client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Mindest- und Höchstdatum
+
+Beschränken Sie auswählbare Daten auf einen bestimmten Bereich mit `minDate` und `maxDate`.
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Deaktivierte Daten
+
+Verwenden Sie `isDateUnavailable`, um bestimmte Daten dynamisch zu deaktivieren.
+
+<CodeDemo source={DisabledDatesSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <DisabledDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Vergangenheit / Zukunft deaktivieren
+
+Verwenden Sie `disablePast` oder `disableFuture`, um Daten vor/nach heute schnell zu deaktivieren.
+
+<CodeDemo source={DisablePastFutureSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <DisablePastFuture client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Daten hervorheben
+
+Heben Sie bestimmte Daten (z. B. Feiertage, Veranstaltungen) mit der `highlightDates`-Prop visuell hervor.
+
+<CodeDemo source={HighlightDatesSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <HighlightDates client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Anfänglicher Monat
+
+Stellen Sie den anfänglich angezeigten Monat ein, wenn der Picker zum ersten Mal geöffnet wird.
+
+<CodeDemo source={InitialMonthSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <InitialMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>

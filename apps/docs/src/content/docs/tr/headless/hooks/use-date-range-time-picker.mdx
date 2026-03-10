@@ -1,0 +1,51 @@
+---
+sidebar_position: 4
+title: useDateRangeTimePicker
+---
+
+# useDateRangeTimePicker
+
+Başlangıç ve bitiş tarihleri için zaman seçimiyle birleştirilmiş tarih aralığı seçimi için hook. `useDateRangePicker` yeteneklerini ve zaman yönetimini tek bir hook'ta birleştirir.
+
+## İçe Aktarma
+
+```tsx
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+```
+
+## Kullanım
+
+```tsx
+import { useState } from "react";
+import { useDateRangeTimePicker } from "react-date-range-picker-headless";
+
+function MyDateRangeTimePicker() {
+  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
+
+  const picker = useDateRangeTimePicker({
+    value: range,
+    onChange: setRange,
+    time: { precision: "minute", hourFormat: "24", minuteStep: 15 },
+  });
+
+  return (
+    <div ref={picker.containerRef}>
+      <button onClick={picker.handleToggle}>
+        {picker.displayValue || picker.locale.rangeTimePlaceholder}
+      </button>
+      {picker.isOpen && (
+        <div ref={picker.popupRef} onKeyDown={picker.handleKeyDown}>
+          {/* Başlangıç ve bitiş için çift takvim, hazır ayarlar, zaman kontrolleri */}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Seçenekler
+
+| Seçenek | Tür | Varsayılan

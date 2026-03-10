@@ -1,0 +1,37 @@
+---
+sidebar_position: 5
+sidebar_label: Props
+---
+
+# Propriedades
+
+| Propriedade           | Tipo                                          | Padrão      | Descrição                                              |
+| --------------------- | --------------------------------------------- | ----------- | ------------------------------------------------------ |
+| `value`               | `Date \| null`                                | --          | Valor da data selecionada                              |
+| `onChange`            | `(date: Date \| null) => void`                | --          | Callback quando o valor muda                           |
+| `minDate`             | `Date`                                        | --          | Data mínima selecionável                               |
+| `maxDate`             | `Date`                                        | --          | Data máxima selecionável                               |
+| `locale`              | `Partial<Locale>`                             | --          | Configuração de localidade personalizada               |
+| `initialMonth`        | `Date`                                        | --          | Mês inicial exibido                                    |
+| `size`                | `"small" \| "medium" \| "large" \| "x-large"` | `"medium"`  | Tamanho do componente                                  |
+| `weekStartsOn`        | `WeekDay`                                     | `"sunday"`  | Primeiro dia da semana                                 |
+| `isDateUnavailable`   | `(date: Date) => boolean`                     | --          | Marcar datas como desabilitadas                        |
+| `displayFormat`       | `string`                                      | --          | Formato de exibição personalizado (ex: `"DD/MM/YYYY"`) |
+| `open`                | `boolean`                                     | --          | Estado de abertura controlado                          |
+| `initialOpen`         | `boolean`                                     | --          | Estado de abertura inicial (não controlado)            |
+| `onOpenChange`        | `(open: boolean) => void`                     | --          | Callback quando o estado de abertura muda              |
+| `required`            | `boolean`                                     | `false`     | Desabilita a limpeza do valor                          |
+| `showOutsideDays`     | `boolean`                                     | `false`     | Mostrar dias dos meses adjacentes                      |
+| `highlightDates`      | `Date[]`                                      | --          | Datas para destacar                                    |
+| `shouldCloseOnSelect` | `boolean`                                     | `false`     | Confirmar automaticamente ao clicar na data            |
+| `numberOfMonths`      | `number`                                      | `1`         | Número de meses para exibir                            |
+| `captionLayout`       | `"buttons" \| "dropdown"`                     | `"buttons"` | Estilo de navegação do cabeçalho                       |
+| `fromYear`            | `number`                                      | --          | Ano inicial para o seletor                             |
+| `toYear`              | `number`                                      | --          | Ano final para o seletor                               |
+| `disablePast`         | `boolean`                                     | `false`     | Desabilitar datas anteriores a hoje                    |
+| `disableFuture`       | `boolean`                                     | `false`     | Desabilitar datas posteriores a hoje                   |
+| `inline`              | `boolean`                                     | `false`     | Mostrar calendário em linha (sem popup)                |
+| `name`                | `string`                                      | --          | Nome do input oculto para submissão de formulário      |
+| `placeholder`         | `string`                                      | --          | Texto do placeholder do gatilho                        |
+| `hideHeader`          | `boolean`                                     | `false`     | Ocultar o cabeçalho de navegação                       |
+| `hideFooter`          | `boolean`                                     | `false`     | Ocultar o rodapé de ações                              |

@@ -1,0 +1,53 @@
+---
+sidebar_position: 8
+sidebar_label: Typography
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFont from "@examples/tailwind4/Customization/CompoundCustomFont";
+import CompoundCustomFontSource from "@examples/tailwind4/Customization/CompoundCustomFont.tsx?raw";
+import CompoundNotoSans from "@examples/tailwind4/Customization/CompoundNotoSans";
+import CompoundNotoSansSource from "@examples/tailwind4/Customization/CompoundNotoSans.tsx?raw";
+import CompoundWebFonts from "@examples/tailwind4/Customization/CompoundWebFonts";
+import CompoundWebFontsSource from "@examples/tailwind4/Customization/CompoundWebFonts.tsx?raw";
+
+# Typografie
+
+Das Tailwind v4-Paket verwendet Tailwinds Standardklasse `font-sans` (`ui-sans-serif, system-ui, sans-serif, ...`). Da die CSS-Eigenschaft `font-family` vererbt wird, können Sie die Schriftart des Pickers überschreiben, indem Sie ihn in einen Container mit einem `fontFamily`-Stil einschließen. Die Schriftart des Wrappers wird auf alle Picker-Elemente kaskadiert.
+
+## Schriftfamilie
+
+Umschließen Sie den Picker und setzen Sie `fontFamily` auf den Wrapper, um die Schriftarten zu wechseln:
+
+<CodeDemo source={CompoundCustomFontSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFont client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Verwendung von Web-Schriftarten (Noto Sans)
+
+Laden Sie eine Web-Schriftart zur Laufzeit und wenden Sie sie über einen Wrapper an. Dieses Beispiel lädt [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) von Google Fonts:
+
+<CodeDemo source={CompoundNotoSansSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNotoSans client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+<Admonition type="tip" title="Produktionseinsatz">
+In einem echten Projekt laden Sie die Schriftart über ein `<link>`-Tag in Ihrem HTML-`<head>` oder über Ihren CSS-Bundler, anstatt sie zur Laufzeit zu injizieren. Der hier gezeigte `useEffect`-Ansatz dient nur zu Demonstrationszwecken.
+</Admonition>
+
+## Web-Schriftarten-Galerie
+
+Vergleichen Sie verschiedene Web-Schriftarten, um zu sehen, wie dramatisch die Typografie das Aussehen des Pickers verändert. Alle unten aufgeführten Schriftarten unterstützen die mehrsprachige Darstellung (Latein, CJK, Koreanisch).
+
+<CodeDemo source={CompoundWebFontsSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundWebFonts client:load />
+  </ExampleWrapper>
+</CodeDemo>

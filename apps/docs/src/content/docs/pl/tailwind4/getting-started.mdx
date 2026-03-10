@@ -1,0 +1,136 @@
+---
+sidebar_position: 1
+sidebar_label: Getting Started
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import PackageInstall from "@/components/PackageInstall.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Tailwind4Basic from "@examples/tailwind4/DatePicker/Basic";
+import Tailwind4BasicSource from "@examples/tailwind4/DatePicker/Basic.tsx?raw";
+
+# Pierwsze kroki z Tailwind CSS v4
+
+Pakiet Tailwind v4 dostarcza komponenty do wyboru daty, stylizowane za pomocą klas użytkowych Tailwind CSS v4 i semantycznych tokenów projektowych.
+
+## Instalacja
+
+<PackageInstall pkg="react-date-range-picker-tailwind4" />
+
+Zaimportuj style komponentów w swoim głównym pliku CSS:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+Jeśli Twój projekt **nie** definiuje jeszcze semantycznych tokenów projektowych (np. projekty shadcn/ui już je mają), zaimportuj również domyślny motyw:
+
+```css
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+```
+
+### Projekty shadcn/ui
+
+shadcn/ui już definiuje wymagane tokeny. Potrzebujesz tylko stylów komponentów:
+
+```css
+/* app/globals.css or src/index.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "react-date-range-picker-tailwind4/rdrp-reset.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+### Samodzielne projekty Tailwind v4
+
+Dla projektów bez shadcn/ui, zaimportuj zarówno tokeny motywu, jak i style komponentów:
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "react-date-range-picker-tailwind4/rdrp-theme.css";
+@import "react-date-range-picker-tailwind4/rdrp-styles.css";
+```
+
+## Semantyczne Tokeny
+
+Komponenty używają wewnętrznie niestandardowych właściwości CSS `--rdrp-*`, które mapują się na semantyczne tokeny Tailwind v4 / shadcn poprzez `var()` z wartościami zastępczymi. Jeśli chcesz dostosować mapowanie, nadpisz zmienne `--rdrp-*` w swoim CSS.
+
+Plik `rdrp-theme.css` dostarcza domyślną paletę Slate + Sky z tymi tokenami:
+
+| Token                        | Zastosowanie                         |
+| ---------------------------- | ------------------------------------ |
+| `--color-background`         | Tła komponentów                      |
+| `--color-foreground`         | Kolor tekstu                         |
+| `--color-primary`            | Wybrane daty, stany aktywne          |
+| `--color-primary-foreground` | Tekst na kolorze podstawowym         |
+| `--color-muted-foreground`   | Przygaszony tekst, symbole zastępcze |
+| `--color-accent`             | Tła przy najechaniu                  |
+| `--color-border`             | Kolory obramowania                   |
+| `--color-ring`               | Kolor pierścienia fokusa             |
+
+## Szybki start
+
+<CodeDemo source={Tailwind4BasicSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <Tailwind4Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Co jest w zestawie
+
+| Komponent             | Opis                                                  |
+| --------------------- | ----------------------------------------------------- |
+| `DatePicker`          | Wybór pojedynczej daty z wyskakującym kalendarzem     |
+| `DateRangePicker`     | Wybór zakresu dat z podwójnym kalendarzem i presetami |
+| `DateTimePicker`      | Wybór daty i godziny z panelem przewijania czasu      |
+| `DateRangeTimePicker` | Wybór zakresu dat i godzin                            |
+
+Wszystkie komponenty wspierają:
+
+- Kontrolowaną wartość za pomocą `value` / `onChange`
+- Nawigację za pomocą klawiatury
+- Tryb ciemny poprzez wariant `dark:`
+- 4 rozmiary: `small`, `medium`, `large`, `x-large`
+- API komponentów złożonych do personalizacji
+
+## Typy TypeScript
+
+Wszystkie typy konfiguracyjne i danych są ponownie eksportowane z pakietu — nie ma potrzeby osobnej instalacji pakietu headless:
+
+```tsx
+import type {
+  Locale,
+  DatePickerSize,
+  TimeConfig,
+  MinuteStep,
+  SecondStep,
+  TimePrecision,
+  HourFormat,
+  TimePeriod,
+  CaptionLayout,
+  WeekDay,
+  DateRangePreset,
+  CalendarMonth,
+  DayProps,
+} from "react-date-range-picker-tailwind4";
+```
+
+Te typy są przydatne do:
+
+- **`Locale`** — Niestandardowe nadpisania lokalizacji (nazwy dni tygodnia, etykiety przycisków, formatowanie daty)
+- **`DatePickerSize`** — Typowanie propa `size` (`"small"` | `"medium"` | `"large"` | `"x-large"`)
+- **`TimeConfig`** — Konfiguracja precyzji, formatu i kroków wyboru czasu
+- **`DateRangePreset`** — Definiowanie presetów dla `DateRangePicker` / `DateRangeTimePicker`
+- **`CalendarMonth`**, **`DayProps`** — Niestandardowe renderowanie za pomocą komponentów złożonych
+
+Zobacz [Typy Headless](/docs/headless/types/common-types) po szczegółowe definicje typów.
+
+## Następne kroki
+
+- [DatePicker](/docs/tailwind4/components/date-picker/basic) — Wybór pojedynczej daty
+- [DateRangePicker](/docs/tailwind4/components/date-range-picker/basic) — Zakres dat z presetami
+- [Komponenty złożone](/docs/tailwind4/customization/overview) — Personalizacja wewnętrznej struktury
+- [Semantyczne tokeny](/docs/tailwind4/customization/semantic-tokens) — Tworzenie motywów za pomocą tokenów projektowych
+- [Tryb ciemny](/docs/tailwind4/customization/dark-mode) — Wsparcie dla ciemnego motywu

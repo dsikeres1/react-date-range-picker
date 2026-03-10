@@ -1,0 +1,22 @@
+---
+sidebar_position: 2
+sidebar_label: Constraints
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinMaxDate from "@examples/tailwind4/DateTimePicker/MinMaxDate";
+import MinMaxDateSource from "@examples/tailwind4/DateTimePicker/MinMaxDate.tsx?raw";
+
+# 制約
+
+## 最小・最大日付
+
+選択可能な日付を特定の日付範囲に制限します。
+
+<CodeDemo source={MinMaxDateSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinMaxDate client:load />
+  </ExampleWrapper>
+</CodeDemo>

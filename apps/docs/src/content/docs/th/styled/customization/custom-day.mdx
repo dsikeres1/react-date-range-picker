@@ -1,0 +1,41 @@
+---
+sidebar_position: 3
+sidebar_label: "Custom Day Cell"
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomDay from "@examples/styled/Customization/CompoundCustomDay";
+import CompoundCustomDaySource from "@examples/styled/Customization/CompoundCustomDay.tsx?raw";
+
+# การปรับแต่งเซลล์วัน
+
+ใช้ render prop ของคอมโพเนนต์ `Day` เพื่อปรับแต่งลักษณะของแต่ละเซลล์วัน ซึ่งมีประโยชน์สำหรับการเพิ่มตัวบ่งชี้เหตุการณ์, ทูลทิป, หรือสไตล์ที่กำหนดเองทั้งหมดให้กับแต่ละวัน
+
+<CodeDemo source={CompoundCustomDaySource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CompoundCustomDay client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Props สำหรับ Render Day
+
+| Prop             | Type         | คำอธิบาย                                                |
+| ---------------- | ------------ | ------------------------------------------------------- |
+| `date`           | `Date`       | อ็อบเจกต์ Date                                          |
+| `day`            | `number`     | วันของเดือน (1-31)                                      |
+| `isToday`        | `boolean`    | ระบุว่าเป็นวันปัจจุบันหรือไม่                           |
+| `isSelected`     | `boolean`    | ระบุว่าวันนั้นถูกเลือกหรือไม่                           |
+| `isDisabled`     | `boolean`    | ระบุว่าวันนั้นถูกปิดใช้งานหรือไม่                       |
+| `isInRange`      | `boolean`    | ระบุว่าวันนั้นอยู่ในช่วงที่เลือกหรือไม่                 |
+| `isRangeStart`   | `boolean`    | ระบุว่าเป็นวันเริ่มต้นของช่วงหรือไม่                    |
+| `isRangeEnd`     | `boolean`    | ระบุว่าเป็นวันสิ้นสุดของช่วงหรือไม่                     |
+| `isInHoverRange` | `boolean`    | ระบุว่าวันนั้นอยู่ในช่วงแสดงตัวอย่างเมื่อโฮเวอร์หรือไม่ |
+| `isHoverTarget`  | `boolean`    | ระบุว่าเป็นเป้าหมายของการโฮเวอร์หรือไม่                 |
+| `isOutsideDay`   | `boolean`    | ระบุว่าวันนั้นเป็นของเดือนที่อยู่ติดกันหรือไม่          |
+| `isHighlighted`  | `boolean`    | ระบุว่าวันนั้นมีจุดไฮไลท์หรือไม่                        |
+| `isFocused`      | `boolean`    | ระบุว่าวันนั้นได้รับการโฟกัสจากคีย์บอร์ดหรือไม่         |
+| `onClick`        | `() => void` | ตัวจัดการการคลิก                                        |
+| `onMouseEnter`   | `() => void` | ตัวจัดการเมื่อเมาส์เข้าสู่พื้นที่                       |
+| `onMouseLeave`   | `() => void` | ตัวจัดการเมื่อเมาส์ออกจากพื้นที่                        |

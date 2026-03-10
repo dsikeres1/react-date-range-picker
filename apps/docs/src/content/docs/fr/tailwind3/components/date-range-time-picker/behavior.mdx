@@ -1,0 +1,57 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/tailwind3/DateRangeTimePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/tailwind3/DateRangeTimePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/tailwind3/DateRangeTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind3/DateRangeTimePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/tailwind3/DateRangeTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind3/DateRangeTimePicker/FormIntegration.tsx?raw";
+
+# Comportement
+
+## Fermer à la sélection
+
+Lorsque `shouldCloseOnSelect` est activé, le sélecteur confirme et se ferme automatiquement lorsqu'un préréglage est cliqué.
+
+<Admonition type="info">
+  Pour les sélecteurs avec heure, `shouldCloseOnSelect` s'applique uniquement aux clics sur les
+  préréglages — pas aux clics sur les dates, car l'utilisateur doit encore régler l'heure.
+</Admonition>
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Plusieurs mois
+
+Affichez plus que les deux mois par défaut côte à côte.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Intégration de formulaire
+
+Utilisez la prop `name` pour inclure des entrées masquées pour la soumission de formulaire native.
+
+<Admonition type="tip">
+  Le style du bouton de soumission dans cet exemple est personnalisé — la bibliothèque ne fournit
+  que le sélecteur de date.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

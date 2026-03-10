@@ -1,0 +1,49 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/tailwind4/DateTimePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/tailwind4/DateTimePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/tailwind4/DateTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/tailwind4/DateTimePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/tailwind4/DateTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/tailwind4/DateTimePicker/FormIntegration.tsx?raw";
+
+# 行为
+
+## 选择后关闭
+
+启用 `shouldCloseOnSelect` 后，当点击一个日期时，选择器会自动确认并关闭。
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 多个月份
+
+并排显示多个月份。
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 表单集成
+
+使用 `name` 属性来包含一个用于原生表单提交的隐藏输入。
+
+<Admonition type="tip">本示例中的提交按钮样式是自定义的——本库仅提供日期选择器。</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

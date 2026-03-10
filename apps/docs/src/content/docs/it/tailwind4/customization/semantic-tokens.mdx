@@ -1,0 +1,167 @@
+---
+sidebar_position: 10
+---
+
+# 시맨틱 토큰
+
+Tailwind v4 패키지는 모든 색상에 대해 시맨틱 CSS 변수(디자인 토큰)를 사용합니다. 이 토큰들은 컴포넌트 스타일을 특정 색상 값에서 분리하여 테마 적용을 간단하게 만듭니다. 토큰 작명 규칙은 [shadcn/ui](https://ui.shadcn.com/)에서 사용하는 패턴과 동일합니다.
+
+## 토큰 시스템
+
+`bg-sky-500`과 같이 하드코딩된 색상 대신, Tailwind v4 컴포넌트는 `bg-primary`, `text-foreground`, `border-border`와 같은 시맨틱 유틸리티를 사용합니다. 이것들은 프로젝트에 정의된 CSS 변수에 매핑됩니다.
+
+```
+bg-primary        → var(--color-primary)
+text-foreground   → var(--color-foreground)
+border-border     → var(--color-border)
+```
+
+## 필수 토큰
+
+Tailwind v4의 `@theme` 지시어를 사용하여 CSS에 다음 토큰들을 정의하세요:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.004 285.823);
+
+  --color-primary: oklch(0.205 0.006 285.885);
+  --color-primary-foreground: oklch(0.985 0.001 285.823);
+
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+
+  --color-accent: oklch(0.96 0.003 285.823);
+  --color-accent-foreground: oklch(0.205 0.006 285.885);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --color-border: oklch(0.922 0.004 285.823);
+  --color-input: oklch(0.922 0.004 285.823);
+  --color-ring: oklch(0.87 0.006 285.823);
+}
+```
+
+## 토큰 참조
+
+| 토큰                         | 사용처                                      | 예시 유틸리티                |
+| ---------------------------- | ------------------------------------------- | ---------------------------- |
+| `--color-background`         | 페이지/앱 배경                              | `bg-background`              |
+| `--color-foreground`         | 기본 텍스트 색상                            | `text-foreground`            |
+| `--color-popover`            | 팝업 배경                                   | `bg-popover`                 |
+| `--color-popover-foreground` | 팝업 텍스트                                 | `text-popover-foreground`    |
+| `--color-primary`            | 선택된 날짜, 확인 버튼, 범위 끝점           | `bg-primary`, `text-primary` |
+| `--color-primary-foreground` | primary 배경 위의 텍스트                    | `text-primary-foreground`    |
+| `--color-muted-foreground`   | 흐린 텍스트 (플레이스홀더, 요일, 탐색 버튼) | `text-muted-foreground`      |
+| `--color-accent`             | 날짜 및 버튼의 hover 배경                   | `bg-accent`                  |
+| `--color-accent-foreground`  | accent 배경 위의 텍스트                     | `text-accent-foreground`     |
+| `--color-destructive`        | 초기화/위험 버튼 텍스트                     | `text-destructive`           |
+| `--color-border`             | 일반적인 테두리 (푸터, 프리셋, 팝업)        | `border-border`              |
+| `--color-input`              | 입력/트리거 테두리                          | `border-input`               |
+| `--color-ring`               | 포커스 링 색상                              | `ring-ring`                  |
+
+## 토큰이 컴포넌트에 매핑되는 방식
+
+피커 전체에 토큰이 적용되는 방식은 다음과 같습니다:
+
+### 트리거 (Trigger)
+
+- 배경: `bg-background`
+- 테두리: `border-input`
+- 텍스트: 루트의 `text-foreground`에서 상속
+- 플레이스홀더: `text-muted-foreground`
+- 포커스 링: `ring-ring`
+
+### 팝업 (Popup)
+
+- 배경: `bg-popover`
+- 텍스트: `text-popover-foreground`
+- 테두리: `border-border`
+
+### 캘린더 날짜
+
+- 기본 hover: `bg-accent` / `text-accent-foreground`
+- 선택됨: `bg-primary` / `text-primary-foreground`
+- 오늘: `text-primary`
+- 범위 내: `bg-primary/10`
+- 범위 시작/끝: `bg-primary` / `text-primary-foreground`
+- 비활성화됨: 투명도가 감소된 `text-muted-foreground`
+
+### 푸터 (Footer)
+
+- 테두리: `border-border`
+- 취소 버튼: `border-input`, hover 시 `bg-accent`
+- 확인 버튼: `bg-primary` / `text-primary-foreground`
+- 초기화 버튼: `text-destructive`
+
+## 토큰 사용자 정의
+
+### Primary 색상 변경
+
+피커의 브랜드를 변경하려면 `--color-primary`와 `--color-primary-foreground`를 변경하세요:
+
+```css
+@theme {
+  /* 보라색 primary */
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+}
+```
+
+### 따뜻한 색상 스킴
+
+```css
+@theme {
+  --color-background: oklch(0.99 0.005 80);
+  --color-foreground: oklch(0.2 0.02 60);
+
+  --color-popover: oklch(0.99 0.005 80);
+  --color-popover-foreground: oklch(0.2 0.02 60);
+
+  --color-primary: oklch(0.6 0.2 40);
+  --color-primary-foreground: oklch(0.98 0.005 80);
+
+  --color-accent: oklch(0.95 0.02 80);
+  --color-accent-foreground: oklch(0.2 0.02 60);
+
+  --color-border: oklch(0.9 0.01 80);
+  --color-input: oklch(0.9 0.01 80);
+  --color-ring: oklch(0.85 0.02 80);
+}
+```
+
+### 다크 모드 토큰
+
+다크 모드를 사용하려면 `.dark` 선택자나 `@media (prefers-color-scheme: dark)` 아래에서 토큰을 재정의하세요:
+
+```css
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.004 285.823);
+  /* ... 라이트 모드 값 */
+}
+
+.dark {
+  --color-background: oklch(0.145 0.004 285.823);
+  --color-foreground: oklch(0.985 0.001 285.823);
+  --color-popover: oklch(0.145 0.004 285.823);
+  --color-popover-foreground: oklch(0.985 0.001 285.823);
+  --color-primary: oklch(0.985 0.001 285.823);
+  --color-primary-foreground: oklch(0.205 0.006 285.885);
+  --color-muted-foreground: oklch(0.556 0.01 285.823);
+  --color-accent: oklch(0.269 0.006 285.885);
+  --color-accent-foreground: oklch(0.985 0.001 285.823);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.269 0.006 285.885);
+  --color-input: oklch(0.269 0.006 285.885);
+  --color-ring: oklch(0.369 0.006 285.885);
+}
+```
+
+더 자세한 내용은 [다크 모드](/docs/tailwind4/customization/dark-mode)를 참조하세요.
+
+## 기존 shadcn/ui 프로젝트
+
+프로젝트에 이미 shadcn/ui 토큰이 정의되어 있다면, 피커는 별도 설정 없이 자동으로 해당 토큰을 사용합니다. 토큰 이름은 의도적으로 호환되도록 만들어졌습니다. 자세한 내용은 [shadcn 레지스트리](/docs/tailwind4/customization/shadcn-registry)를 참조하세요.

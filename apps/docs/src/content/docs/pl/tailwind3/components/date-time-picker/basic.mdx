@@ -1,0 +1,34 @@
+---
+sidebar_position: 1
+sidebar_label: Basic Usage
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import Basic from "@examples/tailwind3/DateTimePicker/Basic";
+import BasicSource from "@examples/tailwind3/DateTimePicker/Basic.tsx?raw";
+import Inline from "@examples/tailwind3/DateTimePicker/Inline";
+import InlineSource from "@examples/tailwind3/DateTimePicker/Inline.tsx?raw";
+
+# DateTimePicker
+
+Komponent do wyboru daty i godziny z kalendarzem i panelem do przewijania czasu.
+
+## Podstawowe użycie
+
+<CodeDemo source={BasicSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Basic client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Tryb Inline
+
+Wyświetla kalendarz i panel czasu w trybie inline, bez wyzwalacza w postaci okna popup.
+
+<CodeDemo source={InlineSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <Inline client:load />
+  </ExampleWrapper>
+</CodeDemo>

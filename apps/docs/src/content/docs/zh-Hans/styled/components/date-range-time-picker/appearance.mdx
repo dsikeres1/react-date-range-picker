@@ -1,0 +1,46 @@
+---
+sidebar_position: 4
+sidebar_label: Appearance
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MultiMonth from "@examples/styled/DateRangeTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangeTimePicker/MultiMonth.tsx?raw";
+import CustomLocale from "@examples/styled/DateRangeTimePicker/CustomLocale";
+import CustomLocaleSource from "@examples/styled/DateRangeTimePicker/CustomLocale.tsx?raw";
+import CaptionDropdown from "@examples/styled/DateRangeTimePicker/CaptionDropdown";
+import CaptionDropdownSource from "@examples/styled/DateRangeTimePicker/CaptionDropdown.tsx?raw";
+
+# 外观
+
+## 多月份显示
+
+并排显示超过 2 个月。对于范围选择器，默认为 `2`。
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 自定义区域设置
+
+使用 headless 包中的 `createLocale` 来自定义月份/星期的名称和 UI 字符串。
+
+<CodeDemo source={CustomLocaleSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CustomLocale client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 标题下拉菜单
+
+将按钮导航切换为月份和年份的下拉选择器。适用于选择远离当前月份的日期。
+
+<CodeDemo source={CaptionDropdownSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <CaptionDropdown client:load />
+  </ExampleWrapper>
+</CodeDemo>

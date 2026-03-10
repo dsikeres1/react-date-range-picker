@@ -1,0 +1,57 @@
+---
+sidebar_position: 4
+sidebar_label: Behavior
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import Admonition from "@/components/Admonition.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import ShouldCloseOnSelect from "@examples/styled/DateRangeTimePicker/ShouldCloseOnSelect";
+import ShouldCloseOnSelectSource from "@examples/styled/DateRangeTimePicker/ShouldCloseOnSelect.tsx?raw";
+import MultiMonth from "@examples/styled/DateRangeTimePicker/MultiMonth";
+import MultiMonthSource from "@examples/styled/DateRangeTimePicker/MultiMonth.tsx?raw";
+import FormIntegration from "@examples/styled/DateRangeTimePicker/FormIntegration";
+import FormIntegrationSource from "@examples/styled/DateRangeTimePicker/FormIntegration.tsx?raw";
+
+# Zachowanie
+
+## Zamykanie po wybraniu
+
+Gdy opcja `shouldCloseOnSelect` jest włączona, picker automatycznie zatwierdza wybór i zamyka się po kliknięciu presetu.
+
+<Admonition type="info">
+  Dla pickerów z włączoną opcją czasu, `shouldCloseOnSelect` dotyczy tylko kliknięć presetów — nie
+  kliknięć dat, ponieważ użytkownik wciąż musi ustawić czas.
+</Admonition>
+
+<CodeDemo source={ShouldCloseOnSelectSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <ShouldCloseOnSelect client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Wiele miesięcy
+
+Wyświetlaj więcej niż domyślne dwa miesiące obok siebie.
+
+<CodeDemo source={MultiMonthSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <MultiMonth client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Integracja z formularzem
+
+Użyj propa `name`, aby dołączyć ukryte pola (hidden inputs) do natywnego przesyłania formularza.
+
+<Admonition type="tip">
+  Style przycisku przesyłania w tym przykładzie są niestandardowe — biblioteka dostarcza tylko date
+  picker.
+</Admonition>
+
+<CodeDemo source={FormIntegrationSource}>
+  <ExampleWrapper variant="styled" client:load>
+    <FormIntegration client:load />
+  </ExampleWrapper>
+</CodeDemo>

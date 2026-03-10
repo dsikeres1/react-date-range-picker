@@ -1,0 +1,55 @@
+---
+sidebar_position: 4
+sidebar_label: Custom Footer
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomFooter from "@examples/tailwind4/Customization/CompoundCustomFooter";
+import CompoundCustomFooterSource from "@examples/tailwind4/Customization/CompoundCustomFooter.tsx?raw";
+import CompoundNoFooter from "@examples/tailwind4/Customization/CompoundNoFooter";
+import CompoundNoFooterSource from "@examples/tailwind4/Customization/CompoundNoFooter.tsx?raw";
+
+# Pie de Página Personalizado
+
+## Pie de Página Reorganizado
+
+Reorganiza los botones del pie de página o añade nuevos como `TodayButton`. Como cada botón es una parte compuesta independiente, tú controlas el orden y el diseño.
+
+<CodeDemo source={CompoundCustomFooterSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundCustomFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Diseño Mínimo
+
+Omite cualquier parte que no necesites. Por ejemplo, elimina completamente el pie de página para un calendario emergente mínimo:
+
+<CodeDemo source={CompoundNoFooterSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <CompoundNoFooter client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Sobrescribir Clases
+
+Cada parte compuesta acepta una prop `className`. El paquete de Tailwind v4 utiliza `cn()` (una utilidad de `clsx` + `twMerge`) para fusionar tus clases con las predeterminadas, de modo que las utilidades en conflicto se resuelven correctamente:
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+<DatePicker.Root value={value} onChange={setValue}>
+  {/* Override trigger width and padding */}
+  <DatePicker.Trigger className="min-w-[300px] px-4 py-3" />
+  <DatePicker.Content className="rounded-2xl shadow-xl">
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title className="text-lg" />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+  </DatePicker.Content>
+</DatePicker.Root>;
+```

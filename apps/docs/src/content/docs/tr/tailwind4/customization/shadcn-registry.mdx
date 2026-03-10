@@ -1,0 +1,132 @@
+---
+sidebar_position: 11
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# shadcn/ui Uyumluluğu
+
+Tailwind v4 paketi, [shadcn/ui](https://ui.shadcn.com/) projeleriyle kutudan çıktığı gibi uyumlu olacak şekilde tasarlanmıştır. Aynı anlamsal token kuralını kullanır, bu nedenle projenizde zaten shadcn/ui kuruluysa, tarih seçici temanızla otomatik olarak eşleşecektir.
+
+## Neden Çalışıyor
+
+shadcn/ui, aşağıdaki gibi anlamsal CSS değişkenlerini tanımlar:
+
+```css
+--background
+--foreground
+--primary
+--primary-foreground
+--muted-foreground
+--accent
+--accent-foreground
+--destructive
+--border
+--input
+--ring
+```
+
+`react-date-range-picker-tailwind4` bileşenleri, Tailwind yardımcı sınıfları (`bg-primary`, `text-foreground`, `border-border`, vb.) aracılığıyla aynı token adlarını kullanır. Her iki sistem de aynı CSS değişkenlerine başvurduğundan, seçici mevcut temanızı devralır.
+
+## Sıfır Yapılandırmalı Kurulum
+
+Eğer bir shadcn/ui projeniz varsa, paketi kurun ve doğrudan kullanın:
+
+```bash
+npm install react-date-range-picker-tailwind4
+```
+
+```tsx
+import { useState } from "react";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function MyDatePicker() {
+  const [value, setValue] = useState<Date | null>(null);
+  return <DatePicker value={value} onChange={setValue} />;
+}
+```
+
+Ek token tanımlarına veya CSS değişikliklerine gerek yoktur. Seçici, mevcut `--color-primary`, `--color-background` vb. değişkenlerinizi kullanacaktır.
+
+## Token Eşleştirmesi
+
+Seçici token'larının shadcn/ui token'larıyla nasıl eşleştiği aşağıda gösterilmiştir:
+
+| Seçici Kullanımı         | Tailwind Sınıfı           | shadcn Token'ı         |
+| ------------------------ | ------------------------- | ---------------------- |
+| Açılır pencere arkaplanı | `bg-popover`              | `--popover`            |
+| Açılır pencere metni     | `text-popover-foreground` | `--popover-foreground` |
+| Seçili gün               | `bg-primary`              | `--primary`            |
+| Seçili gün metni         | `text-primary-foreground` | `--primary-foreground` |
+| Gün üzerine gelme        | `bg-accent`               | `--accent`             |
+| Gün üzerine gelme metni  | `text-accent-foreground`  | `--accent-foreground`  |
+| Soluk metin              | `text-muted-foreground`   | `--muted-foreground`   |
+| Temizle düğmesi          | `text-destructive`        | `--destructive`        |
+| Kenarlıklar              | `border-border`           | `--border`             |
+| Tetikleyici kenarlığı    | `border-input`            | `--input`              |
+| Odak halkası             | `ring-ring`               | `--ring`               |
+
+## shadcn Bileşenleriyle Birlikte Kullanım
+
+Tarih seçici, diğer shadcn/ui bileşenlerinin yanına yerleştirilebilir ve görsel olarak eşleşecektir:
+
+```tsx
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+export function DateForm() {
+  const [date, setDate] = useState<Date | null>(null);
+
+  return (
+    <div className="flex flex-col gap-2">
+      <Label>Bir tarih seçin</Label>
+      <DatePicker value={date} onChange={setDate} />
+      <Button onClick={() => console.log(date)}>Gönder</Button>
+    </div>
+  );
+}
+```
+
+## Karanlık Mod
+
+Eğer shadcn/ui projeniz `class` stratejisi ile `next-themes` kullanıyorsa, karanlık mod otomatik olarak çalışır. Hem shadcn hem de tarih seçici aynı CSS değişkenlerinden okur ve `.dark` seçiciniz her ikisini de değiştirir.
+
+```tsx
+// shadcn'in karanlık mod kurulumuyla kutudan çıktığı gibi çalışır
+<ThemeProvider attribute="class" defaultTheme="system">
+  <DatePicker value={value} onChange={setValue} />
+</ThemeProvider>
+```
+
+## shadcn Kayıt Defteri
+
+Ayrıca bileşenleri doğrudan shadcn CLI aracılığıyla yükleyebilirsiniz:
+
+```bash
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/date-range-time-picker.json
+npx shadcn add https://dsikeres1.github.io/react-date-range-picker/r/time-picker.json
+```
+
+Bu, bileşen kaynak kodunu projenizde `components/ui/` dizinine kopyalar ve doğrudan değiştirmenize olanak tanır.
+
+## shadcn Varsayılanlarının Ötesinde Özelleştirme
+
+Seçicinin shadcn temanızın geri kalanından farklı görünmesini istiyorsanız, token geçersiz kılmalarını bir sarmalayıcıya kapsülleyin:
+
+```css
+.custom-picker {
+  --color-primary: oklch(0.55 0.25 300);
+  --color-primary-foreground: oklch(0.98 0.01 300);
+  --color-accent: oklch(0.95 0.05 300);
+}
+```
+
+```tsx
+<div className="custom-picker">
+  <DatePicker value={value} onChange={setValue} />
+</div>
+```

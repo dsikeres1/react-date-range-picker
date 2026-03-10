@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+sidebar_label: Custom Trigger
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import CompoundCustomTrigger from "@examples/tailwind3/Customization/CompoundCustomTrigger";
+import CompoundCustomTriggerSource from "@examples/tailwind3/Customization/CompoundCustomTrigger.tsx?raw";
+import CompoundCustomTriggerRange from "@examples/tailwind3/Customization/CompoundCustomTriggerRange";
+import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/CompoundCustomTriggerRange.tsx?raw";
+
+# Пользовательский триггер
+
+Замените стандартный триггер вашим собственным элементом, используя render-проп. Компонент `Trigger` принимает дочернюю функцию, которая получает состояние и обратные вызовы, позволяя вам отображать любую пользовательскую кнопку или поле ввода.
+
+<CodeDemo source={CompoundCustomTriggerSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTrigger client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Render-пропсы триггера
+
+| Проп           | Тип              | Описание                                        |
+| -------------- | ---------------- | ----------------------------------------------- |
+| `displayValue` | `string`         | Отформатированная выбранная дата                |
+| `placeholder`  | `string`         | Текст-заполнитель                               |
+| `hasValue`     | `boolean`        | Выбрана ли дата                                 |
+| `isOpen`       | `boolean`        | Открыто ли всплывающее окно                     |
+| `onToggle`     | `() => void`     | Переключить открытие/закрытие всплывающего окна |
+| `onClear`      | `() => void`     | Очистить выбор                                  |
+| `locale`       | `Locale`         | Текущий объект локали                           |
+| `triggerRef`   | `(node) => void` | Callback-ссылка для позиционирования            |
+
+## Триггер для выбора диапазона
+
+Тот же паттерн работает и с `DateRangePicker`:
+
+<CodeDemo source={CompoundCustomTriggerRangeSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <CompoundCustomTriggerRange client:load />
+  </ExampleWrapper>
+</CodeDemo>

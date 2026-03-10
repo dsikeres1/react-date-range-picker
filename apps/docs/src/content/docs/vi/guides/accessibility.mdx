@@ -1,0 +1,127 @@
+---
+sidebar_position: 1
+title: Accessibility
+description: Điều hướng bằng bàn phím, các thuộc tính ARIA, quản lý tiêu điểm và tuân thủ WCAG.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Hỗ trợ tiếp cận
+
+Tất cả các thành phần picker đều được tích hợp sẵn hỗ trợ tiếp cận. Điều hướng bằng bàn phím, các thuộc tính ARIA và quản lý tiêu điểm hoạt động ngay lập tức trong mọi biến thể — Styled, Tailwind v3/v4 và Headless.
+
+Không cần cấu hình thêm cho việc sử dụng tiêu chuẩn. Trang này ghi lại những gì được bao gồm để bạn có thể kiểm tra, mở rộng hoặc sao chép các mẫu trong giao diện người dùng tùy chỉnh.
+
+## Điều hướng bằng bàn phím
+
+### Bộ chọn lịch
+
+| Phím              | Hành động                                                                   |
+| ----------------- | --------------------------------------------------------------------------- |
+| `ArrowLeft`       | Di chuyển tiêu điểm đến ngày trước đó                                       |
+| `ArrowRight`      | Di chuyển tiêu điểm đến ngày tiếp theo                                      |
+| `ArrowUp`         | Di chuyển tiêu điểm đến tuần trước (cùng ngày trong tuần)                   |
+| `ArrowDown`       | Di chuyển tiêu điểm đến tuần tiếp theo (cùng ngày trong tuần)               |
+| `Enter` / `Space` | Chọn ngày đang được tập trung                                               |
+| `Escape`          | Hủy các thay đổi và đóng cửa sổ bật lên                                     |
+| `Tab`             | Di chuyển đến phần tử có thể tập trung tiếp theo (mặc định của trình duyệt) |
+
+**Bỏ qua ngày bị vô hiệu hóa:** Khi điều hướng bằng các phím mũi tên, các ngày bị vô hiệu hóa sẽ tự động được bỏ qua. Bộ chọn sẽ tìm kiếm tối đa 365 ngày theo hướng di chuyển để tìm ngày được bật tiếp theo.
+
+**Tự động cuộn tháng:** Khi tiêu điểm bàn phím di chuyển đến một ngày trong một tháng khác, chế độ xem lịch sẽ cập nhật để hiển thị tháng đó.
+
+### Bộ chọn thời gian
+
+| Phím     | Hành động                               |
+| -------- | --------------------------------------- |
+| `Escape` | Hủy các thay đổi và đóng cửa sổ bật lên |
+
+Việc chọn thời gian sử dụng giao diện bánh xe cuộn với tương tác nhấp/chạm. Các cột cuộn sử dụng `scroll-snap` để chọn giá trị chính xác.
+
+## Thuộc tính ARIA
+
+Mỗi phần tử tương tác đều có các vai trò và thuộc tính ARIA phù hợp:
+
+### Popup & Vùng chứa
+
+| Phần tử             | Thuộc tính              | Giá trị                                |
+| ------------------- | ----------------------- | -------------------------------------- |
+| Vùng chứa popup     | `role`                  | `"dialog"`                             |
+| Vùng chứa nội tuyến | `role`                  | `"group"`                              |
+| Vùng chứa           | `aria-label`            | Văn bản giữ chỗ từ bản địa hóa         |
+| Vùng chứa           | `aria-activedescendant` | ID của ô ngày hiện đang được tập trung |
+
+### Nút kích hoạt
+
+| Thuộc tính      | Giá trị                  |
+| --------------- | ------------------------ |
+| `aria-expanded` | `true` khi popup đang mở |
+| `aria-haspopup` | `"dialog"`               |
+
+### Lưới lịch
+
+| Phần tử                   | Thuộc tính      | Giá trị                                                |
+| ------------------------- | --------------- | ------------------------------------------------------ |
+| Trình bao bọc lưới        | `role`          | `"grid"`                                               |
+| Hàng tuần                 | `role`          | `"row"`                                                |
+| Ô tiêu đề ngày trong tuần | `role`          | `"columnheader"`                                       |
+| Ô ngày                    | `role`          | `"gridcell"`                                           |
+| Ô ngày                    | `aria-selected` | `true` khi được chọn                                   |
+| Ô ngày                    | `aria-current`  | `"date"` khi ô là ngày hôm nay                         |
+| Ô ngày                    | `aria-label`    | Chuỗi ngày được định dạng (ví dụ: `"2026-03-04"`)      |
+| Ô ngày                    | `disabled`      | Đặt trên các ngày bị vô hiệu hóa (thuộc tính HTML gốc) |
+
+### Điều hướng & Danh sách thả xuống
+
+| Phần tử                   | Thuộc tính   | Giá trị                                       |
+| ------------------------- | ------------ | --------------------------------------------- |
+| Nút tháng trước           | `aria-label` | `"Tháng trước"` (từ `locale.prevMonthLabel`)  |
+| Nút tháng sau             | `aria-label` | `"Tháng sau"` (từ `locale.nextMonthLabel`)    |
+| Danh sách thả xuống tháng | `aria-label` | `"Chọn tháng"` (từ `locale.selectMonthLabel`) |
+| Danh sách thả xuống năm   | `aria-label` | `"Chọn năm"` (từ `locale.selectYearLabel`)    |
+
+### Cột thời gian
+
+| Phần tử             | Thuộc tính         | Giá trị                                    |
+| ------------------- | ------------------ | ------------------------------------------ |
+| Cột giờ             | `role`             | `"listbox"`                                |
+| Cột giờ             | `aria-orientation` | `"vertical"`                               |
+| Cột giờ             | `aria-label`       | `"Giờ"` (từ `locale.hourLabel`)            |
+| Cột phút            | `role`             | `"listbox"`                                |
+| Cột phút            | `aria-orientation` | `"vertical"`                               |
+| Cột phút            | `aria-label`       | `"Phút"` (từ `locale.minuteLabel`)         |
+| Cột giây            | `role`             | `"listbox"`                                |
+| Cột giây            | `aria-orientation` | `"vertical"`                               |
+| Cột giây            | `aria-label`       | `"Giây"` (từ `locale.secondLabel`)         |
+| Mục thời gian       | `role`             | `"option"` (các mục đệm: `"presentation"`) |
+| Mục thời gian       | `aria-selected`    | `true` khi mục là giá trị hiện tại         |
+| Nút chuyển đổi buổi | `aria-label`       | Buổi hiện tại + ", chuyển đổi SA/CH"       |
+| Nút xóa             | `aria-label`       | `"Xóa"` (từ `locale.clear`)                |
+
+Tất cả các chuỗi nhãn đều có thể tùy chỉnh thông qua [hệ thống bản địa hóa](/docs/guides/internationalization).
+
+## Quản lý tiêu điểm
+
+### Roving Tabindex
+
+Lưới lịch sử dụng mẫu **roving tabindex**:
+
+- Chỉ ô ngày hiện đang được tập trung mới có `tabIndex={0}` (có thể tab tới).
+- Tất cả các ô ngày khác đều có `tabIndex={-1}` (không thể tab tới, nhưng có thể tập trung bằng các phím mũi tên).
+- Điều này có nghĩa là phím `Tab` di chuyển tiêu điểm ra khỏi lưới lịch (đến điều khiển tiếp theo), và các phím mũi tên di chuyển tiêu điểm bên trong lưới.
+
+### Bẫy tiêu điểm Popup
+
+Chế độ popup sử dụng `FloatingFocusManager` từ `@floating-ui/react` để:
+
+- Bẫy tiêu điểm bên trong popup khi nó đang mở.
+- Trả lại tiêu điểm cho nút kích hoạt khi popup đóng lại.
+- Ngăn chặn việc tab ra khỏi popup đến nội dung nền.
+
+### Các phần tử gốc
+
+Việc chọn tháng và năm sử dụng các phần tử `<select>` gốc, vốn có khả năng truy cập bằng bàn phím. Các ô ngày sử dụng các phần tử `<button>` gốc với các trạng thái bị vô hiệu hóa phù hợp.
+
+## Tuân thủ WCAG 2.1
+
+Các tiêu chí thành công của WCAG 2.

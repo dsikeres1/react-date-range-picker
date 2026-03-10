@@ -1,0 +1,70 @@
+---
+sidebar_position: 3
+title: Browser Compatibility
+description: Поддерживаемые браузеры, используемые функции CSS и JavaScript API.
+---
+
+import Admonition from "@/components/Admonition.astro";
+
+# Совместимость с браузерами
+
+## Матрица поддержки
+
+| Браузер          | Минимальная версия |
+| ---------------- | ------------------ |
+| Chrome           | 88+                |
+| Edge             | 88+ (Chromium)     |
+| Firefox          | 85+                |
+| Safari           | 15.4+              |
+| iOS Safari       | 15.4+              |
+| Samsung Internet | 15+                |
+
+**IE 11 не поддерживается.** Библиотека использует пользовательские свойства CSS, современные JavaScript API и React 18+.
+
+Минимальная версия Safari 15.4 определена поддержкой `:focus-visible`, который используется в стилях индикатора фокуса пакета Styled.
+
+## Функции CSS
+
+| Функция                  | Используется в                         | Впервые поддержано                     |
+| ------------------------ | -------------------------------------- | -------------------------------------- |
+| CSS Custom Properties    | Все пакеты styled (темизация)          | Chrome 49, Firefox 31, Safari 9.1      |
+| `:focus-visible`         | Индикаторы фокуса (Styled)             | Chrome 86, Firefox 85, **Safari 15.4** |
+| `color-scheme`           | Нативные инпуты в темной теме (Styled) | Chrome 81, Firefox 96, Safari 12.1     |
+| `prefers-color-scheme`   | Автоматическая темная тема (Styled)    | Chrome 76, Firefox 67, Safari 12.1     |
+| `prefers-reduced-motion` | Уменьшение анимации (Styled)           | Chrome 74, Firefox 63, Safari 10.1     |
+| `scroll-snap-type`       | Прокрутка выбора времени (Styled)      | Chrome 69, Firefox 68, Safari 11       |
+| Flexbox                  | Макет                                  | Повсеместно                            |
+| CSS Grid                 | Сетка календаря                        | Chrome 57, Firefox 52, Safari 10.1     |
+
+## JavaScript API
+
+| API                                 | Используется                                 | Впервые поддержано                 |
+| ----------------------------------- | -------------------------------------------- | ---------------------------------- |
+| `Intl.DateTimeFormat`               | `createLocale()` генерация локали            | Все современные браузеры           |
+| `Intl.DateTimeFormat.formatToParts` | Извлечение метки AM/PM                       | Chrome 57, Firefox 51, Safari 11   |
+| `ResizeObserver`                    | `@floating-ui/react` позиционирование попапа | Chrome 64, Firefox 69, Safari 13.1 |
+| Хуки React 18+                      | Все хуки и компоненты                        | React 18.0+                        |
+
+## Заметки по пакетам
+
+### Headless
+
+Нет зависимостей от CSS. Требует только React 18+ и стандартные JavaScript API. Совместим с любой средой, поддерживающей React.
+
+### Styled
+
+Использует пользовательские свойства CSS, `:focus-visible`, `color-scheme` и `scroll-snap-type`. Узким местом в поддержке браузеров является **Safari 15.4+** (из-за `:focus-visible`).
+
+Выбор времени на основе прокрутки использует `scroll-snap-type: y mandatory` со скрытыми полосами прокрутки. Поведение прокрутки может немного отличаться на разных платформах из-за различных реализаций инерции/импульса.
+
+### Tailwind v3
+
+Требует Tailwind CSS v3. Та же совместимость с JavaScript, что и у Headless. Поддержка CSS зависит от вывода Tailwind v3 (широко совместим).
+
+### Tailwind v4
+
+Требует Tailwind CSS v4, который сам использует современные функции CSS (`@layer`, `@property`, вложенность CSS). Подробности смотрите в [документации по поддержке браузеров Tailwind CSS v4](https://tailwindcss.com/docs/compatibility).
+
+## Полифилы
+
+Для проектов, которым необходимо

@@ -1,0 +1,44 @@
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Composants Composés
+
+Le paquet Tailwind v4 expose une API de Composants Composés qui vous donne un contrôle total sur la structure interne et le rendu de chaque sélecteur. Au lieu d'un unique composant monolithique, vous composez le sélecteur à partir de parties individuelles.
+
+## Comment Ça Marche
+
+Chaque sélecteur (par ex. `DatePicker`) est à la fois un composant simple et un espace de noms de parties composées :
+
+```tsx
+import { DatePicker } from "react-date-range-picker-tailwind4";
+
+// Utilisation simple -- rend la disposition par défaut
+<DatePicker value={value} onChange={setValue} />
+
+// Utilisation composée -- contrôle total sur la structure
+<DatePicker.Root value={value} onChange={setValue}>
+  <DatePicker.Trigger />
+  <DatePicker.Content>
+    <DatePicker.Header>
+      <DatePicker.PrevButton />
+      <DatePicker.Title />
+      <DatePicker.NextButton />
+    </DatePicker.Header>
+    <DatePicker.Grid />
+    <DatePicker.Footer>
+      <DatePicker.ClearButton />
+      <DatePicker.CancelButton />
+      <DatePicker.ConfirmButton />
+    </DatePicker.Footer>
+  </DatePicker.Content>
+</DatePicker.Root>
+```
+
+Avec les composants composés, vous pouvez :
+
+- **Remplacer** n'importe quelle partie par votre propre rendu (par ex. un déclencheur personnalisé, une cellule de jour personnalisée)
+- **Réorganiser** la disposition (par ex. déplacer les boutons du pied de page, ajouter un bouton aujourd'hui)
+- **Omettre** les parties dont vous n'avez pas besoin (par ex. supprimer le pied de page pour un calendrier minimaliste)
+- \*\*Surcharger les

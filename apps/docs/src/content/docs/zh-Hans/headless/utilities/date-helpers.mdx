@@ -1,0 +1,230 @@
+---
+sidebar_position: 1
+title: Date Helpers
+---
+
+# 日期工具
+
+`headless` 包导出了一组原生 `Date` 辅助函数。它们取代了像 dayjs 或 date-fns 这样的库——该库没有外部日期依赖项。
+
+所有函数都是纯函数（它们返回新的 Date 对象，而不是修改输入）。
+
+## 导入
+
+```tsx
+import {
+  today,
+  parseDate,
+  startOf,
+  endOf,
+  add,
+  subtract,
+  isSame,
+  isBefore,
+  isAfter,
+  diff,
+  daysInMonth,
+  setYear,
+  setMonth,
+  setDate,
+  setHour,
+  setMinute,
+  setSecond,
+  formatBasic,
+} from "react-date-range-picker-headless";
+```
+
+## DateUnit 类型
+
+大多数函数接受一个 `DateUnit` 参数：
+
+```tsx
+type DateUnit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+```
+
+## 函数
+
+### today
+
+返回当前日期/时间。
+
+```tsx
+const now = today(); // new Date()
+```
+
+### parseDate
+
+将值解析为 Date 对象。如果输入为假值，则返回 `new Date()`。
+
+```tsx
+parseDate("2026-03-01"); // Date
+parseDate(1709251200000); // 从时间戳生成 Date
+parseDate(existingDate); // 克隆
+parseDate(null); // new Date() (回退)
+```
+
+**签名：** `parseDate(date?: Date | string | number | null): Date`
+
+### startOf
+
+获取一个时间单位的开始。
+
+```tsx
+startOf(date, "day"); // 2026-03-01 00:00:00.000
+startOf(date, "month"); // 2026-03-01 00:00:00.000
+startOf(date, "year"); // 2026-01-01 00:00:00.000
+startOf(date, "week"); // 一周的开始（默认为周日）
+startOf(date, "week", 1); // 一周的开始（周一）
+```
+
+**签名：** `startOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### endOf
+
+获取一个时间单位的结束。
+
+```tsx
+endOf(date, "day"); // 2026-03-01 23:59:59.999
+endOf(date, "month"); // 2026-03-31 23:59:59.999
+endOf(date, "year"); // 2026-12-31 23:59:59.999
+```
+
+**签名：** `endOf(date: Date, unit: DateUnit, weekStartsOn?: number): Date`
+
+### add
+
+向日期添加一段时间。
+
+```tsx
+add(date, 1, "day"); // 明天
+add(date, 3, "month"); // 3 个月后
+add(date, -1, "year"); // 1 年前
+add(date, 2, "hour"); // 2 小时后
+```
+
+处理月份溢出（例如，1月31日 + 1个月 = 2月28日，而不是3月3日）。
+
+**签名：** `add(date: Date, amount: number, unit: DateUnit): Date`
+
+### subtract
+
+从日期中减去一段时间。相当于 `add(date, -amount, unit)`。
+
+```tsx
+subtract(date, 7, "day"); // 7 天前
+subtract(date, 1, "month"); // 1 个月前
+```
+
+**签名：** `subtract(date: Date, amount: number, unit: DateUnit): Date`
+
+### isSame
+
+检查两个日期在给定的时间精度单位上是否相同。
+
+```tsx
+isSame(date1, date2, "day"); // 是同一日历天吗？
+isSame(date1, date2, "month"); // 是同一个月吗？
+isSame(date1, date2, "year"); // 是同一年吗？
+isSame(null, date2, "day"); // false (空值安全)
+```
+
+**签名：** `isSame(date1: Date | null | undefined, date2: Date | null | undefined, unit?: DateUnit): boolean`
+
+### isBefore
+
+检查第一个日期是否在第二个日期之前（在给定精度下）。
+
+```tsx
+isBefore(date1, date2, "day"); // date1 是在更早的一天吗？
+isBefore(date1, date2); // 毫秒级比较
+```
+
+**签名：** `isBefore(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### isAfter
+
+检查第一个日期是否在第二个日期之后（在给定精度下）。
+
+```tsx
+isAfter(date1, date2, "day"); // date1 是在更晚的一天吗？
+```
+
+**签名：** `isAfter(date1: Date, date2: Date, unit?: DateUnit): boolean`
+
+### diff
+
+获取两个日期在给定单位下的差值。
+
+```tsx
+diff(date1, date2, "day"); // 相差天数
+diff(date1, date2, "month"); // 相差月数
+diff(date1, date2, "year"); // 相差年数
+```
+
+**签名：** `diff(date1: Date, date2: Date, unit: DateUnit): number`
+
+### daysInMonth
+
+获取一个日期的所在月份有多少天。
+
+```tsx
+daysInMonth(new Date(2026, 1)); // 28 (2026年2月)
+daysInMonth(new Date(2026, 0)); // 31 (2026年1月)
+```
+
+**签名：** `daysInMonth(date: Date): number`
+
+### setYear / setMonth / setDate / setHour / setMinute / setSecond
+
+设置日期的特定部分，返回一个新的 Date。
+
+```tsx
+setYear(date, 2027); // 将年份更改为 2027
+setMonth(date, 5); // 更改为六月（0索引）
+setDate(date, 15); // 更改为 15 日
+setHour(date, 14); // 更改为下午 2 点
+setMinute(date, 30); // 更改为 :30
+setSecond(date, 0); // 更改为 :00
+```
+
+`setYear` 和 `setMonth` 会处理溢出（例如，将闰年的2月29日设置为非闰年，会修正为2月28日）。
+
+**签名：**
+
+- `setYear(date: Date, year: number): Date`
+- `setMonth(date: Date, month: number): Date`
+- `setDate(date: Date, day: number): Date`
+- `setHour(date: Date, hour: number): Date`
+- `setMinute(date: Date, minute: number): Date`
+- `setSecond(date: Date, second: number): Date`
+
+### formatBasic
+
+使用模板字符串格式化日期。
+
+```tsx
+formatBasic(date, "YYYY-MM-DD"); // "2026-03-01"
+formatBasic(date, "YYYY/MM/DD HH:mm:ss"); // "2026/03/01 14:30:00"
+formatBasic(date, "M/D"); // "3/1"
+formatBasic(date, "hh:mm A"); // 注意：不支持 A 标记，请使用 hook 中的 period
+```
+
+**支持的标记：**
+
+| 标记   | 输出                       | 示例   |
+| ------ | -------------------------- | ------ |
+| `YYYY` | 4 位年份                   | `2026` |
+| `MM`   | 2 位月份                   | `03`   |
+| `M`    | 月份（无前导零）           | `3`    |
+| `DD`   | 2 位日期                   | `01`   |
+| `D`    | 日期（无前导零）           | `1`    |
+| `HH`   | 2 位小时（24小时制）       | `14`   |
+| `H`    | 小时（24小时制，无前导零） | `14`   |
+| `hh`   | 2 位小时（12小时制）       | `02`   |
+| `h`    | 小时（12小时制，无前导零） | `2`    |
+| `mm`   | 2 位分钟                   | `30`   |
+| `m`    | 分钟（无前导零）           | `30`   |
+| `ss`   | 2 位秒                     | `05`   |
+| `s`    | 秒（无前导零）             | `5`    |
+
+**签名：** `formatBasic(date: Date, format: string): string`

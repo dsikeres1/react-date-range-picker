@@ -1,0 +1,48 @@
+---
+sidebar_position: 4
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import MinuteStep from "@examples/tailwind4/DateTimePicker/MinuteStep";
+import MinuteStepSource from "@examples/tailwind4/DateTimePicker/MinuteStep.tsx?raw";
+import SecondPrecision from "@examples/tailwind4/DateTimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/tailwind4/DateTimePicker/SecondPrecision.tsx?raw";
+import TwelveHour from "@examples/tailwind4/DateTimePicker/TwelveHour";
+import TwelveHourSource from "@examples/tailwind4/DateTimePicker/TwelveHour.tsx?raw";
+
+# Zaman Seçenekleri
+
+`time` prop'u aracılığıyla zaman paneli davranışını yapılandırın.
+
+## Dakika Adımı
+
+Dakika artış adımını ayarlayın. Sabit aralıklarla zamanlama yapmak için kullanışlıdır.
+
+<CodeDemo source={MinuteStepSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <MinuteStep client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Saniye Hassasiyeti
+
+`precision` özelliğini `"second"` olarak ayarlayarak saniye sütununu gösterin.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## 12 Saat Formatı
+
+AM/PM düğmesi ile 12 saat formatına geçiş yapın.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="tailwind4" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>

@@ -1,0 +1,48 @@
+---
+sidebar_position: 2
+sidebar_label: Time Options
+---
+
+import CodeDemo from "@/components/CodeDemo.astro";
+import { ExampleWrapper } from "@/components/ExampleWrapper";
+
+import TwelveHour from "@examples/tailwind3/TimePicker/TwelveHour";
+import TwelveHourSource from "@examples/tailwind3/TimePicker/TwelveHour.tsx?raw";
+import MinuteStep from "@examples/tailwind3/TimePicker/MinuteStep";
+import MinuteStepSource from "@examples/tailwind3/TimePicker/MinuteStep.tsx?raw";
+import SecondPrecision from "@examples/tailwind3/TimePicker/SecondPrecision";
+import SecondPrecisionSource from "@examples/tailwind3/TimePicker/SecondPrecision.tsx?raw";
+
+# Настройки времени
+
+Настройте поведение панели времени с помощью пропа `time`.
+
+## 12-часовой формат
+
+Переключитесь на 12-часовой формат с переключателем AM/PM.
+
+<CodeDemo source={TwelveHourSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <TwelveHour client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Шаг минут
+
+Установите шаг приращения минут. Полезно для планирования с фиксированными интервалами.
+
+<CodeDemo source={MinuteStepSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <MinuteStep client:load />
+  </ExampleWrapper>
+</CodeDemo>
+
+## Точность до секунд
+
+Покажите столбец секунд, установив `precision` в `"second"`.
+
+<CodeDemo source={SecondPrecisionSource}>
+  <ExampleWrapper variant="tailwind3" client:load>
+    <SecondPrecision client:load />
+  </ExampleWrapper>
+</CodeDemo>
