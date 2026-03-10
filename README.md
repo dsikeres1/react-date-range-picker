@@ -97,17 +97,133 @@ npm install react-date-range-picker-headless   # Headless hooks only
 
 ```tsx
 import { useState } from "react";
-import { DateRangePicker } from "react-date-range-picker-tailwind4";
+import { DatePicker } from "react-date-range-picker-tailwind4";
 
 function App() {
-  const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
-    start: null,
-    end: null,
-  });
-
-  return <DateRangePicker value={range} onChange={setRange} />;
+  const [date, setDate] = useState<Date | null>(null);
+  return <DatePicker value={date} onChange={setDate} />;
 }
 ```
+
+### Date Range Picker
+
+```tsx
+import { DateRangePicker } from "react-date-range-picker-tailwind4";
+
+const [range, setRange] = useState<{ start: Date | null; end: Date | null }>({
+  start: null,
+  end: null,
+});
+
+<DateRangePicker value={range} onChange={setRange} />;
+```
+
+### Range Presets
+
+```tsx
+import { DateRangePicker, type DateRangePreset } from "react-date-range-picker-tailwind4";
+
+const presets: DateRangePreset[] = [
+  {
+    label: "Last 7 days",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setDate(end.getDate() - 6);
+      return { start, end };
+    },
+  },
+  {
+    label: "Last 30 days",
+    value: () => {
+      const end = new Date();
+      const start = new Date();
+      start.setDate(end.getDate() - 29);
+      return { start, end };
+    },
+  },
+];
+
+<DateRangePicker value={range} onChange={setRange} presets={presets} />;
+```
+
+### Date & Time Picker
+
+```tsx
+import { DateTimePicker } from "react-date-range-picker-tailwind4";
+
+const [dateTime, setDateTime] = useState<Date | null>(null);
+
+// 24-hour format (default)
+<DateTimePicker value={dateTime} onChange={setDateTime} />
+
+// 12-hour format with seconds
+<DateTimePicker
+  value={dateTime}
+  onChange={setDateTime}
+  time={{ hourFormat: "12", precision: "second" }}
+/>
+```
+
+### Date Range & Time Picker
+
+```tsx
+import { DateRangeTimePicker } from "react-date-range-picker-tailwind4";
+
+<DateRangeTimePicker
+  value={range}
+  onChange={setRange}
+  time={{ hourFormat: "12" }}
+  presets={presets}
+/>;
+```
+
+### Time Picker (Standalone)
+
+```tsx
+import { TimePicker } from "react-date-range-picker-tailwind4";
+
+const [time, setTime] = useState<{ hour: number; minute: number; second: number } | null>(null);
+
+<TimePicker value={time} onChange={setTime} time={{ hourFormat: "12" }} />;
+```
+
+### Inline Mode
+
+Render the calendar always visible, without a popup trigger:
+
+```tsx
+<DatePicker value={date} onChange={setDate} inline />
+<DateRangePicker value={range} onChange={setRange} inline />
+```
+
+### Date Constraints
+
+```tsx
+<DatePicker
+  value={date}
+  onChange={setDate}
+  minDate={new Date(2025, 0, 1)}
+  maxDate={new Date(2025, 11, 31)}
+/>
+
+<DateRangePicker
+  value={range}
+  onChange={setRange}
+  minDays={3}
+  maxDays={14}
+/>
+```
+
+### Dark Mode
+
+Add the `dark` class to a parent element or `<html>`:
+
+```html
+<html class="dark"></html>
+```
+
+All components automatically adapt to dark mode.
 
 ### Compound Component (Full Customization)
 
