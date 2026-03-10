@@ -1,0 +1,205 @@
+/* Variables for tailwind4: maps --rdrp-* to Tailwind v4 / shadcn tokens.
+   In shadcn projects, --color-* variables are predefined.
+   For standalone use, import rdrp-theme.css which defines fallback --color-* values. */
+
+:root {
+  /* Colors — map to Tailwind v4 semantic tokens */
+  --rdrp-color-primary: var(--color-primary, #0ea5e9);
+  --rdrp-color-primary-hover: color-mix(in oklch, var(--color-primary, #0ea5e9) 85%, black);
+  --rdrp-color-primary-light: color-mix(
+    in oklch,
+    var(--color-primary, #0ea5e9) 10%,
+    var(--color-background, #ffffff)
+  );
+  --rdrp-color-primary-lighter: color-mix(
+    in oklch,
+    var(--color-primary, #0ea5e9) 10%,
+    var(--color-background, #ffffff)
+  );
+  --rdrp-color-primary-disabled: color-mix(
+    in oklch,
+    var(--color-primary, #0ea5e9) 60%,
+    var(--color-background, #ffffff)
+  );
+
+  --rdrp-color-bg: var(--color-background, #ffffff);
+  --rdrp-color-bg-hover: var(--color-accent, #f1f5f9);
+  --rdrp-color-bg-subtle: var(--color-background, #ffffff);
+
+  --rdrp-color-text: var(--color-foreground, #0f172a);
+  --rdrp-color-text-strong: var(--color-foreground, #0f172a);
+  --rdrp-color-text-muted: var(--color-muted-foreground, #64748b);
+  --rdrp-color-text-placeholder: var(--color-muted-foreground, #64748b);
+  --rdrp-color-text-disabled: var(--color-muted-foreground, #64748b);
+  --rdrp-color-text-outside: color-mix(
+    in oklch,
+    var(--color-muted-foreground, #64748b) 50%,
+    transparent
+  );
+  --rdrp-color-text-inverse: var(--color-primary-foreground, #ffffff);
+  --rdrp-color-text-danger: var(--color-destructive, #ef4444);
+  --rdrp-color-text-today: var(--color-primary, #0ea5e9);
+
+  --rdrp-color-border: var(--color-border, #e2e8f0);
+  --rdrp-color-border-light: var(--color-border, #e2e8f0);
+  --rdrp-color-border-subtle: var(--color-border, #e2e8f0);
+  --rdrp-color-border-hover: color-mix(in oklch, var(--color-ring, #0ea5e9) 50%, transparent);
+
+  --rdrp-color-highlight-dot: #f59e0b;
+  --rdrp-highlight-dot-size: 4px;
+  --rdrp-color-range-bg: color-mix(
+    in oklch,
+    var(--color-primary, #0ea5e9) 10%,
+    var(--color-background, #ffffff)
+  );
+  --rdrp-color-hover-range-bg: color-mix(
+    in oklch,
+    var(--color-primary, #0ea5e9) 5%,
+    var(--color-background, #ffffff)
+  );
+  --rdrp-color-hover-target-bg: color-mix(
+    in oklch,
+    var(--color-primary, #0ea5e9) 15%,
+    var(--color-background, #ffffff)
+  );
+  --rdrp-color-time-highlight: color-mix(in oklch, var(--color-primary, #0ea5e9) 10%, transparent);
+
+  /* Typography — same as styled */
+  --rdrp-font-family: inherit;
+  --rdrp-font-size-xs: 11px;
+  --rdrp-font-size-sm: 12px;
+  --rdrp-font-size-base: 13px;
+  --rdrp-font-size-md: 14px;
+  --rdrp-font-size-lg: 15px;
+  --rdrp-font-weight-normal: 400;
+  --rdrp-font-weight-medium: 500;
+  --rdrp-font-weight-semibold: 600;
+  --rdrp-font-weight-bold: 700;
+
+  /* Spacing — same as styled */
+  --rdrp-spacing-xs: 2px;
+  --rdrp-spacing-sm: 4px;
+  --rdrp-spacing-md: 8px;
+  --rdrp-spacing-lg: 12px;
+  --rdrp-spacing-xl: 16px;
+  --rdrp-spacing-2xl: 24px;
+
+  /* Borders — same as styled */
+  --rdrp-border-radius-sm: 4px;
+  --rdrp-border-radius-md: 6px;
+  --rdrp-border-radius-lg: 8px;
+  --rdrp-border-radius-xl: 12px;
+  --rdrp-border-radius-full: 9999px;
+  --rdrp-border-width: 1px;
+
+  /* Shadows — same as styled */
+  --rdrp-shadow-popup: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --rdrp-shadow-inline: none;
+  --rdrp-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+
+  /* Sizing — same as styled */
+  --rdrp-cell-size: 36px;
+  --rdrp-nav-btn-size: 28px;
+  --rdrp-weekday-height: 28px;
+  --rdrp-grid-min-height: 216px;
+  --rdrp-panel-min-width: 252px;
+  --rdrp-dual-gap: 24px;
+  --rdrp-trigger-min-width: 200px;
+  --rdrp-trigger-padding-x: 14px;
+  --rdrp-trigger-padding-y: 8px;
+  --rdrp-popup-padding: 16px;
+  --rdrp-popup-gap: 6px;
+  --rdrp-btn-padding-x: 14px;
+  --rdrp-btn-padding-y: 6px;
+  --rdrp-preset-min-width: 140px;
+  --rdrp-time-item-height: 32px;
+  --rdrp-time-panel-height: 176px;
+  --rdrp-time-column-height: 160px;
+  --rdrp-time-panel-min-width: 120px;
+  --rdrp-time-colon-width: 12px;
+  --rdrp-time-picker-content-min-width: 250px;
+
+  /* Z-index */
+  --rdrp-z-popup: 50;
+  --rdrp-z-inline: auto;
+  --rdrp-z-day-button: 20;
+
+  /* Transitions */
+  --rdrp-transition-fast: 150ms;
+  --rdrp-transition-normal: 150ms;
+}
+
+.rdrp-root {
+  color-scheme: light;
+}
+
+/* Dark mode: .dark class (Tailwind / shadcn convention) */
+.dark {
+  --rdrp-color-primary: var(--color-primary, #0ea5e9);
+  --rdrp-color-primary-hover: color-mix(in oklch, var(--color-primary, #0ea5e9) 85%, black);
+  --rdrp-color-primary-light: color-mix(
+    in oklch,
+    var(--color-primary, #0ea5e9) 15%,
+    var(--color-background, #020617)
+  );
+  --rdrp-color-primary-lighter: color-mix(
+    in oklch,
+    var(--color-primary, #0ea5e9) 15%,
+    var(--color-background, #020617)
+  );
+  --rdrp-color-primary-disabled: color-mix(
+    in oklch,
+    var(--color-primary, #0ea5e9) 40%,
+    var(--color-background, #020617)
+  );
+
+  --rdrp-color-bg: var(--color-background, #020617);
+  --rdrp-color-bg-hover: var(--color-accent, #1e293b);
+  --rdrp-color-bg-subtle: var(--color-background, #020617);
+
+  --rdrp-color-text: var(--color-foreground, #f8fafc);
+  --rdrp-color-text-strong: var(--color-foreground, #f8fafc);
+  --rdrp-color-text-muted: var(--color-muted-foreground, #94a3b8);
+  --rdrp-color-text-placeholder: var(--color-muted-foreground, #94a3b8);
+  --rdrp-color-text-disabled: var(--color-muted-foreground, #94a3b8);
+  --rdrp-color-text-outside: color-mix(
+    in oklch,
+    var(--color-muted-foreground, #94a3b8) 50%,
+    transparent
+  );
+  --rdrp-color-text-inverse: var(--color-primary-foreground, #ffffff);
+  --rdrp-color-text-danger: var(--color-destructive, #ef4444);
+  --rdrp-color-text-today: var(--color-primary, #38bdf8);
+
+  --rdrp-color-border: var(--color-border, #1e293b);
+  --rdrp-color-border-light: var(--color-border, #1e293b);
+  --rdrp-color-border-subtle: var(--color-border, #1e293b);
+  --rdrp-color-border-hover: color-mix(in oklch, var(--color-ring, #0ea5e9) 50%, transparent);
+
+  --rdrp-color-highlight-dot: #fbbf24;
+  --rdrp-color-range-bg: color-mix(
+    in oklch,
+    var(--color-primary, #0ea5e9) 15%,
+    var(--color-background, #020617)
+  );
+  --rdrp-color-hover-range-bg: color-mix(
+    in oklch,
+    var(--color-primary, #0ea5e9) 8%,
+    var(--color-background, #020617)
+  );
+  --rdrp-color-hover-target-bg: color-mix(
+    in oklch,
+    var(--color-primary, #0ea5e9) 20%,
+    var(--color-background, #020617)
+  );
+  --rdrp-color-time-highlight: color-mix(in oklch, var(--color-primary, #0ea5e9) 10%, transparent);
+
+  --rdrp-shadow-popup: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+  --rdrp-shadow-inline: none;
+  --rdrp-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dark .rdrp-root,
+.rdrp-root.dark {
+  color-scheme: dark;
+}
