@@ -1,5 +1,11 @@
 # react-date-range-picker-headless
 
+## 0.2.4
+
+### Patch Changes
+
+- fix(tailwind3): dark mode not working - replace hardcoded color classes with CSS variable bridge + Tailwind plugin
+
 ## 0.2.3
 
 ### Patch Changes

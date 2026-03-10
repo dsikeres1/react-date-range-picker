@@ -1,6 +1,6 @@
 {
   "name": "react-date-range-picker-headless",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Headless date & range picker hooks for React — zero dependencies, compound components, keyboard navigation, 15 locales",
   "author": "DSikeres1",
   "repository": {
