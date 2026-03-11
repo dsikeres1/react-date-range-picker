@@ -5,6 +5,11 @@ import tailwindcss from "@tailwindcss/vite";
 import expressiveCode from "astro-expressive-code";
 import sitemap from "@astrojs/sitemap";
 import { remarkBaseUrl } from "./src/lib/remark-base-url";
+import { readFileSync } from "fs";
+
+const { version } = JSON.parse(
+  readFileSync(new URL("../../packages/headless/package.json", import.meta.url), "utf-8"),
+);
 
 /**
  * Wrap @tailwindcss/vite to skip Expressive Code CSS files.
@@ -44,6 +49,7 @@ export default defineConfig({
     plugins: [tailwindWithExclusions()],
     define: {
       "process.env.NODE_ENV": JSON.stringify("development"),
+      __RDRP_VERSION__: JSON.stringify(version),
     },
     server: {
       fs: {

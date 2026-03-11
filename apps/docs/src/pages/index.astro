@@ -4,6 +4,7 @@ import GNB from "@/components/GNB.astro";
 import Footer from "@/components/Footer.astro";
 
 const base = import.meta.env.BASE_URL;
+const version: string = __RDRP_VERSION__;
 ---
 
 <BaseLayout title="Home">
@@ -26,6 +27,12 @@ const base = import.meta.env.BASE_URL;
         >
           React Date Range Picker
         </h1>
+        <span
+          class="inline-block rounded-full bg-accent px-3 py-1 text-sm font-medium text-muted-foreground"
+          style="margin-bottom: 1rem;"
+        >
+          v{version}
+        </span>
         <p
           class="mx-auto max-w-xl text-muted-foreground"
           style="font-size: 1.25rem; margin-bottom: 2rem;"
