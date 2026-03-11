@@ -1,5 +1,11 @@
 # react-date-range-picker-headless
 
+## 1.0.1
+
+### Patch Changes
+
+- c8e2f2b: Add version badge to docs sidebar and landing page
+
 ## 1.0.0
 
 Initial stable release.

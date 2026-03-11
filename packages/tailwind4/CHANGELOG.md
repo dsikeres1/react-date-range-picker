@@ -1,5 +1,13 @@
 # react-date-range-picker-tailwind4
 
+## 1.0.1
+
+### Patch Changes
+
+- c8e2f2b: Add version badge to docs sidebar and landing page
+- Updated dependencies [c8e2f2b]
+  - react-date-range-picker-headless@1.0.1
+
 ## 1.0.0
 
 Initial stable release.
