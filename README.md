@@ -10,6 +10,10 @@
   <img src="https://img.shields.io/badge/TypeScript-strict-blue" alt="TypeScript" />
   <img src="https://img.shields.io/badge/dependencies-0_(headless)-green" alt="zero dependencies" />
 </p>
+<p align="center">
+  <a href="https://dsikeres1.github.io/react-date-range-picker/"><img src="https://img.shields.io/badge/Documentation-blue?style=flat-square&logo=readthedocs&logoColor=white" alt="Documentation" /></a>
+  <a href="https://github.com/dsikeres1/react-date-range-picker"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub" /></a>
+</p>
 
 ## Why This Library?
 
@@ -37,12 +41,12 @@ Most React date pickers either lack range/time support, don't support Tailwind C
 
 ## Packages
 
-| Package                                                                                                | Description                                   |                                                                                                                                           |
-| ------------------------------------------------------------------------------------------------------ | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| [`react-date-range-picker-tailwind4`](https://www.npmjs.com/package/react-date-range-picker-tailwind4) | Tailwind CSS v4 + shadcn/ui compatible        | [![npm](https://img.shields.io/npm/v/react-date-range-picker-tailwind4)](https://www.npmjs.com/package/react-date-range-picker-tailwind4) |
-| [`react-date-range-picker-tailwind3`](https://www.npmjs.com/package/react-date-range-picker-tailwind3) | Tailwind CSS v3                               | [![npm](https://img.shields.io/npm/v/react-date-range-picker-tailwind3)](https://www.npmjs.com/package/react-date-range-picker-tailwind3) |
-| [`react-date-range-picker-styled`](https://www.npmjs.com/package/react-date-range-picker-styled)       | Built-in CSS (no Tailwind, CSS variables)     | [![npm](https://img.shields.io/npm/v/react-date-range-picker-styled)](https://www.npmjs.com/package/react-date-range-picker-styled)       |
-| [`react-date-range-picker-headless`](https://www.npmjs.com/package/react-date-range-picker-headless)   | Headless hooks — bring your own UI, zero deps | [![npm](https://img.shields.io/npm/v/react-date-range-picker-headless)](https://www.npmjs.com/package/react-date-range-picker-headless)   |
+| Package                                                                                                | Description                                   |                                                                                                                                           | Docs                                                                                                  |
+| ------------------------------------------------------------------------------------------------------ | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| [`react-date-range-picker-tailwind4`](https://www.npmjs.com/package/react-date-range-picker-tailwind4) | Tailwind CSS v4 + shadcn/ui compatible        | [![npm](https://img.shields.io/npm/v/react-date-range-picker-tailwind4)](https://www.npmjs.com/package/react-date-range-picker-tailwind4) | [Getting Started](https://dsikeres1.github.io/react-date-range-picker/docs/tailwind4/getting-started) |
+| [`react-date-range-picker-tailwind3`](https://www.npmjs.com/package/react-date-range-picker-tailwind3) | Tailwind CSS v3                               | [![npm](https://img.shields.io/npm/v/react-date-range-picker-tailwind3)](https://www.npmjs.com/package/react-date-range-picker-tailwind3) | [Getting Started](https://dsikeres1.github.io/react-date-range-picker/docs/tailwind3/getting-started) |
+| [`react-date-range-picker-styled`](https://www.npmjs.com/package/react-date-range-picker-styled)       | Built-in CSS (no Tailwind, CSS variables)     | [![npm](https://img.shields.io/npm/v/react-date-range-picker-styled)](https://www.npmjs.com/package/react-date-range-picker-styled)       | [Getting Started](https://dsikeres1.github.io/react-date-range-picker/docs/styled/getting-started)    |
+| [`react-date-range-picker-headless`](https://www.npmjs.com/package/react-date-range-picker-headless)   | Headless hooks — bring your own UI, zero deps | [![npm](https://img.shields.io/npm/v/react-date-range-picker-headless)](https://www.npmjs.com/package/react-date-range-picker-headless)   | [Getting Started](https://dsikeres1.github.io/react-date-range-picker/docs/headless/getting-started)  |
 
 ## Choose Your Installation
 

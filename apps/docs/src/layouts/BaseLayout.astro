@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { locales, defaultLocale, toUrlLocale, localeFromUrl } from "@/lib/i18n";
 
 interface Props {
   title: string;
@@ -18,6 +19,29 @@ const siteUrl = "https://dsikeres1.github.io/react-date-range-picker";
 const ogImage = `${siteUrl}/og.png`;
 const canonicalUrl = `https://dsikeres1.github.io${Astro.url.pathname}`;
 const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/react-date-range-picker/";
+const base = "/react-date-range-picker";
+const origin = "https://dsikeres1.github.io";
+
+/* ── hreflang alternate links for docs pages ── */
+const isDocsPage = Astro.url.pathname.startsWith(`${base}/docs/`);
+let hreflangLinks: { hreflang: string; href: string }[] = [];
+
+if (isDocsPage) {
+  const afterDocs = Astro.url.pathname.slice(`${base}/docs/`.length);
+  const segments = afterDocs.split("/");
+  const urlLocale = localeFromUrl(segments[0]);
+  const isNonDefaultLocale = urlLocale && urlLocale !== defaultLocale;
+  const pathWithoutLang = isNonDefaultLocale ? segments.slice(1).join("/") : afterDocs;
+
+  hreflangLinks = locales.map((locale) => ({
+    hreflang: locale,
+    href: `${origin}${base}/docs/${locale === defaultLocale ? "" : `${toUrlLocale(locale)}/`}${pathWithoutLang}`,
+  }));
+  hreflangLinks.push({
+    hreflang: "x-default",
+    href: `${origin}${base}/docs/${pathWithoutLang}`,
+  });
+}
 ---
 
 <!doctype html>
@@ -46,6 +70,11 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/react-date
       href={`${import.meta.env.BASE_URL}/apple-touch-icon.png`}
     />
     <link rel="canonical" href={canonicalUrl} />
+    {
+      hreflangLinks.map(({ hreflang, href }) => (
+        <link rel="alternate" hreflang={hreflang} href={href} />
+      ))
+    }
     <link rel="manifest" href={`${import.meta.env.BASE_URL}/site.webmanifest`} />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
@@ -94,6 +123,26 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/react-date
             })}
           />
         </>
+      )
+    }
+    {
+      isDocsPage && !isHome && (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            headline: fullTitle,
+            description,
+            url: canonicalUrl,
+            inLanguage: lang,
+            isPartOf: {
+              "@type": "WebSite",
+              name: "React Date Range Picker",
+              url: siteUrl,
+            },
+          })}
+        />
       )
     }
 

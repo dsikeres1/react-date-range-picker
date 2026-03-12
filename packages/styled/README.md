@@ -8,6 +8,12 @@
   <a href="https://github.com/dsikeres1/react-date-range-picker/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/react-date-range-picker-styled" alt="license" /></a>
   <img src="https://img.shields.io/badge/TypeScript-strict-blue" alt="TypeScript" />
 </p>
+<p align="center">
+  <a href="https://dsikeres1.github.io/react-date-range-picker/docs/styled/getting-started"><img src="https://img.shields.io/badge/Documentation-blue?style=flat-square&logo=readthedocs&logoColor=white" alt="Documentation" /></a>
+  <a href="https://github.com/dsikeres1/react-date-range-picker"><img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub" /></a>
+</p>
+
+> Part of the [React Date Range Picker](https://github.com/dsikeres1/react-date-range-picker) family — Also available: [`tailwind4`](https://www.npmjs.com/package/react-date-range-picker-tailwind4) · [`tailwind3`](https://www.npmjs.com/package/react-date-range-picker-tailwind3) · [`headless`](https://www.npmjs.com/package/react-date-range-picker-headless)
 
 ## Installation
 
