@@ -1,5 +1,13 @@
 # react-date-range-picker-styled
 
+## 1.0.2
+
+### Patch Changes
+
+- 42aefb2: Add shield.io badges for Documentation and GitHub links in README
+- Updated dependencies [42aefb2]
+  - react-date-range-picker-headless@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
