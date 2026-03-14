@@ -9,7 +9,7 @@ const { pkg } = Astro.props;
 <div class="not-prose my-4">
   <div class="flex gap-1 border-b border-border">
     <button
-      class="tab-btn rounded-t-md border-b-2 border-primary px-3 py-1.5 text-sm font-medium text-primary"
+      class="tab-btn rounded-t-md border-b-2 border-primary px-3 py-1.5 text-sm font-medium text-link"
       data-tab="npm">npm</button
     >
     <button
@@ -63,7 +63,7 @@ const { pkg } = Astro.props;
       const tab = btn.getAttribute("data-tab");
       container.querySelectorAll(".tab-btn").forEach((b) => {
         b.classList.toggle("border-primary", b.getAttribute("data-tab") === tab);
-        b.classList.toggle("text-primary", b.getAttribute("data-tab") === tab);
+        b.classList.toggle("text-link", b.getAttribute("data-tab") === tab);
         b.classList.toggle("border-b-2", b.getAttribute("data-tab") === tab);
         b.classList.toggle("text-muted-foreground", b.getAttribute("data-tab") !== tab);
       });

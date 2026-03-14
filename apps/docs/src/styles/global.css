@@ -22,13 +22,14 @@
   --color-popover-foreground: #0f172a; /* slate-900 */
   --color-primary: #0ea5e9; /* sky-500 */
   --color-primary-foreground: #ffffff;
-  --color-muted-foreground: #64748b; /* slate-500 */
+  --color-muted-foreground: #475569; /* slate-600 — WCAG AA on white (7.58:1) and accent (6.92:1) */
   --color-accent: #f1f5f9; /* slate-100 */
   --color-accent-foreground: #0f172a; /* slate-900 */
   --color-destructive: #ef4444; /* red-500 */
   --color-border: #e2e8f0; /* slate-200 */
   --color-input: #e2e8f0; /* slate-200 */
   --color-ring: #0ea5e9; /* sky-500 */
+  --color-link: #0369a1; /* sky-700 — WCAG AA text contrast on white (5.39:1) */
 
   /* Docs-specific tokens */
   --color-sidebar: #f8fafc; /* slate-50 */
@@ -58,6 +59,7 @@
   --color-border: #1e293b; /* slate-800 */
   --color-input: #1e293b; /* slate-800 */
   --color-ring: #0ea5e9; /* sky-500 */
+  --color-link: #38bdf8; /* sky-300 — WCAG AA text contrast on dark bg */
 
   --color-sidebar: #020617; /* slate-950 */
   --color-sidebar-foreground: #f8fafc; /* slate-50 */
@@ -81,7 +83,7 @@
 
 /* ── Prose customizations ── */
 .prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-  color: var(--color-primary);
+  color: var(--color-link);
   text-decoration: underline;
   text-underline-offset: 2px;
 }

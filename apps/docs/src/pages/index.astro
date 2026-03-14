@@ -42,7 +42,7 @@ const version: string = __RDRP_VERSION__;
         </p>
         <a
           href={`${base}/docs/tailwind4/getting-started`}
-          class="inline-block rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+          class="inline-block rounded-lg bg-sky-700 px-6 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-sky-800"
         >
           Get Started
         </a>
@@ -54,12 +54,12 @@ const version: string = __RDRP_VERSION__;
       <div class="mx-auto max-w-5xl">
         <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h3
+            <h2
               class="font-semibold text-foreground"
               style="font-size: 1.1rem; margin-bottom: 0.4rem;"
             >
               Headless Core
-            </h3>
+            </h2>
             <p
               class="text-muted-foreground"
               style="font-size: 0.93rem; line-height: 1.6; margin: 0;"
@@ -69,12 +69,12 @@ const version: string = __RDRP_VERSION__;
             </p>
           </div>
           <div>
-            <h3
+            <h2
               class="font-semibold text-foreground"
               style="font-size: 1.1rem; margin-bottom: 0.4rem;"
             >
               Compound Components
-            </h3>
+            </h2>
             <p
               class="text-muted-foreground"
               style="font-size: 0.93rem; line-height: 1.6; margin: 0;"
@@ -83,12 +83,12 @@ const version: string = __RDRP_VERSION__;
             </p>
           </div>
           <div>
-            <h3
+            <h2
               class="font-semibold text-foreground"
               style="font-size: 1.1rem; margin-bottom: 0.4rem;"
             >
               Tailwind v4 + shadcn
-            </h3>
+            </h2>
             <p
               class="text-muted-foreground"
               style="font-size: 0.93rem; line-height: 1.6; margin: 0;"
@@ -98,12 +98,12 @@ const version: string = __RDRP_VERSION__;
             </p>
           </div>
           <div>
-            <h3
+            <h2
               class="font-semibold text-foreground"
               style="font-size: 1.1rem; margin-bottom: 0.4rem;"
             >
               TypeScript
-            </h3>
+            </h2>
             <p
               class="text-muted-foreground"
               style="font-size: 0.93rem; line-height: 1.6; margin: 0;"
@@ -137,7 +137,7 @@ const version: string = __RDRP_VERSION__;
             <p class="text-muted-foreground" style="font-size: 0.9rem; margin: 0.4rem 0 0;">
               Semantic tokens. shadcn registry support.
             </p>
-            <code class="mt-2 block text-xs text-muted-foreground/70"
+            <code class="mt-2 block text-xs text-muted-foreground"
               >react-date-range-picker-tailwind4</code
             >
           </a>
@@ -152,7 +152,7 @@ const version: string = __RDRP_VERSION__;
             <p class="text-muted-foreground" style="font-size: 0.9rem; margin: 0.4rem 0 0;">
               Utility classes for Tailwind CSS v3 projects.
             </p>
-            <code class="mt-2 block text-xs text-muted-foreground/70"
+            <code class="mt-2 block text-xs text-muted-foreground"
               >react-date-range-picker-tailwind3</code
             >
           </a>
@@ -167,7 +167,7 @@ const version: string = __RDRP_VERSION__;
             <p class="text-muted-foreground" style="font-size: 0.9rem; margin: 0.4rem 0 0;">
               Built-in CSS. No framework required.
             </p>
-            <code class="mt-2 block text-xs text-muted-foreground/70"
+            <code class="mt-2 block text-xs text-muted-foreground"
               >react-date-range-picker-styled</code
             >
           </a>
@@ -182,7 +182,7 @@ const version: string = __RDRP_VERSION__;
             <p class="text-muted-foreground" style="font-size: 0.9rem; margin: 0.4rem 0 0;">
               Unstyled hooks. Full rendering control.
             </p>
-            <code class="mt-2 block text-xs text-muted-foreground/70"
+            <code class="mt-2 block text-xs text-muted-foreground"
               >react-date-range-picker-headless</code
             >
           </a>
@@ -202,7 +202,7 @@ const version: string = __RDRP_VERSION__;
         <div class="mt-8">
           <div class="flex gap-1 border-b border-border" id="install-tabs">
             <button
-              class="install-tab rounded-t-md border-b-2 border-primary px-3 py-1.5 text-sm font-medium text-primary"
+              class="install-tab rounded-t-md border-b-2 border-primary px-3 py-1.5 text-sm font-medium text-link"
               data-pkg="react-date-range-picker-tailwind4">Tailwind v4</button
             >
             <button
@@ -265,7 +265,7 @@ const version: string = __RDRP_VERSION__;
       document.querySelectorAll(".install-tab").forEach((b) => {
         const isActive = b === btn;
         b.classList.toggle("border-primary", isActive);
-        b.classList.toggle("text-primary", isActive);
+        b.classList.toggle("text-link", isActive);
         b.classList.toggle("border-b-2", isActive);
         b.classList.toggle("text-muted-foreground", !isActive);
       });

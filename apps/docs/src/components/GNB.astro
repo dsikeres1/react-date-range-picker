@@ -52,7 +52,11 @@ const currentPath = Astro.url.pathname;
     </button>
 
     <!-- Logo -->
-    <a href={base} class="flex items-center gap-2 font-semibold text-foreground">
+    <a
+      href={base}
+      class="flex items-center gap-2 font-semibold text-foreground"
+      aria-label="React Date Range Picker Home"
+    >
       <img src={`${base}/logo.svg`} alt="" class="size-7" />
       <span class="hidden sm:inline">React Date Range Picker</span>
     </a>
