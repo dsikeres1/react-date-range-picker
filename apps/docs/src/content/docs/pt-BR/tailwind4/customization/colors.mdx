@@ -18,8 +18,8 @@ Troque os temas de cores em tempo de execução sobrescrevendo as propriedades p
 O pacote Tailwind v4 usa o formato **oklch** para tokens semânticos. Sobrescreva `--color-primary` e `--color-primary-foreground` para reformular o seletor:
 
 <CodeDemo source={CompoundColorThemeSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundColorTheme client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundColorTheme client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,7 +28,7 @@ O pacote Tailwind v4 usa o formato **oklch** para tokens semânticos. Sobrescrev
 A mesma técnica funciona com seletores popup:
 
 <CodeDemo source={CompoundColorThemePopupSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundColorThemePopup client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundColorThemePopup client:visible />
   </ExampleWrapper>
 </CodeDemo>

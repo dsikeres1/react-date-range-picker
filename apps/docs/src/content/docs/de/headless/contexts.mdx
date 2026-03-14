@@ -36,14 +36,14 @@ Mit Kontext konsumieren Unterkomponenten direkt, was sie benötigen:
 function MyDatePicker() {
   return (
     <DatePickerProvider value={value} onChange={onChange}>
-      <ExampleWrapper variant="headless" client:load>
-        <MyTrigger client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyTrigger client:visible />
       </ExampleWrapper>
-      <ExampleWrapper variant="headless" client:load>
-        <MyCalendar client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyCalendar client:visible />
       </ExampleWrapper>
-      <ExampleWrapper variant="headless" client:load>
-        <MyFooter client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyFooter client:visible />
       </ExampleWrapper>
     </DatePickerProvider>
   );
@@ -337,7 +337,7 @@ Jeder Provider rendert zwei verschachtelte Kontexte:
 ## Beispiel: Zusammengesetzter Date Picker
 
 <CodeDemo source={ContextExampleSource}>
-  <ExampleWrapper variant="headless" client:load>
-    <ContextExample client:load />
+  <ExampleWrapper variant="headless" client:visible>
+    <ContextExample client:visible />
   </ExampleWrapper>
 </CodeDemo>

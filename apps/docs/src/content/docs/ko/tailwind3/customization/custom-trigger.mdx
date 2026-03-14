@@ -16,8 +16,8 @@ import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/
 렌더 프롭(render prop)을 사용하여 기본 트리거를 커스텀 엘리먼트로 교체하세요. `Trigger` 컴포넌트는 상태와 콜백을 받는 함수를 자식으로 허용하여 어떤 형태의 커스텀 버튼이나 입력 필드라도 렌더링할 수 있게 해줍니다.
 
 <CodeDemo source={CompoundCustomTriggerSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomTrigger client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomTrigger client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,7 +39,7 @@ import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/
 동일한 패턴이 `DateRangePicker`에도 적용됩니다:
 
 <CodeDemo source={CompoundCustomTriggerRangeSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomTriggerRange client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomTriggerRange client:visible />
   </ExampleWrapper>
 </CodeDemo>

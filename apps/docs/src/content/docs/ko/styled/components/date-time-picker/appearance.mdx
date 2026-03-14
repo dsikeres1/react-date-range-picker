@@ -18,8 +18,8 @@ import FormIntegrationSource from "@examples/styled/DateTimePicker/FormIntegrati
 국제화를 위해 커스텀 로캘을 제공합니다. `dateTimePlaceholder` 키를 사용하여 트리거 텍스트를 커스터마이즈할 수 있습니다.
 
 <CodeDemo source={CustomLocaleSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomLocale client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomLocale client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,7 +28,7 @@ import FormIntegrationSource from "@examples/styled/DateTimePicker/FormIntegrati
 네이티브 폼 제출을 위한 숨겨진 인풋(hidden input)을 포함하려면 `name` prop을 사용하세요.
 
 <CodeDemo source={FormIntegrationSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <FormIntegration client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <FormIntegration client:visible />
   </ExampleWrapper>
 </CodeDemo>

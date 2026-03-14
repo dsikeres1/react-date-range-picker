@@ -18,8 +18,8 @@ import CompoundNoFooterSource from "@examples/tailwind4/Customization/CompoundNo
 Reorganiza los botones del pie de página o añade nuevos como `TodayButton`. Como cada botón es una parte compuesta independiente, tú controlas el orden y el diseño.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,8 +28,8 @@ Reorganiza los botones del pie de página o añade nuevos como `TodayButton`. Co
 Omite cualquier parte que no necesites. Por ejemplo, elimina completamente el pie de página para un calendario emergente mínimo:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

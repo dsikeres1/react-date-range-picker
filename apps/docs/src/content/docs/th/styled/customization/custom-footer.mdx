@@ -20,8 +20,8 @@ import CompoundNoFooterSource from "@examples/styled/Customization/CompoundNoFoo
 จัดเรียงปุ่มส่วนท้ายใหม่หรือเพิ่มปุ่มใหม่ๆ เช่น `TodayButton` คอมโพเนนต์ประกอบ `DateTimePicker` ประกอบด้วย `TimeSection` พร้อม `TimePanel` สำหรับการเลือกเวลา และ `Footer` ทำหน้าที่เป็นคอนเท이너สำหรับปุ่มดำเนินการ
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,8 +39,8 @@ import CompoundNoFooterSource from "@examples/styled/Customization/CompoundNoFoo
 ละเว้นส่วนที่คุณไม่ต้องการ ตัวอย่างเช่น ปฏิทินอินไลน์ที่ไม่มีส่วนหัว ไม่มีส่วนท้าย หรือทริกเกอร์:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

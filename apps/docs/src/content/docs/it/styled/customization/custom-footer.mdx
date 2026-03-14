@@ -20,8 +20,8 @@ Crea un piè di pagina completamente personalizzato con i tuoi bottoni e il tuo 
 Riorganizza i bottoni del piè di pagina o aggiungine di nuovi come `TodayButton`. Il componente composto `DateTimePicker` include una `TimeSection` con `TimePanel` per la selezione dell'ora, e il `Footer` funge da contenitore per i bottoni di azione.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,8 +39,8 @@ Puoi anche saltare del tutto i bottoni di azione predefiniti e usare i tuoi elem
 Ometti qualsiasi parte di cui non hai bisogno. Ad esempio, un calendario in linea senza intestazione, piè di pagina o trigger:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

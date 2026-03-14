@@ -16,8 +16,8 @@ import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/
 Sostituisci il trigger predefinito con il tuo elemento personalizzato usando una render prop. Il componente `Trigger` accetta una funzione come figlio che riceve stato e callback, permettendoti di renderizzare qualsiasi pulsante o input personalizzato.
 
 <CodeDemo source={CompoundCustomTriggerSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomTrigger client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomTrigger client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,7 +39,7 @@ Sostituisci il trigger predefinito con il tuo elemento personalizzato usando una
 Lo stesso pattern funziona con `DateRangePicker`:
 
 <CodeDemo source={CompoundCustomTriggerRangeSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomTriggerRange client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomTriggerRange client:visible />
   </ExampleWrapper>
 </CodeDemo>

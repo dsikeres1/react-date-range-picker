@@ -18,8 +18,8 @@ import CompoundNoFooterSource from "@examples/tailwind4/Customization/CompoundNo
 푸터 버튼을 재배치하거나 `TodayButton`과 같은 새로운 버튼을 추가하세요. 각 버튼은 독립적인 컴파운드 컴포넌트(compound part)이므로, 순서와 레이아웃을 직접 제어할 수 있습니다.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,8 +28,8 @@ import CompoundNoFooterSource from "@examples/tailwind4/Customization/CompoundNo
 필요 없는 부분은 생략하세요. 예를 들어, 미니멀한 팝업 캘린더를 위해 푸터 전체를 제외할 수 있습니다:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

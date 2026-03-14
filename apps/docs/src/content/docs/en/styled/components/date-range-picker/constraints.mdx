@@ -20,8 +20,8 @@ import AllowSingleDateSource from "@examples/styled/DateRangePicker/AllowSingleD
 Restrict the range length with `minDays` and `maxDays` (inclusive). Users cannot confirm a range shorter than `minDays` or longer than `maxDays`.
 
 <CodeDemo source={MinMaxDaysSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <MinMaxDays client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <MinMaxDays client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ Restrict the range length with `minDays` and `maxDays` (inclusive). Users cannot
 Use `isDateUnavailable` to dynamically disable specific dates. Disabled dates cannot be selected as start or end of a range.
 
 <CodeDemo source={DisabledDatesSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <DisabledDates client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <DisabledDates client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ Use `isDateUnavailable` to dynamically disable specific dates. Disabled dates ca
 By default, a range where start equals end is allowed. Set `allowSingleDateInRange={false}` to require at least two distinct dates.
 
 <CodeDemo source={AllowSingleDateSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <AllowSingleDate client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <AllowSingleDate client:visible />
   </ExampleWrapper>
 </CodeDemo>

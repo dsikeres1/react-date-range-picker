@@ -16,8 +16,8 @@ import CompoundCustomTriggerRangeSource from "@examples/tailwind4/Customization/
 Substitua o botão de gatilho padrão pelo seu próprio elemento usando a render prop `Trigger`. Ao passar uma função como filho para o `DatePicker.Trigger`, você recebe estado e callbacks para construir qualquer interface de gatilho que desejar.
 
 <CodeDemo source={CompoundCustomTriggerSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomTrigger client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomTrigger client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,7 +39,7 @@ Substitua o botão de gatilho padrão pelo seu próprio elemento usando a render
 O mesmo padrão funciona com o `DateRangePicker`:
 
 <CodeDemo source={CompoundCustomTriggerRangeSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomTriggerRange client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomTriggerRange client:visible />
   </ExampleWrapper>
 </CodeDemo>

@@ -20,8 +20,8 @@ Wechseln Sie das Farbthema zur Laufzeit, indem Sie CSS-Custom-Properties auf ein
 ## Inline-Theme-Umschalter
 
 <CodeDemo source={CompoundColorThemeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorTheme client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorTheme client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ Wechseln Sie das Farbthema zur Laufzeit, indem Sie CSS-Custom-Properties auf ein
 Der gleiche Ansatz funktioniert auch bei Popup-Pickern:
 
 <CodeDemo source={CompoundColorThemePopupSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorThemePopup client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorThemePopup client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ Der gleiche Ansatz funktioniert auch bei Popup-Pickern:
 Sie können Farben auch direkt über das `style`-Attribut auf einem Wrapper-Element überschreiben:
 
 <CodeDemo source={CSSCustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CSSCustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CSSCustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>

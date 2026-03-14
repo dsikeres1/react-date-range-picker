@@ -35,8 +35,8 @@ Gói styled sử dụng **system font stack** theo mặc định:
 Ghi đè phông chữ thông qua thuộc tính `style` trên một phần tử bao bọc:
 
 <CodeDemo source={CSSCustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CSSCustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CSSCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -45,8 +45,8 @@ Ghi đè phông chữ thông qua thuộc tính `style` trên một phần tử b
 Chuyển đổi giữa các họ phông chữ bằng cách đặt `--rdrp-font-family` trên một trình bao bọc:
 
 <CodeDemo source={CompoundCustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -68,8 +68,8 @@ import "react-date-range-picker-styled/rdrp-styles.css";
 ```
 
 <CodeDemo source={CompoundNotoSansSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNotoSans client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNotoSans client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -83,8 +83,8 @@ So sánh các phông chữ web khác nhau để xem kiểu chữ thay đổi gia
 </Admonition>
 
 <CodeDemo source={CompoundWebFontsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundWebFonts client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundWebFonts client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -105,7 +105,7 @@ Tinh chỉnh mật độ kiểu chữ bằng cách ghi đè các biến kích th
 | `--rdrp-font-weight-bold`     | `700`    | Chỉ báo hôm nay          |
 
 <CodeDemo source={CompoundCustomFontPopupSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFontPopup client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFontPopup client:visible />
   </ExampleWrapper>
 </CodeDemo>

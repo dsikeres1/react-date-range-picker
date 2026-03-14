@@ -163,8 +163,8 @@ document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
 一個互動範例，展示一個 **DatePicker** (行內) 以及一個用於在淺色和深色模式之間切換的按鈕。
 
 <CodeDemo source={DarkModeToggleSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <DarkModeToggle client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <DarkModeToggle client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -173,7 +173,7 @@ document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
 一個在深色背景上使用 `data-theme="dark"` 渲染的 **DateTimePicker**。
 
 <CodeDemo source={CustomDarkModeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomDarkMode client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomDarkMode client:visible />
   </ExampleWrapper>
 </CodeDemo>

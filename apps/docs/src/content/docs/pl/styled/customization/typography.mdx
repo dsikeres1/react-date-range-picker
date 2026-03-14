@@ -35,8 +35,8 @@ Aby nadpisać, ustaw `--rdrp-font-family` na dowolnym elemencie nadrzędnym — 
 Nadpisz czcionkę za pomocą atrybutu `style` na elemencie otaczającym:
 
 <CodeDemo source={CSSCustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CSSCustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CSSCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -45,8 +45,8 @@ Nadpisz czcionkę za pomocą atrybutu `style` na elemencie otaczającym:
 Przełączaj się między rodzinami czcionek, ustawiając `--rdrp-font-family` na elemencie otaczającym:
 
 <CodeDemo source={CompoundCustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -68,8 +68,8 @@ import "react-date-range-picker-styled/rdrp-styles.css";
 ```
 
 <CodeDemo source={CompoundNotoSansSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNotoSans client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNotoSans client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -83,8 +83,8 @@ Porównaj różne czcionki internetowe, aby zobaczyć, jak radykalnie typografia
 </Admonition>
 
 <CodeDemo source={CompoundWebFontsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundWebFonts client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundWebFonts client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -105,7 +105,7 @@ Dostosuj gęstość typografii, nadpisując zmienne rozmiaru i wagi:
 | `--rdrp-font-weight-bold`     | `700`    | Wskaźnik dzisiejszego dnia |
 
 <CodeDemo source={CompoundCustomFontPopupSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFontPopup client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFontPopup client:visible />
   </ExampleWrapper>
 </CodeDemo>

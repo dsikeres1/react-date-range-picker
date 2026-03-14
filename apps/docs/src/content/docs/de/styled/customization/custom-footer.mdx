@@ -20,8 +20,8 @@ Erstellen Sie eine vollständig benutzerdefinierte Fußzeile mit Ihren eigenen S
 Ordnen Sie die Schaltflächen in der Fußzeile neu an oder fügen Sie neue hinzu, wie z.B. `TodayButton`. Die `DateTimePicker`-Verbundkomponente enthält einen `TimeSection` mit einem `TimePanel` zur Zeitauswahl, und die `Footer` dient als Container für Aktionsschaltflächen.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,8 +39,8 @@ Sie können auch die integrierten Aktionsschaltflächen vollständig weglassen u
 Lassen Sie alle Teile weg, die Sie nicht benötigen. Zum Beispiel ein kopfzeilenloser Inline-Kalender ohne Fußzeile oder Auslöser:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

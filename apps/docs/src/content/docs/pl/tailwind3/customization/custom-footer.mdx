@@ -18,8 +18,8 @@ import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNo
 Zmień układ przycisków w stopce i dodaj dodatkowe akcje, takie jak przycisk "Dzisiaj". Dzięki komponentom złożonym masz pełną kontrolę nad tym, które przyciski i w jakiej kolejności się pojawiają.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,8 +28,8 @@ Zmień układ przycisków w stopce i dodaj dodatkowe akcje, takie jak przycisk "
 Usuń każdą część, której nie potrzebujesz. W tym przypadku stopka została całkowicie pominięta, aby uzyskać minimalistyczny układ samego kalendarza:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

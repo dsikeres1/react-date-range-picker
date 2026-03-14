@@ -31,8 +31,8 @@ Le package stylisé inclut 4 variantes de taille intégrées qui mettent à l'é
 Passez la prop `size` à n'importe quel composant de sélecteur :
 
 <CodeDemo source={SizesSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <Sizes client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <Sizes client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -187,8 +187,8 @@ Ou avec l'API de Composant Composé, ajoutez la classe à Root :
 Vous pouvez également surcharger les variables de dimensionnement via des styles en ligne :
 
 <CodeDemo source={CustomSizeViaCSSSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSizeViaCSS client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSizeViaCSS client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

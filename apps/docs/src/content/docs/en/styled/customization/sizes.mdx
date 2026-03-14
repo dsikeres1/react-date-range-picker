@@ -31,8 +31,8 @@ The styled package includes 4 built-in size variants that scale typography, spac
 Pass the `size` prop to any picker component:
 
 <CodeDemo source={SizesSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <Sizes client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <Sizes client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -187,8 +187,8 @@ Or with the Compound Component API, add the class to Root:
 You can also override sizing variables via inline styles:
 
 <CodeDemo source={CustomSizeViaCSSSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSizeViaCSS client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSizeViaCSS client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

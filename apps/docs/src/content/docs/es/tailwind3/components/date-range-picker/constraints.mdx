@@ -20,8 +20,8 @@ import AllowSingleDateSource from "@examples/tailwind3/DateRangePicker/AllowSing
 Restringe la longitud del rango con `minDays` y `maxDays` (inclusivo). Los usuarios no pueden confirmar un rango más corto que `minDays` o más largo que `maxDays`.
 
 <CodeDemo source={MinMaxDaysSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <MinMaxDays client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <MinMaxDays client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ Restringe la longitud del rango con `minDays` y `maxDays` (inclusivo). Los usuar
 Usa `isDateUnavailable` para deshabilitar dinámicamente fechas específicas. Las fechas deshabilitadas no pueden ser seleccionadas como inicio o fin de un rango.
 
 <CodeDemo source={DisabledDatesSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <DisabledDates client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <DisabledDates client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ Usa `isDateUnavailable` para deshabilitar dinámicamente fechas específicas. La
 Por defecto, se permite un rango donde el inicio es igual al fin. Establece `allowSingleDateInRange={false}` para requerir al menos dos fechas distintas.
 
 <CodeDemo source={AllowSingleDateSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <AllowSingleDate client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <AllowSingleDate client:visible />
   </ExampleWrapper>
 </CodeDemo>

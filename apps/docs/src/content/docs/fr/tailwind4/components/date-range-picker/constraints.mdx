@@ -20,8 +20,8 @@ import AllowSingleDateSource from "@examples/tailwind4/DateRangePicker/AllowSing
 Limitez la longueur de la plage avec `minDays` et `maxDays` (inclus). Les utilisateurs ne peuvent pas confirmer une plage plus courte que `minDays` ou plus longue que `maxDays`.
 
 <CodeDemo source={MinMaxDaysSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <MinMaxDays client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <MinMaxDays client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ Limitez la longueur de la plage avec `minDays` et `maxDays` (inclus). Les utilis
 Utilisez `isDateUnavailable` pour désactiver dynamiquement des dates spécifiques. Les dates désactivées ne peuvent pas être sélectionnées comme début ou fin d'une plage.
 
 <CodeDemo source={DisabledDatesSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <DisabledDates client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <DisabledDates client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ Utilisez `isDateUnavailable` pour désactiver dynamiquement des dates spécifiqu
 Par défaut, une plage où le début est égal à la fin est autorisée. Réglez `allowSingleDateInRange={false}` pour exiger au moins deux dates distinctes.
 
 <CodeDemo source={AllowSingleDateSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <AllowSingleDate client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <AllowSingleDate client:visible />
   </ExampleWrapper>
 </CodeDemo>

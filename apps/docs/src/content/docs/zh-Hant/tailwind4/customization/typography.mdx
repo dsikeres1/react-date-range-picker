@@ -23,8 +23,8 @@ Tailwind v4 套件使用 Tailwind 預設的 `font-sans` 類別 (`ui-sans-serif, 
 將選擇器包裝起來並在包裝容器上設定 `fontFamily` 來切換字體：
 
 <CodeDemo source={CompoundCustomFontSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomFont client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -33,8 +33,8 @@ Tailwind v4 套件使用 Tailwind 預設的 `font-sans` 類別 (`ui-sans-serif, 
 在執行階段載入網頁字體並透過包裝容器套用它。此範例從 Google Fonts 載入 [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans)：
 
 <CodeDemo source={CompoundNotoSansSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundNotoSans client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundNotoSans client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -47,7 +47,7 @@ Tailwind v4 套件使用 Tailwind 預設的 `font-sans` 類別 (`ui-sans-serif, 
 比較不同的網頁字體，看看字體排印如何顯著地改變選擇器的外觀。以下所有字體都支援多語言渲染 (拉丁語、中日韓、韓語)。
 
 <CodeDemo source={CompoundWebFontsSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundWebFonts client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundWebFonts client:visible />
   </ExampleWrapper>
 </CodeDemo>

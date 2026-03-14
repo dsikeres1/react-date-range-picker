@@ -22,8 +22,8 @@ Konfigurieren Sie das Verhalten des Zeit-Panels über die `time`-Prop.
 Wechseln Sie zum 12-Stunden-Format mit AM/PM-Umschalter.
 
 <CodeDemo source={TwelveHourSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <TwelveHour client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <TwelveHour client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -32,8 +32,8 @@ Wechseln Sie zum 12-Stunden-Format mit AM/PM-Umschalter.
 Stellen Sie den Schritt für die Minuteninkrementierung ein. Nützlich für die Planung in festen Intervallen.
 
 <CodeDemo source={MinuteStepSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <MinuteStep client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <MinuteStep client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -42,7 +42,7 @@ Stellen Sie den Schritt für die Minuteninkrementierung ein. Nützlich für die 
 Zeigen Sie die Sekundenspalte an, indem Sie `precision` auf `"second"` setzen.
 
 <CodeDemo source={SecondPrecisionSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <SecondPrecision client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <SecondPrecision client:visible />
   </ExampleWrapper>
 </CodeDemo>

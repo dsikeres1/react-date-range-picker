@@ -178,8 +178,8 @@ Lub ogranicz nadpisania do konkretnej instancji, używając klasy otaczającej:
 Nadpisz zmienne kolorów podstawowych, aby stworzyć zupełnie inny schemat kolorów. Ten przykład używa **DatePicker** z odcieniami fioletu.
 
 <CodeDemo source={CustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -188,8 +188,8 @@ Nadpisz zmienne kolorów podstawowych, aby stworzyć zupełnie inny schemat kolo
 Czcionki są dziedziczone kaskadowo w CSS, więc opakowanie komponentu w `div` z niestandardową `font-family` zastosuje ją do całego tekstu. Ten przykład używa **DateRangePicker** z czcionką szeryfową Georgia.
 
 <CodeDemo source={CustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -198,8 +198,8 @@ Czcionki są dziedziczone kaskadowo w CSS, więc opakowanie komponentu w `div` z
 Ustaw wszystkie zmienne `border-radius` na `0px`, aby uzyskać całkowicie kwadratowy wygląd.
 
 <CodeDemo source={CustomBorderRadiusSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomBorderRadius client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomBorderRadius client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -208,7 +208,7 @@ Ustaw wszystkie zmienne `border-radius` na `0px`, aby uzyskać całkowicie kwadr
 Zamiast używać wbudowanego propa `size`, nadpisz poszczególne zmienne rozmiaru, aby uzyskać precyzyjną kontrolę. Ten przykład używa **DateRangePicker** z niestandardowym rozmiarem komórek i czcionek.
 
 <CodeDemo source={CustomSizeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSize client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSize client:visible />
   </ExampleWrapper>
 </CodeDemo>

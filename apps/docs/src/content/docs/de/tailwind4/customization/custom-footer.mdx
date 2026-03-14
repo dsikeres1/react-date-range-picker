@@ -18,8 +18,8 @@ import CompoundNoFooterSource from "@examples/tailwind4/Customization/CompoundNo
 Ordnen Sie die Schaltflächen in der Fußzeile neu an oder fügen Sie neue wie den `TodayButton` hinzu. Da jede Schaltfläche ein unabhängiger Teil des Baukastens ist, steuern Sie die Reihenfolge und das Layout.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,8 +28,8 @@ Ordnen Sie die Schaltflächen in der Fußzeile neu an oder fügen Sie neue wie d
 Lassen Sie alle Teile weg, die Sie nicht benötigen. Lassen Sie zum Beispiel die Fußzeile für einen minimalen Popup-Kalender ganz weg:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

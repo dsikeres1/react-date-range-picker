@@ -31,8 +31,8 @@ Gói styled bao gồm 4 biến thể kích thước tích hợp giúp thay đổ
 Truyền prop `size` cho bất kỳ thành phần picker nào:
 
 <CodeDemo source={SizesSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <Sizes client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <Sizes client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -187,8 +187,8 @@ Hoặc với API Compound Component, thêm class vào Root:
 Bạn cũng có thể ghi đè các biến kích thước thông qua style nội tuyến:
 
 <CodeDemo source={CustomSizeViaCSSSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSizeViaCSS client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSizeViaCSS client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

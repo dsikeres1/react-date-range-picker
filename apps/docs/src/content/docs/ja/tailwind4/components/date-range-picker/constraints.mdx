@@ -20,8 +20,8 @@ import AllowSingleDateSource from "@examples/tailwind4/DateRangePicker/AllowSing
 `minDays` と `maxDays` (両端を含む) を使って、期間の長さを制限します。ユーザーは `minDays` より短い、または `maxDays` より長い期間を確定できません。
 
 <CodeDemo source={MinMaxDaysSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <MinMaxDays client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <MinMaxDays client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ import AllowSingleDateSource from "@examples/tailwind4/DateRangePicker/AllowSing
 `isDateUnavailable` を使って、特定の日付を動的に無効化します。無効化された日付は、期間の開始日または終了日として選択できません。
 
 <CodeDemo source={DisabledDatesSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <DisabledDates client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <DisabledDates client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ import AllowSingleDateSource from "@examples/tailwind4/DateRangePicker/AllowSing
 デフォルトでは、開始日と終了日が同じ期間が許可されています。少なくとも2つの異なる日付を必須にするには、`allowSingleDateInRange={false}` を設定します。
 
 <CodeDemo source={AllowSingleDateSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <AllowSingleDate client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <AllowSingleDate client:visible />
   </ExampleWrapper>
 </CodeDemo>

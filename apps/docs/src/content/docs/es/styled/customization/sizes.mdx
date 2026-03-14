@@ -31,8 +31,8 @@ El paquete con estilo incluye 4 variantes de tamaño incorporadas que escalan la
 Pasa la prop `size` a cualquier componente del selector:
 
 <CodeDemo source={SizesSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <Sizes client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <Sizes client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -187,8 +187,8 @@ O con la API de Componentes Compuestos, añade la clase a Root:
 También puedes sobrescribir las variables de tamaño mediante estilos en línea:
 
 <CodeDemo source={CustomSizeViaCSSSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSizeViaCSS client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSizeViaCSS client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

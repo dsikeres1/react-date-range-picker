@@ -20,8 +20,8 @@ Chuyển đổi chủ đề màu sắc trong thời gian chạy bằng cách ghi
 ## Trình chuyển đổi chủ đề nội tuyến
 
 <CodeDemo source={CompoundColorThemeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorTheme client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorTheme client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ Chuyển đổi chủ đề màu sắc trong thời gian chạy bằng cách ghi
 Cách tiếp cận tương tự cũng hoạt động với bộ chọn popup:
 
 <CodeDemo source={CompoundColorThemePopupSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorThemePopup client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorThemePopup client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ Cách tiếp cận tương tự cũng hoạt động với bộ chọn popup:
 Bạn cũng có thể ghi đè màu sắc trực tiếp thông qua thuộc tính `style` trên một phần tử bao bọc:
 
 <CodeDemo source={CSSCustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CSSCustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CSSCustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>

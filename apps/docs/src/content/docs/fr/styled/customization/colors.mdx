@@ -20,8 +20,8 @@ Changez le thème de couleur à l'exécution en surchargeant les propriétés pe
 ## Sélecteur de Thème Intégré
 
 <CodeDemo source={CompoundColorThemeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorTheme client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorTheme client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ Changez le thème de couleur à l'exécution en surchargeant les propriétés pe
 La même approche fonctionne avec les sélecteurs popup :
 
 <CodeDemo source={CompoundColorThemePopupSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorThemePopup client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorThemePopup client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ La même approche fonctionne avec les sélecteurs popup :
 Vous pouvez également surcharger les couleurs directement via l'attribut `style` sur un élément englobant :
 
 <CodeDemo source={CSSCustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CSSCustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CSSCustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>

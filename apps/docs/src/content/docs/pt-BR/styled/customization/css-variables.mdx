@@ -178,8 +178,8 @@ Ou escopo as sobrescritas para uma instância específica usando uma classe wrap
 Sobrescreva as variáveis de cor primária para criar um esquema de cores completamente diferente. Este exemplo usa um **DatePicker** com tons de violeta/roxo.
 
 <CodeDemo source={CustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -188,8 +188,8 @@ Sobrescreva as variáveis de cor primária para criar um esquema de cores comple
 As fontes funcionam em cascata através do CSS, então envolver o seletor em uma div com uma `font-family` personalizada se aplica a todo o texto. Este exemplo usa um **DateRangePicker** com a fonte serifada Georgia.
 
 <CodeDemo source={CustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -198,8 +198,8 @@ As fontes funcionam em cascata através do CSS, então envolver o seletor em uma
 Defina todas as variáveis de raio de borda para `0px` para uma aparência completamente quadrada.
 
 <CodeDemo source={CustomBorderRadiusSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomBorderRadius client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomBorderRadius client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -208,7 +208,7 @@ Defina todas as variáveis de raio de borda para `0px` para uma aparência compl
 Em vez de usar a propriedade `size` embutida, sobrescreva as variáveis de dimensionamento individuais para um controle preciso. Este exemplo usa um **DateRangePicker** com tamanho de célula e tamanhos de fonte personalizados.
 
 <CodeDemo source={CustomSizeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSize client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSize client:visible />
   </ExampleWrapper>
 </CodeDemo>

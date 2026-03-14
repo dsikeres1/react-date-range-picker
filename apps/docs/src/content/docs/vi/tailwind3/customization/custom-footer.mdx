@@ -18,8 +18,8 @@ import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNo
 Sắp xếp lại các nút ở chân trang và thêm các hành động phụ như nút "Hôm nay". Với các thành phần hỗn hợp, bạn có thể kiểm soát chính xác nút nào xuất hiện và theo thứ tự nào.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,8 +28,8 @@ Sắp xếp lại các nút ở chân trang và thêm các hành động phụ n
 Loại bỏ bất kỳ phần nào bạn không cần. Ở đây, chân trang được bỏ qua hoàn toàn để có một bố cục tối giản chỉ có lịch:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

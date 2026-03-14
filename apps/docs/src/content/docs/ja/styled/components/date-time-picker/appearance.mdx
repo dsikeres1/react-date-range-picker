@@ -18,8 +18,8 @@ import FormIntegrationSource from "@examples/styled/DateTimePicker/FormIntegrati
 国際化対応のためにカスタムロケールを提供します。`dateTimePlaceholder` キーでトリガーテキストをカスタマイズできます。
 
 <CodeDemo source={CustomLocaleSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomLocale client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomLocale client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,7 +28,7 @@ import FormIntegrationSource from "@examples/styled/DateTimePicker/FormIntegrati
 `name` prop を使用して、ネイティブフォーム送信用の非表示 input を含めることができます。
 
 <CodeDemo source={FormIntegrationSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <FormIntegration client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <FormIntegration client:visible />
   </ExampleWrapper>
 </CodeDemo>

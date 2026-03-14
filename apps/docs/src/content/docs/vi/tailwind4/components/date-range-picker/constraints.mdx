@@ -20,8 +20,8 @@ import AllowSingleDateSource from "@examples/tailwind4/DateRangePicker/AllowSing
 Giới hạn độ dài của khoảng thời gian bằng `minDays` và `maxDays` (bao gồm). Người dùng không thể xác nhận một khoảng thời gian ngắn hơn `minDays` hoặc dài hơn `maxDays`.
 
 <CodeDemo source={MinMaxDaysSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <MinMaxDays client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <MinMaxDays client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ Giới hạn độ dài của khoảng thời gian bằng `minDays` và `maxDays
 Sử dụng `isDateUnavailable` để vô hiệu hóa động các ngày cụ thể. Các ngày bị vô hiệu hóa không thể được chọn làm ngày bắt đầu hoặc kết thúc của một khoảng thời gian.
 
 <CodeDemo source={DisabledDatesSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <DisabledDates client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <DisabledDates client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ Sử dụng `isDateUnavailable` để vô hiệu hóa động các ngày cụ th
 Theo mặc định, một khoảng thời gian có ngày bắt đầu bằng ngày kết thúc là được phép. Đặt `allowSingleDateInRange={false}` để yêu cầu ít nhất hai ngày riêng biệt.
 
 <CodeDemo source={AllowSingleDateSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <AllowSingleDate client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <AllowSingleDate client:visible />
   </ExampleWrapper>
 </CodeDemo>

@@ -20,8 +20,8 @@ Xây dựng một chân trang hoàn toàn tùy chỉnh với các nút và bố 
 Sắp xếp lại các nút ở chân trang hoặc thêm các nút mới như `TodayButton`. Thành phần phức hợp `DateTimePicker` bao gồm một `TimeSection` với `TimePanel` để chọn thời gian, và `Footer` hoạt động như một vùng chứa cho các nút hành động.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,8 +39,8 @@ Bạn cũng có thể bỏ qua hoàn toàn các nút hành động tích hợp v
 Bỏ qua bất kỳ phần nào bạn không cần. Ví dụ, một lịch nội tuyến không có tiêu đề, không có chân trang hoặc trình kích hoạt:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

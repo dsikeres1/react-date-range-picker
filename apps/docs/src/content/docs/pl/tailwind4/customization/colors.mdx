@@ -18,8 +18,8 @@ Przełączaj motywy kolorów w czasie rzeczywistym, nadpisując niestandardowe w
 Pakiet Tailwind v4 używa formatu **oklch** dla semantycznych tokenów. Nadpisz `--color-primary` i `--color-primary-foreground`, aby zmienić wygląd pickera:
 
 <CodeDemo source={CompoundColorThemeSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundColorTheme client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundColorTheme client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,7 +28,7 @@ Pakiet Tailwind v4 używa formatu **oklch** dla semantycznych tokenów. Nadpisz 
 Ta sama technika działa w przypadku pickerów w trybie popup:
 
 <CodeDemo source={CompoundColorThemePopupSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundColorThemePopup client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundColorThemePopup client:visible />
   </ExampleWrapper>
 </CodeDemo>

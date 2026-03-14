@@ -163,8 +163,8 @@ document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
 라이트 모드와 다크 모드 간 전환을 위한 토글 버튼이 있는 **DatePicker**(인라인)를 보여주는 대화형 예제입니다.
 
 <CodeDemo source={DarkModeToggleSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <DarkModeToggle client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <DarkModeToggle client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -173,7 +173,7 @@ document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
 어두운 배경에서 `data-theme="dark"`를 사용하여 다크 모드로 렌더링된 **DateTimePicker**입니다.
 
 <CodeDemo source={CustomDarkModeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomDarkMode client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomDarkMode client:visible />
   </ExampleWrapper>
 </CodeDemo>

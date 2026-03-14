@@ -20,8 +20,8 @@ import CaptionDropdownSource from "@examples/tailwind3/DateRangePicker/CaptionDr
 Display more than 2 months side by side. Defaults to `2` for range pickers.
 
 <CodeDemo source={MultiMonthSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <MultiMonth client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <MultiMonth client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ Display more than 2 months side by side. Defaults to `2` for range pickers.
 Use `createLocale` from the headless package to customize month/day names and UI strings.
 
 <CodeDemo source={CustomLocaleSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CustomLocale client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CustomLocale client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ Use `createLocale` from the headless package to customize month/day names and UI
 Switch from button navigation to dropdown selectors for month and year. Useful for picking dates far from the current month.
 
 <CodeDemo source={CaptionDropdownSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CaptionDropdown client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CaptionDropdown client:visible />
   </ExampleWrapper>
 </CodeDemo>

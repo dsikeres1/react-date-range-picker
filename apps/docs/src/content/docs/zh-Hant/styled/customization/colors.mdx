@@ -20,8 +20,8 @@ import CSSCustomColorsSource from "@examples/styled/Customization/CSSCustomColor
 ## 行內主題切換器
 
 <CodeDemo source={CompoundColorThemeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorTheme client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorTheme client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ import CSSCustomColorsSource from "@examples/styled/Customization/CSSCustomColor
 同樣的方法也適用於彈出式選擇器：
 
 <CodeDemo source={CompoundColorThemePopupSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorThemePopup client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorThemePopup client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ import CSSCustomColorsSource from "@examples/styled/Customization/CSSCustomColor
 您也可以直接透過 `style` 屬性在包裝器元素上覆寫顏色：
 
 <CodeDemo source={CSSCustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CSSCustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CSSCustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>

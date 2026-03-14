@@ -163,8 +163,8 @@ document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
 Açık ve koyu modlar arasında geçiş yapmak için bir geçiş düğmesi ile birlikte bir **DatePicker** (satır içi) gösteren etkileşimli bir örnek.
 
 <CodeDemo source={DarkModeToggleSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <DarkModeToggle client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <DarkModeToggle client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -173,7 +173,7 @@ Açık ve koyu modlar arasında geçiş yapmak için bir geçiş düğmesi ile b
 Koyu bir arka plan üzerinde `data-theme="dark"` kullanılarak koyu modda oluşturulmuş bir **DateTimePicker**.
 
 <CodeDemo source={CustomDarkModeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomDarkMode client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomDarkMode client:visible />
   </ExampleWrapper>
 </CodeDemo>

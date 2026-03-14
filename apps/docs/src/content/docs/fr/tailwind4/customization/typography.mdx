@@ -23,8 +23,8 @@ Le paquet Tailwind v4 utilise la classe par défaut `font-sans` de Tailwind (`ui
 Enveloppez le sélecteur et définissez `fontFamily` sur le conteneur pour changer de police :
 
 <CodeDemo source={CompoundCustomFontSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomFont client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -33,8 +33,8 @@ Enveloppez le sélecteur et définissez `fontFamily` sur le conteneur pour chang
 Chargez une police Web à l'exécution et appliquez-la via un conteneur. Cet exemple charge [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) depuis Google Fonts :
 
 <CodeDemo source={CompoundNotoSansSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundNotoSans client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundNotoSans client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -47,7 +47,7 @@ Dans un projet réel, chargez la police via une balise `<link>` dans votre `<hea
 Comparez différentes polices Web pour voir à quel point la typographie change radicalement l'apparence du sélecteur. Toutes les polices ci-dessous prennent en charge le rendu multilingue (latin, CJK, coréen).
 
 <CodeDemo source={CompoundWebFontsSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundWebFonts client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundWebFonts client:visible />
   </ExampleWrapper>
 </CodeDemo>

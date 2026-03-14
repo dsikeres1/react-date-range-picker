@@ -163,8 +163,8 @@ document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
 Интерактивный пример, показывающий **DatePicker** (встроенный) с кнопкой-переключателем для смены светлого и тёмного режимов.
 
 <CodeDemo source={DarkModeToggleSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <DarkModeToggle client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <DarkModeToggle client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -173,7 +173,7 @@ document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
 **DateTimePicker**, отображаемый в тёмном режиме с использованием `data-theme="dark"` на тёмном фоне.
 
 <CodeDemo source={CustomDarkModeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomDarkMode client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomDarkMode client:visible />
   </ExampleWrapper>
 </CodeDemo>

@@ -18,8 +18,8 @@ import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNo
 Reorganize os botões do rodapé e adicione ações extras como um botão "Hoje". Com componentes compostos, você controla exatamente quais botões aparecem e em que ordem.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,8 +28,8 @@ Reorganize os botões do rodapé e adicione ações extras como um botão "Hoje"
 Remova qualquer parte que você não precise. Aqui o rodapé é omitido completamente para um layout mínimo apenas de calendário:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

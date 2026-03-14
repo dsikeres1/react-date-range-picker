@@ -16,8 +16,8 @@ import CompoundCustomTriggerRangeSource from "@examples/tailwind4/Customization/
 使用 `Trigger` render prop 将默认的触发按钮替换为您自己的元素。当您将一个函数作为子元素传递给 `DatePicker.Trigger` 时，您会收到状态和回调，以构建您想要的任何触发器 UI。
 
 <CodeDemo source={CompoundCustomTriggerSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomTrigger client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomTrigger client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,7 +39,7 @@ import CompoundCustomTriggerRangeSource from "@examples/tailwind4/Customization/
 同样的模式也适用于 `DateRangePicker`：
 
 <CodeDemo source={CompoundCustomTriggerRangeSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomTriggerRange client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomTriggerRange client:visible />
   </ExampleWrapper>
 </CodeDemo>

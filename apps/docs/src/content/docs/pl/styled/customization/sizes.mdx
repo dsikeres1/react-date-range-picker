@@ -31,8 +31,8 @@ Pakiet `styled` zawiera 4 wbudowane warianty rozmiarów, które proporcjonalnie 
 Przekaż prop `size` do dowolnego komponentu wyboru:
 
 <CodeDemo source={SizesSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <Sizes client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <Sizes client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -187,8 +187,8 @@ Lub za pomocą API komponentów złożonych (Compound Component API), dodaj klas
 Możesz również nadpisać zmienne rozmiaru za pomocą stylów inline:
 
 <CodeDemo source={CustomSizeViaCSSSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSizeViaCSS client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSizeViaCSS client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

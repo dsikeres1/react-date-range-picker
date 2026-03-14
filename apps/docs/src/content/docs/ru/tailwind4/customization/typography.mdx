@@ -23,8 +23,8 @@ import CompoundWebFontsSource from "@examples/tailwind4/Customization/CompoundWe
 Оберните компонент и установите `fontFamily` для обертки, чтобы сменить шрифт:
 
 <CodeDemo source={CompoundCustomFontSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomFont client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -33,8 +33,8 @@ import CompoundWebFontsSource from "@examples/tailwind4/Customization/CompoundWe
 Загрузите веб-шрифт во время выполнения и примените его с помощью обертки. В этом примере загружается [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) из Google Fonts:
 
 <CodeDemo source={CompoundNotoSansSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundNotoSans client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundNotoSans client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -47,7 +47,7 @@ import CompoundWebFontsSource from "@examples/tailwind4/Customization/CompoundWe
 Сравните различные веб-шрифты, чтобы увидеть, как сильно типографика меняет внешний вид компонента. Все шрифты ниже поддерживают многоязычный рендеринг (латиница, CJK, корейский).
 
 <CodeDemo source={CompoundWebFontsSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundWebFonts client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundWebFonts client:visible />
   </ExampleWrapper>
 </CodeDemo>

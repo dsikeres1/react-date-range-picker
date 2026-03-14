@@ -178,8 +178,8 @@ import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw"
 プライマリーカラー変数を上書きして、全く異なるカラースキームを作成します。この例では、紫/バイオレットトーンの**DatePicker**を使用しています。
 
 <CodeDemo source={CustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -188,8 +188,8 @@ import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw"
 フォントはCSSを通じて継承されるため、ピッカーをカスタムの`font-family`を持つdivでラップすると、すべてのテキストに適用されます。この例では、Georgiaセリフフォントを使用した**DateRangePicker**を使用しています。
 
 <CodeDemo source={CustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -198,8 +198,8 @@ import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw"
 すべての境界線半径変数を`0px`に設定して、完全に四角い外観にします。
 
 <CodeDemo source={CustomBorderRadiusSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomBorderRadius client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomBorderRadius client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -208,7 +208,7 @@ import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw"
 組み込みの`size`プロパティを使用する代わりに、個々のサイズ変数を上書きして精密な制御を行います。この例では、カスタムのセルサイズとフォントサイズを持つ**DateRangePicker**を使用しています。
 
 <CodeDemo source={CustomSizeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSize client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSize client:visible />
   </ExampleWrapper>
 </CodeDemo>

@@ -18,8 +18,8 @@ import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNo
 重新排列页脚按钮并添加额外的操作，例如“今天”按钮。通过复合组件，您可以精确控制显示哪些按钮以及它们的顺序。
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,8 +28,8 @@ import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNo
 移除任何您不需要的部分。这里完全省略了页脚，以实现一个最小化的纯日历布局：
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

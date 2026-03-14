@@ -20,8 +20,8 @@ Bir sarmalayıcı (wrapper) element üzerindeki CSS özel özelliklerini (custom
 ## Satır-içi Tema Değiştirici
 
 <CodeDemo source={CompoundColorThemeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorTheme client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorTheme client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ Bir sarmalayıcı (wrapper) element üzerindeki CSS özel özelliklerini (custom
 Aynı yaklaşım açılır pencere seçicilerle de çalışır:
 
 <CodeDemo source={CompoundColorThemePopupSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorThemePopup client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorThemePopup client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ Aynı yaklaşım açılır pencere seçicilerle de çalışır:
 Ayrıca bir sarmalayıcı (wrapper) element üzerindeki `style` niteliği aracılığıyla renkleri doğrudan geçersiz kılabilirsiniz:
 
 <CodeDemo source={CSSCustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CSSCustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CSSCustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>

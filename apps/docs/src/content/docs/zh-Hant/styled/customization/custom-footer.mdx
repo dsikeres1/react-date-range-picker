@@ -20,8 +20,8 @@ import CompoundNoFooterSource from "@examples/styled/Customization/CompoundNoFoo
 重排頁尾按鈕或新增按鈕，例如 `TodayButton`。`DateTimePicker` 複合元件包含一個帶有 `TimePanel` 的 `TimeSection` 用於時間選擇，而 `Footer` 則作為操作按鈕的容器。
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,8 +39,8 @@ import CompoundNoFooterSource from "@examples/styled/Customization/CompoundNoFoo
 省略您不需要的任何部分。例如，一個沒有頁首、頁尾或觸發器的無標頭行內日曆：
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

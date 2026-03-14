@@ -16,8 +16,8 @@ import CompoundCustomTriggerRangeSource from "@examples/styled/Customization/Com
 기본 트리거를 자체 버튼이나 입력 필드로 교체하세요. `Trigger` 컴포넌트는 트리거의 모양과 동작을 완벽하게 제어할 수 있는 렌더 프롭(render prop)을 받습니다.
 
 <CodeDemo source={CompoundCustomTriggerSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomTrigger client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomTrigger client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,7 +39,7 @@ import CompoundCustomTriggerRangeSource from "@examples/styled/Customization/Com
 `DateRangePicker`에서도 동일한 패턴이 작동합니다:
 
 <CodeDemo source={CompoundCustomTriggerRangeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomTriggerRange client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomTriggerRange client:visible />
   </ExampleWrapper>
 </CodeDemo>

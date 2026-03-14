@@ -20,8 +20,8 @@ import CaptionDropdownSource from "@examples/tailwind3/DateRangePicker/CaptionDr
 Zeigen Sie mehr als 2 Monate nebeneinander an. Standard ist `2` für Bereichsauswahlen.
 
 <CodeDemo source={MultiMonthSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <MultiMonth client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <MultiMonth client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ Zeigen Sie mehr als 2 Monate nebeneinander an. Standard ist `2` für Bereichsaus
 Verwenden Sie `createLocale` aus dem Headless-Paket, um Monats-/Tagesnamen und UI-Zeichenfolgen anzupassen.
 
 <CodeDemo source={CustomLocaleSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CustomLocale client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CustomLocale client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ Verwenden Sie `createLocale` aus dem Headless-Paket, um Monats-/Tagesnamen und U
 Wechseln Sie von der Tasten-Navigation zu Dropdown-Auswahlen für Monat und Jahr. Nützlich für die Auswahl von Daten, die weit vom aktuellen Monat entfernt sind.
 
 <CodeDemo source={CaptionDropdownSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CaptionDropdown client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CaptionDropdown client:visible />
   </ExampleWrapper>
 </CodeDemo>

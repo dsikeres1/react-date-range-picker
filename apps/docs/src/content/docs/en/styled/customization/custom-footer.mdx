@@ -20,8 +20,8 @@ Build a completely custom footer with your own buttons and layout, or remove par
 Rearrange footer buttons or add new ones like `TodayButton`. The `DateTimePicker` compound component includes a `TimeSection` with `TimePanel` for time selection, and the `Footer` acts as a container for action buttons.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,8 +39,8 @@ You can also skip the built-in action buttons entirely and use your own elements
 Omit any parts you don't need. For example, a header-less inline calendar with no footer or trigger:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

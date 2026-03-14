@@ -23,8 +23,8 @@ Das Tailwind v3-Paket verwendet die standardmäßige `font-sans`-Klasse von Tail
 Umschließen Sie den Picker und setzen Sie `fontFamily` auf den Wrapper, um die Schriftarten zu wechseln:
 
 <CodeDemo source={CompoundCustomFontSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomFont client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -33,8 +33,8 @@ Umschließen Sie den Picker und setzen Sie `fontFamily` auf den Wrapper, um die 
 Laden Sie zur Laufzeit eine Web-Schriftart und wenden Sie sie über einen Wrapper an. Dieses Beispiel lädt [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) von Google Fonts:
 
 <CodeDemo source={CompoundNotoSansSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundNotoSans client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundNotoSans client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -47,7 +47,7 @@ In einem echten Projekt laden Sie die Schriftart über ein `<link>`-Tag in Ihrem
 Vergleichen Sie verschiedene Web-Schriftarten, um zu sehen, wie dramatisch die Typografie das Aussehen des Pickers verändert. Alle unten aufgeführten Schriftarten unterstützen die mehrsprachige Darstellung (Latein, CJK, Koreanisch).
 
 <CodeDemo source={CompoundWebFontsSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundWebFonts client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundWebFonts client:visible />
   </ExampleWrapper>
 </CodeDemo>

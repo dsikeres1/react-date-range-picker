@@ -23,8 +23,8 @@ O pacote Tailwind v3 usa a classe padrão `font-sans` do Tailwind (`ui-sans-seri
 Envolva o seletor e defina `fontFamily` no contêiner para trocar de fonte:
 
 <CodeDemo source={CompoundCustomFontSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomFont client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -33,8 +33,8 @@ Envolva o seletor e defina `fontFamily` no contêiner para trocar de fonte:
 Carregue uma web font em tempo de execução e aplique-a através de um contêiner. Este exemplo carrega a [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) do Google Fonts:
 
 <CodeDemo source={CompoundNotoSansSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundNotoSans client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundNotoSans client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -47,7 +47,7 @@ Em um projeto real, carregue a fonte através de uma tag `<link>` no `<head>` do
 Compare diferentes web fonts para ver como a tipografia muda drasticamente a aparência do seletor. Todas as fontes abaixo suportam renderização em vários idiomas (Latim, CJK, Coreano).
 
 <CodeDemo source={CompoundWebFontsSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundWebFonts client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundWebFonts client:visible />
   </ExampleWrapper>
 </CodeDemo>

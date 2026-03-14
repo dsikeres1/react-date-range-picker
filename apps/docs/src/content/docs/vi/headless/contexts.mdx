@@ -36,14 +36,14 @@ Với context, các thành phần con sử dụng những gì chúng cần một
 function MyDatePicker() {
   return (
     <DatePickerProvider value={value} onChange={onChange}>
-      <ExampleWrapper variant="headless" client:load>
-        <MyTrigger client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyTrigger client:visible />
       </ExampleWrapper>
-      <ExampleWrapper variant="headless" client:load>
-        <MyCalendar client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyCalendar client:visible />
       </ExampleWrapper>
-      <ExampleWrapper variant="headless" client:load>
-        <MyFooter client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyFooter client:visible />
       </ExampleWrapper>
     </DatePickerProvider>
   );
@@ -337,7 +337,7 @@ Mỗi provider hiển thị hai context lồng nhau:
 ## Ví dụ: Date Picker phức hợp
 
 <CodeDemo source={ContextExampleSource}>
-  <ExampleWrapper variant="headless" client:load>
-    <ContextExample client:load />
+  <ExampleWrapper variant="headless" client:visible>
+    <ContextExample client:visible />
   </ExampleWrapper>
 </CodeDemo>

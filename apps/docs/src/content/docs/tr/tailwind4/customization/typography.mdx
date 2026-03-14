@@ -23,8 +23,8 @@ Tailwind v4 paketi, Tailwind'in varsayılan `font-sans` sınıfını (`ui-sans-s
 Yazı tiplerini değiştirmek için seçiciyi sarın ve sarmalayıcı üzerinde `fontFamily` ayarlayın:
 
 <CodeDemo source={CompoundCustomFontSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomFont client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -33,8 +33,8 @@ Yazı tiplerini değiştirmek için seçiciyi sarın ve sarmalayıcı üzerinde 
 Çalışma zamanında bir web yazı tipi yükleyin ve bir sarmalayıcı aracılığıyla uygulayın. Bu örnek, Google Fonts'tan [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) yazı tipini yükler:
 
 <CodeDemo source={CompoundNotoSansSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundNotoSans client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundNotoSans client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -47,7 +47,7 @@ Gerçek bir projede, yazı tipini çalışma zamanında enjekte etmek yerine HTM
 Tipografinin seçicinin görünümünü ne kadar çarpıcı bir şekilde değiştirdiğini görmek için farklı web yazı tiplerini karşılaştırın. Aşağıdaki tüm yazı tipleri çok dilli işlemeyi (Latin, CJK, Korece) destekler.
 
 <CodeDemo source={CompoundWebFontsSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundWebFonts client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundWebFonts client:visible />
   </ExampleWrapper>
 </CodeDemo>

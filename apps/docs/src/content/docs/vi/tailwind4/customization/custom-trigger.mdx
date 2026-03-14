@@ -16,8 +16,8 @@ import CompoundCustomTriggerRangeSource from "@examples/tailwind4/Customization/
 Thay thế nút kích hoạt mặc định bằng phần tử của riêng bạn bằng cách sử dụng render prop `Trigger`. Khi bạn truyền một hàm làm con cho `DatePicker.Trigger`, bạn sẽ nhận được trạng thái và các hàm gọi lại để xây dựng bất kỳ giao diện người dùng trình kích hoạt nào bạn muốn.
 
 <CodeDemo source={CompoundCustomTriggerSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomTrigger client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomTrigger client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,7 +39,7 @@ Thay thế nút kích hoạt mặc định bằng phần tử của riêng bạn
 Mô hình tương tự cũng hoạt động với `DateRangePicker`:
 
 <CodeDemo source={CompoundCustomTriggerRangeSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomTriggerRange client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomTriggerRange client:visible />
   </ExampleWrapper>
 </CodeDemo>

@@ -20,8 +20,8 @@ Construa um rodapé completamente personalizado com seus próprios botões e lay
 Reorganize os botões do rodapé ou adicione novos como o `TodayButton`. O componente composto `DateTimePicker` inclui uma `TimeSection` com um `TimePanel` para seleção de tempo, e o `Footer` atua como um contêiner para os botões de ação.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,8 +39,8 @@ Você também pode pular totalmente os botões de ação integrados e usar seus 
 Omita quaisquer partes que você não precise. Por exemplo, um calendário embutido sem cabeçalho, rodapé ou gatilho:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

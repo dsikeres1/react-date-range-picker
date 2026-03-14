@@ -35,8 +35,8 @@ Pour surcharger, définissez `--rdrp-font-family` sur n'importe quel élément a
 Surchargez la police via l'attribut `style` sur un élément conteneur :
 
 <CodeDemo source={CSSCustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CSSCustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CSSCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -45,8 +45,8 @@ Surchargez la police via l'attribut `style` sur un élément conteneur :
 Basculez entre les familles de polices en définissant `--rdrp-font-family` sur un conteneur :
 
 <CodeDemo source={CompoundCustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -68,8 +68,8 @@ import "react-date-range-picker-styled/rdrp-styles.css";
 ```
 
 <CodeDemo source={CompoundNotoSansSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNotoSans client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNotoSans client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -84,8 +84,8 @@ Comparez différentes polices web pour voir à quel point la typographie change 
 </Admonition>
 
 <CodeDemo source={CompoundWebFontsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundWebFonts client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundWebFonts client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -106,7 +106,7 @@ Ajustez finement la densité de la typographie en surchargeant les variables de 
 | `--rdrp-font-weight-bold`     | `700`  | Indicateur d'aujourd'hui           |
 
 <CodeDemo source={CompoundCustomFontPopupSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFontPopup client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFontPopup client:visible />
   </ExampleWrapper>
 </CodeDemo>

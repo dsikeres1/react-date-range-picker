@@ -20,8 +20,8 @@ Construye un pie de página completamente personalizado con tus propios botones 
 Reorganiza los botones del pie de página o añade nuevos como `TodayButton`. El componente compuesto `DateTimePicker` incluye una `TimeSection` con un `TimePanel` para la selección de la hora, y el `Footer` actúa como un contenedor para los botones de acción.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,8 +39,8 @@ También puedes omitir por completo los botones de acción incorporados y usar t
 Omite cualquier parte que no necesites. Por ejemplo, un calendario en línea sin encabezado, pie de página ni disparador:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

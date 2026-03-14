@@ -16,8 +16,8 @@ import CompoundCustomTriggerRangeSource from "@examples/tailwind4/Customization/
 Zastąp domyślny przycisk wyzwalający własnym elementem, używając render prop `Trigger`. Kiedy przekażesz funkcję jako dziecko do `DatePicker.Trigger`, otrzymasz stan i wywołania zwrotne, aby zbudować dowolny interfejs wyzwalacza.
 
 <CodeDemo source={CompoundCustomTriggerSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomTrigger client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomTrigger client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,7 +39,7 @@ Zastąp domyślny przycisk wyzwalający własnym elementem, używając render pr
 Ten sam wzorzec działa z `DateRangePicker`:
 
 <CodeDemo source={CompoundCustomTriggerRangeSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomTriggerRange client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomTriggerRange client:visible />
   </ExampleWrapper>
 </CodeDemo>

@@ -18,8 +18,8 @@ import CompoundNoFooterSource from "@examples/tailwind4/Customization/CompoundNo
 จัดเรียงปุ่มส่วนท้ายใหม่หรือเพิ่มปุ่มใหม่ๆ เช่น `TodayButton` เนื่องจากแต่ละปุ่มเป็นส่วนประกอบอิสระ คุณจึงสามารถควบคุมลำดับและเลย์เอาต์ได้
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,8 +28,8 @@ import CompoundNoFooterSource from "@examples/tailwind4/Customization/CompoundNo
 ละเว้นส่วนใดๆ ที่คุณไม่ต้องการ ตัวอย่างเช่น การทิ้งส่วนท้ายไปทั้งหมดเพื่อสร้างปฏิทินป๊อปอัปแบบมินิมอล:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

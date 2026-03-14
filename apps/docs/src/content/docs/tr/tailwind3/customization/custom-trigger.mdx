@@ -16,8 +16,8 @@ import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/
 Varsayılan tetikleyiciyi bir render prop kullanarak kendi elemanınızla değiştirin. `Trigger` bileşeni, durumu ve geri aramaları alan bir fonksiyon alt bileşeni kabul eder, bu da herhangi bir özel düğme veya girdi oluşturmanıza olanak tanır.
 
 <CodeDemo source={CompoundCustomTriggerSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomTrigger client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomTrigger client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,7 +39,7 @@ Varsayılan tetikleyiciyi bir render prop kullanarak kendi elemanınızla deği�
 Aynı desen `DateRangePicker` ile de çalışır:
 
 <CodeDemo source={CompoundCustomTriggerRangeSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomTriggerRange client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomTriggerRange client:visible />
   </ExampleWrapper>
 </CodeDemo>

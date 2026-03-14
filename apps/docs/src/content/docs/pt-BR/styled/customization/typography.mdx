@@ -35,8 +35,8 @@ Para substituir, defina `--rdrp-font-family` em qualquer elemento ancestral — 
 Substitua a fonte através do atributo `style` em um elemento invólucro (wrapper):
 
 <CodeDemo source={CSSCustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CSSCustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CSSCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -45,8 +45,8 @@ Substitua a fonte através do atributo `style` em um elemento invólucro (wrappe
 Alterne entre famílias de fontes definindo `--rdrp-font-family` em um invólucro:
 
 <CodeDemo source={CompoundCustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -68,8 +68,8 @@ import "react-date-range-picker-styled/rdrp-styles.css";
 ```
 
 <CodeDemo source={CompoundNotoSansSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNotoSans client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNotoSans client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -83,8 +83,8 @@ Compare diferentes fontes da web para ver como a tipografia altera drasticamente
 </Admonition>
 
 <CodeDemo source={CompoundWebFontsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundWebFonts client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundWebFonts client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -105,7 +105,7 @@ Ajuste a densidade da tipografia substituindo as variáveis de tamanho e peso:
 | `--rdrp-font-weight-bold`     | `700`  | Indicador de hoje          |
 
 <CodeDemo source={CompoundCustomFontPopupSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFontPopup client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFontPopup client:visible />
   </ExampleWrapper>
 </CodeDemo>

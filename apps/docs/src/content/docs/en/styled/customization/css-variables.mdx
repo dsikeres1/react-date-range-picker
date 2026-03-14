@@ -180,8 +180,8 @@ Or scope overrides to a specific instance using a wrapper class:
 Override primary color variables to create a completely different color scheme. This example uses a **DatePicker** with violet/purple tones.
 
 <CodeDemo source={CustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -190,8 +190,8 @@ Override primary color variables to create a completely different color scheme. 
 Fonts cascade through CSS, so wrapping the picker in a div with a custom `font-family` applies to all text. This example uses a **DateRangePicker** with Georgia serif.
 
 <CodeDemo source={CustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -200,8 +200,8 @@ Fonts cascade through CSS, so wrapping the picker in a div with a custom `font-f
 Set all border radius variables to `0px` for a completely square look.
 
 <CodeDemo source={CustomBorderRadiusSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomBorderRadius client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomBorderRadius client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -210,7 +210,7 @@ Set all border radius variables to `0px` for a completely square look.
 Instead of using the built-in `size` prop, override individual sizing variables for precise control. This example uses a **DateRangePicker** with custom cell size and font sizes.
 
 <CodeDemo source={CustomSizeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSize client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSize client:visible />
   </ExampleWrapper>
 </CodeDemo>

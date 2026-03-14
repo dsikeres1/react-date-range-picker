@@ -20,8 +20,8 @@ import CSSCustomColorsSource from "@examples/styled/Customization/CSSCustomColor
 ## 인라인 테마 전환기
 
 <CodeDemo source={CompoundColorThemeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorTheme client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorTheme client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ import CSSCustomColorsSource from "@examples/styled/Customization/CSSCustomColor
 팝업 피커에서도 동일한 방식이 작동합니다:
 
 <CodeDemo source={CompoundColorThemePopupSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorThemePopup client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorThemePopup client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ import CSSCustomColorsSource from "@examples/styled/Customization/CSSCustomColor
 또한 래퍼 요소의 `style` 속성을 통해 직접 색상을 재정의할 수도 있습니다:
 
 <CodeDemo source={CSSCustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CSSCustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CSSCustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>

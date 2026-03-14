@@ -20,8 +20,8 @@ Créez un pied de page entièrement personnalisé avec vos propres boutons et vo
 Réorganisez les boutons du pied de page ou ajoutez-en de nouveaux comme `TodayButton`. Le composant composé `DateTimePicker` inclut une `TimeSection` avec `TimePanel` pour la sélection de l'heure, et le `Footer` agit comme un conteneur pour les boutons d'action.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,8 +39,8 @@ Vous pouvez également ignorer complètement les boutons d'action intégrés et 
 Omettez toutes les parties dont vous n'avez pas besoin. Par exemple, un calendrier en ligne sans en-tête, sans pied de page ni déclencheur :
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

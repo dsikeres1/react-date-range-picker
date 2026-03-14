@@ -18,8 +18,8 @@ import CompoundColorThemePopupSource from "@examples/tailwind4/Customization/Com
 Пакет Tailwind v4 использует формат **oklch** для семантических токенов. Переопределите `--color-primary` и `--color-primary-foreground`, чтобы изменить оформление компонента:
 
 <CodeDemo source={CompoundColorThemeSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundColorTheme client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundColorTheme client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,7 +28,7 @@ import CompoundColorThemePopupSource from "@examples/tailwind4/Customization/Com
 Тот же метод работает и для компонентов выбора даты во всплывающем окне:
 
 <CodeDemo source={CompoundColorThemePopupSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundColorThemePopup client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundColorThemePopup client:visible />
   </ExampleWrapper>
 </CodeDemo>

@@ -36,14 +36,14 @@ Context を使えば、サブコンポーネントは必要なものを直接消
 function MyDatePicker() {
   return (
     <DatePickerProvider value={value} onChange={onChange}>
-      <ExampleWrapper variant="headless" client:load>
-        <MyTrigger client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyTrigger client:visible />
       </ExampleWrapper>
-      <ExampleWrapper variant="headless" client:load>
-        <MyCalendar client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyCalendar client:visible />
       </ExampleWrapper>
-      <ExampleWrapper variant="headless" client:load>
-        <MyFooter client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyFooter client:visible />
       </ExampleWrapper>
     </DatePickerProvider>
   );
@@ -337,7 +337,7 @@ function usePickerContext(): PickerContextValue;
 ## 例：コンパウンドデートピッカー
 
 <CodeDemo source={ContextExampleSource}>
-  <ExampleWrapper variant="headless" client:load>
-    <ContextExample client:load />
+  <ExampleWrapper variant="headless" client:visible>
+    <ContextExample client:visible />
   </ExampleWrapper>
 </CodeDemo>

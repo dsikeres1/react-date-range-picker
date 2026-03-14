@@ -18,8 +18,8 @@ import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNo
 フッターボタンを再配置し、「今日」ボタンのような追加アクションを追加します。複合コンポーネントを使用すると、どのボタンがどの順序で表示されるかを正確に制御できます。
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,8 +28,8 @@ import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNo
 不要な部分はすべて削除できます。ここでは、カレンダーのみの最小レイアウトのためにフッターを完全に省略しています:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

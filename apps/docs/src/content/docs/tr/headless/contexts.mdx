@@ -36,14 +36,14 @@ Context ile alt bileşenler, ihtiyaç duydukları şeyi doğrudan tüketir:
 function MyDatePicker() {
   return (
     <DatePickerProvider value={value} onChange={onChange}>
-      <ExampleWrapper variant="headless" client:load>
-        <MyTrigger client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyTrigger client:visible />
       </ExampleWrapper>
-      <ExampleWrapper variant="headless" client:load>
-        <MyCalendar client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyCalendar client:visible />
       </ExampleWrapper>
-      <ExampleWrapper variant="headless" client:load>
-        <MyFooter client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyFooter client:visible />
       </ExampleWrapper>
     </DatePickerProvider>
   );

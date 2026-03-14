@@ -16,8 +16,8 @@ import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/
 使用渲染属性 (render prop) 以您自己的元素替换默认触发器。`Trigger` 组件接受一个函数子组件，该函数接收状态和回调，让您可以渲染任何自定义按钮或输入。
 
 <CodeDemo source={CompoundCustomTriggerSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomTrigger client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomTrigger client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,7 +39,7 @@ import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/
 同样的模式也适用于 `DateRangePicker`：
 
 <CodeDemo source={CompoundCustomTriggerRangeSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomTriggerRange client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomTriggerRange client:visible />
   </ExampleWrapper>
 </CodeDemo>

@@ -178,8 +178,8 @@ styled 包对所有视觉值都使用 CSS 自定义属性（变量）。在 `.rd
 覆盖主色变量以创建完全不同的配色方案。此示例使用带有紫罗兰/紫色调的 **DatePicker**。
 
 <CodeDemo source={CustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -188,8 +188,8 @@ styled 包对所有视觉值都使用 CSS 自定义属性（变量）。在 `.rd
 字体通过 CSS 继承，因此将选择器包装在具有自定义 `font-family` 的 div 中会应用于所有文本。此示例使用带有 Georgia serif 字体的 **DateRangePicker**。
 
 <CodeDemo source={CustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -198,8 +198,8 @@ styled 包对所有视觉值都使用 CSS 自定义属性（变量）。在 `.rd
 将所有边框圆角变量设置为 `0px` 以获得完全方正的外观。
 
 <CodeDemo source={CustomBorderRadiusSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomBorderRadius client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomBorderRadius client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -208,7 +208,7 @@ styled 包对所有视觉值都使用 CSS 自定义属性（变量）。在 `.rd
 除了使用内置的 `size` prop 外，还可以覆盖单个尺寸变量以进行精确控制。此示例使用具有自定义单元格尺寸和字体大小的 **DateRangePicker**。
 
 <CodeDemo source={CustomSizeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSize client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSize client:visible />
   </ExampleWrapper>
 </CodeDemo>

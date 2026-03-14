@@ -20,8 +20,8 @@ Zmieniaj motyw kolorystyczny w czasie rzeczywistym, nadpisując niestandardowe w
 ## Przełącznik Motywu w Linii
 
 <CodeDemo source={CompoundColorThemeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorTheme client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorTheme client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -30,8 +30,8 @@ Zmieniaj motyw kolorystyczny w czasie rzeczywistym, nadpisując niestandardowe w
 To samo podejście działa w przypadku selektorów w okienku:
 
 <CodeDemo source={CompoundColorThemePopupSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundColorThemePopup client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundColorThemePopup client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -40,7 +40,7 @@ To samo podejście działa w przypadku selektorów w okienku:
 Możesz także nadpisać kolory bezpośrednio za pomocą atrybutu `style` na elemencie otaczającym:
 
 <CodeDemo source={CSSCustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CSSCustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CSSCustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>

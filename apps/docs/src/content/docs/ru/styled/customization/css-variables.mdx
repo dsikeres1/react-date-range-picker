@@ -178,8 +178,8 @@ import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw"
 Переопределите переменные основного цвета, чтобы создать совершенно другую цветовую схему. В этом примере используется **DatePicker** с фиолетовыми/пурпурными тонами.
 
 <CodeDemo source={CustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -188,8 +188,8 @@ import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw"
 Шрифты каскадируются через CSS, поэтому обертывание средства выбора в div с пользовательским `font-family` применяется ко всему тексту. В этом примере используется **DateRangePicker** со шрифтом Georgia с засечками.
 
 <CodeDemo source={CustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -198,8 +198,8 @@ import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw"
 Установите все переменные радиуса границы на `0px` для получения полностью квадратного вида.
 
 <CodeDemo source={CustomBorderRadiusSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomBorderRadius client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomBorderRadius client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -208,7 +208,7 @@ import CustomSizeSource from "@examples/styled/Customization/CustomSize.tsx?raw"
 Вместо использования встроенного пропа `size`, переопределите отдельные переменные размеров для точного контроля. В этом примере используется **DateRangePicker** с пользовательским размером ячейки и размерами шрифтов.
 
 <CodeDemo source={CustomSizeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSize client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSize client:visible />
   </ExampleWrapper>
 </CodeDemo>

@@ -18,8 +18,8 @@ import CompoundNoFooterSource from "@examples/tailwind4/Customization/CompoundNo
 Altbilgi düğmelerini yeniden düzenleyin veya `TodayButton` gibi yenilerini ekleyin. Her düğme bağımsız bir bileşik parça olduğundan, sırayı ve düzeni siz kontrol edersiniz.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,8 +28,8 @@ Altbilgi düğmelerini yeniden düzenleyin veya `TodayButton` gibi yenilerini ek
 İhtiyaç duymadığınız parçaları atlayabilirsiniz. Örneğin, minimal bir açılır takvim için altbilgiyi tamamen kaldırın:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

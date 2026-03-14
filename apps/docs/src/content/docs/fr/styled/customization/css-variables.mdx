@@ -178,8 +178,8 @@ Ou limitez les surcharges à une instance spécifique en utilisant une classe d'
 Surchargez les variables de couleur primaire pour créer un schéma de couleurs complètement différent. Cet exemple utilise un **DatePicker** avec des tons violets/pourpres.
 
 <CodeDemo source={CustomColorsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomColors client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomColors client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -188,8 +188,8 @@ Surchargez les variables de couleur primaire pour créer un schéma de couleurs 
 Les polices se propagent en cascade via CSS, donc envelopper le sélecteur dans une div avec une `font-family` personnalisée s'applique à tout le texte. Cet exemple utilise un **DateRangePicker** avec la police serif Georgia.
 
 <CodeDemo source={CustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -198,8 +198,8 @@ Les polices se propagent en cascade via CSS, donc envelopper le sélecteur dans 
 Définissez toutes les variables de rayon de bordure à `0px` pour un aspect complètement carré.
 
 <CodeDemo source={CustomBorderRadiusSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomBorderRadius client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomBorderRadius client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -208,7 +208,7 @@ Définissez toutes les variables de rayon de bordure à `0px` pour un aspect com
 Au lieu d'utiliser la prop `size` intégrée, surchargez les variables de dimensionnement individuelles pour un contrôle précis. Cet exemple utilise un **DateRangePicker** avec une taille de cellule et des tailles de police personnalisées.
 
 <CodeDemo source={CustomSizeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSize client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSize client:visible />
   </ExampleWrapper>
 </CodeDemo>

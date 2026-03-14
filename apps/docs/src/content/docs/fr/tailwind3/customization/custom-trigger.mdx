@@ -16,8 +16,8 @@ import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/
 Remplacez le déclencheur par défaut par votre propre élément en utilisant une render prop. Le composant `Trigger` accepte une fonction enfant qui reçoit l'état et des callbacks, vous permettant de rendre n'importe quel bouton ou champ de saisie personnalisé.
 
 <CodeDemo source={CompoundCustomTriggerSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomTrigger client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomTrigger client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,7 +39,7 @@ Remplacez le déclencheur par défaut par votre propre élément en utilisant un
 Le même modèle fonctionne avec `DateRangePicker`:
 
 <CodeDemo source={CompoundCustomTriggerRangeSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomTriggerRange client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomTriggerRange client:visible />
   </ExampleWrapper>
 </CodeDemo>

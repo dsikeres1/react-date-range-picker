@@ -16,8 +16,8 @@ import CompoundCustomTriggerRangeSource from "@examples/tailwind3/Customization/
 Ersetzen Sie den Standard-Trigger durch Ihr eigenes Element, indem Sie eine Render-Prop verwenden. Die `Trigger`-Komponente akzeptiert eine Funktion als Kind, die Zustand und Callbacks empfängt, sodass Sie jeden beliebigen benutzerdefinierten Button oder Input rendern können.
 
 <CodeDemo source={CompoundCustomTriggerSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomTrigger client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomTrigger client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,7 +39,7 @@ Ersetzen Sie den Standard-Trigger durch Ihr eigenes Element, indem Sie eine Rend
 Das gleiche Muster funktioniert mit `DateRangePicker`:
 
 <CodeDemo source={CompoundCustomTriggerRangeSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomTriggerRange client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomTriggerRange client:visible />
   </ExampleWrapper>
 </CodeDemo>

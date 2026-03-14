@@ -22,8 +22,8 @@ import SecondPrecisionSource from "@examples/tailwind3/TimePicker/SecondPrecisio
 Переключитесь на 12-часовой формат с переключателем AM/PM.
 
 <CodeDemo source={TwelveHourSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <TwelveHour client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <TwelveHour client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -32,8 +32,8 @@ import SecondPrecisionSource from "@examples/tailwind3/TimePicker/SecondPrecisio
 Установите шаг приращения минут. Полезно для планирования с фиксированными интервалами.
 
 <CodeDemo source={MinuteStepSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <MinuteStep client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <MinuteStep client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -42,7 +42,7 @@ import SecondPrecisionSource from "@examples/tailwind3/TimePicker/SecondPrecisio
 Покажите столбец секунд, установив `precision` в `"second"`.
 
 <CodeDemo source={SecondPrecisionSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <SecondPrecision client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <SecondPrecision client:visible />
   </ExampleWrapper>
 </CodeDemo>

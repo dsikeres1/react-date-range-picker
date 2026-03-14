@@ -16,8 +16,8 @@ import CompoundCustomTriggerRangeSource from "@examples/styled/Customization/Com
 Замените стандартный триггер своей собственной кнопкой или полем ввода. Компонент `Trigger` принимает `render prop`, который дает вам полный контроль над внешним видом и поведением триггера.
 
 <CodeDemo source={CompoundCustomTriggerSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomTrigger client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomTrigger client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -39,7 +39,7 @@ import CompoundCustomTriggerRangeSource from "@examples/styled/Customization/Com
 Этот же паттерн работает и с `DateRangePicker`:
 
 <CodeDemo source={CompoundCustomTriggerRangeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomTriggerRange client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomTriggerRange client:visible />
   </ExampleWrapper>
 </CodeDemo>

@@ -31,8 +31,8 @@ O pacote `styled` inclui 4 variantes de tamanho integradas que escalam tipografi
 Passe a prop `size` para qualquer componente de seletor:
 
 <CodeDemo source={SizesSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <Sizes client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <Sizes client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -187,8 +187,8 @@ Ou com a API de Componentes Compostos, adicione a classe ao Root:
 Você também pode sobrescrever variáveis de dimensionamento através de estilos embutidos:
 
 <CodeDemo source={CustomSizeViaCSSSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSizeViaCSS client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSizeViaCSS client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

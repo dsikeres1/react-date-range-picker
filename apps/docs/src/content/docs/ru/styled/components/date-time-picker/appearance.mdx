@@ -18,8 +18,8 @@ import FormIntegrationSource from "@examples/styled/DateTimePicker/FormIntegrati
 Предоставьте пользовательскую локаль для интернационализации. Ключ `dateTimePlaceholder` настраивает текст триггера.
 
 <CodeDemo source={CustomLocaleSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomLocale client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomLocale client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,7 +28,7 @@ import FormIntegrationSource from "@examples/styled/DateTimePicker/FormIntegrati
 Используйте свойство `name`, чтобы включить скрытое поле ввода для нативной отправки формы.
 
 <CodeDemo source={FormIntegrationSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <FormIntegration client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <FormIntegration client:visible />
   </ExampleWrapper>
 </CodeDemo>

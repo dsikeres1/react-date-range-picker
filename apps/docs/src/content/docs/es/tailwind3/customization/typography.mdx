@@ -23,8 +23,8 @@ El paquete de Tailwind v3 utiliza la clase por defecto de Tailwind `font-sans` (
 Envuelve el selector y establece `fontFamily` en el contenedor para cambiar de fuente:
 
 <CodeDemo source={CompoundCustomFontSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomFont client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -33,8 +33,8 @@ Envuelve el selector y establece `fontFamily` en el contenedor para cambiar de f
 Carga una fuente web en tiempo de ejecución y aplícala a través de un contenedor. Este ejemplo carga [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) de Google Fonts:
 
 <CodeDemo source={CompoundNotoSansSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundNotoSans client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundNotoSans client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -47,7 +47,7 @@ En un proyecto real, carga la fuente a través de una etiqueta `<link>` en el `<
 Compara diferentes fuentes web para ver cómo la tipografía cambia drásticamente la apariencia del selector. Todas las fuentes a continuación admiten la representación en múltiples idiomas (latín, CJK, coreano).
 
 <CodeDemo source={CompoundWebFontsSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundWebFonts client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundWebFonts client:visible />
   </ExampleWrapper>
 </CodeDemo>

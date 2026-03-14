@@ -163,8 +163,8 @@ document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
 Ein interaktives Beispiel, das einen **DatePicker** (inline) mit einer Umschalttaste zum Umschalten zwischen hellem und dunklem Modus zeigt.
 
 <CodeDemo source={DarkModeToggleSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <DarkModeToggle client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <DarkModeToggle client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -173,7 +173,7 @@ Ein interaktives Beispiel, das einen **DatePicker** (inline) mit einer Umschaltt
 Ein **DateTimePicker**, der im dunklen Modus mit `data-theme="dark"` auf einem dunklen Hintergrund gerendert wird.
 
 <CodeDemo source={CustomDarkModeSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomDarkMode client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomDarkMode client:visible />
   </ExampleWrapper>
 </CodeDemo>

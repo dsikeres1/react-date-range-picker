@@ -23,8 +23,8 @@ Pakiet dla Tailwind v4 używa domyślnej klasy `font-sans` Tailwind (`ui-sans-se
 Owiń picker i ustaw `fontFamily` na kontenerze, aby zmienić czcionki:
 
 <CodeDemo source={CompoundCustomFontSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundCustomFont client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -33,8 +33,8 @@ Owiń picker i ustaw `fontFamily` na kontenerze, aby zmienić czcionki:
 Załaduj czcionkę internetową w czasie działania i zastosuj ją za pomocą kontenera. Ten przykład ładuje [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans) z Google Fonts:
 
 <CodeDemo source={CompoundNotoSansSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundNotoSans client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundNotoSans client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -47,7 +47,7 @@ W prawdziwym projekcie załaduj czcionkę za pomocą tagu `<link>` w sekcji `<he
 Porównaj różne czcionki internetowe, aby zobaczyć, jak radykalnie typografia zmienia wygląd pickera. Wszystkie poniższe czcionki obsługują renderowanie wielojęzyczne (łacina, CJK, koreański).
 
 <CodeDemo source={CompoundWebFontsSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundWebFonts client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundWebFonts client:visible />
   </ExampleWrapper>
 </CodeDemo>

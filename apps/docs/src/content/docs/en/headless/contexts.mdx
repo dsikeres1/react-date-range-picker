@@ -36,14 +36,14 @@ With context, sub-components consume what they need directly:
 function MyDatePicker() {
   return (
     <DatePickerProvider value={value} onChange={onChange}>
-      <ExampleWrapper variant="headless" client:load>
-        <MyTrigger client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyTrigger client:visible />
       </ExampleWrapper>
-      <ExampleWrapper variant="headless" client:load>
-        <MyCalendar client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyCalendar client:visible />
       </ExampleWrapper>
-      <ExampleWrapper variant="headless" client:load>
-        <MyFooter client:load />
+      <ExampleWrapper variant="headless" client:visible>
+        <MyFooter client:visible />
       </ExampleWrapper>
     </DatePickerProvider>
   );
@@ -338,7 +338,7 @@ Every provider renders two nested contexts:
 ## Example: Compound Date Picker
 
 <CodeDemo source={ContextExampleSource}>
-  <ExampleWrapper variant="headless" client:load>
-    <ContextExample client:load />
+  <ExampleWrapper variant="headless" client:visible>
+    <ContextExample client:visible />
   </ExampleWrapper>
 </CodeDemo>

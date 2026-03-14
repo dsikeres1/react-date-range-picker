@@ -35,8 +35,8 @@ Para sobrescribir, establece `--rdrp-font-family` en cualquier elemento ancestro
 Sobrescribe la fuente a través del atributo `style` en un elemento contenedor:
 
 <CodeDemo source={CSSCustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CSSCustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CSSCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -45,8 +45,8 @@ Sobrescribe la fuente a través del atributo `style` en un elemento contenedor:
 Cambia entre familias de fuentes estableciendo `--rdrp-font-family` en un contenedor:
 
 <CodeDemo source={CompoundCustomFontSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFont client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFont client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -68,8 +68,8 @@ import "react-date-range-picker-styled/rdrp-styles.css";
 ```
 
 <CodeDemo source={CompoundNotoSansSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundNotoSans client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundNotoSans client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -83,8 +83,8 @@ Compara diferentes web fonts para ver cómo la tipografía cambia drásticamente
 </Admonition>
 
 <CodeDemo source={CompoundWebFontsSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundWebFonts client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundWebFonts client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -105,7 +105,7 @@ Ajusta la densidad de la tipografía sobrescribiendo las variables de tamaño y 
 | `--rdrp-font-weight-bold`     | `700`          | Indicador de hoy               |
 
 <CodeDemo source={CompoundCustomFontPopupSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CompoundCustomFontPopup client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CompoundCustomFontPopup client:visible />
   </ExampleWrapper>
 </CodeDemo>

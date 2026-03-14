@@ -18,8 +18,8 @@ import CompoundNoFooterSource from "@examples/tailwind3/Customization/CompoundNo
 Ordnen Sie die Schaltflächen in der Fußzeile neu an und fügen Sie zusätzliche Aktionen wie eine „Heute“-Schaltfläche hinzu. Mit Compound-Komponenten steuern Sie genau, welche Schaltflächen in welcher Reihenfolge erscheinen.
 
 <CodeDemo source={CompoundCustomFooterSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundCustomFooter client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundCustomFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,8 +28,8 @@ Ordnen Sie die Schaltflächen in der Fußzeile neu an und fügen Sie zusätzlich
 Entfernen Sie alle Teile, die Sie nicht benötigen. Hier wird die Fußzeile für ein minimales, nur aus dem Kalender bestehendes Layout vollständig weggelassen:
 
 <CodeDemo source={CompoundNoFooterSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CompoundNoFooter client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CompoundNoFooter client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

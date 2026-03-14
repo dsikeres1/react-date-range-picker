@@ -18,8 +18,8 @@ import FormIntegrationSource from "@examples/tailwind3/DateTimePicker/FormIntegr
 ระบุการปรับแก้ภาษา (locale) สำหรับการทำให้เป็นสากล (internationalization) คีย์ `dateTimePlaceholder` จะใช้ปรับแต่งข้อความของ trigger
 
 <CodeDemo source={CustomLocaleSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <CustomLocale client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <CustomLocale client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,7 +28,7 @@ import FormIntegrationSource from "@examples/tailwind3/DateTimePicker/FormIntegr
 ใช้ prop `name` เพื่อรวม input ที่ซ่อนอยู่สำหรับการส่งฟอร์มแบบดั้งเดิม
 
 <CodeDemo source={FormIntegrationSource}>
-  <ExampleWrapper variant="tailwind3" client:load>
-    <FormIntegration client:load />
+  <ExampleWrapper variant="tailwind3" client:visible>
+    <FormIntegration client:visible />
   </ExampleWrapper>
 </CodeDemo>

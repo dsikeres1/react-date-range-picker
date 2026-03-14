@@ -31,8 +31,8 @@ Das Styled-Paket enthält 4 integrierte Größenvarianten, die Typografie, Abst�
 Übergeben Sie die `size`-Prop an eine beliebige Picker-Komponente:
 
 <CodeDemo source={SizesSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <Sizes client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <Sizes client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -187,8 +187,8 @@ Oder fügen Sie mit der Compound Component API die Klasse zu Root hinzu:
 Sie können Größenvariablen auch über Inline-Stile überschreiben:
 
 <CodeDemo source={CustomSizeViaCSSSource}>
-  <ExampleWrapper variant="styled" client:load>
-    <CustomSizeViaCSS client:load />
+  <ExampleWrapper variant="styled" client:visible>
+    <CustomSizeViaCSS client:visible />
   </ExampleWrapper>
 </CodeDemo>
 

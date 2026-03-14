@@ -18,8 +18,8 @@ Switch color themes at runtime by overriding CSS custom properties on a wrapper 
 The Tailwind v4 package uses **oklch** format for semantic tokens. Override `--color-primary` and `--color-primary-foreground` to rebrand the picker:
 
 <CodeDemo source={CompoundColorThemeSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundColorTheme client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundColorTheme client:visible />
   </ExampleWrapper>
 </CodeDemo>
 
@@ -28,7 +28,7 @@ The Tailwind v4 package uses **oklch** format for semantic tokens. Override `--c
 The same technique works with popup pickers:
 
 <CodeDemo source={CompoundColorThemePopupSource}>
-  <ExampleWrapper variant="tailwind4" client:load>
-    <CompoundColorThemePopup client:load />
+  <ExampleWrapper variant="tailwind4" client:visible>
+    <CompoundColorThemePopup client:visible />
   </ExampleWrapper>
 </CodeDemo>
