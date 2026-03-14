@@ -1,5 +1,13 @@
 # react-date-range-picker-styled
 
+## 1.0.3
+
+### Patch Changes
+
+- b2aa8b9: Upgrade docs site to Astro 6.0.4 stable, achieve Lighthouse 100/100/100/100 scores with accessibility and performance improvements
+- Updated dependencies [b2aa8b9]
+  - react-date-range-picker-headless@1.0.3
+
 ## 1.0.2
 
 ### Patch Changes
